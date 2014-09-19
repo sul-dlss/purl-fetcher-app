@@ -434,3 +434,121 @@ Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
 INFO: [dev] webapp=/solr path=/admin/ping params={action=status&wt=json} status=503 QTime=2 
 Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
 INFO: [dev] webapp=/solr path=/replication params={command=details&wt=json} status=0 QTime=21 
+Sep 19, 2014 12:47:33 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/system params={wt=json} status=0 QTime=57 
+Sep 19, 2014 12:47:34 PM org.apache.solr.common.SolrException log
+SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-top.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-top.html]
+	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
+	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
+	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
+	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-top.html} status=400 QTime=4 
+Sep 19, 2014 12:47:34 PM org.apache.solr.common.SolrException log
+SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-bottom.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-bottom.html]
+	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
+	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
+	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
+	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-bottom.html} status=400 QTime=1 
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/replication params={command=details&wt=json} status=0 QTime=12 
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/ping params={action=status&wt=json} status=503 QTime=0 
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.html} status=0 QTime=1 
+Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/admin/luke params={numTerms=0&wt=json&show=index} status=0 QTime=25 
+Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy onInit
+INFO: SolrDeletionPolicy.onInit: commits:num=1
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1l9,generation=2061,filenames=[_1lo.fdt, _1ky_Lucene40_0.prx, _1m0_Lucene40_0.tip, _1lo_nrm.cfs, _1ky.fnm, _1lp_nrm.cfs, _1lo_Lucene40_0.frq, _1m0_Lucene40_0.tim, _1lk.si, _1lr_nrm.cfs, _1ky_nrm.cfe, _1lp.si, _1lr.si, _1lx_nrm.cfe, _1m5_nrm.cfs, _1lx.fnm, _1m0.fdt, _1lk_Lucene40_0.frq, _1lx_nrm.cfs, _1m0.fdx, _1lq_Lucene40_0.frq, _1m0_nrm.cfe, _1ky_8.del, _1lp.fdt, _1lp_nrm.cfe, _1lq_Lucene40_0.prx, _1lo_nrm.cfe, _1lq.fdt, _1lx.fdx, _1ky_Lucene40_0.frq, _1m5.fdt, _1m0.si, segments_1l9, _1lx.fdt, _1m5.fdx, _1lr_nrm.cfe, _1lk.fnm, _1lx_Lucene40_0.tim, _1lx_Lucene40_0.tip, _1lo.fnm, _1lk_Lucene40_0.prx, _1m5.si, _1m0_Lucene40_0.frq, _1lo_Lucene40_0.tim, _1lp_Lucene40_0.tim, _1m5_Lucene40_0.frq, _1ky.fdt, _1ky.si, _1lq_nrm.cfs, _1lo_Lucene40_0.tip, _1lq.fdx, _1ky.fdx, _1lp_Lucene40_0.tip, _1ky_Lucene40_0.tim, _1ky_Lucene40_0.tip, _1lp.fdx, _1lq.fnm, _1m0.fnm, _1m5_Lucene40_0.tim, _1m0_nrm.cfs, _1lq.si, _1lp_Lucene40_0.frq, _1lx_Lucene40_0.prx, _1m5.fnm, _1lo_Lucene40_0.prx, _1lk_Lucene40_0.tip, _1m5_Lucene40_0.tip, _1lx_Lucene40_0.frq, _1m5_nrm.cfe, _1lr.fdt, _1lk_nrm.cfs, _1lp.fnm, _1lk_Lucene40_0.tim, _1lr_Lucene40_0.frq, _1m0_Lucene40_0.prx, _1lr_Lucene40_0.prx, _1lr.fdx, _1lp_Lucene40_0.prx, _1lr.fnm, _1ky_nrm.cfs, _1lq_Lucene40_0.tip, _1lr_Lucene40_0.tip, _1lr_Lucene40_0.tim, _1lq_Lucene40_0.tim, _1lx.si, _1lq_nrm.cfe, _1lk.fdt, _1lo.si, _1lk_nrm.cfe, _1lo.fdx, _1lk.fdx, _1m5_Lucene40_0.prx]
+Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 2061
+Sep 19, 2014 12:49:25 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@db2e44d realtime
+Sep 19, 2014 12:49:25 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy onCommit
+INFO: SolrDeletionPolicy.onCommit: commits:num=2
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1l9,generation=2061,filenames=[_1lo.fdt, _1ky_Lucene40_0.prx, _1m0_Lucene40_0.tip, _1lo_nrm.cfs, _1ky.fnm, _1lp_nrm.cfs, _1lo_Lucene40_0.frq, _1m0_Lucene40_0.tim, _1lk.si, _1lr_nrm.cfs, _1ky_nrm.cfe, _1lp.si, _1lr.si, _1lx_nrm.cfe, _1m5_nrm.cfs, _1lx.fnm, _1m0.fdt, _1lk_Lucene40_0.frq, _1lx_nrm.cfs, _1m0.fdx, _1lq_Lucene40_0.frq, _1m0_nrm.cfe, _1ky_8.del, _1lp.fdt, _1lp_nrm.cfe, _1lq_Lucene40_0.prx, _1lo_nrm.cfe, _1lq.fdt, _1lx.fdx, _1ky_Lucene40_0.frq, _1m5.fdt, _1m0.si, segments_1l9, _1lx.fdt, _1m5.fdx, _1lr_nrm.cfe, _1lk.fnm, _1lx_Lucene40_0.tim, _1lx_Lucene40_0.tip, _1lo.fnm, _1lk_Lucene40_0.prx, _1m5.si, _1m0_Lucene40_0.frq, _1lo_Lucene40_0.tim, _1lp_Lucene40_0.tim, _1m5_Lucene40_0.frq, _1ky.fdt, _1ky.si, _1lq_nrm.cfs, _1lo_Lucene40_0.tip, _1lq.fdx, _1ky.fdx, _1lp_Lucene40_0.tip, _1ky_Lucene40_0.tim, _1ky_Lucene40_0.tip, _1lp.fdx, _1lq.fnm, _1m0.fnm, _1m5_Lucene40_0.tim, _1m0_nrm.cfs, _1lq.si, _1lp_Lucene40_0.frq, _1lx_Lucene40_0.prx, _1m5.fnm, _1lo_Lucene40_0.prx, _1lk_Lucene40_0.tip, _1m5_Lucene40_0.tip, _1lx_Lucene40_0.frq, _1m5_nrm.cfe, _1lr.fdt, _1lk_nrm.cfs, _1lp.fnm, _1lk_Lucene40_0.tim, _1lr_Lucene40_0.frq, _1m0_Lucene40_0.prx, _1lr_Lucene40_0.prx, _1lr.fdx, _1lp_Lucene40_0.prx, _1lr.fnm, _1ky_nrm.cfs, _1lq_Lucene40_0.tip, _1lr_Lucene40_0.tip, _1lr_Lucene40_0.tim, _1lq_Lucene40_0.tim, _1lx.si, _1lq_nrm.cfe, _1lk.fdt, _1lo.si, _1lk_nrm.cfe, _1lo.fdx, _1lk.fdx, _1m5_Lucene40_0.prx]
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1la,generation=2062,filenames=[segments_1la]
+Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 2062
+Sep 19, 2014 12:49:26 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@db951f2 main
+Sep 19, 2014 12:49:26 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@db951f2 main{StandardDirectoryReader(segments_1l9:7599:nrt)}
+Sep 19, 2014 12:49:26 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 12:49:26 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479704486693830656),commit=} 0 1271
+Sep 19, 2014 12:49:32 PM org.apache.solr.core.SolrCore execute
+INFO: [dev] webapp=/solr path=/select params={wt=xml&q=*:*} hits=0 status=0 QTime=21 
+Sep 19, 2014 12:49:39 PM org.apache.solr.core.SolrCore execute
+INFO: [test] webapp=/solr path=/select params={wt=xml&q=*:*} hits=19 status=0 QTime=10 
+Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy onInit
+INFO: SolrDeletionPolicy.onInit: commits:num=1
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfj,generation=34255,filenames=[_q5m.fdt, _q5m_Lucene40_0.frq, _q5m.si, _q4i_nrm.cfe, _q5m.fdx, _q5m_Lucene40_0.tim, _q5c_Lucene40_0.prx, _q5k_nrm.cfs, _q4m_nrm.cfs, _q4q_Lucene40_0.prx, _q77.fnm, _q78_nrm.cfe, _q4i_Lucene40_0.tim, _q4m.fnm, _q4i_Lucene40_0.prx, _q4i_nrm.cfs, _q4m_nrm.cfe, _q4i_Lucene40_0.tip, _q78.fdx, _q5m_Lucene40_0.tip, _q5k_nrm.cfe, _q4q_Lucene40_0.tip, _q78_nrm.cfs, _q78.fdt, _q4q_Lucene40_0.tim, _q76_Lucene40_0.prx, _q5k.fnm, _q76_Lucene40_0.tim, _q76.fdt, _q5k.fdt, _q4q.si, _q76.fdx, _q5k.fdx, _q5m_2.del, _q76_Lucene40_0.tip, _q77.si, _q77_Lucene40_0.frq, _q78.si, _q4m_Lucene40_0.frq, _q4i_9.del, _q4i.fdx, _q4q.fnm, _q5m_nrm.cfs, _q76_Lucene40_0.frq, _q4i.fnm, _q77_nrm.cfs, _q5c_nrm.cfe, _q77_nrm.cfe, _q4m_Lucene40_0.prx, _q4m.si, _q5c.fnm, _q77_Lucene40_0.tim, _q78_Lucene40_0.tip, _q78_Lucene40_0.tim, _q77_Lucene40_0.tip, _q5m_nrm.cfe, _q5k.si, _q4i.fdt, _q5c.fdt, _q4q_Lucene40_0.frq, _q5c.fdx, _q76_nrm.cfs, _q5m_Lucene40_0.prx, _q4q.fdx, _q5c_Lucene40_0.frq, _q4m_Lucene40_0.tip, _q4q_nrm.cfe, _q5c.si, _q4q.fdt, _q76.fnm, _q4i.si, _q4m_1.del, _q78_Lucene40_0.prx, _q4m.fdt, segments_qfj, _q77_Lucene40_0.prx, _q76.si, _q77.fdx, _q4i_Lucene40_0.frq, _q5k_Lucene40_0.prx, _q76_nrm.cfe, _q4m_Lucene40_0.tim, _q4m.fdx, _q78.fnm, _q77.fdt, _q5k_Lucene40_0.tim, _q5c_Lucene40_0.tip, _q5c_nrm.cfs, _q5m.fnm, _q5c_Lucene40_0.tim, _q5k_Lucene40_0.tip, _q78_Lucene40_0.frq, _q5k_Lucene40_0.frq, _q4q_nrm.cfs]
+Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 34255
+Sep 19, 2014 12:50:05 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@c7f5bf9 realtime
+Sep 19, 2014 12:50:05 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy onCommit
+INFO: SolrDeletionPolicy.onCommit: commits:num=2
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfj,generation=34255,filenames=[_q5m.fdt, _q5m_Lucene40_0.frq, _q5m.si, _q4i_nrm.cfe, _q5m.fdx, _q5m_Lucene40_0.tim, _q5c_Lucene40_0.prx, _q5k_nrm.cfs, _q4m_nrm.cfs, _q4q_Lucene40_0.prx, _q77.fnm, _q78_nrm.cfe, _q4i_Lucene40_0.tim, _q4m.fnm, _q4i_Lucene40_0.prx, _q4i_nrm.cfs, _q4m_nrm.cfe, _q4i_Lucene40_0.tip, _q78.fdx, _q5m_Lucene40_0.tip, _q5k_nrm.cfe, _q4q_Lucene40_0.tip, _q78_nrm.cfs, _q78.fdt, _q4q_Lucene40_0.tim, _q76_Lucene40_0.prx, _q5k.fnm, _q76_Lucene40_0.tim, _q76.fdt, _q5k.fdt, _q4q.si, _q76.fdx, _q5k.fdx, _q5m_2.del, _q76_Lucene40_0.tip, _q77.si, _q77_Lucene40_0.frq, _q78.si, _q4m_Lucene40_0.frq, _q4i_9.del, _q4i.fdx, _q4q.fnm, _q5m_nrm.cfs, _q76_Lucene40_0.frq, _q4i.fnm, _q77_nrm.cfs, _q5c_nrm.cfe, _q77_nrm.cfe, _q4m_Lucene40_0.prx, _q4m.si, _q5c.fnm, _q77_Lucene40_0.tim, _q78_Lucene40_0.tip, _q78_Lucene40_0.tim, _q77_Lucene40_0.tip, _q5m_nrm.cfe, _q5k.si, _q4i.fdt, _q5c.fdt, _q4q_Lucene40_0.frq, _q5c.fdx, _q76_nrm.cfs, _q5m_Lucene40_0.prx, _q4q.fdx, _q5c_Lucene40_0.frq, _q4m_Lucene40_0.tip, _q4q_nrm.cfe, _q5c.si, _q4q.fdt, _q76.fnm, _q4i.si, _q4m_1.del, _q78_Lucene40_0.prx, _q4m.fdt, segments_qfj, _q77_Lucene40_0.prx, _q76.si, _q77.fdx, _q4i_Lucene40_0.frq, _q5k_Lucene40_0.prx, _q76_nrm.cfe, _q4m_Lucene40_0.tim, _q4m.fdx, _q78.fnm, _q77.fdt, _q5k_Lucene40_0.tim, _q5c_Lucene40_0.tip, _q5c_nrm.cfs, _q5m.fnm, _q5c_Lucene40_0.tim, _q5k_Lucene40_0.tip, _q78_Lucene40_0.frq, _q5k_Lucene40_0.frq, _q4q_nrm.cfs]
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfk,generation=34256,filenames=[segments_qfk]
+Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 34256
+Sep 19, 2014 12:50:05 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@1286d597 main
+Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [test] Registered new searcher Searcher@1286d597 main{StandardDirectoryReader(segments_qfj:131324:nrt)}
+Sep 19, 2014 12:50:05 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 12:50:05 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [test] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479704529614143488),commit=} 0 229
+Sep 19, 2014 12:50:07 PM org.apache.solr.core.SolrCore execute
+INFO: [test] webapp=/solr path=/select params={wt=xml&q=*:*} hits=0 status=0 QTime=5 

@@ -1,4 +1,5 @@
 require 'jettywrapper' unless Rails.env.production? 
+require 'rest_client'
 
 desc "Run continuous integration suite"
 task :ci do
