@@ -21,8 +21,10 @@
 /tmp
 
 # Ignore jetty changes
-/jetty/solr/dev/data/
-/jetty/solr/test/data/
+jetty/solr/dev/data/*
+jetty/solr/test/data/*
+jetty/solr/dev/data
+jetty/solr/test/data
 jetty/solr/dev/conf/schema.xml
 jetty/solr/dev/conf/solrconfig.xml
 jetty/solr/test/conf/schema.xml

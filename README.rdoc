@@ -38,4 +38,10 @@ A web service app that queries the DOR solr service to return info needed for in
   
 == Running tests
 
-  bundle exec rake local_ci
+Assuming your local jetty is already started:
+  
+  rake local_ci
+
+On the CI server, or if your local jetty is not yet started:
+
+  rake ci

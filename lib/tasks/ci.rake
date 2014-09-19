@@ -1,18 +1,18 @@
 require 'jettywrapper' unless Rails.env.production? 
 require 'rest_client'
 
-desc "Run continuous integration suite"
+desc "Run continuous integration suite (assuming jetty is not yet started)"
 task :ci do
   unless Rails.env.test?  
-    system("rake ci RAILS_ENV=test")
+    system("bundle exec rake ci RAILS_ENV=test")
   else
-    system("rake db:migrate RAILS_ENV=test")  
+    system("bundle exec rake db:migrate RAILS_ENV=test")  
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task["dorfetcher:refresh_fixtures"].invoke
       Rake::Task["db:migrate"].invoke
       Rake::Task["db:fixtures:load"].invoke
       Rake::Task["db:seed"].invoke      
-      Rake::Task["rspec"].invoke
+      system('bundle exec rspec spec --color')
     end
   end
 end
@@ -25,7 +25,7 @@ task :local_ci do
   Rake::Task["db:migrate"].invoke
   Rake::Task["db:fixtures:load"].invoke
   Rake::Task["db:seed"].invoke
-  Rake::Task["rspec"].invoke
+  system('bundle exec rspec spec --color')
 end
 
 namespace :dorfetcher do
