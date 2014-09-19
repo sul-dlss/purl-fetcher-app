@@ -22,6 +22,3 @@
 #Ignore Configuration Files 
 config/database.yml
 config/solr.yml
-config/environments/development.rb
-config/environments/production.rb
-config/environments/test.rb
