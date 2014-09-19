@@ -25,15 +25,13 @@ A web service app that queries the DOR solr service to return info needed for in
   rake jetty:start
 
   rake db:migrate
-  rake db:test:prepare
   rake db:migrate RAILS_ENV=test
 
-  rake dorfetcher:refreshfix
-  rake dorfetcher:refreshfix RAILS_ENV=test
+  rake dorfetcher:refresh_fixtures
+  rake dorfetcher:refresh_fixtures RAILS_ENV=test
 
 
 == Running the application
-
 
   rake jetty:start
   rails server

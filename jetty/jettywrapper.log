@@ -1,554 +1,491 @@
-2014-09-19 10:45:12.544:INFO::Logging to STDERR via org.mortbay.log.StdErrLog
-2014-09-19 10:45:12.729:INFO::jetty-6.1-SNAPSHOT
-2014-09-19 10:45:12.818:INFO::Extract file:/Users/peter/Sites/development/dor-fetcher-service/jetty/webapps/solr.war to /var/folders/yf/zcbccx5s10bf_dp85y0021y40000gn/T/Jetty_0_0_0_0_8983_solr.war__solr__k1kf17/webapp
-Sep 19, 2014 10:45:13 AM org.apache.solr.core.SolrResourceLoader locateSolrHome
+2014-09-19 13:34:42.231:INFO::Logging to STDERR via org.mortbay.log.StdErrLog
+2014-09-19 13:34:42.409:INFO::jetty-6.1-SNAPSHOT
+2014-09-19 13:34:42.573:INFO::Extract file:/Users/peter/Sites/development/dor-fetcher-service/jetty/webapps/solr.war to /var/folders/yf/zcbccx5s10bf_dp85y0021y40000gn/T/Jetty_0_0_0_0_8983_solr.war__solr__k1kf17/webapp
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader locateSolrHome
 INFO: JNDI not configured for solr (NoInitialContextEx)
-Sep 19, 2014 10:45:13 AM org.apache.solr.core.SolrResourceLoader locateSolrHome
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader locateSolrHome
 INFO: using system property solr.solr.home: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr
-Sep 19, 2014 10:45:13 AM org.apache.solr.core.SolrResourceLoader <init>
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader <init>
 INFO: new SolrResourceLoader for deduced Solr Home: '/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/'
-Sep 19, 2014 10:45:14 AM org.apache.solr.servlet.SolrDispatchFilter init
+Sep 19, 2014 1:34:43 PM org.apache.solr.servlet.SolrDispatchFilter init
 INFO: SolrDispatchFilter.init()
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader locateSolrHome
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader locateSolrHome
 INFO: JNDI not configured for solr (NoInitialContextEx)
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader locateSolrHome
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader locateSolrHome
 INFO: using system property solr.solr.home: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer$Initializer initialize
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer$Initializer initialize
 INFO: looking for solr.xml: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/solr.xml
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer <init>
-INFO: New CoreContainer 1583486197
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer load
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer <init>
+INFO: New CoreContainer 1747988071
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer load
 INFO: Loading CoreContainer using Solr Home: '/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/'
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader <init>
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader <init>
 INFO: new SolrResourceLoader for directory: '/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/'
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer load
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer load
 INFO: Registering Log Listener
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer load
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer load
 INFO: loading shared library: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/lib
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CoreContainer create
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.CoreContainer create
 INFO: Creating SolrCore 'dev' using instanceDir: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader <init>
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader <init>
 INFO: new SolrResourceLoader for directory: '/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/'
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-analysis-extras-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-analysis-extras-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-clustering-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-langid-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-velocity-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/icu4j-49.1.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-continuation-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-deploy-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-http-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-io-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-jmx-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-security-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-server-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-servlet-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-util-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-webapp-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-xml-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-icu-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-morfologik-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-smartcn-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-stempel-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-fsa-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-polish-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-stemming-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/servlet-api-3.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrConfig initLibs
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrConfig initLibs
 INFO: Adding specified lib dirs to ClassLoader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-analysis-extras-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-analysis-extras-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-clustering-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-langid-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/apache-solr-velocity-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/icu4j-49.1.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-continuation-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-deploy-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-http-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-io-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-jmx-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-security-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-server-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-servlet-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-util-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-webapp-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/jetty-xml-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-icu-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-morfologik-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-smartcn-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/lucene-analyzers-stempel-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-fsa-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-polish-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/morfologik-stemming-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:43 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/lib/servlet-api-3.0.jar' to classloader
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrConfig <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrConfig <init>
 INFO: Using Lucene MatchVersion: LUCENE_40
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrConfig <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrConfig <init>
 INFO: Loaded SolrConfig: solrconfig.xml
-Sep 19, 2014 10:45:14 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:44 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: Reading Solr Schema
-Sep 19, 2014 10:45:14 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:44 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: Schema name=revs
-Sep 19, 2014 10:45:14 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:44 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: default search field in schema is text
-Sep 19, 2014 10:45:14 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:44 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: query parser default operator is AND
-Sep 19, 2014 10:45:14 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:44 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: unique key field: id
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrCore <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrCore <init>
 INFO: [dev] Opening new SolrCore at /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/, dataDir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrCore <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrCore <init>
 INFO: JMX monitoring not detected for core: dev
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.SolrCore getNewIndexDir
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrCore getNewIndexDir
 WARNING: New index directory detected: old=null new=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index/
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.CachingDirectoryFactory get
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.CachingDirectoryFactory get
 INFO: return new directory for /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index forceNew:false
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /get: solr.RealTimeGetHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: adding lazy requestHandler: solr.ReplicationHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /replication: solr.ReplicationHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created standard: solr.StandardRequestHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: adding lazy requestHandler: solr.FieldAnalysisRequestHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /analysis/field: solr.FieldAnalysisRequestHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /update: solr.UpdateRequestHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /admin/: org.apache.solr.handler.admin.AdminHandlers
-Sep 19, 2014 10:45:14 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /admin/ping: solr.PingRequestHandler
-Sep 19, 2014 10:45:14 AM org.apache.solr.handler.loader.XMLLoader init
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.loader.XMLLoader init
 INFO: xsltCacheLifetimeSeconds=60
-Sep 19, 2014 10:45:15 AM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@19c6866d main
-Sep 19, 2014 10:45:15 AM org.apache.solr.update.CommitTracker <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@178ed77a main
+Sep 19, 2014 1:34:44 PM org.apache.solr.update.CommitTracker <init>
 INFO: Hard AutoCommit: disabled
-Sep 19, 2014 10:45:15 AM org.apache.solr.update.CommitTracker <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.update.CommitTracker <init>
 INFO: Soft AutoCommit: disabled
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting socketTimeout to: 0
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting urlScheme to: http://
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting connTimeout to: 0
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting maxConnectionsPerHost to: 20
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting corePoolSize to: 0
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting maximumPoolSize to: 2147483647
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting maxThreadIdleTime to: 5
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting sizeOfQueue to: -1
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
+Sep 19, 2014 1:34:44 PM org.apache.solr.handler.component.HttpShardHandlerFactory getParameter
 INFO: Setting fairnessPolicy to: false
-Sep 19, 2014 10:45:15 AM org.apache.solr.client.solrj.impl.HttpClientUtil createClient
+Sep 19, 2014 1:34:44 PM org.apache.solr.client.solrj.impl.HttpClientUtil createClient
 INFO: Creating new http client, config:maxConnectionsPerHost=20&maxConnections=10000&socketTimeout=0&connTimeout=0&retry=false
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrCore registerSearcher
-INFO: [dev] Registered new searcher Searcher@19c6866d main{StandardDirectoryReader(segments_1l9:7597 _1ky(4.0.0.2):C19/8 _1lk(4.0.0.2):C1 _1lo(4.0.0.2):C1 _1lp(4.0.0.2):C1 _1lq(4.0.0.2):C1 _1lr(4.0.0.2):C1 _1lx(4.0.0.2):C1 _1m0(4.0.0.2):C1 _1m5(4.0.0.2):C1)}
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.CoreContainer register
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@178ed77a main{StandardDirectoryReader(segments_1la:7599)}
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.CoreContainer register
 INFO: registering core: dev
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.CoreContainer create
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.CoreContainer create
 INFO: Creating SolrCore 'test' using instanceDir: /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader <init>
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader <init>
 INFO: new SolrResourceLoader for directory: '/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/'
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-analysis-extras-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-analysis-extras-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-clustering-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-langid-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-velocity-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/icu4j-49.1.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-continuation-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-deploy-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-http-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-io-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-jmx-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-security-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-server-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-servlet-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-util-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-webapp-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-xml-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-icu-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-morfologik-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-smartcn-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-stempel-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-fsa-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-polish-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-stemming-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/servlet-api-3.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrConfig initLibs
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrConfig initLibs
 INFO: Adding specified lib dirs to ClassLoader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-analysis-extras-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-analysis-extras-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-clustering-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-langid-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/apache-solr-velocity-3.5.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/icu4j-49.1.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-continuation-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-deploy-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-http-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-io-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-jmx-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-security-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-server-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-servlet-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-util-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-webapp-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/jetty-xml-8.1.2.v20120308.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-icu-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-morfologik-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-smartcn-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/lucene-analyzers-stempel-4.0.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-fsa-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-polish-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/morfologik-stemming-1.5.3.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrResourceLoader replaceClassLoader
+Sep 19, 2014 1:34:44 PM org.apache.solr.core.SolrResourceLoader replaceClassLoader
 INFO: Adding 'file:/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/lib/servlet-api-3.0.jar' to classloader
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrConfig <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrConfig <init>
 INFO: Using Lucene MatchVersion: LUCENE_40
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrConfig <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrConfig <init>
 INFO: Loaded SolrConfig: solrconfig.xml
-Sep 19, 2014 10:45:15 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:45 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: Reading Solr Schema
-Sep 19, 2014 10:45:15 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:45 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: Schema name=revs
-Sep 19, 2014 10:45:15 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:45 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: default search field in schema is text
-Sep 19, 2014 10:45:15 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:45 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: query parser default operator is AND
-Sep 19, 2014 10:45:15 AM org.apache.solr.schema.IndexSchema readSchema
+Sep 19, 2014 1:34:45 PM org.apache.solr.schema.IndexSchema readSchema
 INFO: unique key field: id
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrCore <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrCore <init>
 INFO: [test] Opening new SolrCore at /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/, dataDir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrCore <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrCore <init>
 INFO: JMX monitoring not detected for core: test
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrCore getNewIndexDir
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrCore getNewIndexDir
 WARNING: New index directory detected: old=null new=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index/
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.CachingDirectoryFactory get
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.CachingDirectoryFactory get
 INFO: return new directory for /Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index forceNew:false
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /get: solr.RealTimeGetHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: adding lazy requestHandler: solr.ReplicationHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /replication: solr.ReplicationHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created standard: solr.StandardRequestHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: adding lazy requestHandler: solr.FieldAnalysisRequestHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /analysis/field: solr.FieldAnalysisRequestHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /update: solr.UpdateRequestHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /admin/: org.apache.solr.handler.admin.AdminHandlers
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.RequestHandlers initHandlersFromConfig
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.RequestHandlers initHandlersFromConfig
 INFO: created /admin/ping: solr.PingRequestHandler
-Sep 19, 2014 10:45:15 AM org.apache.solr.handler.loader.XMLLoader init
+Sep 19, 2014 1:34:45 PM org.apache.solr.handler.loader.XMLLoader init
 INFO: xsltCacheLifetimeSeconds=60
-Sep 19, 2014 10:45:15 AM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@408b6c39 main
-Sep 19, 2014 10:45:15 AM org.apache.solr.update.CommitTracker <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@677af46e main
+Sep 19, 2014 1:34:45 PM org.apache.solr.update.CommitTracker <init>
 INFO: Hard AutoCommit: disabled
-Sep 19, 2014 10:45:15 AM org.apache.solr.update.CommitTracker <init>
+Sep 19, 2014 1:34:45 PM org.apache.solr.update.CommitTracker <init>
 INFO: Soft AutoCommit: disabled
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.SolrCore registerSearcher
-INFO: [test] Registered new searcher Searcher@408b6c39 main{StandardDirectoryReader(segments_qfj:131322 _q4i(4.0.0.2):C19/10 _q4m(4.0.0.2):C2/1 _q4q(4.0.0.2):C1 _q5c(4.0.0.2):C1 _q5k(4.0.0.2):C2 _q5m(4.0.0.2):C3/2 _q76(4.0.0.2):C2 _q77(4.0.0.2):C1 _q78(4.0.0.2):C1)}
-Sep 19, 2014 10:45:15 AM org.apache.solr.core.CoreContainer register
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [test] Registered new searcher Searcher@677af46e main{StandardDirectoryReader(segments_qfk:131324)}
+Sep 19, 2014 1:34:45 PM org.apache.solr.core.CoreContainer register
 INFO: registering core: test
-Sep 19, 2014 10:45:15 AM org.apache.solr.servlet.SolrDispatchFilter init
+Sep 19, 2014 1:34:45 PM org.apache.solr.servlet.SolrDispatchFilter init
 INFO: user.dir=/Users/peter/Sites/development/dor-fetcher-service/jetty
-Sep 19, 2014 10:45:15 AM org.apache.solr.servlet.SolrDispatchFilter init
+Sep 19, 2014 1:34:45 PM org.apache.solr.servlet.SolrDispatchFilter init
 INFO: SolrDispatchFilter.init() done
-2014-09-19 10:45:15.918:INFO::Started SocketConnector@0.0.0.0:8983
-Sep 19, 2014 10:45:27 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/system params={wt=json} status=0 QTime=78 
-Sep 19, 2014 10:45:28 AM org.apache.solr.common.SolrException log
-SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-top.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-top.html]
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
-	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
-	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
-	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
-
-Sep 19, 2014 10:45:28 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-top.html} status=400 QTime=2 
-Sep 19, 2014 10:45:28 AM org.apache.solr.common.SolrException log
-SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-bottom.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-bottom.html]
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
-	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
-	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
-	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
-
-Sep 19, 2014 10:45:28 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-bottom.html} status=400 QTime=1 
-Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/luke params={numTerms=0&wt=json&show=index} status=0 QTime=15 
-Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.html} status=0 QTime=2 
-Sep 19, 2014 10:45:29 AM org.apache.solr.handler.ReplicationHandler inform
-INFO: Commits will be reserved for  10000
-Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/ping params={action=status&wt=json} status=503 QTime=2 
-Sep 19, 2014 10:45:29 AM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/replication params={command=details&wt=json} status=0 QTime=21 
-Sep 19, 2014 12:47:33 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/system params={wt=json} status=0 QTime=57 
-Sep 19, 2014 12:47:34 PM org.apache.solr.common.SolrException log
-SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-top.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-top.html]
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
-	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
-	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
-	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
-
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-top.html} status=400 QTime=4 
-Sep 19, 2014 12:47:34 PM org.apache.solr.common.SolrException log
-SEVERE: org.apache.solr.common.SolrException: Can not find: admin-extra.menu-bottom.html [/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/conf/admin-extra.menu-bottom.html]
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.showFromFileSystem(ShowFileRequestHandler.java:231)
-	at org.apache.solr.handler.admin.ShowFileRequestHandler.handleRequestBody(ShowFileRequestHandler.java:122)
-	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
-	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
-	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
-	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
-	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
-	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
-	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
-	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
-	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
-
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.menu-bottom.html} status=400 QTime=1 
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/replication params={command=details&wt=json} status=0 QTime=12 
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/ping params={action=status&wt=json} status=503 QTime=0 
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/file/ params={file=admin-extra.html} status=0 QTime=1 
-Sep 19, 2014 12:47:34 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/admin/luke params={numTerms=0&wt=json&show=index} status=0 QTime=25 
-Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy onInit
+2014-09-19 13:34:45.265:INFO::Started SocketConnector@0.0.0.0:8983
+Sep 19, 2014 1:34:49 PM org.apache.solr.core.SolrDeletionPolicy onInit
 INFO: SolrDeletionPolicy.onInit: commits:num=1
-	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1l9,generation=2061,filenames=[_1lo.fdt, _1ky_Lucene40_0.prx, _1m0_Lucene40_0.tip, _1lo_nrm.cfs, _1ky.fnm, _1lp_nrm.cfs, _1lo_Lucene40_0.frq, _1m0_Lucene40_0.tim, _1lk.si, _1lr_nrm.cfs, _1ky_nrm.cfe, _1lp.si, _1lr.si, _1lx_nrm.cfe, _1m5_nrm.cfs, _1lx.fnm, _1m0.fdt, _1lk_Lucene40_0.frq, _1lx_nrm.cfs, _1m0.fdx, _1lq_Lucene40_0.frq, _1m0_nrm.cfe, _1ky_8.del, _1lp.fdt, _1lp_nrm.cfe, _1lq_Lucene40_0.prx, _1lo_nrm.cfe, _1lq.fdt, _1lx.fdx, _1ky_Lucene40_0.frq, _1m5.fdt, _1m0.si, segments_1l9, _1lx.fdt, _1m5.fdx, _1lr_nrm.cfe, _1lk.fnm, _1lx_Lucene40_0.tim, _1lx_Lucene40_0.tip, _1lo.fnm, _1lk_Lucene40_0.prx, _1m5.si, _1m0_Lucene40_0.frq, _1lo_Lucene40_0.tim, _1lp_Lucene40_0.tim, _1m5_Lucene40_0.frq, _1ky.fdt, _1ky.si, _1lq_nrm.cfs, _1lo_Lucene40_0.tip, _1lq.fdx, _1ky.fdx, _1lp_Lucene40_0.tip, _1ky_Lucene40_0.tim, _1ky_Lucene40_0.tip, _1lp.fdx, _1lq.fnm, _1m0.fnm, _1m5_Lucene40_0.tim, _1m0_nrm.cfs, _1lq.si, _1lp_Lucene40_0.frq, _1lx_Lucene40_0.prx, _1m5.fnm, _1lo_Lucene40_0.prx, _1lk_Lucene40_0.tip, _1m5_Lucene40_0.tip, _1lx_Lucene40_0.frq, _1m5_nrm.cfe, _1lr.fdt, _1lk_nrm.cfs, _1lp.fnm, _1lk_Lucene40_0.tim, _1lr_Lucene40_0.frq, _1m0_Lucene40_0.prx, _1lr_Lucene40_0.prx, _1lr.fdx, _1lp_Lucene40_0.prx, _1lr.fnm, _1ky_nrm.cfs, _1lq_Lucene40_0.tip, _1lr_Lucene40_0.tip, _1lr_Lucene40_0.tim, _1lq_Lucene40_0.tim, _1lx.si, _1lq_nrm.cfe, _1lk.fdt, _1lo.si, _1lk_nrm.cfe, _1lo.fdx, _1lk.fdx, _1m5_Lucene40_0.prx]
-Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
-INFO: newest commit = 2061
-Sep 19, 2014 12:49:25 PM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@db2e44d realtime
-Sep 19, 2014 12:49:25 PM org.apache.solr.update.DirectUpdateHandler2 commit
-INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
-Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy onCommit
-INFO: SolrDeletionPolicy.onCommit: commits:num=2
-	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1l9,generation=2061,filenames=[_1lo.fdt, _1ky_Lucene40_0.prx, _1m0_Lucene40_0.tip, _1lo_nrm.cfs, _1ky.fnm, _1lp_nrm.cfs, _1lo_Lucene40_0.frq, _1m0_Lucene40_0.tim, _1lk.si, _1lr_nrm.cfs, _1ky_nrm.cfe, _1lp.si, _1lr.si, _1lx_nrm.cfe, _1m5_nrm.cfs, _1lx.fnm, _1m0.fdt, _1lk_Lucene40_0.frq, _1lx_nrm.cfs, _1m0.fdx, _1lq_Lucene40_0.frq, _1m0_nrm.cfe, _1ky_8.del, _1lp.fdt, _1lp_nrm.cfe, _1lq_Lucene40_0.prx, _1lo_nrm.cfe, _1lq.fdt, _1lx.fdx, _1ky_Lucene40_0.frq, _1m5.fdt, _1m0.si, segments_1l9, _1lx.fdt, _1m5.fdx, _1lr_nrm.cfe, _1lk.fnm, _1lx_Lucene40_0.tim, _1lx_Lucene40_0.tip, _1lo.fnm, _1lk_Lucene40_0.prx, _1m5.si, _1m0_Lucene40_0.frq, _1lo_Lucene40_0.tim, _1lp_Lucene40_0.tim, _1m5_Lucene40_0.frq, _1ky.fdt, _1ky.si, _1lq_nrm.cfs, _1lo_Lucene40_0.tip, _1lq.fdx, _1ky.fdx, _1lp_Lucene40_0.tip, _1ky_Lucene40_0.tim, _1ky_Lucene40_0.tip, _1lp.fdx, _1lq.fnm, _1m0.fnm, _1m5_Lucene40_0.tim, _1m0_nrm.cfs, _1lq.si, _1lp_Lucene40_0.frq, _1lx_Lucene40_0.prx, _1m5.fnm, _1lo_Lucene40_0.prx, _1lk_Lucene40_0.tip, _1m5_Lucene40_0.tip, _1lx_Lucene40_0.frq, _1m5_nrm.cfe, _1lr.fdt, _1lk_nrm.cfs, _1lp.fnm, _1lk_Lucene40_0.tim, _1lr_Lucene40_0.frq, _1m0_Lucene40_0.prx, _1lr_Lucene40_0.prx, _1lr.fdx, _1lp_Lucene40_0.prx, _1lr.fnm, _1ky_nrm.cfs, _1lq_Lucene40_0.tip, _1lr_Lucene40_0.tip, _1lr_Lucene40_0.tim, _1lq_Lucene40_0.tim, _1lx.si, _1lq_nrm.cfe, _1lk.fdt, _1lo.si, _1lk_nrm.cfe, _1lo.fdx, _1lk.fdx, _1m5_Lucene40_0.prx]
 	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1la,generation=2062,filenames=[segments_1la]
-Sep 19, 2014 12:49:25 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+Sep 19, 2014 1:34:49 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
 INFO: newest commit = 2062
-Sep 19, 2014 12:49:26 PM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@db951f2 main
-Sep 19, 2014 12:49:26 PM org.apache.solr.core.SolrCore registerSearcher
-INFO: [dev] Registered new searcher Searcher@db951f2 main{StandardDirectoryReader(segments_1l9:7599:nrt)}
-Sep 19, 2014 12:49:26 PM org.apache.solr.update.DirectUpdateHandler2 commit
-INFO: end_commit_flush
-Sep 19, 2014 12:49:26 PM org.apache.solr.update.processor.LogUpdateProcessor finish
-INFO: [dev] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479704486693830656),commit=} 0 1271
-Sep 19, 2014 12:49:32 PM org.apache.solr.core.SolrCore execute
-INFO: [dev] webapp=/solr path=/select params={wt=xml&q=*:*} hits=0 status=0 QTime=21 
-Sep 19, 2014 12:49:39 PM org.apache.solr.core.SolrCore execute
-INFO: [test] webapp=/solr path=/select params={wt=xml&q=*:*} hits=19 status=0 QTime=10 
-Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy onInit
-INFO: SolrDeletionPolicy.onInit: commits:num=1
-	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfj,generation=34255,filenames=[_q5m.fdt, _q5m_Lucene40_0.frq, _q5m.si, _q4i_nrm.cfe, _q5m.fdx, _q5m_Lucene40_0.tim, _q5c_Lucene40_0.prx, _q5k_nrm.cfs, _q4m_nrm.cfs, _q4q_Lucene40_0.prx, _q77.fnm, _q78_nrm.cfe, _q4i_Lucene40_0.tim, _q4m.fnm, _q4i_Lucene40_0.prx, _q4i_nrm.cfs, _q4m_nrm.cfe, _q4i_Lucene40_0.tip, _q78.fdx, _q5m_Lucene40_0.tip, _q5k_nrm.cfe, _q4q_Lucene40_0.tip, _q78_nrm.cfs, _q78.fdt, _q4q_Lucene40_0.tim, _q76_Lucene40_0.prx, _q5k.fnm, _q76_Lucene40_0.tim, _q76.fdt, _q5k.fdt, _q4q.si, _q76.fdx, _q5k.fdx, _q5m_2.del, _q76_Lucene40_0.tip, _q77.si, _q77_Lucene40_0.frq, _q78.si, _q4m_Lucene40_0.frq, _q4i_9.del, _q4i.fdx, _q4q.fnm, _q5m_nrm.cfs, _q76_Lucene40_0.frq, _q4i.fnm, _q77_nrm.cfs, _q5c_nrm.cfe, _q77_nrm.cfe, _q4m_Lucene40_0.prx, _q4m.si, _q5c.fnm, _q77_Lucene40_0.tim, _q78_Lucene40_0.tip, _q78_Lucene40_0.tim, _q77_Lucene40_0.tip, _q5m_nrm.cfe, _q5k.si, _q4i.fdt, _q5c.fdt, _q4q_Lucene40_0.frq, _q5c.fdx, _q76_nrm.cfs, _q5m_Lucene40_0.prx, _q4q.fdx, _q5c_Lucene40_0.frq, _q4m_Lucene40_0.tip, _q4q_nrm.cfe, _q5c.si, _q4q.fdt, _q76.fnm, _q4i.si, _q4m_1.del, _q78_Lucene40_0.prx, _q4m.fdt, segments_qfj, _q77_Lucene40_0.prx, _q76.si, _q77.fdx, _q4i_Lucene40_0.frq, _q5k_Lucene40_0.prx, _q76_nrm.cfe, _q4m_Lucene40_0.tim, _q4m.fdx, _q78.fnm, _q77.fdt, _q5k_Lucene40_0.tim, _q5c_Lucene40_0.tip, _q5c_nrm.cfs, _q5m.fnm, _q5c_Lucene40_0.tim, _q5k_Lucene40_0.tip, _q78_Lucene40_0.frq, _q5k_Lucene40_0.frq, _q4q_nrm.cfs]
-Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
-INFO: newest commit = 34255
-Sep 19, 2014 12:50:05 PM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@c7f5bf9 realtime
-Sep 19, 2014 12:50:05 PM org.apache.solr.update.DirectUpdateHandler2 commit
+Sep 19, 2014 1:34:49 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@4cd297c0 realtime
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.DirectUpdateHandler2 commit
 INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
-Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy onCommit
-INFO: SolrDeletionPolicy.onCommit: commits:num=2
-	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfj,generation=34255,filenames=[_q5m.fdt, _q5m_Lucene40_0.frq, _q5m.si, _q4i_nrm.cfe, _q5m.fdx, _q5m_Lucene40_0.tim, _q5c_Lucene40_0.prx, _q5k_nrm.cfs, _q4m_nrm.cfs, _q4q_Lucene40_0.prx, _q77.fnm, _q78_nrm.cfe, _q4i_Lucene40_0.tim, _q4m.fnm, _q4i_Lucene40_0.prx, _q4i_nrm.cfs, _q4m_nrm.cfe, _q4i_Lucene40_0.tip, _q78.fdx, _q5m_Lucene40_0.tip, _q5k_nrm.cfe, _q4q_Lucene40_0.tip, _q78_nrm.cfs, _q78.fdt, _q4q_Lucene40_0.tim, _q76_Lucene40_0.prx, _q5k.fnm, _q76_Lucene40_0.tim, _q76.fdt, _q5k.fdt, _q4q.si, _q76.fdx, _q5k.fdx, _q5m_2.del, _q76_Lucene40_0.tip, _q77.si, _q77_Lucene40_0.frq, _q78.si, _q4m_Lucene40_0.frq, _q4i_9.del, _q4i.fdx, _q4q.fnm, _q5m_nrm.cfs, _q76_Lucene40_0.frq, _q4i.fnm, _q77_nrm.cfs, _q5c_nrm.cfe, _q77_nrm.cfe, _q4m_Lucene40_0.prx, _q4m.si, _q5c.fnm, _q77_Lucene40_0.tim, _q78_Lucene40_0.tip, _q78_Lucene40_0.tim, _q77_Lucene40_0.tip, _q5m_nrm.cfe, _q5k.si, _q4i.fdt, _q5c.fdt, _q4q_Lucene40_0.frq, _q5c.fdx, _q76_nrm.cfs, _q5m_Lucene40_0.prx, _q4q.fdx, _q5c_Lucene40_0.frq, _q4m_Lucene40_0.tip, _q4q_nrm.cfe, _q5c.si, _q4q.fdt, _q76.fnm, _q4i.si, _q4m_1.del, _q78_Lucene40_0.prx, _q4m.fdt, segments_qfj, _q77_Lucene40_0.prx, _q76.si, _q77.fdx, _q4i_Lucene40_0.frq, _q5k_Lucene40_0.prx, _q76_nrm.cfe, _q4m_Lucene40_0.tim, _q4m.fdx, _q78.fnm, _q77.fdt, _q5k_Lucene40_0.tim, _q5c_Lucene40_0.tip, _q5c_nrm.cfs, _q5m.fnm, _q5c_Lucene40_0.tim, _q5k_Lucene40_0.tip, _q78_Lucene40_0.frq, _q5k_Lucene40_0.frq, _q4q_nrm.cfs]
-	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfk,generation=34256,filenames=[segments_qfk]
-Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
-INFO: newest commit = 34256
-Sep 19, 2014 12:50:05 PM org.apache.solr.search.SolrIndexSearcher <init>
-INFO: Opening Searcher@1286d597 main
-Sep 19, 2014 12:50:05 PM org.apache.solr.core.SolrCore registerSearcher
-INFO: [test] Registered new searcher Searcher@1286d597 main{StandardDirectoryReader(segments_qfj:131324:nrt)}
-Sep 19, 2014 12:50:05 PM org.apache.solr.update.DirectUpdateHandler2 commit
+Sep 19, 2014 1:34:49 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@79123c5f main
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.DirectUpdateHandler2 commit
 INFO: end_commit_flush
-Sep 19, 2014 12:50:05 PM org.apache.solr.update.processor.LogUpdateProcessor finish
-INFO: [test] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479704529614143488),commit=} 0 229
-Sep 19, 2014 12:50:07 PM org.apache.solr.core.SolrCore execute
-INFO: [test] webapp=/solr path=/select params={wt=xml&q=*:*} hits=0 status=0 QTime=5 
+Sep 19, 2014 1:34:49 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@79123c5f main{StandardDirectoryReader(segments_1la:7599:nrt)}
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479707342688747520),commit=} 0 591
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:34:49 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@899ff91 main
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:34:49 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@899ff91 main{StandardDirectoryReader(segments_1la:7599:nrt)}
+Sep 19, 2014 1:34:49 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {commit=} 0 1
+Sep 19, 2014 1:35:48 PM org.apache.solr.core.SolrDeletionPolicy onInit
+INFO: SolrDeletionPolicy.onInit: commits:num=1
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/test/data/index,segFN=segments_qfk,generation=34256,filenames=[segments_qfk]
+Sep 19, 2014 1:35:48 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 34256
+Sep 19, 2014 1:35:48 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@7fb6a1c4 realtime
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:35:48 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@263945e2 main
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:35:48 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [test] Registered new searcher Searcher@263945e2 main{StandardDirectoryReader(segments_qfk:131324:nrt)}
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [test] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479707405063290880),commit=} 0 16
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:35:48 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@604ee1f1 main
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:35:48 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [test] Registered new searcher Searcher@604ee1f1 main{StandardDirectoryReader(segments_qfk:131324:nrt)}
+Sep 19, 2014 1:35:48 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [test] webapp=/solr path=/update params={commit=true} {commit=} 0 1
+Sep 19, 2014 1:38:52 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:38:52 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@7ffd10fa main
+Sep 19, 2014 1:38:52 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:38:52 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@7ffd10fa main{StandardDirectoryReader(segments_1la:7599:nrt)}
+Sep 19, 2014 1:38:52 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479707598085160960),commit=} 0 6
+Sep 19, 2014 1:38:52 PM org.apache.solr.handler.loader.XMLLoader readDoc
+WARNING: unexpected XML tag doc/str
+Sep 19, 2014 1:38:52 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {} 0 4
+Sep 19, 2014 1:38:52 PM org.apache.solr.common.SolrException log
+SEVERE: org.apache.solr.common.SolrException: unexpected XML tag doc/str
+	at org.apache.solr.handler.loader.XMLLoader.readDoc(XMLLoader.java:399)
+	at org.apache.solr.handler.loader.XMLLoader.processUpdate(XMLLoader.java:229)
+	at org.apache.solr.handler.loader.XMLLoader.load(XMLLoader.java:157)
+	at org.apache.solr.handler.UpdateRequestHandler$1.load(UpdateRequestHandler.java:92)
+	at org.apache.solr.handler.ContentStreamHandlerBase.handleRequestBody(ContentStreamHandlerBase.java:74)
+	at org.apache.solr.handler.RequestHandlerBase.handleRequest(RequestHandlerBase.java:129)
+	at org.apache.solr.core.SolrCore.execute(SolrCore.java:1699)
+	at org.apache.solr.servlet.SolrDispatchFilter.execute(SolrDispatchFilter.java:455)
+	at org.apache.solr.servlet.SolrDispatchFilter.doFilter(SolrDispatchFilter.java:276)
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212)
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399)
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216)
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766)
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450)
+	at org.mortbay.jetty.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:230)
+	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
+	at org.mortbay.jetty.Server.handle(Server.java:326)
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
+	at org.mortbay.jetty.HttpConnection$RequestHandler.content(HttpConnection.java:945)
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:756)
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:218)
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
+	at org.mortbay.jetty.bio.SocketConnector$Connection.run(SocketConnector.java:228)
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
+
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:40:15 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@74ac576f main
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:40:15 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@74ac576f main{StandardDirectoryReader(segments_1la:7599:nrt)}
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {deleteByQuery=*:* (-1479707685255380992),commit=} 0 2
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: start commit{flags=0,_version_=0,optimize=false,openSearcher=true,waitSearcher=true,expungeDeletes=false,softCommit=false}
+Sep 19, 2014 1:40:15 PM org.apache.solr.core.SolrDeletionPolicy onCommit
+INFO: SolrDeletionPolicy.onCommit: commits:num=2
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1la,generation=2062,filenames=[segments_1la]
+	commit{dir=/Users/peter/Sites/development/dor-fetcher-service/jetty/solr/dev/data/index,segFN=segments_1lb,generation=2063,filenames=[_1m6_Lucene40_0.tim, _1m6_nrm.cfs, _1m6_nrm.cfe, _1m6.fnm, _1m6.si, _1m6.fdx, _1m6_Lucene40_0.tip, segments_1lb, _1m6_Lucene40_0.frq, _1m6_Lucene40_0.prx, _1m6.fdt]
+Sep 19, 2014 1:40:15 PM org.apache.solr.core.SolrDeletionPolicy updateCommits
+INFO: newest commit = 2063
+Sep 19, 2014 1:40:15 PM org.apache.solr.search.SolrIndexSearcher <init>
+INFO: Opening Searcher@28bd36fa main
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.DirectUpdateHandler2 commit
+INFO: end_commit_flush
+Sep 19, 2014 1:40:15 PM org.apache.solr.core.SolrCore registerSearcher
+INFO: [dev] Registered new searcher Searcher@28bd36fa main{StandardDirectoryReader(segments_1lb:7601:nrt _1m6(4.0.0.2):C1)}
+Sep 19, 2014 1:40:15 PM org.apache.solr.update.processor.LogUpdateProcessor finish
+INFO: [dev] webapp=/solr path=/update params={commit=true} {add=[bb004bn8654 (1479707685267963904)],commit=} 0 545

@@ -7,6 +7,8 @@
 # Ignore bundler config.
 /.bundle
 
+/db/*.sqlite3
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
@@ -14,11 +16,24 @@
 # Ignore rvm files
 .rvmrc
 
-
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
 
+# Ignore jetty changes
+/jetty/solr/dev/data/
+/jetty/solr/test/data/
+jetty/solr/dev/conf/schema.xml
+jetty/solr/dev/conf/solrconfig.xml
+jetty/solr/test/conf/schema.xml
+jetty/solr/test/conf/solrconfig.xml
+
 #Ignore Configuration Files 
 config/database.yml
 config/solr.yml
+
+/public/*.gz
+/public/sitemap.xml
+
+nohup.out
+REVISION

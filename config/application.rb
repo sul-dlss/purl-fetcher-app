@@ -19,5 +19,14 @@ module DorFetcherService
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    
+    load_yaml_config = lambda { |yaml_file|
+      full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
+      yaml      = YAML.load(File.read full_path)
+      return yaml[Rails.env]
+    }
+    
+    config.solr_url=load_yaml_config.call('solr.yml')['url']
+    
   end
 end
