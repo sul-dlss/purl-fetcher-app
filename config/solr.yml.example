@@ -10,6 +10,7 @@
 # jetty_path is only required for rake tasks that need to know
 # how to start up solr, generally for automated testing. 
 
+#Note:  If you are tunnelling you make need to change portname and point to a different core
 development: &dev
   jetty_path: './jetty'
   url: http://localhost:8983/solr/dev
