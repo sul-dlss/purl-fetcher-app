@@ -1,28 +1,43 @@
-== README
+= dor-fetcher-service
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A web service app that queries the DOR solr service to return info needed for indexing or other purposes.
 
-Things you may want to cover:
+== Dependencies on non-public code
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* fill me in
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== Setting up your environment
+
+  rvm install 2.1.2 # or use your favorite ruby manager
+  
+  git clone https://github.com/sul-dlss/dor-fetcher-service.git
+  
+  cd dor-fetcher-service
+  
+  rvm use 2.1.2 # or switch as needed
+
+  bundle install
+  rake dorfetcher:config
+
+  # Edit config/*.yml files, adding passwords, etc.
+
+  rake jetty:start
+
+  rake db:migrate
+  rake db:test:prepare
+  rake db:migrate RAILS_ENV=test
+
+  rake dorfetcher:refreshfix
+  rake dorfetcher:refreshfix RAILS_ENV=test
+
+
+== Running the application
+
+
+  rake jetty:start
+  rails server
+  
+== Running tests
+
+  bundle exec rake local_ci
