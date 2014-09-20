@@ -28,5 +28,10 @@ module DorFetcherService
     
     config.solr_url=load_yaml_config.call('solr.yml')['url']
     
+    
   end
 end
+
+#Convienence constant for SOLR_URL and SOLR
+Solr_URL = DorFetcherService::Application.config.solr_url
+Solr= RSolr.connect :url => Solr_URL
