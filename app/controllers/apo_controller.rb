@@ -1,5 +1,3 @@
-require 'rsolr'
-
 class ApoController < ApplicationController
   
   type_field = "active_fedora_model_s"
