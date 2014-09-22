@@ -1,0 +1,12 @@
+development: &dev
+  apo_field: "is_governed_by_s"
+  collection_field: "is_member_of_collection_s"
+  tag_field: "tag_facet"
+  id_field: "id"
+  collection_type: "Dor::Collection"
+  apo_type: "Dor::AdminPolicyObject"
+  fedora_type_field: "active_fedora_model_s"
+  fedora_prefix: "info:fedora/"
+  druid_prefix: "druid:"
+  last_changed: "published_dt"
+  
