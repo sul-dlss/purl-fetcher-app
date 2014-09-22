@@ -27,9 +27,11 @@ module DorFetcherService
     }
     
     config.solr_url=load_yaml_config.call('solr.yml')['url']
-    
+
     
   end
+  
+  
 end
 
 #Convienence constant for SOLR_URL and SOLR
