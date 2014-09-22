@@ -32,6 +32,9 @@ namespace :dorfetcher do
   
   desc "Copy configuration files"
   task :config do
+    Rake::Task["jetty:stop"].invoke
+    system('rm -fr jetty/solr/dev/data/index')
+    system('rm -fr jetty/solr/test/data/index')
     cp("#{Rails.root}/config/database.yml.example", "#{Rails.root}/config/database.yml") unless File.exists?("#{Rails.root}/config/database.yml")
     cp("#{Rails.root}/config/solr.yml.example", "#{Rails.root}/config/solr.yml") unless File.exists?("#{Rails.root}/config/solr.yml")
     cp("#{Rails.root}/config/schema.xml", "#{Rails.root}/jetty/solr/dev/conf/schema.xml")
