@@ -38,8 +38,7 @@ module Fetcher
   
   def get_times(params)
     #TODO: Check params for ISO 8601 Standard
-    start_time = params[:first_modified] || Time.at(0).utc.iso8601
-    end_time = params[:last_modified] || Time.now.utc.iso8601
+    start_time = params[:first_modified] || Time.at(0).utc.iso860 so8601
     return {:first => start_time, :last => end_time}
     
   end

@@ -12,4 +12,8 @@ class TagController < ApplicationController
 
   end
   
+  def index
+    #TODO: Return a list of all tag_facet entries or their counts
+  end
+  
 end
