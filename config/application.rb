@@ -52,7 +52,7 @@ Type_Field = DorFetcherService::Application.config.solr_terms['fedora_type_field
 Last_Changed_Field = DorFetcherService::Application.config.solr_terms['last_changed']
 Fedora_Prefix = DorFetcherService::Application.config.solr_terms['fedora_prefix']
 Druid_Prefix = DorFetcherService::Application.config.solr_terms['druid_prefix']
-Fedora_Types = {:collection => DorFetcherService::Application.config.solr_terms['collection_type'], :apo => DorFetcherService::Application.config.solr_terms['apo_type']}
+Fedora_Types = {:collection => DorFetcherService::Application.config.solr_terms['collection_type'], :apo => DorFetcherService::Application.config.solr_terms['apo_type'], :item=>DorFetcherService::Application.config.solr_terms['item _type']}
 Controller_Types = {:collection => DorFetcherService::Application.config.solr_terms['collection_field'], :apo=> DorFetcherService::Application.config.solr_terms['apo_field'], :tag=> DorFetcherService::Application.config.solr_terms['tag_field']}
 
 

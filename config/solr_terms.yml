@@ -9,6 +9,7 @@ development: &dev
   fedora_prefix: "info:fedora/"
   druid_prefix: "druid:"
   last_changed: "published_dt"
+  item_type: "Dor::Item"
 test: &dev
 staging: &dev
 production: &dev
