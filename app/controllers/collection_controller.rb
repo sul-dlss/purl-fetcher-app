@@ -1,8 +1,6 @@
 #include Fetcher
 
 class CollectionController < ApplicationController
-  type_field = "active_fedora_model_s"
-  id = "id"
   def index
     #TODO:  Allow for param to just get count
     #target_type = "Dor::Collection"

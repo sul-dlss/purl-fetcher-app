@@ -33,7 +33,7 @@ module Fetcher
   
   def parse_druid(druid)
     #If we have druid:foo, we want [1], if we just have foo we want [0]
-    cleaned_druid = druid.split(":")[1] || druid.split(":")[0]
+    cleaned_druid = druid.split(":")[1] || druid.split(":")[0] #We could REGEX to ensure this is a valid druid
   end
   
   def get_times(params)
