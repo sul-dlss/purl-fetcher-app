@@ -29,7 +29,7 @@ class ApoController < ApplicationController
   
   druid_for_apo = "info:fedora/" + :druid
   apo_field = "is_governed_by_s"
-  time_field = "obj_last_mod_date_dt"
+  time_field = "published_dt"
   
    
   response = Solr.get 'select', :params => {:q => "(#{apo_field}:\"#{druid_for_apo}\" OR #{id}:\"#{:druid}\") AND #{time_field}:[\"#{start_time}\" TO \"#{end_time}\"]", :wt => :json, :fl => "#{id} AND #{time_field} AND #{type_field}"}
