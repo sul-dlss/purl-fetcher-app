@@ -18,6 +18,7 @@ A web service app that queries the DOR solr service to return info needed for in
   rvm use 2.1.2 # or switch as needed
 
   bundle install
+  cp config/solr.yml.example config/solr.yml
   rake dorfetcher:config
 
   # Edit config/*.yml files, adding passwords, etc.
