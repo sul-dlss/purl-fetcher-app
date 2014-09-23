@@ -45,11 +45,11 @@ namespace :dorfetcher do
   
   desc "Delete and index all fixtures in solr"
   task :refresh_fixtures do
-    unless Rails.env.production? || Rails.env.staging?
+    unless Rails.env.production? || Rails.env.staging? || DorFetcherService::Application.config.solr_url.include?('8080')
       Rake::Task["dorfetcher:delete_records_in_solr"].invoke
       Rake::Task["dorfetcher:index_fixtures"].invoke
     else
-      puts "Refusing to delete since we're running under the #{Rails.env} environment. You know, for safety."      
+      puts "Refusing to delete since we're running under the #{Rails.env} environment or port 8080. You know, for safety."      
     end
   end
   
@@ -70,11 +70,11 @@ namespace :dorfetcher do
 
   desc "Delete all records in solr"
   task :delete_records_in_solr do
-   unless Rails.env.production? || Rails.env.staging?
+    unless Rails.env.production? || Rails.env.staging? || DorFetcherService::Application.config.solr_url.include?('8080')
       puts "Deleting all solr documents from #{DorFetcherService::Application.config.solr_url}"
       RestClient.post "#{DorFetcherService::Application.config.solr_url}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
-      puts "Refusing to delete since we're running under the #{Rails.env} environment. You know, for safety."
+      puts "Refusing to delete since we're running under the #{Rails.env} environment or port 8080. You know, for safety."
     end
   end
 end
