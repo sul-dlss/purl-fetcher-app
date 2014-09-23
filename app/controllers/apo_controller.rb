@@ -16,7 +16,7 @@ class ApoController < ApplicationController
   end
   
   def show
-  #/apo/:druid?first_modified=TIME UTC&lastmodified=TIME_UTC
+  #/apo/:druid?first_modified=TIME UTC&last_modified=TIME_UTC
   #TODO: Option for count
   #TODO: Option for recursion 
   

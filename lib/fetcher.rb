@@ -31,16 +31,24 @@ module Fetcher
     return Druid_Prefix + parse_druid(druid)
   end
   
+  # given a druid in any format (e.g. oo000oo0001 or druid:oo00oo0001, returns only the numberical part, striping the "druid:" prefix -- if invalid druid passed, will raise an exception)
   def parse_druid(druid)
-    #If we have druid:foo, we want [1], if we just have foo we want [0]
-    cleaned_druid = druid.split(":")[1] || druid.split(":")[0] #We could REGEX to ensure this is a valid druid
+    matches = druid.match(/[a-zA-Z]{2}\d{3}[a-zA-Z]{2}\d{4}/)
+    matches.nil? ? raise("invalid druid") : matches[0]
   end
   
   def get_times(params)
-    #TODO: Check params for ISO 8601 Standard
-    start_time = params[:first_modified] || Time.at(0).utc.iso860 so8601
+    first_modified = params[:first_modified]
+    last_modified = params[:last_modified] 
+    begin 
+      first_modified_time=Time.parse(first_modified)
+      last_modified_time=Time.parse(last_modified)
+    rescue
+      raise "invalid time paramaters"
+    end
+    start_time = first_modified_time.utc.iso8601 || Time.at(0).utc.iso8601
+    end_time = last_modified_time.utc.iso8601 || Time.now.utc.iso8601
     return {:first => start_time, :last => end_time}
-    
   end
   
 end

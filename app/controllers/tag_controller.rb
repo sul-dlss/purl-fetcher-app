@@ -1,7 +1,7 @@
 class TagController < ApplicationController
   #include Fetcher
   def show
-  #/tag/:tag?first_modified=TIME UTC?lastmodified=TIME_UTC
+  #/tag/:tag?first_modified=TIME UTC?last_modified=TIME_UTC
   #TODO: Allow count option
   
   times = get_times(params)   

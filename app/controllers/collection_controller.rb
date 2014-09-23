@@ -11,7 +11,7 @@ class CollectionController < ApplicationController
   end
   
   def show
-  #/collection/:druid?first_modified=TIME UTC?lastmodified=TIME_UTC
+  #/collection/:druid?first_modified=TIME UTC?last_modified=TIME_UTC
   #TODO:  Allow for param to just get count
   
   return find_all_under(params, :collection)

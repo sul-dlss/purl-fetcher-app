@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe("Queries") do
+describe("Queries",:type=>:request,:integration=>true)  do
   
   before :each do
     
