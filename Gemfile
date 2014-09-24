@@ -28,6 +28,11 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
+	gem 'capistrano', "~> 3.0"
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'lyberteam-capistrano-devel', '~> 3.0'
+  gem 'awesome_print'
 end
 
 group :staging, :production do
