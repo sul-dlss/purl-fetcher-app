@@ -1,15 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :rvm_ruby_version, '2.1.2'      # Defaults to: 'default'
 set :application, 'dor-fetcher-service'
-set :repo_url, 'git@github.com:sul-dlss/dor-fetcher-service.git'
-
-set :ssh_options, {
-  keys: [Capistrano::OneTimeKey.temporary_ssh_private_key_path],
-  forward_agent: true,
-  auth_methods: %w(publickey password)
-}
+set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
 
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -30,13 +23,36 @@ set :deploy_to, '/home/lyberadmin/dor-fetcher-service'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{}
+set :linked_files, %w{config/database.yml config/solr.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{log config/certs config/environments tmp vendor/bundle config/solr.yml config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+namespace :deploy do
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+  end
+
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
+end

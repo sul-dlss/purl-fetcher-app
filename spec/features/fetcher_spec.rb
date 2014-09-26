@@ -6,6 +6,14 @@ describe("Fetcher lib")  do
     @fetcher=FetcherTester.new
   end
   
+  it "should use transactions" do
+    puts Users.count
+    u=Users.new
+    u.name='Cowboy'
+    u.save
+    puts Users.count
+  end
+  
   it "should raise an exception for either starting of ending date in an invalid format" do
     expect{@fetcher.get_times({first_modified:'01/01/2010 10:00:00am',last_modified:'ness'})}.to raise_error("invalid time paramaters")
     expect{@fetcher.get_times({first_modified:'bogus',last_modified:'01/01/2010 10:00:00am'})}.to raise_error("invalid time paramaters")
