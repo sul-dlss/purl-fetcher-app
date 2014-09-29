@@ -25,13 +25,18 @@ module DorFetcherService
     
     load_yaml_config = lambda { |yaml_file|
       full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
-      yaml      = YAML.load(File.read full_path)
+      yaml_erb  = ERB.new(IO.read(full_path)).result(binding)
+      yaml      = YAML.load(yaml_erb)
       return yaml[Rails.env]
     }
     
-    config.solr_url=load_yaml_config.call('solr.yml')['url']
-    config.solr_terms = load_yaml_config.call('solr_terms.yml')
-    
+    begin
+      config.solr_url=load_yaml_config.call('solr.yml')['url']
+      config.solr_terms = load_yaml_config.call('solr_terms.yml')
+    rescue
+      puts 'WARNING: config/solr.yml config not found'
+    end
+  
   end
   
 end
@@ -39,19 +44,23 @@ end
 Conf = DorFetcherService::Application.config
 
 #Convienence constant for SOLR_URL and SOLR
-Solr_URL = Conf.solr_url
-Solr= RSolr.connect :url => Solr_URL
-Solr_terms = Conf.solr_terms
+begin
+  Solr_URL = Conf.solr_url
+  Solr= RSolr.connect :url => Solr_URL
+  Solr_terms = Conf.solr_terms
 
-#Convience constants for Solr Fields
-#solr_field_yaml = DorFetcherService::Application.config.solr_terms
-ID_Field = Solr_terms['id_field']
-Type_Field = Solr_terms['fedora_type_field'] 
-Last_Changed_Field = Solr_terms['last_changed']
-Fedora_Prefix = Solr_terms['fedora_prefix']
-Druid_Prefix = Solr_terms['druid_prefix']
-Fedora_Types = {:collection =>Solr_terms['collection_type'], :apo =>Solr_terms['apo_type'], :item=>Solr_terms['item _type']}
-Controller_Types = {:collection => Solr_terms['collection_field'], :apo=>Solr_terms['apo_field'], :tag=> Solr_terms['tag_field']}
+  #Convience constants for Solr Fields
+  #solr_field_yaml = DorFetcherService::Application.config.solr_terms
+  ID_Field = Solr_terms['id_field']
+  Type_Field = Solr_terms['fedora_type_field'] 
+  Last_Changed_Field = Solr_terms['last_changed']
+  Fedora_Prefix = Solr_terms['fedora_prefix']
+  Druid_Prefix = Solr_terms['druid_prefix']
+  Fedora_Types = {:collection =>Solr_terms['collection_type'], :apo =>Solr_terms['apo_type'], :item=>Solr_terms['item _type']}
+  Controller_Types = {:collection => Solr_terms['collection_field'], :apo=>Solr_terms['apo_field'], :tag=> Solr_terms['tag_field']}
+rescue
+  puts 'WARNING: configuration not complete'
+end
 
 
 #solr_fields = {:apo_field => apo_field, :collection_field => collection_field}
