@@ -4,7 +4,9 @@ class TagController < ApplicationController
   #/tag/:tag?first_modified=TIME UTC?last_modified=TIME_UTC
   #TODO: Allow count option
   
-    find_by_tag(params)
+    result=find_by_tag(params)
+    render_result(result)
+    
   end
   
   def index

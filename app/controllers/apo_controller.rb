@@ -11,8 +11,9 @@ class ApoController < ApplicationController
     #target_type = "Dor::AdminPolicyObject"
     #response = Solr.get 'select', :params => {:q => "(#{type_field}):\"#{target_type}\")", :wt => :json, :fl ="#{id}" }
     
-    return find_all_fedora_type(:apo)
-  
+    result=find_all_fedora_type(:apo)
+    render_result(result)
+    
   end
   
   def show
@@ -23,8 +24,8 @@ class ApoController < ApplicationController
   #Example for African Music APO:
   #Solr.get 'select', :params => {:q => '(is_governed_by_s:"info:fedora/druid:gn965yg6021" OR id:"druid:gn965yg6021") AND obj_last_mod_date_dt:["1970-08-19T23:00:09Z" TO "2014-09-19T23:00:09Z"]', :wt=> :json, :fl => 'id AND obj_last_mod_date_dt AND active_fedora_model_s'}
   
-  return find_all_under(params, :apo)
-  
+  result=find_all_under(params, :apo)
+  render_result(result)
 
   end
   

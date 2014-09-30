@@ -3,8 +3,8 @@ module Fetcher
     #ftype should be :collection or :apo (or other symbol if we added more since this was updated)
 
     params={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\"", :wt => :json, :fl =>"#{ID_Field}"}
-    params.merge!(:rows => 0) if count_only
-
+    get_rows(params,count_only)
+    
     response = Solr.get 'select', :params => params
     #TODO:  Call JSON Formatter
     
@@ -21,7 +21,7 @@ module Fetcher
       :wt => :json,
       :fl => "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field}"
       }
-    params.merge!(:rows => 0) if count_only
+      get_rows(params,count_only)
 
     response = Solr.get 'select', :params => params
   
@@ -40,7 +40,8 @@ module Fetcher
       :fl => "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field}"
       }
 
-    params.merge!(:rows => 0) if count_only
+      get_rows(params,count_only)
+    
     response = Solr.get 'select', :params => params
 
     #TODO: Format return response into a nested list and return it
@@ -76,6 +77,11 @@ module Fetcher
     end_time = last_modified_time.utc.iso8601 
     raise "start time is before end time" if start_time >= end_time
     return {:first => start_time, :last => end_time}
+  end
+  
+  def get_rows(params,count_only)
+    params.merge!(:rows => 0) if count_only
+    params.merge!(:rows => 100000000) unless params.has_key?(:rows)
   end
   
 end
