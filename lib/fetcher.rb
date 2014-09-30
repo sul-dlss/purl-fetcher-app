@@ -62,17 +62,19 @@ module Fetcher
     matches.nil? ? raise("invalid druid") : matches[0]
   end
   
-  def get_times(params)
-    first_modified = params[:first_modified]
-    last_modified = params[:last_modified] 
+  def get_times(p = {})
+    params = p || {}
+    first_modified = params[:first_modified] || Time.at(0).utc.iso8601
+    last_modified = params[:last_modified] || Date.tomorrow.to_time.utc.iso8601
     begin 
       first_modified_time=Time.parse(first_modified)
       last_modified_time=Time.parse(last_modified)
     rescue
       raise "invalid time paramaters"
     end
-    start_time = first_modified_time.utc.iso8601 || Time.at(0).utc.iso8601
-    end_time = last_modified_time.utc.iso8601 || Time.now.utc.iso8601
+    start_time = first_modified_time.utc.iso8601 
+    end_time = last_modified_time.utc.iso8601 
+    raise "start time is before end time" if start_time >= end_time
     return {:first => start_time, :last => end_time}
   end
   
