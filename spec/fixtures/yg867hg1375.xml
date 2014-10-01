@@ -1,0 +1,795 @@
+<doc>
+    <str name="id">druid:yg867hg1375</str>
+    <arr name="system_create_dt">
+      <date>2013-11-11T23:32:43Z</date>
+    </arr>
+    <arr name="date">
+      <date>2013-11-11T23:32:43Z</date>
+      <date>2013-11-11T23:34:39Z</date>
+      <date>2013-11-11T23:32:43.234Z</date>
+      <date>2013-11-11T23:34:39.986Z</date>
+      <date>2013-11-11T15:32:42Z</date>
+      <date>2013-11-11T15:32:51Z</date>
+      <date>2013-11-11T15:32:47Z</date>
+      <date>2013-11-11T15:32:46Z</date>
+      <date>2013-11-11T15:33:17Z</date>
+      <date>2013-11-11T15:34:14Z</date>
+      <date>2013-11-11T15:34:29Z</date>
+      <date>2013-11-11T15:34:33Z</date>
+      <date>2013-11-11T15:34:40Z</date>
+      <date>2013-11-11T15:36:02Z</date>
+      <date>2013-11-11T15:38:28Z</date>
+      <date>2013-11-11T15:38:47Z</date>
+      <date>2013-11-12T08:21:05Z</date>
+      <date>2013-11-11T15:36:02Z</date>
+      <date>2013-11-11T15:38:21Z</date>
+      <date>2013-11-11T15:38:25Z</date>
+      <date>2013-11-11T15:38:25Z</date>
+      <date>2013-11-11T15:38:26Z</date>
+      <date>2013-11-11T15:38:26Z</date>
+      <date>2013-11-11T15:38:28Z</date>
+      <date>2014-09-27T18:27:19Z</date>
+      <date>2013-11-11T23:32:42Z</date>
+      <date>2013-11-11T23:32:42Z</date>
+      <date>2013-11-11T23:32:42Z</date>
+      <date>2013-11-11T23:32:51Z</date>
+      <date>2013-11-11T23:32:51Z</date>
+      <date>2013-11-11T23:32:51Z</date>
+      <date>2013-11-11T23:34:33Z</date>
+      <date>2013-11-11T23:34:33Z</date>
+      <date>2013-11-11T23:34:33Z</date>
+      <date>2013-11-11T23:38:28Z</date>
+      <date>2013-11-11T23:38:28Z</date>
+      <date>2013-11-11T23:38:28Z</date>
+      <date>2013-11-11T23:38:47Z</date>
+      <date>2013-11-11T23:38:47Z</date>
+      <date>2013-11-11T23:38:47Z</date>
+    </arr>
+    <arr name="system_modified_dt">
+      <date>2013-11-11T23:34:39Z</date>
+    </arr>
+    <arr name="active_fedora_model_s">
+      <str>Dor::Collection</str>
+    </arr>
+    <arr name="object_profile_display">
+      <str>{"datastreams":{"DC":{"dsLabel":"Dublin Core Record for this object","dsVersionID":"DC1.0","dsCreateDate":"2013-11-11T23:32:43Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":"http://www.openarchives.org/OAI/2.0/oai_dc/","dsControlGroup":"X","dsSize":412,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+DC+DC1.0","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"RELS-EXT":{"dsLabel":"Fedora Object-to-Object Relationship Metadata","dsVersionID":"RELS-EXT.0","dsCreateDate":"2013-11-11T23:32:43Z","dsState":"A","dsMIME":"application/rdf+xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":464,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+RELS-EXT+RELS-EXT.0","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"identityMetadata":{"dsLabel":"Identity Metadata","dsVersionID":"identityMetadata.1","dsCreateDate":"2013-11-11T23:34:12Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":424,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+identityMetadata+identityMetadata.1","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"events":{"dsLabel":"Events","dsVersionID":"events.0","dsCreateDate":"2013-11-11T23:34:12Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":146,"dsVersionable":false,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+events+events.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"provenanceMetadata":{"dsLabel":"Provenance Metadata","dsVersionID":"provenanceMetadata.0","dsCreateDate":"2013-11-11T23:34:39Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":265,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+provenanceMetadata+provenanceMetadata.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"contentMetadata":{},"workflows":{"dsLabel":"Workflows","dsVersionID":"workflows.0","dsCreateDate":"2013-11-11T23:32:43Z","dsState":"A","dsMIME":"application/xml","dsFormatURI":null,"dsControlGroup":"E","dsSize":0,"dsVersionable":true,"dsInfoType":null,"dsLocation":"https://lyberservices-prod.stanford.edu/workflow/dor/objects/druid:yg867hg1375/workflows","dsLocationType":"URL","dsChecksumType":"DISABLED","dsChecksum":"none"},"descMetadata":{"dsLabel":"Descriptive Metadata","dsVersionID":"descMetadata.0","dsCreateDate":"2013-11-11T23:32:51Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"M","dsSize":2196,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+descMetadata+descMetadata.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"rightsMetadata":{"dsLabel":"Rights Metadata","dsVersionID":"rightsMetadata.0","dsCreateDate":"2013-11-11T23:32:44Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":414,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+rightsMetadata+rightsMetadata.0","dsLocationType":"URL","dsChecksumType":"DISABLED","dsChecksum":"none"},"versionMetadata":{"dsLabel":"Version Metadata","dsVersionID":"versionMetadata.0","dsCreateDate":"2013-11-11T23:32:44Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":136,"dsVersionable":false,"dsInfoType":null,"dsLocation":"druid:yg867hg1375+versionMetadata+versionMetadata.0","dsLocationType":"URL","dsChecksumType":"DISABLED","dsChecksum":"none"}},"objLabel":"Francis E. Stafford photographs, 1909-1933","objOwnerId":"argo.stanford.edu","objModels":["info:fedora/fedora-system:FedoraObject-3.0","info:fedora/afmodel:Dor_Collection"],"objCreateDate":"2013-11-11T23:32:43Z","objLastModDate":"2013-11-11T23:34:39Z","objDissIndexViewURL":"https://localhost:443/fedora/objects/druid%3Ayg867hg1375/methods/fedora-system%3A3/viewMethodIndex","objItemIndexViewURL":"https://localhost:443/fedora/objects/druid%3Ayg867hg1375/methods/fedora-system%3A3/viewItemIndex","objState":"A"}</str>
+    </arr>
+    <arr name="dc_title_t">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_title_display">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_0_title_t">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_0_title_display">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_0_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="dc_identifier_t">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="dc_identifier_display">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="dc_0_identifier_t">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="dc_0_identifier_display">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="title_t">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="title_display">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="identifier_t">
+      <str>druid:yg867hg1375</str>
+      <str>catkey:9615156</str>
+      <str>uuid:8f1feb20-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="identifier_display">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="identityMetadata_objectId_t">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="identityMetadata_0_objectId_t">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="identityMetadata_objectType_t">
+      <str>collection</str>
+    </arr>
+    <arr name="identityMetadata_objectType_facet">
+      <str>collection</str>
+    </arr>
+    <arr name="identityMetadata_0_objectType_t">
+      <str>collection</str>
+    </arr>
+    <arr name="identityMetadata_0_objectType_facet">
+      <str>collection</str>
+    </arr>
+    <arr name="identityMetadata_tag_t">
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="identityMetadata_tag_facet">
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="identityMetadata_0_tag_t">
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="identityMetadata_0_tag_facet">
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="identityMetadata_objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_0_objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_0_objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="objectId_t">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="objectType_t">
+      <str>collection</str>
+    </arr>
+    <arr name="objectType_facet">
+      <str>collection</str>
+    </arr>
+    <arr name="tag_t">
+      <str>Remediated By : 3.25.3</str>
+      <str>Remediated By</str>
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="tag_facet">
+      <str>Remediated By : 3.25.3</str>
+      <str>Remediated By</str>
+      <str>Remediated By : 3.25.3</str>
+    </arr>
+    <arr name="objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="obj_label_t">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="obj_owner_id_t">
+      <str>argo.stanford.edu</str>
+    </arr>
+    <arr name="obj_models_t">
+      <str>info:fedora/fedora-system:FedoraObject-3.0 info:fedora/afmodel:Dor_Collection</str>
+    </arr>
+    <arr name="obj_create_date_dt">
+      <date>2013-11-11T23:32:43.234Z</date>
+    </arr>
+    <arr name="obj_last_mod_date_dt">
+      <date>2013-11-11T23:34:39.986Z</date>
+    </arr>
+    <arr name="obj_diss_index_view_url_t">
+      <str>https://localhost:443/fedora/objects/druid%3Ayg867hg1375/methods/fedora-system%3A3/viewMethodIndex</str>
+    </arr>
+    <arr name="obj_item_index_view_url_t">
+      <str>https://localhost:443/fedora/objects/druid%3Ayg867hg1375/methods/fedora-system%3A3/viewItemIndex</str>
+    </arr>
+    <arr name="obj_state_t">
+      <str>A</str>
+    </arr>
+    <arr name="dor_id_t">
+      <str>9615156</str>
+      <str>8f1feb20-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="catkey_id_t">
+      <str>9615156</str>
+    </arr>
+    <arr name="uuid_id_t">
+      <str>8f1feb20-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="remediated_by_tag_t">
+      <str>3.25.3</str>
+    </arr>
+    <arr name="remediated_by_tag_facet">
+      <str>3.25.3</str>
+    </arr>
+    <arr name="events_event_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="events_0_event_0_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="events_event_type_display">
+      <str>remediation</str>
+    </arr>
+    <arr name="events_0_event_0_type_display">
+      <str>remediation</str>
+    </arr>
+    <arr name="events_event_when_display">
+      <str>2013-11-11T15:34:11-08:00</str>
+    </arr>
+    <arr name="events_0_event_0_when_display">
+      <str>2013-11-11T15:34:11-08:00</str>
+    </arr>
+    <arr name="events_event_message_display">
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="events_0_event_0_message_display">
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="event_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="event_0_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="event_type_display">
+      <str>remediation</str>
+    </arr>
+    <arr name="event_0_type_display">
+      <str>remediation</str>
+    </arr>
+    <arr name="event_when_display">
+      <str>2013-11-11T15:34:11-08:00</str>
+    </arr>
+    <arr name="event_0_when_display">
+      <str>2013-11-11T15:34:11-08:00</str>
+    </arr>
+    <arr name="event_message_display">
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="event_0_message_display">
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="wf_facet">
+      <str>accessionWF</str>
+      <str>disseminationWF</str>
+      <str>sdrIngestWF</str>
+    </arr>
+    <arr name="wf_wps_facet">
+      <str>accessionWF</str>
+      <str>accessionWF:start-accession</str>
+      <str>accessionWF:start-accession:completed</str>
+      <str>accessionWF:descriptive-metadata</str>
+      <str>accessionWF:descriptive-metadata:completed</str>
+      <str>accessionWF:rights-metadata</str>
+      <str>accessionWF:rights-metadata:completed</str>
+      <str>accessionWF:content-metadata</str>
+      <str>accessionWF:content-metadata:completed</str>
+      <str>accessionWF:technical-metadata</str>
+      <str>accessionWF:technical-metadata:completed</str>
+      <str>accessionWF:remediate-object</str>
+      <str>accessionWF:remediate-object:completed</str>
+      <str>accessionWF:shelve</str>
+      <str>accessionWF:shelve:completed</str>
+      <str>accessionWF:publish</str>
+      <str>accessionWF:publish:completed</str>
+      <str>accessionWF:provenance-metadata</str>
+      <str>accessionWF:provenance-metadata:completed</str>
+      <str>accessionWF:sdr-ingest-transfer</str>
+      <str>accessionWF:sdr-ingest-transfer:completed</str>
+      <str>accessionWF:sdr-ingest-received</str>
+      <str>accessionWF:sdr-ingest-received:completed</str>
+      <str>accessionWF:end-accession</str>
+      <str>accessionWF:end-accession:completed</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF:cleanup</str>
+      <str>disseminationWF:cleanup:completed</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF:start-ingest</str>
+      <str>sdrIngestWF:start-ingest:completed</str>
+      <str>sdrIngestWF:register-sdr</str>
+      <str>sdrIngestWF:register-sdr:completed</str>
+      <str>sdrIngestWF:transfer-object</str>
+      <str>sdrIngestWF:transfer-object:completed</str>
+      <str>sdrIngestWF:validate-bag</str>
+      <str>sdrIngestWF:validate-bag:completed</str>
+      <str>sdrIngestWF:verify-agreement</str>
+      <str>sdrIngestWF:verify-agreement:completed</str>
+      <str>sdrIngestWF:complete-deposit</str>
+      <str>sdrIngestWF:complete-deposit:completed</str>
+      <str>sdrIngestWF:update-catalog</str>
+      <str>sdrIngestWF:update-catalog:skipped</str>
+      <str>sdrIngestWF:create-replica</str>
+      <str>sdrIngestWF:create-replica:skipped</str>
+      <str>sdrIngestWF:ingest-cleanup</str>
+      <str>sdrIngestWF:ingest-cleanup:completed</str>
+    </arr>
+    <arr name="wf_wsp_facet">
+      <str>accessionWF</str>
+      <str>accessionWF:completed</str>
+      <str>accessionWF:completed:start-accession</str>
+      <str>accessionWF:completed:descriptive-metadata</str>
+      <str>accessionWF:completed:rights-metadata</str>
+      <str>accessionWF:completed:content-metadata</str>
+      <str>accessionWF:completed:technical-metadata</str>
+      <str>accessionWF:completed:remediate-object</str>
+      <str>accessionWF:completed:shelve</str>
+      <str>accessionWF:completed:publish</str>
+      <str>accessionWF:completed:provenance-metadata</str>
+      <str>accessionWF:completed:sdr-ingest-transfer</str>
+      <str>accessionWF:completed:sdr-ingest-received</str>
+      <str>accessionWF:completed:end-accession</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF:completed</str>
+      <str>disseminationWF:completed:cleanup</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF:completed</str>
+      <str>sdrIngestWF:completed:start-ingest</str>
+      <str>sdrIngestWF:completed:register-sdr</str>
+      <str>sdrIngestWF:completed:transfer-object</str>
+      <str>sdrIngestWF:completed:validate-bag</str>
+      <str>sdrIngestWF:completed:verify-agreement</str>
+      <str>sdrIngestWF:completed:complete-deposit</str>
+      <str>sdrIngestWF:skipped</str>
+      <str>sdrIngestWF:skipped:update-catalog</str>
+      <str>sdrIngestWF:skipped:create-replica</str>
+      <str>sdrIngestWF:completed:ingest-cleanup</str>
+    </arr>
+    <arr name="workflow_status_display">
+      <str>accessionWF|active|0|dor</str>
+      <str>disseminationWF|completed|0|dor</str>
+      <str>sdrIngestWF|active|0|sdr</str>
+    </arr>
+    <arr name="wf_accessionWF_start-accession_dt">
+      <date>2013-11-11T15:32:42Z</date>
+    </arr>
+    <arr name="wf_swp_facet">
+      <str>completed</str>
+      <str>completed:accessionWF</str>
+      <str>completed:accessionWF:start-accession</str>
+      <str>completed:accessionWF:descriptive-metadata</str>
+      <str>completed:accessionWF:rights-metadata</str>
+      <str>completed:accessionWF:content-metadata</str>
+      <str>completed:accessionWF:technical-metadata</str>
+      <str>completed:accessionWF:remediate-object</str>
+      <str>completed:accessionWF:shelve</str>
+      <str>completed:accessionWF:publish</str>
+      <str>completed:accessionWF:provenance-metadata</str>
+      <str>completed:accessionWF:sdr-ingest-transfer</str>
+      <str>completed:accessionWF:sdr-ingest-received</str>
+      <str>completed:accessionWF:end-accession</str>
+      <str>completed:disseminationWF</str>
+      <str>completed:disseminationWF:cleanup</str>
+      <str>completed:sdrIngestWF</str>
+      <str>completed:sdrIngestWF:start-ingest</str>
+      <str>completed:sdrIngestWF:register-sdr</str>
+      <str>completed:sdrIngestWF:transfer-object</str>
+      <str>completed:sdrIngestWF:validate-bag</str>
+      <str>completed:sdrIngestWF:verify-agreement</str>
+      <str>completed:sdrIngestWF:complete-deposit</str>
+      <str>skipped</str>
+      <str>skipped:sdrIngestWF</str>
+      <str>skipped:sdrIngestWF:update-catalog</str>
+      <str>skipped:sdrIngestWF:create-replica</str>
+      <str>completed:sdrIngestWF:ingest-cleanup</str>
+    </arr>
+    <arr name="wf_accessionWF_descriptive-metadata_dt">
+      <date>2013-11-11T15:32:51Z</date>
+    </arr>
+    <arr name="wf_accessionWF_rights-metadata_dt">
+      <date>2013-11-11T15:32:47Z</date>
+    </arr>
+    <arr name="wf_accessionWF_content-metadata_dt">
+      <date>2013-11-11T15:32:46Z</date>
+    </arr>
+    <arr name="wf_accessionWF_technical-metadata_dt">
+      <date>2013-11-11T15:33:17Z</date>
+    </arr>
+    <arr name="wf_accessionWF_remediate-object_dt">
+      <date>2013-11-11T15:34:14Z</date>
+    </arr>
+    <arr name="wf_accessionWF_shelve_dt">
+      <date>2013-11-11T15:34:29Z</date>
+    </arr>
+    <arr name="wf_accessionWF_publish_dt">
+      <date>2013-11-11T15:34:33Z</date>
+    </arr>
+    <arr name="wf_accessionWF_provenance-metadata_dt">
+      <date>2013-11-11T15:34:40Z</date>
+    </arr>
+    <arr name="wf_accessionWF_sdr-ingest-transfer_dt">
+      <date>2013-11-11T15:36:02Z</date>
+    </arr>
+    <arr name="wf_accessionWF_sdr-ingest-received_dt">
+      <date>2013-11-11T15:38:28Z</date>
+    </arr>
+    <arr name="wf_accessionWF_end-accession_dt">
+      <date>2013-11-11T15:38:47Z</date>
+    </arr>
+    <arr name="wf_disseminationWF_cleanup_dt">
+      <date>2013-11-12T08:21:05Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_start-ingest_dt">
+      <date>2013-11-11T15:36:02Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_register-sdr_dt">
+      <date>2013-11-11T15:38:21Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_transfer-object_dt">
+      <date>2013-11-11T15:38:25Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_validate-bag_dt">
+      <date>2013-11-11T15:38:25Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_verify-agreement_dt">
+      <date>2013-11-11T15:38:26Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_complete-deposit_dt">
+      <date>2013-11-11T15:38:26Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_ingest-cleanup_dt">
+      <date>2013-11-11T15:38:28Z</date>
+    </arr>
+    <arr name="mods_title_info_main_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="mods_0_title_info_0_main_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="mods_abstract_display">
+      <str>Photographs of scenes in China, mainly between 1909 and 1915.</str>
+    </arr>
+    <arr name="mods_0_abstract_display">
+      <str>Photographs of scenes in China, mainly between 1909 and 1915.</str>
+    </arr>
+    <arr name="title_info_main_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="title_info_0_main_title_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="extent_t">
+      <str>3 oversize boxes.</str>
+    </arr>
+    <arr name="abstract_display">
+      <str>Photographs of scenes in China, mainly between 1909 and 1915.</str>
+    </arr>
+    <arr name="is_governed_by_s">
+      <str>info:fedora/druid:vb546ms7107</str>
+    </arr>
+    <arr name="has_model_s">
+      <str>info:fedora/afmodel:Dor_Collection</str>
+    </arr>
+    <arr name="dor_services_version_facet">
+      <str>4.4.12</str>
+    </arr>
+    <arr name="indexed_at_dt">
+      <date>2014-09-27T18:27:19Z</date>
+    </arr>
+    <arr name="indexed_day_t">
+      <str>2014-09-27T07:00:00Z</str>
+    </arr>
+    <arr name="indexed_day_facet">
+      <str>2014-09-27T07:00:00Z</str>
+    </arr>
+    <arr name="ds_specs_display">
+      <str>DC|X|text/xml|0|412|Dublin Core Record for this object</str>
+      <str>RELS-EXT|X|application/rdf+xml|0|464|Fedora Object-to-Object Relationship Metadata</str>
+      <str>identityMetadata|X|text/xml|1|424|Identity Metadata</str>
+      <str>events|X|text/xml|0|146|Events</str>
+      <str>provenanceMetadata|X|text/xml|0|265|Provenance Metadata</str>
+      <str>workflows|E|application/xml|0|4377|Workflows</str>
+      <str>descMetadata|M|text/xml|0|2196|Descriptive Metadata</str>
+      <str>rightsMetadata|X|text/xml|0|414|Rights Metadata</str>
+      <str>versionMetadata|X|text/xml|0|136|Version Metadata</str>
+    </arr>
+    <arr name="apo_title_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="apo_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="versions_display">
+      <str>1;1.0.0;Initial Version</str>
+    </arr>
+    <arr name="lifecycle_t">
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+    </arr>
+    <arr name="lifecycle_facet">
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+    </arr>
+    <arr name="lifecycle_display">
+      <str>submitted:2013-11-11T23:32:42Z;1</str>
+      <str>described:2013-11-11T23:32:51Z;1</str>
+      <str>published:2013-11-11T23:34:33Z;1</str>
+      <str>deposited:2013-11-11T23:38:28Z;1</str>
+      <str>accessioned:2013-11-11T23:38:47Z;1</str>
+    </arr>
+    <arr name="submitted_day_t">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="submitted_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="submitted_dt">
+      <date>2013-11-11T23:32:42Z</date>
+    </arr>
+    <arr name="submitted_facet">
+      <str>2013-11-11T23:32:42Z</str>
+    </arr>
+    <arr name="submitted_earliest_dt">
+      <date>2013-11-11T23:32:42Z</date>
+    </arr>
+    <arr name="submitted_earliest_facet">
+      <str>2013-11-11T23:32:42Z</str>
+    </arr>
+    <arr name="submitted_latest_dt">
+      <date>2013-11-11T23:32:42Z</date>
+    </arr>
+    <arr name="submitted_latest_facet">
+      <str>2013-11-11T23:32:42Z</str>
+    </arr>
+    <arr name="described_day_t">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="described_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="described_dt">
+      <date>2013-11-11T23:32:51Z</date>
+    </arr>
+    <arr name="described_facet">
+      <str>2013-11-11T23:32:51Z</str>
+    </arr>
+    <arr name="described_earliest_dt">
+      <date>2013-11-11T23:32:51Z</date>
+    </arr>
+    <arr name="described_earliest_facet">
+      <str>2013-11-11T23:32:51Z</str>
+    </arr>
+    <arr name="described_latest_dt">
+      <date>2013-11-11T23:32:51Z</date>
+    </arr>
+    <arr name="described_latest_facet">
+      <str>2013-11-11T23:32:51Z</str>
+    </arr>
+    <arr name="published_day_t">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="published_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="published_dt">
+      <date>2013-11-11T23:34:33Z</date>
+    </arr>
+    <arr name="published_facet">
+      <str>2013-11-11T23:34:33Z</str>
+    </arr>
+    <arr name="published_earliest_dt">
+      <date>2013-11-11T23:34:33Z</date>
+    </arr>
+    <arr name="published_earliest_facet">
+      <str>2013-11-11T23:34:33Z</str>
+    </arr>
+    <arr name="published_latest_dt">
+      <date>2013-11-11T23:34:33Z</date>
+    </arr>
+    <arr name="published_latest_facet">
+      <str>2013-11-11T23:34:33Z</str>
+    </arr>
+    <arr name="deposited_day_t">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="deposited_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="deposited_dt">
+      <date>2013-11-11T23:38:28Z</date>
+    </arr>
+    <arr name="deposited_facet">
+      <str>2013-11-11T23:38:28Z</str>
+    </arr>
+    <arr name="deposited_earliest_dt">
+      <date>2013-11-11T23:38:28Z</date>
+    </arr>
+    <arr name="deposited_earliest_facet">
+      <str>2013-11-11T23:38:28Z</str>
+    </arr>
+    <arr name="deposited_latest_dt">
+      <date>2013-11-11T23:38:28Z</date>
+    </arr>
+    <arr name="deposited_latest_facet">
+      <str>2013-11-11T23:38:28Z</str>
+    </arr>
+    <arr name="accessioned_day_t">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="accessioned_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="accessioned_dt">
+      <date>2013-11-11T23:38:47Z</date>
+    </arr>
+    <arr name="accessioned_facet">
+      <str>2013-11-11T23:38:47Z</str>
+    </arr>
+    <arr name="accessioned_earliest_dt">
+      <date>2013-11-11T23:38:47Z</date>
+    </arr>
+    <arr name="accessioned_earliest_facet">
+      <str>2013-11-11T23:38:47Z</str>
+    </arr>
+    <arr name="accessioned_latest_dt">
+      <date>2013-11-11T23:38:47Z</date>
+    </arr>
+    <arr name="accessioned_latest_facet">
+      <str>2013-11-11T23:38:47Z</str>
+    </arr>
+    <arr name="status_display">
+      <str>v1 Accessioned</str>
+    </arr>
+    <arr name="current_version_display">
+      <str>1</str>
+    </arr>
+    <arr name="current_version_facet">
+      <str>1</str>
+    </arr>
+    <arr name="last_modified_day_facet">
+      <str>2013-11-11</str>
+    </arr>
+    <arr name="metadata_format_t">
+      <str>mods</str>
+    </arr>
+    <arr name="metadata_format_facet">
+      <str>mods</str>
+    </arr>
+    <arr name="public_dc_title_t">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="public_dc_contributor_t">
+      <str>Stafford, Francis E., 1884-1938</str>
+    </arr>
+    <arr name="public_dc_type_t">
+      <str>Collection</str>
+    </arr>
+    <arr name="public_dc_date_t">
+      <str>1909-1933</str>
+    </arr>
+    <arr name="public_dc_language_t">
+      <str>und</str>
+    </arr>
+    <arr name="public_dc_format_t">
+      <str>3 oversize boxes.</str>
+    </arr>
+    <arr name="public_dc_description_t">
+      <str>Photographs of scenes in China, mainly between 1909 and 1915.</str>
+      <str>American missionary in China, 1909-1915 and 1932-1933.</str>
+    </arr>
+    <arr name="public_dc_rights_t">
+      <str>Closed. Digital use copies available.</str>
+    </arr>
+    <arr name="public_dc_coverage_t">
+      <str>China</str>
+    </arr>
+    <arr name="sw_format_facet">
+      <str>Manuscript/Archive</str>
+    </arr>
+    <arr name="sw_title_245a_search_facet_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="sw_title_245_search_facet_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="sw_title_sort_facet">
+      <str>Francis E Stafford photographs 19091933</str>
+    </arr>
+    <arr name="sw_title_245a_display_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="sw_title_display_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="sw_title_full_display_facet">
+      <str>Francis E. Stafford photographs, 1909-1933</str>
+    </arr>
+    <arr name="sw_author_1xx_search_facet_facet">
+      <str>Stafford, Francis E., 1884-1938</str>
+    </arr>
+    <arr name="sw_author_person_facet_facet">
+      <str>Stafford, Francis E., 1884-1938</str>
+    </arr>
+    <arr name="sw_author_person_display_facet">
+      <str>Stafford, Francis E., 1884-1938</str>
+    </arr>
+    <arr name="sw_author_person_full_display_facet">
+      <str>Stafford, Francis E., 1884-1938</str>
+    </arr>
+    <arr name="sw_geographic_search_facet_facet">
+      <str>China</str>
+    </arr>
+    <arr name="sw_subject_other_subvy_search_facet_facet">
+      <str>Pictorial works</str>
+    </arr>
+    <arr name="sw_subject_all_search_facet_facet">
+      <str>China</str>
+      <str>Pictorial works</str>
+    </arr>
+    <arr name="sw_geographic_facet_facet">
+      <str>China</str>
+    </arr>
+    <arr name="sw_pub_search_facet_facet">
+      <str>cau</str>
+    </arr>
+    <arr name="sw_pub_date_sort_facet">
+      <str>1909</str>
+    </arr>
+    <arr name="sw_pub_date_group_facet_facet">
+      <str>More than 50 years ago</str>
+    </arr>
+    <arr name="sw_pub_date_facet">
+      <str>1909</str>
+    </arr>
+    <arr name="sw_pub_date_display_facet">
+      <str>1909</str>
+    </arr>
+    <arr name="sw_all_search_facet_facet">
+      <str>
+   
+      Francis E. Stafford photographs, 1909-1933
+   
+   
+      Stafford, Francis E.
+      1884-1938
+   
+   mixed material
+   
+      
+         cau
+      
+      1909
+      1933
+      monographic
+   
+   
+      und
+   
+   
+      3 oversize boxes.
+   
+   Photographs of scenes in China, mainly between 1909 and 1915.
+   Closed. Digital use copies available.
+   
+   American missionary in China, 1909-1915 and 1932-1933.
+   
+      China
+      Pictorial works
+   
+   
+      CSt-H Hoover Institution on War, Revolution and Peace
+   
+   
+      dacs
+      CSt-H
+      120521
+      20120526011056.0
+      a9615156
+      Converted from MARCXML to MODS version 3.4 using MARC21slim2MODS3-4_SDR.xsl (Version 1.2.5 2013/08/11)
+   
+</str>
+    </arr>
+    <long name="_version_">1480424098896019456</long>
+    <date name="timestamp">2014-09-27T18:27:20.505Z</date></doc>

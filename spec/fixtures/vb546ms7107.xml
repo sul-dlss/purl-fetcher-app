@@ -1,0 +1,1095 @@
+<doc>
+    <str name="id">druid:vb546ms7107</str>
+    <arr name="system_create_dt">
+      <date>2013-11-11T23:32:39Z</date>
+    </arr>
+    <arr name="date">
+      <date>2013-11-11T23:32:39Z</date>
+      <date>2014-08-07T06:33:47Z</date>
+      <date>2013-11-11T23:32:39.757Z</date>
+      <date>2014-08-07T06:33:47.566Z</date>
+      <date>2013-11-11T15:32:38Z</date>
+      <date>2014-06-02T15:28:58Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+      <date>2013-11-11T15:32:50Z</date>
+      <date>2014-06-02T15:29:42Z</date>
+      <date>2014-08-06T15:28:03Z</date>
+      <date>2013-11-11T15:32:46Z</date>
+      <date>2014-06-02T15:31:05Z</date>
+      <date>2014-08-06T15:28:16Z</date>
+      <date>2013-11-11T15:32:46Z</date>
+      <date>2014-06-02T15:32:33Z</date>
+      <date>2014-08-06T15:28:44Z</date>
+      <date>2013-11-11T15:33:14Z</date>
+      <date>2014-06-02T15:34:03Z</date>
+      <date>2014-08-06T22:59:36Z</date>
+      <date>2013-11-11T15:34:11Z</date>
+      <date>2014-06-02T15:34:35Z</date>
+      <date>2014-08-06T23:33:02Z</date>
+      <date>2013-11-11T15:34:28Z</date>
+      <date>2014-06-02T15:35:04Z</date>
+      <date>2014-08-06T23:33:03Z</date>
+      <date>2013-11-11T15:34:29Z</date>
+      <date>2014-06-02T15:35:19Z</date>
+      <date>2014-08-06T23:33:38Z</date>
+      <date>2013-11-11T15:34:39Z</date>
+      <date>2014-06-02T15:35:24Z</date>
+      <date>2014-08-06T23:33:47Z</date>
+      <date>2013-11-11T15:35:34Z</date>
+      <date>2014-06-02T15:35:49Z</date>
+      <date>2014-08-06T23:35:20Z</date>
+      <date>2013-11-11T15:38:21Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:14Z</date>
+      <date>2013-11-11T15:38:45Z</date>
+      <date>2014-06-02T15:36:47Z</date>
+      <date>2014-08-10T20:31:36Z</date>
+      <date>2013-11-12T08:20:48Z</date>
+      <date>2014-06-02T15:37:40Z</date>
+      <date>2014-08-10T20:31:47Z</date>
+      <date>2014-06-02T15:28:22Z</date>
+      <date>2014-07-17T17:06:34Z</date>
+      <date>2014-06-02T15:28:56Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+      <date>2014-06-02T15:28:56Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+      <date>2013-11-11T15:35:33Z</date>
+      <date>2014-06-02T15:35:49Z</date>
+      <date>2014-08-06T23:35:20Z</date>
+      <date>2013-11-11T15:38:15Z</date>
+      <date>2014-06-02T15:36:11Z</date>
+      <date>2014-08-10T20:29:59Z</date>
+      <date>2013-11-11T15:38:17Z</date>
+      <date>2014-06-02T15:36:14Z</date>
+      <date>2014-08-10T20:30:04Z</date>
+      <date>2013-11-11T15:38:17Z</date>
+      <date>2014-06-02T15:36:14Z</date>
+      <date>2014-08-10T20:30:06Z</date>
+      <date>2013-11-11T15:38:18Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:09Z</date>
+      <date>2013-11-11T15:38:18Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:11Z</date>
+      <date>2013-11-11T15:38:21Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:15Z</date>
+      <date>2014-09-27T18:27:46Z</date>
+      <date>2013-11-11T23:32:38Z</date>
+      <date>2013-11-11T23:32:38Z</date>
+      <date>2014-08-06T22:27:49Z</date>
+      <date>2013-11-11T23:32:50Z</date>
+      <date>2013-11-11T23:32:50Z</date>
+      <date>2014-08-06T22:28:03Z</date>
+      <date>2013-11-11T23:34:29Z</date>
+      <date>2013-11-11T23:34:29Z</date>
+      <date>2014-08-07T06:33:38Z</date>
+      <date>2013-11-11T23:38:21Z</date>
+      <date>2013-11-11T23:38:21Z</date>
+      <date>2014-08-11T03:30:14Z</date>
+      <date>2013-11-11T23:38:45Z</date>
+      <date>2013-11-11T23:38:45Z</date>
+      <date>2014-08-11T03:31:36Z</date>
+      <date>2014-06-02T22:28:22Z</date>
+      <date>2014-06-02T22:28:22Z</date>
+      <date>2014-07-18T00:06:34Z</date>
+    </arr>
+    <arr name="system_modified_dt">
+      <date>2014-08-07T06:33:47Z</date>
+    </arr>
+    <arr name="active_fedora_model_s">
+      <str>Dor::AdminPolicyObject</str>
+    </arr>
+    <arr name="object_profile_display">
+      <str>{"datastreams":{"DC":{"dsLabel":"Dublin Core Record for this object","dsVersionID":"DC1.0","dsCreateDate":"2013-11-11T23:32:39Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":"http://www.openarchives.org/OAI/2.0/oai_dc/","dsControlGroup":"X","dsSize":385,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+DC+DC1.0","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"RELS-EXT":{"dsLabel":"Fedora Object-to-Object Relationship Metadata","dsVersionID":"RELS-EXT.2","dsCreateDate":"2013-11-22T23:14:37Z","dsState":"A","dsMIME":"application/rdf+xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":576,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+RELS-EXT+RELS-EXT.2","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"identityMetadata":{"dsLabel":"Identity Metadata","dsVersionID":"identityMetadata.4","dsCreateDate":"2014-08-07T06:32:59Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":392,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+identityMetadata+identityMetadata.4","dsLocationType":null,"dsChecksumType":"DISABLED","dsChecksum":"none"},"rightsMetadata":{"dsLabel":"Rights Metadata","dsVersionID":"rightsMetadata.0","dsCreateDate":"2013-11-11T23:32:46Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":572,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+rightsMetadata+rightsMetadata.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"provenanceMetadata":{"dsLabel":"Provenance Metadata","dsVersionID":"provenanceMetadata.2","dsCreateDate":"2014-08-07T06:33:47Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":265,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+provenanceMetadata+provenanceMetadata.2","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"events":{"dsLabel":"Events","dsVersionID":"events.5","dsCreateDate":"2014-08-07T06:32:59Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":702,"dsVersionable":false,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+events+events.5","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"descMetadata":{"dsLabel":"Descriptive Metadata","dsVersionID":"descMetadata.0","dsCreateDate":"2013-11-11T23:32:46Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"M","dsSize":279,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+descMetadata+descMetadata.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"workflows":{"dsLabel":"Workflow","dsVersionID":"workflows.4","dsCreateDate":"2014-08-06T22:27:49Z","dsState":"A","dsMIME":"application/xml","dsFormatURI":null,"dsControlGroup":"E","dsSize":0,"dsVersionable":false,"dsInfoType":null,"dsLocation":"https://lyberservices-prod.stanford.edu/workflow/dor/objects/druid:vb546ms7107/workflows","dsLocationType":"URL","dsChecksumType":"DISABLED","dsChecksum":"none"},"versionMetadata":{"dsLabel":"Version Metadata","dsVersionID":"versionMetadata.8","dsCreateDate":"2014-08-06T22:27:48Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":359,"dsVersionable":false,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+versionMetadata+versionMetadata.8","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"administrativeMetadata":{"dsLabel":"Administrative Metadata","dsVersionID":"administrativeMetadata.0","dsCreateDate":"2013-11-11T23:32:46Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":272,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+administrativeMetadata+administrativeMetadata.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"roleMetadata":{"dsLabel":"Role Metadata","dsVersionID":"roleMetadata.4","dsCreateDate":"2014-07-18T19:35:18Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":695,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+roleMetadata+roleMetadata.4","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"},"defaultObjectRights":{"dsLabel":"Default Object Rights","dsVersionID":"defaultObjectRights.0","dsCreateDate":"2013-11-11T23:32:46Z","dsState":"A","dsMIME":"text/xml","dsFormatURI":null,"dsControlGroup":"X","dsSize":515,"dsVersionable":true,"dsInfoType":null,"dsLocation":"druid:vb546ms7107+defaultObjectRights+defaultObjectRights.0","dsLocationType":"INTERNAL_ID","dsChecksumType":"DISABLED","dsChecksum":"none"}},"objLabel":"Stafford Photos","objOwnerId":"argo.stanford.edu","objModels":["info:fedora/afmodel:Dor_AdminPolicyObject","info:fedora/fedora-system:FedoraObject-3.0"],"objCreateDate":"2013-11-11T23:32:39Z","objLastModDate":"2014-08-07T06:33:47Z","objDissIndexViewURL":"https://localhost:443/fedora/objects/druid%3Avb546ms7107/methods/fedora-system%3A3/viewMethodIndex","objItemIndexViewURL":"https://localhost:443/fedora/objects/druid%3Avb546ms7107/methods/fedora-system%3A3/viewItemIndex","objState":"A"}</str>
+    </arr>
+    <arr name="dc_title_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_title_display">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_0_title_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_0_title_display">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_0_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="dc_identifier_t">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="dc_identifier_display">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="dc_0_identifier_t">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="dc_0_identifier_display">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="title_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="title_display">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="identifier_t">
+      <str>druid:vb546ms7107</str>
+      <str>uuid:8bf6c176-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="identifier_display">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="identityMetadata_objectId_t">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="identityMetadata_0_objectId_t">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="identityMetadata_objectType_t">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="identityMetadata_objectType_facet">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="identityMetadata_0_objectType_t">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="identityMetadata_0_objectType_facet">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="identityMetadata_tag_t">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="identityMetadata_tag_facet">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="identityMetadata_0_tag_t">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="identityMetadata_0_tag_facet">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="identityMetadata_objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_0_objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="identityMetadata_0_objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="objectId_t">
+      <str>druid:vb546ms7107</str>
+    </arr>
+    <arr name="objectType_t">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="objectType_facet">
+      <str>adminPolicy</str>
+    </arr>
+    <arr name="tag_t">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+      <str>Registered By</str>
+      <str>Registered By : hfrost</str>
+      <str>Remediated By</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="tag_facet">
+      <str>Registered By : hfrost</str>
+      <str>Remediated By : 4.6.6.2</str>
+      <str>Registered By</str>
+      <str>Registered By : hfrost</str>
+      <str>Remediated By</str>
+      <str>Remediated By : 4.6.6.2</str>
+    </arr>
+    <arr name="objectCreator_t">
+      <str>DOR</str>
+    </arr>
+    <arr name="objectCreator_facet">
+      <str>DOR</str>
+    </arr>
+    <arr name="obj_label_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="obj_owner_id_t">
+      <str>argo.stanford.edu</str>
+    </arr>
+    <arr name="obj_models_t">
+      <str>info:fedora/afmodel:Dor_AdminPolicyObject info:fedora/fedora-system:FedoraObject-3.0</str>
+    </arr>
+    <arr name="obj_create_date_dt">
+      <date>2013-11-11T23:32:39.757Z</date>
+    </arr>
+    <arr name="obj_last_mod_date_dt">
+      <date>2014-08-07T06:33:47.566Z</date>
+    </arr>
+    <arr name="obj_diss_index_view_url_t">
+      <str>https://localhost:443/fedora/objects/druid%3Avb546ms7107/methods/fedora-system%3A3/viewMethodIndex</str>
+    </arr>
+    <arr name="obj_item_index_view_url_t">
+      <str>https://localhost:443/fedora/objects/druid%3Avb546ms7107/methods/fedora-system%3A3/viewItemIndex</str>
+    </arr>
+    <arr name="obj_state_t">
+      <str>A</str>
+    </arr>
+    <arr name="dor_id_t">
+      <str>8bf6c176-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="uuid_id_t">
+      <str>8bf6c176-4b29-11e3-8e31-0050569b3c3c</str>
+    </arr>
+    <arr name="registered_by_tag_t">
+      <str>hfrost</str>
+    </arr>
+    <arr name="registered_by_tag_facet">
+      <str>hfrost</str>
+    </arr>
+    <arr name="remediated_by_tag_t">
+      <str>4.6.6.2</str>
+    </arr>
+    <arr name="remediated_by_tag_facet">
+      <str>4.6.6.2</str>
+    </arr>
+    <arr name="events_event_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Rosalyn Metz</str>
+      <str>Rosalyn Metz</str>
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Benjamin L Albritton</str>
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="events_0_event_0_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="events_event_type_display">
+      <str>remediation</str>
+      <str>open</str>
+      <str>close</str>
+      <str>remediation</str>
+      <str>close</str>
+      <str>remediation</str>
+    </arr>
+    <arr name="events_0_event_0_type_display">
+      <str>remediation</str>
+      <str>remediation</str>
+      <str>remediation</str>
+    </arr>
+    <arr name="events_event_when_display">
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2014-06-02T15:28:22-07:00</str>
+      <str>2014-06-02T15:28:58-07:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2014-08-06T15:27:50-07:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+    </arr>
+    <arr name="events_0_event_0_when_display">
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+    </arr>
+    <arr name="events_event_message_display">
+      <str>Record Remediation Version</str>
+      <str>Version 2 opened</str>
+      <str>Version 2 closed</str>
+      <str>Record Remediation Version</str>
+      <str>Version 3 closed</str>
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="events_0_event_0_message_display">
+      <str>Record Remediation Version</str>
+      <str>Record Remediation Version</str>
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="events_0_event_1_who_display">
+      <str>Rosalyn Metz</str>
+    </arr>
+    <arr name="events_0_event_1_type_display">
+      <str>open</str>
+    </arr>
+    <arr name="events_0_event_1_when_display">
+      <str>2014-06-02T15:28:22-07:00</str>
+    </arr>
+    <arr name="events_0_event_1_message_display">
+      <str>Version 2 opened</str>
+    </arr>
+    <arr name="events_0_event_2_who_display">
+      <str>Rosalyn Metz</str>
+    </arr>
+    <arr name="events_0_event_2_type_display">
+      <str>close</str>
+    </arr>
+    <arr name="events_0_event_2_when_display">
+      <str>2014-06-02T15:28:58-07:00</str>
+    </arr>
+    <arr name="events_0_event_2_message_display">
+      <str>Version 2 closed</str>
+    </arr>
+    <arr name="events_0_event_4_who_display">
+      <str>Benjamin L Albritton</str>
+    </arr>
+    <arr name="events_0_event_4_type_display">
+      <str>close</str>
+    </arr>
+    <arr name="events_0_event_4_when_display">
+      <str>2014-08-06T15:27:50-07:00</str>
+    </arr>
+    <arr name="events_0_event_4_message_display">
+      <str>Version 3 closed</str>
+    </arr>
+    <arr name="event_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Rosalyn Metz</str>
+      <str>Rosalyn Metz</str>
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Benjamin L Albritton</str>
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="event_0_who_display">
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Dor::Identifiable 3.6.1</str>
+      <str>Dor::Identifiable 3.6.1</str>
+    </arr>
+    <arr name="event_type_display">
+      <str>remediation</str>
+      <str>open</str>
+      <str>close</str>
+      <str>remediation</str>
+      <str>close</str>
+      <str>remediation</str>
+    </arr>
+    <arr name="event_0_type_display">
+      <str>remediation</str>
+      <str>remediation</str>
+      <str>remediation</str>
+    </arr>
+    <arr name="event_when_display">
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2014-06-02T15:28:22-07:00</str>
+      <str>2014-06-02T15:28:58-07:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2014-08-06T15:27:50-07:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+    </arr>
+    <arr name="event_0_when_display">
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+      <str>2013-11-11T15:34:08-08:00</str>
+    </arr>
+    <arr name="event_message_display">
+      <str>Record Remediation Version</str>
+      <str>Version 2 opened</str>
+      <str>Version 2 closed</str>
+      <str>Record Remediation Version</str>
+      <str>Version 3 closed</str>
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="event_0_message_display">
+      <str>Record Remediation Version</str>
+      <str>Record Remediation Version</str>
+      <str>Record Remediation Version</str>
+    </arr>
+    <arr name="event_1_who_display">
+      <str>Rosalyn Metz</str>
+    </arr>
+    <arr name="event_1_type_display">
+      <str>open</str>
+    </arr>
+    <arr name="event_1_when_display">
+      <str>2014-06-02T15:28:22-07:00</str>
+    </arr>
+    <arr name="event_1_message_display">
+      <str>Version 2 opened</str>
+    </arr>
+    <arr name="event_2_who_display">
+      <str>Rosalyn Metz</str>
+    </arr>
+    <arr name="event_2_type_display">
+      <str>close</str>
+    </arr>
+    <arr name="event_2_when_display">
+      <str>2014-06-02T15:28:58-07:00</str>
+    </arr>
+    <arr name="event_2_message_display">
+      <str>Version 2 closed</str>
+    </arr>
+    <arr name="event_4_who_display">
+      <str>Benjamin L Albritton</str>
+    </arr>
+    <arr name="event_4_type_display">
+      <str>close</str>
+    </arr>
+    <arr name="event_4_when_display">
+      <str>2014-08-06T15:27:50-07:00</str>
+    </arr>
+    <arr name="event_4_message_display">
+      <str>Version 3 closed</str>
+    </arr>
+    <arr name="mods_title_info_main_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="mods_0_title_info_0_main_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="title_info_main_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="title_info_0_main_title_facet">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="wf_facet">
+      <str>accessionWF</str>
+      <str>accessionWF</str>
+      <str>accessionWF</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF</str>
+      <str>versioningWF</str>
+      <str>versioningWF</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF</str>
+    </arr>
+    <arr name="wf_wps_facet">
+      <str>accessionWF</str>
+      <str>accessionWF:start-accession</str>
+      <str>accessionWF:start-accession:completed</str>
+      <str>accessionWF:descriptive-metadata</str>
+      <str>accessionWF:descriptive-metadata:completed</str>
+      <str>accessionWF:rights-metadata</str>
+      <str>accessionWF:rights-metadata:completed</str>
+      <str>accessionWF:content-metadata</str>
+      <str>accessionWF:content-metadata:completed</str>
+      <str>accessionWF:technical-metadata</str>
+      <str>accessionWF:technical-metadata:completed</str>
+      <str>accessionWF:remediate-object</str>
+      <str>accessionWF:remediate-object:completed</str>
+      <str>accessionWF:shelve</str>
+      <str>accessionWF:shelve:completed</str>
+      <str>accessionWF:publish</str>
+      <str>accessionWF:publish:completed</str>
+      <str>accessionWF:provenance-metadata</str>
+      <str>accessionWF:provenance-metadata:completed</str>
+      <str>accessionWF:sdr-ingest-transfer</str>
+      <str>accessionWF:sdr-ingest-transfer:completed</str>
+      <str>accessionWF:sdr-ingest-received</str>
+      <str>accessionWF:sdr-ingest-received:completed</str>
+      <str>accessionWF:end-accession</str>
+      <str>accessionWF:end-accession:completed</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF:cleanup</str>
+      <str>disseminationWF:cleanup:completed</str>
+      <str>versioningWF</str>
+      <str>versioningWF:start-version</str>
+      <str>versioningWF:start-version:completed</str>
+      <str>versioningWF:submit-version</str>
+      <str>versioningWF:submit-version:completed</str>
+      <str>versioningWF:start-accession</str>
+      <str>versioningWF:start-accession:completed</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF:start-ingest</str>
+      <str>sdrIngestWF:start-ingest:completed</str>
+      <str>sdrIngestWF:register-sdr</str>
+      <str>sdrIngestWF:register-sdr:completed</str>
+      <str>sdrIngestWF:transfer-object</str>
+      <str>sdrIngestWF:transfer-object:completed</str>
+      <str>sdrIngestWF:validate-bag</str>
+      <str>sdrIngestWF:validate-bag:completed</str>
+      <str>sdrIngestWF:verify-agreement</str>
+      <str>sdrIngestWF:verify-agreement:completed</str>
+      <str>sdrIngestWF:complete-deposit</str>
+      <str>sdrIngestWF:complete-deposit:completed</str>
+      <str>sdrIngestWF:update-catalog</str>
+      <str>sdrIngestWF:update-catalog:skipped</str>
+      <str>sdrIngestWF:create-replica</str>
+      <str>sdrIngestWF:create-replica:skipped</str>
+      <str>sdrIngestWF:ingest-cleanup</str>
+      <str>sdrIngestWF:ingest-cleanup:completed</str>
+    </arr>
+    <arr name="wf_wsp_facet">
+      <str>accessionWF</str>
+      <str>accessionWF:completed</str>
+      <str>accessionWF:completed:start-accession</str>
+      <str>accessionWF:completed:descriptive-metadata</str>
+      <str>accessionWF:completed:rights-metadata</str>
+      <str>accessionWF:completed:content-metadata</str>
+      <str>accessionWF:completed:technical-metadata</str>
+      <str>accessionWF:completed:remediate-object</str>
+      <str>accessionWF:completed:shelve</str>
+      <str>accessionWF:completed:publish</str>
+      <str>accessionWF:completed:provenance-metadata</str>
+      <str>accessionWF:completed:sdr-ingest-transfer</str>
+      <str>accessionWF:completed:sdr-ingest-received</str>
+      <str>accessionWF:completed:end-accession</str>
+      <str>disseminationWF</str>
+      <str>disseminationWF:completed</str>
+      <str>disseminationWF:completed:cleanup</str>
+      <str>versioningWF</str>
+      <str>versioningWF:completed</str>
+      <str>versioningWF:completed:start-version</str>
+      <str>versioningWF:completed:submit-version</str>
+      <str>versioningWF:completed:start-accession</str>
+      <str>sdrIngestWF</str>
+      <str>sdrIngestWF:completed</str>
+      <str>sdrIngestWF:completed:start-ingest</str>
+      <str>sdrIngestWF:completed:register-sdr</str>
+      <str>sdrIngestWF:completed:transfer-object</str>
+      <str>sdrIngestWF:completed:validate-bag</str>
+      <str>sdrIngestWF:completed:verify-agreement</str>
+      <str>sdrIngestWF:completed:complete-deposit</str>
+      <str>sdrIngestWF:skipped</str>
+      <str>sdrIngestWF:skipped:update-catalog</str>
+      <str>sdrIngestWF:skipped:create-replica</str>
+      <str>sdrIngestWF:completed:ingest-cleanup</str>
+    </arr>
+    <arr name="workflow_status_display">
+      <str>accessionWF|active|0|dor</str>
+      <str>accessionWF|active|0|dor</str>
+      <str>accessionWF|active|0|dor</str>
+      <str>disseminationWF|completed|0|dor</str>
+      <str>disseminationWF|completed|0|dor</str>
+      <str>disseminationWF|completed|0|dor</str>
+      <str>versioningWF|completed|0|dor</str>
+      <str>versioningWF|completed|0|dor</str>
+      <str>sdrIngestWF|active|0|sdr</str>
+      <str>sdrIngestWF|active|0|sdr</str>
+      <str>sdrIngestWF|active|0|sdr</str>
+    </arr>
+    <arr name="wf_accessionWF_start-accession_dt">
+      <date>2013-11-11T15:32:38Z</date>
+      <date>2014-06-02T15:28:58Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+    </arr>
+    <arr name="wf_swp_facet">
+      <str>completed</str>
+      <str>completed:accessionWF</str>
+      <str>completed:accessionWF:start-accession</str>
+      <str>completed:accessionWF:descriptive-metadata</str>
+      <str>completed:accessionWF:rights-metadata</str>
+      <str>completed:accessionWF:content-metadata</str>
+      <str>completed:accessionWF:technical-metadata</str>
+      <str>completed:accessionWF:remediate-object</str>
+      <str>completed:accessionWF:shelve</str>
+      <str>completed:accessionWF:publish</str>
+      <str>completed:accessionWF:provenance-metadata</str>
+      <str>completed:accessionWF:sdr-ingest-transfer</str>
+      <str>completed:accessionWF:sdr-ingest-received</str>
+      <str>completed:accessionWF:end-accession</str>
+      <str>completed:disseminationWF</str>
+      <str>completed:disseminationWF:cleanup</str>
+      <str>completed:versioningWF</str>
+      <str>completed:versioningWF:start-version</str>
+      <str>completed:versioningWF:submit-version</str>
+      <str>completed:versioningWF:start-accession</str>
+      <str>completed:sdrIngestWF</str>
+      <str>completed:sdrIngestWF:start-ingest</str>
+      <str>completed:sdrIngestWF:register-sdr</str>
+      <str>completed:sdrIngestWF:transfer-object</str>
+      <str>completed:sdrIngestWF:validate-bag</str>
+      <str>completed:sdrIngestWF:verify-agreement</str>
+      <str>completed:sdrIngestWF:complete-deposit</str>
+      <str>skipped</str>
+      <str>skipped:sdrIngestWF</str>
+      <str>skipped:sdrIngestWF:update-catalog</str>
+      <str>skipped:sdrIngestWF:create-replica</str>
+      <str>completed:sdrIngestWF:ingest-cleanup</str>
+    </arr>
+    <arr name="wf_accessionWF_descriptive-metadata_dt">
+      <date>2013-11-11T15:32:50Z</date>
+      <date>2014-06-02T15:29:42Z</date>
+      <date>2014-08-06T15:28:03Z</date>
+    </arr>
+    <arr name="wf_accessionWF_rights-metadata_dt">
+      <date>2013-11-11T15:32:46Z</date>
+      <date>2014-06-02T15:31:05Z</date>
+      <date>2014-08-06T15:28:16Z</date>
+    </arr>
+    <arr name="wf_accessionWF_content-metadata_dt">
+      <date>2013-11-11T15:32:46Z</date>
+      <date>2014-06-02T15:32:33Z</date>
+      <date>2014-08-06T15:28:44Z</date>
+    </arr>
+    <arr name="wf_accessionWF_technical-metadata_dt">
+      <date>2013-11-11T15:33:14Z</date>
+      <date>2014-06-02T15:34:03Z</date>
+      <date>2014-08-06T22:59:36Z</date>
+    </arr>
+    <arr name="wf_accessionWF_remediate-object_dt">
+      <date>2013-11-11T15:34:11Z</date>
+      <date>2014-06-02T15:34:35Z</date>
+      <date>2014-08-06T23:33:02Z</date>
+    </arr>
+    <arr name="wf_accessionWF_shelve_dt">
+      <date>2013-11-11T15:34:28Z</date>
+      <date>2014-06-02T15:35:04Z</date>
+      <date>2014-08-06T23:33:03Z</date>
+    </arr>
+    <arr name="wf_accessionWF_publish_dt">
+      <date>2013-11-11T15:34:29Z</date>
+      <date>2014-06-02T15:35:19Z</date>
+      <date>2014-08-06T23:33:38Z</date>
+    </arr>
+    <arr name="wf_accessionWF_provenance-metadata_dt">
+      <date>2013-11-11T15:34:39Z</date>
+      <date>2014-06-02T15:35:24Z</date>
+      <date>2014-08-06T23:33:47Z</date>
+    </arr>
+    <arr name="wf_accessionWF_sdr-ingest-transfer_dt">
+      <date>2013-11-11T15:35:34Z</date>
+      <date>2014-06-02T15:35:49Z</date>
+      <date>2014-08-06T23:35:20Z</date>
+    </arr>
+    <arr name="wf_accessionWF_sdr-ingest-received_dt">
+      <date>2013-11-11T15:38:21Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:14Z</date>
+    </arr>
+    <arr name="wf_accessionWF_end-accession_dt">
+      <date>2013-11-11T15:38:45Z</date>
+      <date>2014-06-02T15:36:47Z</date>
+      <date>2014-08-10T20:31:36Z</date>
+    </arr>
+    <arr name="wf_disseminationWF_cleanup_dt">
+      <date>2013-11-12T08:20:48Z</date>
+      <date>2014-06-02T15:37:40Z</date>
+      <date>2014-08-10T20:31:47Z</date>
+    </arr>
+    <arr name="wf_versioningWF_start-version_dt">
+      <date>2014-06-02T15:28:22Z</date>
+      <date>2014-07-17T17:06:34Z</date>
+    </arr>
+    <arr name="wf_versioningWF_submit-version_dt">
+      <date>2014-06-02T15:28:56Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+    </arr>
+    <arr name="wf_versioningWF_start-accession_dt">
+      <date>2014-06-02T15:28:56Z</date>
+      <date>2014-08-06T15:27:49Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_start-ingest_dt">
+      <date>2013-11-11T15:35:33Z</date>
+      <date>2014-06-02T15:35:49Z</date>
+      <date>2014-08-06T23:35:20Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_register-sdr_dt">
+      <date>2013-11-11T15:38:15Z</date>
+      <date>2014-06-02T15:36:11Z</date>
+      <date>2014-08-10T20:29:59Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_transfer-object_dt">
+      <date>2013-11-11T15:38:17Z</date>
+      <date>2014-06-02T15:36:14Z</date>
+      <date>2014-08-10T20:30:04Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_validate-bag_dt">
+      <date>2013-11-11T15:38:17Z</date>
+      <date>2014-06-02T15:36:14Z</date>
+      <date>2014-08-10T20:30:06Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_verify-agreement_dt">
+      <date>2013-11-11T15:38:18Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:09Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_complete-deposit_dt">
+      <date>2013-11-11T15:38:18Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:11Z</date>
+    </arr>
+    <arr name="wf_sdrIngestWF_ingest-cleanup_dt">
+      <date>2013-11-11T15:38:21Z</date>
+      <date>2014-06-02T15:36:15Z</date>
+      <date>2014-08-10T20:30:15Z</date>
+    </arr>
+    <arr name="administrativeMetadata_registration_workflow_id_facet">
+      <str>digitizationWF</str>
+    </arr>
+    <arr name="administrativeMetadata_0_registration_0_workflow_id_facet">
+      <str>digitizationWF</str>
+    </arr>
+    <arr name="administrativeMetadata_registration_default_collection_facet">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="administrativeMetadata_0_registration_0_default_collection_facet">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="registration_workflow_id_facet">
+      <str>digitizationWF</str>
+    </arr>
+    <arr name="registration_0_workflow_id_facet">
+      <str>digitizationWF</str>
+    </arr>
+    <arr name="registration_default_collection_facet">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="registration_0_default_collection_facet">
+      <str>druid:yg867hg1375</str>
+    </arr>
+    <arr name="apo_role_group_dor-apo-manager_t">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+    </arr>
+    <arr name="apo_role_group_dor-apo-manager_facet">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+    </arr>
+    <arr name="apo_role_dor-apo-manager_t">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="apo_role_dor-apo-manager_facet">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="apo_register_permissions_t">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="apo_register_permissions_facet">
+      <str>workgroup:dlss:developers</str>
+      <str>workgroup:sdr:metadata-staff</str>
+      <str>workgroup:dlss:pmag-staff</str>
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="apo_role_person_dor-apo-manager_t">
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="apo_role_person_dor-apo-manager_facet">
+      <str>person:sunetid:wakin</str>
+      <str>person:sunetid:lkmiller</str>
+      <str>person:sunetid:rrader</str>
+      <str>person:sunetid:lpnguyen</str>
+    </arr>
+    <arr name="rightsMetadata_copyright_facet">
+      <str>For copyright status, please contact the Hoover Institution Archives at archives@hoover.stanford.edu.</str>
+    </arr>
+    <arr name="rightsMetadata_0_copyright_facet">
+      <str>For copyright status, please contact the Hoover Institution Archives at archives@hoover.stanford.edu.</str>
+    </arr>
+    <arr name="copyright_facet">
+      <str>For copyright status, please contact the Hoover Institution Archives at archives@hoover.stanford.edu.</str>
+    </arr>
+    <arr name="is_governed_by_s">
+      <str>info:fedora/druid:hv992ry2431</str>
+    </arr>
+    <arr name="referencesAgreement_s">
+      <str>info:fedora/druid:fm300jh1784</str>
+    </arr>
+    <arr name="has_model_s">
+      <str>info:fedora/afmodel:Dor_AdminPolicyObject</str>
+    </arr>
+    <arr name="dor_services_version_facet">
+      <str>4.4.12</str>
+    </arr>
+    <arr name="indexed_at_dt">
+      <date>2014-09-27T18:27:46Z</date>
+    </arr>
+    <arr name="indexed_day_t">
+      <str>2014-09-27T07:00:00Z</str>
+    </arr>
+    <arr name="indexed_day_facet">
+      <str>2014-09-27T07:00:00Z</str>
+    </arr>
+    <arr name="ds_specs_display">
+      <str>DC|X|text/xml|0|385|Dublin Core Record for this object</str>
+      <str>RELS-EXT|X|application/rdf+xml|2|576|Fedora Object-to-Object Relationship Metadata</str>
+      <str>identityMetadata|X|text/xml|4|392|Identity Metadata</str>
+      <str>rightsMetadata|X|text/xml|0|572|Rights Metadata</str>
+      <str>provenanceMetadata|X|text/xml|2|265|Provenance Metadata</str>
+      <str>events|X|text/xml|5|702|Events</str>
+      <str>descMetadata|M|text/xml|0|279|Descriptive Metadata</str>
+      <str>workflows|E|application/xml|4|14179|Workflow</str>
+      <str>versionMetadata|X|text/xml|8|359|Version Metadata</str>
+      <str>administrativeMetadata|X|text/xml|0|272|Administrative Metadata</str>
+      <str>roleMetadata|X|text/xml|4|695|Role Metadata</str>
+      <str>defaultObjectRights|X|text/xml|0|515|Default Object Rights</str>
+    </arr>
+    <arr name="apo_title_t">
+      <str>[Internal System Objects]</str>
+    </arr>
+    <arr name="apo_title_facet">
+      <str>[Internal System Objects]</str>
+    </arr>
+    <arr name="default_rights_facet">
+      <str>World</str>
+    </arr>
+    <arr name="agreement_facet">
+      <str>druid:fm300jh1784</str>
+    </arr>
+    <arr name="metadata_format_t">
+      <str>mods</str>
+    </arr>
+    <arr name="metadata_format_facet">
+      <str>mods</str>
+    </arr>
+    <arr name="public_dc_title_t">
+      <str>Stafford Photos</str>
+    </arr>
+    <arr name="versions_display">
+      <str>3;3.0.0;</str>
+      <str>2;2.0.0;updated referenced agreement</str>
+      <str>1;1.0.0;Initial Version</str>
+    </arr>
+    <arr name="lifecycle_t">
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+      <str>opened</str>
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+      <str>opened</str>
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+    </arr>
+    <arr name="lifecycle_facet">
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+      <str>opened</str>
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+      <str>opened</str>
+      <str>submitted</str>
+      <str>described</str>
+      <str>published</str>
+      <str>deposited</str>
+      <str>accessioned</str>
+    </arr>
+    <arr name="lifecycle_display">
+      <str>submitted:2013-11-11T23:32:38Z;1</str>
+      <str>described:2013-11-11T23:32:50Z;1</str>
+      <str>published:2013-11-11T23:34:29Z;1</str>
+      <str>deposited:2013-11-11T23:38:21Z;1</str>
+      <str>accessioned:2013-11-11T23:38:45Z;1</str>
+      <str>opened:2014-06-02T22:28:22Z;2</str>
+      <str>submitted:2014-06-02T22:28:58Z;2</str>
+      <str>described:2014-06-02T22:29:42Z;2</str>
+      <str>published:2014-06-02T22:35:19Z;2</str>
+      <str>deposited:2014-06-02T22:36:15Z;2</str>
+      <str>accessioned:2014-06-02T22:36:47Z;2</str>
+      <str>opened:2014-07-18T00:06:34Z;3</str>
+      <str>submitted:2014-08-06T22:27:49Z;3</str>
+      <str>described:2014-08-06T22:28:03Z;3</str>
+      <str>published:2014-08-07T06:33:38Z;3</str>
+      <str>deposited:2014-08-11T03:30:14Z;3</str>
+      <str>accessioned:2014-08-11T03:31:36Z;3</str>
+    </arr>
+    <arr name="submitted_day_t">
+      <str>2014-08-06</str>
+    </arr>
+    <arr name="submitted_day_facet">
+      <str>2014-08-06</str>
+    </arr>
+    <arr name="submitted_dt">
+      <date>2013-11-11T23:32:38Z</date>
+    </arr>
+    <arr name="submitted_facet">
+      <str>2013-11-11T23:32:38Z</str>
+    </arr>
+    <arr name="submitted_earliest_dt">
+      <date>2013-11-11T23:32:38Z</date>
+    </arr>
+    <arr name="submitted_earliest_facet">
+      <str>2013-11-11T23:32:38Z</str>
+    </arr>
+    <arr name="submitted_latest_dt">
+      <date>2014-08-06T22:27:49Z</date>
+    </arr>
+    <arr name="submitted_latest_facet">
+      <str>2014-08-06T22:27:49Z</str>
+    </arr>
+    <arr name="described_day_t">
+      <str>2014-08-06</str>
+    </arr>
+    <arr name="described_day_facet">
+      <str>2014-08-06</str>
+    </arr>
+    <arr name="described_dt">
+      <date>2013-11-11T23:32:50Z</date>
+    </arr>
+    <arr name="described_facet">
+      <str>2013-11-11T23:32:50Z</str>
+    </arr>
+    <arr name="described_earliest_dt">
+      <date>2013-11-11T23:32:50Z</date>
+    </arr>
+    <arr name="described_earliest_facet">
+      <str>2013-11-11T23:32:50Z</str>
+    </arr>
+    <arr name="described_latest_dt">
+      <date>2014-08-06T22:28:03Z</date>
+    </arr>
+    <arr name="described_latest_facet">
+      <str>2014-08-06T22:28:03Z</str>
+    </arr>
+    <arr name="published_day_t">
+      <str>2014-08-07</str>
+    </arr>
+    <arr name="published_day_facet">
+      <str>2014-08-07</str>
+    </arr>
+    <arr name="published_dt">
+      <date>2013-11-11T23:34:29Z</date>
+    </arr>
+    <arr name="published_facet">
+      <str>2013-11-11T23:34:29Z</str>
+    </arr>
+    <arr name="published_earliest_dt">
+      <date>2013-11-11T23:34:29Z</date>
+    </arr>
+    <arr name="published_earliest_facet">
+      <str>2013-11-11T23:34:29Z</str>
+    </arr>
+    <arr name="published_latest_dt">
+      <date>2014-08-07T06:33:38Z</date>
+    </arr>
+    <arr name="published_latest_facet">
+      <str>2014-08-07T06:33:38Z</str>
+    </arr>
+    <arr name="deposited_day_t">
+      <str>2014-08-11</str>
+    </arr>
+    <arr name="deposited_day_facet">
+      <str>2014-08-11</str>
+    </arr>
+    <arr name="deposited_dt">
+      <date>2013-11-11T23:38:21Z</date>
+    </arr>
+    <arr name="deposited_facet">
+      <str>2013-11-11T23:38:21Z</str>
+    </arr>
+    <arr name="deposited_earliest_dt">
+      <date>2013-11-11T23:38:21Z</date>
+    </arr>
+    <arr name="deposited_earliest_facet">
+      <str>2013-11-11T23:38:21Z</str>
+    </arr>
+    <arr name="deposited_latest_dt">
+      <date>2014-08-11T03:30:14Z</date>
+    </arr>
+    <arr name="deposited_latest_facet">
+      <str>2014-08-11T03:30:14Z</str>
+    </arr>
+    <arr name="accessioned_day_t">
+      <str>2014-08-11</str>
+    </arr>
+    <arr name="accessioned_day_facet">
+      <str>2014-08-11</str>
+    </arr>
+    <arr name="accessioned_dt">
+      <date>2013-11-11T23:38:45Z</date>
+    </arr>
+    <arr name="accessioned_facet">
+      <str>2013-11-11T23:38:45Z</str>
+    </arr>
+    <arr name="accessioned_earliest_dt">
+      <date>2013-11-11T23:38:45Z</date>
+    </arr>
+    <arr name="accessioned_earliest_facet">
+      <str>2013-11-11T23:38:45Z</str>
+    </arr>
+    <arr name="accessioned_latest_dt">
+      <date>2014-08-11T03:31:36Z</date>
+    </arr>
+    <arr name="accessioned_latest_facet">
+      <str>2014-08-11T03:31:36Z</str>
+    </arr>
+    <arr name="opened_day_t">
+      <str>2014-07-18</str>
+    </arr>
+    <arr name="opened_day_facet">
+      <str>2014-07-18</str>
+    </arr>
+    <arr name="opened_dt">
+      <date>2014-06-02T22:28:22Z</date>
+    </arr>
+    <arr name="opened_facet">
+      <str>2014-06-02T22:28:22Z</str>
+    </arr>
+    <arr name="opened_earliest_dt">
+      <date>2014-06-02T22:28:22Z</date>
+    </arr>
+    <arr name="opened_earliest_facet">
+      <str>2014-06-02T22:28:22Z</str>
+    </arr>
+    <arr name="opened_latest_dt">
+      <date>2014-07-18T00:06:34Z</date>
+    </arr>
+    <arr name="opened_latest_facet">
+      <str>2014-07-18T00:06:34Z</str>
+    </arr>
+    <arr name="status_display">
+      <str>v3 Accessioned</str>
+    </arr>
+    <arr name="version_opened_t">
+      <str>2014-07-18</str>
+    </arr>
+    <arr name="version_opened_facet">
+      <str>2014-07-18</str>
+    </arr>
+    <arr name="current_version_display">
+      <str>3</str>
+    </arr>
+    <arr name="current_version_facet">
+      <str>3</str>
+    </arr>
+    <arr name="last_modified_day_facet">
+      <str>2014-08-07</str>
+    </arr>
+    <long name="_version_">1480424129067745280</long>
+    <date name="timestamp">2014-09-27T18:27:49.279Z</date></doc>
