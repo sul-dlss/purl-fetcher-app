@@ -45,7 +45,7 @@ Assuming your local jetty is already started:
 On the CI server, or if your local jetty is not yet started:
 
   rake ci
-  
+    
 == Tunneling into Stanford Solr For Developmental Work 
 
 If you want to tunnel into production (or dev) Solr you can tunnel in.
