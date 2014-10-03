@@ -29,6 +29,7 @@ group :development, :staging, :test do
   gem 'jettywrapper'
   gem 'sqlite3'
   gem 'awesome_print'
+  gem 'yard'
 end
 
 group :deployment do

@@ -45,7 +45,17 @@ Assuming your local jetty is already started:
 On the CI server, or if your local jetty is not yet started:
 
   rake ci
-    
+
+== Generate documentation
+
+To generate documentation into the "doc" folder:
+
+	yard
+
+To keep a local server running with up to date code documentation that you can view in your browser:
+
+	yard server --reload    
+
 == Tunneling into Stanford Solr For Developmental Work 
 
 If you want to tunnel into production (or dev) Solr you can tunnel in.
@@ -56,5 +66,5 @@ If you want to tunnel into production (or dev) Solr you can tunnel in.
   Shut down dor-fetcher-services if running (console or webapp).
   In your Solr.yml file comment out the current development url.
   Add in url: http://localhost:8080/solr/CORENAME under development.
-  Restart the app, you will not be using the solr server selected in step two.
+  Restart the app, you will be using the solr server selected in step two.
 
