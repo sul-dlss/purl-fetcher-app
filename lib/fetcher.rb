@@ -20,7 +20,7 @@ module Fetcher
     
     times = get_times(params)
     
-    params= {
+    solrparams= {
       :q => "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", 
       :wt => :json,
       :fl => "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field}"
