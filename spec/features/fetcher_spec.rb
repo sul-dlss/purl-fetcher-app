@@ -48,5 +48,15 @@ describe("Fetcher lib")  do
     expect{@fetcher.parse_druid('bogus')}.to raise_error('invalid druid')
   end
   
+  it "should add the correct value to the solr params for counting rows" do
+    solrparams={:q=>{:something=>'dude'},:fq=>{:somethingelse=>'test'}}
+    default_max_row=100000000
+    expect(@fetcher.get_rows(solrparams,{:rows=>0})).to eq(solrparams.merge(:rows=>0))
+    expect(@fetcher.get_rows(solrparams,{})).to eq(solrparams.merge(:rows=>default_max_row))
+    expect(@fetcher.get_rows(solrparams,{:othercrap=>'500'})).to eq(solrparams.merge(:rows=>default_max_row))   
+    expect(@fetcher.get_rows(solrparams,{:rows=>'500'})).to eq(solrparams.merge(:rows=>'500'))    
+     
+  end
+  
 end
   

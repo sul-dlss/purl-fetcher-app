@@ -4,7 +4,7 @@ class ApoController < ApplicationController
 
   # API call to get a full list of all APOs
   #
-  # @return [requested_format] Will return json or xml (depending on what was requested) structure containg all of the published APOs.  If no format requested, defaults to json
+  # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published APOs.  If no format requested, defaults to json
   #
   # @param [querystring] Paramters can be specified in the querystring
   #   * rows = number of results to return (set to 0 to only get count)
@@ -13,10 +13,10 @@ class ApoController < ApplicationController
   #
   # Example:
   #   http://localhost:3000/apo.json  # gives all APOs in json format
-  #   http://localhost:3000/apo?count_only=true # returns only the count of APOs in json format
+  #   http://localhost:3000/apo?rows=0 # returns only the count of APOs in json format
   #   http://localhost:3000/apo.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the APOs published in January of 2014 in XML format
   #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
-  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z&count_only=true # returns only the count of APOs published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of APOs published SINCE January of 2014 up until today in json format
   def index
     #/apo/
     #TODO: Option for count
@@ -30,21 +30,29 @@ class ApoController < ApplicationController
     render_result(result)
     
   end
-  
+
+  # API call to get a list of druids associated with a specific APO
+  #
+  # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published druids associated with a specific APO.
+  #  If no format requested, defaults to json
+  #
+  # @param [string] druid of the APO requested
+  #
+  # @param [querystring] Paramters can be specified in the querystring
+  #   * rows = number of results to return (set to 0 to only get count)
+  #   * first_modified = datetime in UTC (default: earliest possible date)
+  #   * last_modified = datetime in UTC (default: current time)
+  #
+  # Example:
+  #   http://localhost:3000/apo/druid:oo000oo0001.json  # gives all objects associated with this druid APO in json format
+  #   http://localhost:3000/apo/druid:oo000oo0001?rows=0 # returns only the count of APOs in json format
+  #   http://localhost:3000/apo/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this druid APO published in January of 2014 in XML format
   def show
-  #/apo/:druid?first_modified=TIME UTC&last_modified=TIME_UTC
-  #TODO: Option for count
   #TODO: Option for recursion 
-  
-  #Example for African Music APO:
-  #Solr.get 'select', :params => {:q => '(is_governed_by_s:"info:fedora/druid:gn965yg6021" OR id:"druid:gn965yg6021") AND obj_last_mod_date_dt:["1970-08-19T23:00:09Z" TO "2014-09-19T23:00:09Z"]', :wt=> :json, :fl => 'id AND obj_last_mod_date_dt AND active_fedora_model_s'}
   
   result=find_all_under(params, :apo)
   render_result(result)
 
   end
   
-  
-
-
 end
