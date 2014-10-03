@@ -1,7 +1,22 @@
 #include Fetcher
 
 class ApoController < ApplicationController
-  
+
+  # API call to get a full list of all APOs
+  #
+  # @return [requested_format] Will return json or xml (depending on what was requested) structure containg all of the published APOs.  If no format requested, defaults to json
+  #
+  # @param [querystring] Paramters can be specified in the querystring
+  #   * rows = number of results to return (set to 0 to only get count)
+  #   * first_modified = datetime in UTC (default: earliest possible date)
+  #   * last_modified = datetime in UTC (default: current time)
+  #
+  # Example:
+  #   http://localhost:3000/apo.json  # gives all APOs in json format
+  #   http://localhost:3000/apo?count_only=true # returns only the count of APOs in json format
+  #   http://localhost:3000/apo.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the APOs published in January of 2014 in XML format
+  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z&count_only=true # returns only the count of APOs published SINCE January of 2014 up until today in json format
   def index
     #/apo/
     #TODO: Option for count
@@ -11,7 +26,7 @@ class ApoController < ApplicationController
     #target_type = "Dor::AdminPolicyObject"
     #response = Solr.get 'select', :params => {:q => "(#{type_field}):\"#{target_type}\")", :wt => :json, :fl ="#{id}" }
     
-    result=find_all_fedora_type(:apo)
+    result=find_all_fedora_type(params,:apo)
     render_result(result)
     
   end

@@ -6,7 +6,7 @@ class CollectionController < ApplicationController
     #target_type = "Dor::Collection"
     #response = Solr.get 'select', :params => {:q => "(#{type_field}):\"#{target_type}\")", :wt => :json, :fl ="#{id}" }
     
-    result=find_all_fedora_type(:collection,params)
+    result=find_all_fedora_type(params,:collection)
     render_result(result)
   
   end

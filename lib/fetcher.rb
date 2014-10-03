@@ -1,17 +1,21 @@
 module Fetcher
-  def find_all_fedora_type(ftype, count_only=false)
+  
+  def find_all_fedora_type(params,ftype)
+    
     #ftype should be :collection or :apo (or other symbol if we added more since this was updated)
 
-    params={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\"", :wt => :json, :fl =>"#{ID_Field}"}
-    get_rows(params,count_only)
+    times = get_times(params)
+
+    solrparams={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", :wt => :json, :fl =>"#{ID_Field}"}
+    get_rows(solrparams,params)
     
-    response = Solr.get 'select', :params => params
-    #TODO:  Call JSON Formatter
+    response = Solr.get 'select', :params => solrparams
     
     return response
+    
   end
   
-  def find_all_under(params, controlled_by, count_only=false)
+  def find_all_under(params, controlled_by)
     #controlled_by should be :collection or :apo (or other symbol if we added more since this was updated)
     
     times = get_times(params)
@@ -21,30 +25,28 @@ module Fetcher
       :wt => :json,
       :fl => "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field}"
       }
-      get_rows(params,count_only)
+      get_rows(solrparams,params)
 
-    response = Solr.get 'select', :params => params
+    response = Solr.get 'select', :params => solrparams
   
     #TODO: If APO in response and said APO's druid != user provided druid, recursion!  
     
-    #TODO: Format in JSON
     return response  
   end
   
-  def find_by_tag(params, count_only=false)
+  def find_by_tag(params)
     times = get_times(params)
 
-    params={
+    solrparams={
       :q => "(#{Controller_Types[:tag]}:\"#{params[:tag]}\") AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", 
       :wt => :json,
       :fl => "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field}"
       }
 
-      get_rows(params,count_only)
+      get_rows(solrparams,params)
     
-    response = Solr.get 'select', :params => params
+    response = Solr.get 'select', :params => solrparams
 
-    #TODO: Format return response into a nested list and return it
     return response
 
   end
@@ -57,12 +59,35 @@ module Fetcher
     return Druid_Prefix + parse_druid(druid)
   end
   
-  # given a druid in any format (e.g. oo000oo0001 or druid:oo00oo0001, returns only the numberical part, striping the "druid:" prefix -- if invalid druid passed, will raise an exception)
+  # Given a druid in any format (e.g. oo000oo0001 or druid:oo00oo0001), returns only the numberical part, stripping the "druid:" prefix
+  # If invalid druid passed, will raise an exception.
+  #
+  # @return [string] druid
+  #
+  # @param [string] druid
+  #
+  # Example:
+  #   parse_druid('oo000oo0001') # returns oo000oo0001
+  #   parse_druid('druid:oo000oo0001') # returns oo000oo0001
+  #   parse_druid('junk') # throws an exception
   def parse_druid(druid)
     matches = druid.match(/[a-zA-Z]{2}\d{3}[a-zA-Z]{2}\d{4}/)
     matches.nil? ? raise("invalid druid") : matches[0]
   end
-  
+ 
+  # Given a hash containing "first_modified" and "last_modified", ensures the date formats are valid, converts to proper ISO8601 if they are.
+  # If first_modified is missing, sets to the earliest possible date.
+  # If last_modified is missing, sets to current date/time.
+  # If invalid dates are passed in, throws an exception.
+  #
+  # @return [hash] containing :first and :last keys with proper vaues
+  #
+  # @param [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
+  #
+  # Example:
+  #   get_times(:first_modified=>'01/01/2014') # returns {:first=>'2014-01-01T00:00:00Z',last:'CURRENT_DATETIME_IN_UTC_ISO8601'}
+  #   get_times(:first_modified=>'junk') # throws exception
+  #   get_times(:first_modified=>'01/01/2014',:last_modified=>'01/01/2015') # returns {:first=>'2014-01-01T00:00:00Z',last:'2015-01-01T00:00:00Z'}
   def get_times(p = {})
     params = p || {}
     first_modified = params[:first_modified] || Time.at(0).utc.iso8601
@@ -78,10 +103,16 @@ module Fetcher
     raise "start time is before end time" if start_time >= end_time
     return {:first => start_time, :last => end_time}
   end
-  
-  def get_rows(params,count_only)
-    params.merge!(:rows => 0) if count_only
-    params.merge!(:rows => 100000000) unless params.has_key?(:rows)
+
+  # Given a params hash that will be passed to solr, adds in the proper :rows value depending on if we are requesting a certain number of rows or not
+  #
+  # @return [hash] solr params hash
+  #
+  # @param [hash] solr params has to be altered
+  # @param [hash] query string params from user
+  #
+  def get_rows(solrparams,params)
+    params.has_key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000)  # if user passes in the rows they want, use that, else just return everything
   end
   
 end

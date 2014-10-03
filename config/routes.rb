@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   #APO Routes
-  resources :apo 
-  resources :tag
-  resources :collection
+  resources :apo, :defaults => { :format => 'json' }
+  resources :tag, :defaults => { :format => 'json' }
+  resources :collection, :defaults => { :format => 'json' }
 
   
   # The priority is based upon order of creation: first created -> highest priority.
