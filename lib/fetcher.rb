@@ -1,5 +1,15 @@
+# A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
-  
+
+  # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type (potentially limited by rows or date if specified by the user)
+  #
+  # @return [hash] solr response
+  #
+  # @param params [hash] querystring parameters from user, which could be an empty hash
+  # @param ftype [string] fedora object type, could be :apo or :collection
+  #
+  # Example:
+  #   find_all_fedora_type(params,:apo)
   def find_all_fedora_type(params,ftype)
     
     #ftype should be :collection or :apo (or other symbol if we added more since this was updated)
@@ -14,7 +24,16 @@ module Fetcher
     return response
     
   end
-  
+
+  # Given the user's querystring parameters (including the ID paramater, which represents the druid), and a fedora object type, return a solr response containing all of the objects controlled by that druid of that type (potentially limited by rows or date if specified by the user)
+  #
+  # @return [hash] solr response
+  #
+  # @param params [hash] querystring parameters from user, which must include :id of the druid
+  # @param controlled_by [string] fedora object type, could be :apo or :collection
+  #
+  # Example:
+  #   find_all_fedora_type(params,:apo)  
   def find_all_under(params, controlled_by)
     #controlled_by should be :collection or :apo (or other symbol if we added more since this was updated)
     
@@ -33,7 +52,15 @@ module Fetcher
     
     return response  
   end
-  
+
+  # Given the user's querystring parameters (including the ID paramater, which represents the tag), return a solr response containing all of the objects associated with the supplied tag(potentially limited by rows or date if specified by the user)
+  #
+  # @return [hash] solr response
+  #
+  # @param params [hash] querystring parameters from user, which must include :id of the tag
+  #
+  # Example:
+  #   find_by_tag(params)    
   def find_by_tag(params)
     times = get_times(params)
 
@@ -51,10 +78,26 @@ module Fetcher
 
   end
 
+  # Given a druid without the druid prefix (e.g. oo000oo0001), add the prefixes needed for querying solr for controllers
+  #
+  # @return [string] druid
+  #
+  # @param druid [string] druid
+  #
+  # Example:
+  #   druid_for_controller('oo000oo0001') # returns info:fedora/druid:oo000oo0001
   def druid_of_controller(druid)
     return Fedora_Prefix + Druid_Prefix + parse_druid(druid)
   end
-  
+
+  # Given a druid without the druid prefix (e.g. oo000oo0001), add the prefix needed for querying solr
+  #
+  # @return [string] druid
+  #
+  # @param druid [string] druid
+  #
+  # Example:
+  #   druid_for_solr('oo000oo0001') # returns druid:oo000oo0001
   def druid_for_solr(druid)
     return Druid_Prefix + parse_druid(druid)
   end
@@ -64,7 +107,7 @@ module Fetcher
   #
   # @return [string] druid
   #
-  # @param [string] druid
+  # @param druid [string] druid
   #
   # Example:
   #   parse_druid('oo000oo0001') # returns oo000oo0001
@@ -82,7 +125,7 @@ module Fetcher
   #
   # @return [hash] containing :first and :last keys with proper vaues
   #
-  # @param [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
+  # @param p [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
   #
   # Example:
   #   get_times(:first_modified=>'01/01/2014') # returns {:first=>'2014-01-01T00:00:00Z',last:'CURRENT_DATETIME_IN_UTC_ISO8601'}
@@ -108,8 +151,8 @@ module Fetcher
   #
   # @return [hash] solr params hash
   #
-  # @param [hash] solr params has to be altered
-  # @param [hash] query string params from user
+  # @param solrparams [hash] solr params has to be altered
+  # @param params [hash] query string params from user
   #
   def get_rows(solrparams,params)
     params.has_key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000)  # if user passes in the rows they want, use that, else just return everything
