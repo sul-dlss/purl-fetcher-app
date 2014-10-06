@@ -7,7 +7,7 @@ class TagController < ApplicationController
   #
   # @param [string] tag requested, should be URL encoded if it contains special characters
   #
-  # @param [querystring] Paramters can be specified in the querystring
+  # @param [querystring] Parameters can be specified in the querystring
   #   * rows = number of results to return (set to 0 to only get count)
   #   * first_modified = datetime in UTC (default: earliest possible date)
   #   * last_modified = datetime in UTC (default: current time)
@@ -28,7 +28,7 @@ class TagController < ApplicationController
   # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published druids associated with a specific tag.
   #  If no format requested, defaults to json
   #
-  # @param [querystring] Paramters can be specified in the querystring
+  # @param [querystring] Parameters can be specified in the querystring
   #   * rows = number of results to return (set to 0 to only get count)
   #   * first_modified = datetime in UTC (default: earliest possible date)
   #   * last_modified = datetime in UTC (default: current time)
