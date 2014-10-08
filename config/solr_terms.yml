@@ -3,13 +3,12 @@ development: &default
   collection_field: "is_member_of_collection_s"
   tag_field: "tag_facet"
   id_field: "id"
-  collection_type: "Dor::Collection"
-  apo_type: "Dor::AdminPolicyObject"
-  fedora_type_field: "active_fedora_model_s"
-  fedora_prefix: "info:fedora/"
+  collection_type: "collection"
+  apo_type: "adminpolicy"
+  fedora_type_field: "identityMetadata_objectType_t" 
   druid_prefix: "druid:"
   last_changed: "published_dt"
-  item_type: "Dor::Item"
+  item_type: "item"
 test: 
   <<: *default
 staging: 

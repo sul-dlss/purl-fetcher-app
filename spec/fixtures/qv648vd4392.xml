@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:qv648vd4392</field>
     <field name ="title_t">The Revs Institute for Automotive Research</field>
-    <field name ="active_fedora_model_s">Dor::AdminPolicyObject</field>
+    <field name ="identityMetadata_objectType_t">Dor::AdminPolicyObject</field>
     <field name ="published_dt">2013-11-11T23:34:29Z</field>
 </doc>
       

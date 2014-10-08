@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:vb546ms7107</field>
     <field name ="title_t">Stafford Photos</field>
-    <field name ="active_fedora_model_s">Dor::AdminPolicyObject</field>
+    <field name ="identityMetadata_objectType_t">Dor::AdminPolicyObject</field>
     <field name ="published_dt">2014-09-09T15:40:29Z</field>
     <field name ="published_dt">2014-08-08T15:20:28Z</field>
     <field name ="published_dt">2013-03-13T12:13:13Z</field>

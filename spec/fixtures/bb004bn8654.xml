@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:bb004bn8654</field>
     <field name ="title_t"> Bryar 250 Trans-American: 1966</field>
-    <field name ="active_fedora_model_s">Dor::Item</field>
+    <field name ="identityMetadata_objectType_t">Dor::Item</field>
     <field name ="published_dt">2014-05-05T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:06:06Z</field>

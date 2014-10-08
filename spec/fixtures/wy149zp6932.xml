@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:wy149zp6932</field>
     <field name ="title_t">The George Phillips Collection of the Revs Institute</field>
-    <field name ="active_fedora_model_s">Dor::Collection</field>
+    <field name ="identityMetadata_objectType_t">Dor::Collection</field>
     <field name ="published_dt">2014-05-05T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:06:06Z</field>
