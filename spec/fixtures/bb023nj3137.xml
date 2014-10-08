@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:bb023nj3137</field>
     <field name ="title_t">Snetterton Vanwall Trophy: 1958</field>
-    <field name ="identityMetadata_objectType_t">Dor::Item</field>
+    <field name ="identityMetadata_objectType_t">item</field>
     <field name ="published_dt">2014-05-05T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:04:13Z</field>
     <field name ="published_dt">2014-06-06T05:06:06Z</field>
