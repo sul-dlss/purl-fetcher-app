@@ -9,6 +9,8 @@ development: &default
   druid_prefix: "druid:"
   last_changed: "published_dt"
   item_type: "item"
+  fedora_prefix: "info:fedora/"
+  title_field: "title_t"
 test: 
   <<: *default
 staging: 

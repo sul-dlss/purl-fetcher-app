@@ -52,11 +52,12 @@ begin
   #Convience constants for Solr Fields
   #solr_field_yaml = DorFetcherService::Application.config.solr_terms
   ID_Field = Solr_terms['id_field']
-  Type_Field = Solr_terms['fedora_type_field'] 
+  Type_Field = Solr_terms['fedora_type_field']
+  Title_Field = Solr_terms['title_field'] 
   Last_Changed_Field = Solr_terms['last_changed']
   Fedora_Prefix = Solr_terms['fedora_prefix']
   Druid_Prefix = Solr_terms['druid_prefix']
-  Fedora_Types = {:collection =>Solr_terms['collection_type'], :apo =>Solr_terms['apo_type'], :item=>Solr_terms['item _type']}
+  Fedora_Types = {:collection =>Solr_terms['collection_type'], :apo =>Solr_terms['apo_type'], :item=>Solr_terms['item_type']}
   Controller_Types = {:collection => Solr_terms['collection_field'], :apo=>Solr_terms['apo_field'], :tag=> Solr_terms['tag_field']}
 rescue
   puts 'WARNING: configuration not complete'

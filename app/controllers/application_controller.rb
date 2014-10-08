@@ -1,4 +1,5 @@
 require 'rsolr'
+require 'json'
 
 class ApplicationController < ActionController::Base
   include Fetcher
