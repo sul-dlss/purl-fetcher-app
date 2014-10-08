@@ -52,3 +52,26 @@ end
 class FetcherTester
   include Fetcher
 end
+
+class FixtureData
+  @@collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yg867hg1375', 'druid:yt502zj0924'] 
+  @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
+  
+  def number_of_collections
+    return @@collection_druids.size
+  end
+  
+  def collection_druids_list
+    return @@collection_druids
+  end
+  
+  def number_of_apos
+    return @@apo_druids.size
+  end
+  
+  def apo_druids_list
+    return @@apo_druids
+  end
+ 
+  
+end

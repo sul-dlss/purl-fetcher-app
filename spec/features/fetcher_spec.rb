@@ -4,6 +4,8 @@ describe("Fetcher lib")  do
   
   before :each do
     @fetcher=FetcherTester.new
+    @fixture_data = FixtureData.new
+ 
   end
 
   it "should return the current date and time when time not passed in" do
@@ -56,6 +58,30 @@ describe("Fetcher lib")  do
     expect(@fetcher.get_rows(solrparams,{:othercrap=>'500'})).to eq(solrparams.merge(:rows=>default_max_row))   
     expect(@fetcher.get_rows(solrparams,{:rows=>'500'})).to eq(solrparams.merge(:rows=>'500'))    
   end
+  
+  it "number of Collections found should be all collections when not supplied a date range" do
+    expect(@fetcher.find_all_fedora_type({},:collection)[:response][:numFound]).to eq(@fixture_data.number_of_collections)
+  end
+  
+  it "should return all Collection Druids when not supplied a date range" do
+    druids_found = @fetcher.find_all_fedora_type({},:collection)[:response][:docs]
+    @fixture_data.collection_druids_list.each do |druid|
+      expect(druids_found.select {|i| i[:id]==druid}.size).to eq(1)
+    end
+  end
+  
+  it "number of APOs found should be all APOs when not supplied a date range" do
+    expect(@fetcher.find_all_fedora_type({},:apo)[:response][:numFound]).to eq(@fixture_data.number_of_apos)
+  end
+  
+  it "should return all APO Druids when not supplied a date range" do
+    apos_found = @fetcher.find_all_fedora_type({},:apo)[:response][:docs]
+    @fixture_data.apo_druids_list.each do |apo|
+      expect(apos_found.select {|i| i[:id]==apo}.size).to eq(1)
+    end
+  end
+  
+  
   
 end
   

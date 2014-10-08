@@ -72,6 +72,7 @@ namespace :dorfetcher do
   task :delete_records_in_solr do
     unless Rails.env.production? || Rails.env.staging? || DorFetcherService::Application.config.solr_url.include?('8080')
       puts "Deleting all solr documents from #{DorFetcherService::Application.config.solr_url}"
+      puts DorFetcherService::Application.config.solr_url 
       RestClient.post "#{DorFetcherService::Application.config.solr_url}/update?commit=true", "<delete><query>*:*</query></delete>" , :content_type => "text/xml"
     else
       puts "Refusing to delete since we're running under the #{Rails.env} environment or port 8080. You know, for safety."
