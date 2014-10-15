@@ -58,9 +58,6 @@ end
 class FixtureData
   @@collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yg867hg1375', 'druid:yt502zj0924'] 
   @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
-  @@base_url = "http://127.0.0.1:3000"
-  
-
   
   def number_of_collections
     return @@collection_druids.size
@@ -79,17 +76,13 @@ class FixtureData
   end
   
   def base_collections_url
-    return @@base_url + "/collection/"
+    return "/collection/"
   end
   
   def base_apos_url
-    return @@base_url + "/apo/"
+    return "/apo/"
   end
-  
-  def base_url
-    return @@base_url
-  end
-  
+ 
   def add_params_to_url(url, params)
     count = 0 
     params.each do |key,value|

@@ -62,7 +62,8 @@ describe("Fetcher lib")  do
   
   it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
      target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-     response = @fixture_data.get_response_body(target_url)
+     visit target_url
+     response = JSON.parse(page.body)
      
      #We Should Only Have The Four Collection Objects
      expect(response['collection'].size).to eq(@fixture_data.number_of_collections)
@@ -81,7 +82,8 @@ describe("Fetcher lib")  do
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
     target_url = @fixture_data.add_params_to_url(@fixture_data.base_apos_url, {})
-    response = @fixture_data.get_response_body(target_url)
+    visit target_url
+    response = JSON.parse(page.body)
     
     #We Should Only Have The Four Collection Objects
     expect(response['adminpolicy'].size).to eq(@fixture_data.number_of_apos)
@@ -104,10 +106,12 @@ describe("Fetcher lib")  do
     #Set the dates
     solrparams = {:first_modified =>'2014-01-01T00:00:00Z', :last_modified => '2014-05-06T00:00:00Z'}
     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, solrparams)
-    response = @fixture_data.get_response_body(target_url)
+    visit target_url
+    response = JSON.parse(page.body)
     
     #We Should Only Have The Three Revs Fixtures
-    expect(response['collection'].size).to eq(3)
+    expect(page).to have_content('"counts":[{"collection":3},{"total_count":3}]}')
+   
     
     revs_druids = ['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924']
     
@@ -124,7 +128,6 @@ describe("Fetcher lib")  do
     expect(response['adminpolicy']).to be nil
     
   end
-  
   
   def result_should_contain_druids(druids, response)
     response.each do |r|
