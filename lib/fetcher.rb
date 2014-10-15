@@ -168,6 +168,8 @@ module Fetcher
   def format_json(params, response)
     
     all_json = {}
+    times = get_times(params)
+
     #Create A Hash that contains an empty list for each Fedora Type
     Fedora_Types.each do |key, value|
       all_json.store(value.to_sym, [])
@@ -178,10 +180,8 @@ module Fetcher
       type = doc[Type_Field.to_sym][0]
       
       #Make the JSON for this druid
-      j = {:druid => doc[ID_Field.to_sym], :latest_change=> doc[Last_Changed_Field.to_sym], :title => doc[Title_Field.to_sym]}
-      #TODO: Write a function that displays the last date within the date range supplied by the user
-      #TODO:  Pass params to this function
-      
+      j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => doc[Title_Field.to_sym]}
+
       #Append this little json stub to its proper parent array
       all_json[type.to_sym] << j
     end
@@ -220,6 +220,20 @@ module Fetcher
   
   end
   
-  
+  # This function determines the latest date modified/changed in the appropriate timeframe
+  # If no timeframe provided in the params, it is just the latest date.  Otherwise it uses
+  # first_modified and/or last_modified as the bounding dates and returns the latest date in
+  # the requested timeframe
+  def determine_latest_date(times, last_changed)
+      latest_date = Time.at(0).utc.iso8601
+
+      last_changed.each do |date|
+        if ((date > times[:first] && date < times[:last]) && date > latest_date)
+          latest_date = date
+        end
+      end
+      return latest_date
+
+  end
   
 end

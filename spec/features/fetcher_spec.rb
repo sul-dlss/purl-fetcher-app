@@ -81,7 +81,10 @@ describe("Fetcher lib")  do
     end
   end
   
-  
+  it "should return only one latest-change date that is the latest value" do
+    solrparams = {first_modified:'2014-01-01T00:00:00Z',last_modified:'2014-05-06T00:00:00Z'}
+    druids_found = @fetcher.find_all_under(solrparams, "vb546ms7107")[:response][:docs]
+    expect(druids_found.size).to eq(6)
+  end
   
 end
-  
