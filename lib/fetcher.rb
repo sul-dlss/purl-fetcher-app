@@ -225,14 +225,24 @@ module Fetcher
   # first_modified and/or last_modified as the bounding dates and returns the latest date in
   # the requested timeframe
   def determine_latest_date(times, last_changed)
-      latest_date = Time.at(0).utc.iso8601
-
-      last_changed.each do |date|
-        if ((date > times[:first] && date < times[:last]) && date > latest_date)
-          latest_date = date
+      #latest_date = Time.at(0).utc.iso8601
+      
+      #Sort with latest date first
+      changes_sorted = last_changed.sort.reverse
+      
+      prev_change = changes_sorted[0] #There has to be at least one, otherwise item was not published and could not have been harvested
+      changes_sorted.each do |c|
+        
+        #all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had zero results for this, we just want the first one earlier than :last
+        if c <= times[:last]
+          return c
         end
       end
-      return latest_date
+      
+      #If we get down here we have a big problem, because there should have been at least one date earlier than times[:last]
+      raise("Error finding latest changed date, failed to find one")
+
+      
 
   end
   
