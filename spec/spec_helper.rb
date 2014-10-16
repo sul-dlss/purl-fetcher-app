@@ -83,17 +83,3 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
-
-class TestHelper
-  def result_should_contain_druids(druids, response)
-    response.each do |r|
-      expect(druids.include?(r['druid'])).to be true
-      
-      #expect(druids[r['druid']].include?).to be_true
-      #puts response[druid]
-      #expect(response[druid]).to be
-    end
-  
-  end
-  
-end

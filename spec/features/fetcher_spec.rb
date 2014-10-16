@@ -5,8 +5,6 @@ describe("Fetcher lib")  do
   before :each do
     @fetcher=FetcherTester.new
     @fixture_data = FixtureData.new
-    @test_helper = TestHelper.new
- 
   end
 
   it "should return the current date and time when time not passed in" do
@@ -111,9 +109,6 @@ describe("Fetcher lib")  do
     
     #We Should Only Have The Three Revs Fixtures
     expect(page).to have_content('"counts":[{"collection":3},{"total_count":3}]}')
-   
-    
-    revs_druids = ['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924']
     
     #Ensure The Three Revs Collection Driuds Are Present
     result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collection'])
@@ -132,10 +127,6 @@ describe("Fetcher lib")  do
   def result_should_contain_druids(druids, response)
     response.each do |r|
       expect(druids.include?(r['druid'])).to be true
-      
-      #expect(druids[r['druid']].include?).to be_true
-      #puts response[druid]
-      #expect(response[druid]).to be
     end
   
   end
@@ -143,10 +134,6 @@ describe("Fetcher lib")  do
   def result_should_not_contain_druids(druids, response)
     response.each do |r|
       expect(druids.include?(r['druid'])).to be false
-      
-      #expect(druids[r['druid']].include?).to be_true
-      #puts response[druid]
-      #expect(response[druid]).to be
     end
   
   end
