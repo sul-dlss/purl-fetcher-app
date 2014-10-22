@@ -4,11 +4,14 @@ lock '3.2.1'
 set :application, 'dor-fetcher-service'
 set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
 
+# Prompt for the correct username
+set :user, ask("User", 'enter in the app username')
+
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/lyberadmin/dor-fetcher-service'
+ask :deploy_to, '/opt/app/dor-fetcher-service'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -23,7 +26,7 @@ set :deploy_to, '/home/lyberadmin/dor-fetcher-service'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/solr.yml}
+set :linked_files, %w{config/solr.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -32,7 +35,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
 
 namespace :deploy do
 
