@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-group :development, :staging, :test do
+group :test do
   gem 'jettywrapper'
   gem 'sqlite3'
   gem 'awesome_print'
@@ -39,7 +39,7 @@ group :deployment do
   gem 'capistrano-rvm'
 end
 
-group :staging, :production do
+group :staging, :production, :development do
   gem 'mysql2'
 end
 
