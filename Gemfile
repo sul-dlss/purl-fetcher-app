@@ -25,8 +25,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-gem 'jettywrapper'
-
 group :test do
   gem 'jettywrapper'
   gem 'sqlite3'
@@ -37,6 +35,7 @@ end
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
+  gem 'capistrano-bundler'
   gem 'lyberteam-capistrano-devel'
   gem 'capistrano-rvm'
 end
