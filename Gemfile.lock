@@ -103,7 +103,7 @@ GEM
     minitest (5.4.1)
     multi_json (1.10.1)
     multipart-post (2.0.0)
-    mysql2 (0.3.16)
+    mysql (2.9.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
@@ -207,7 +207,7 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   lyberteam-capistrano-devel
-  mysql2
+  mysql
   rails (>= 4.1.6)
   rest_client
   rsolr (>= 1.0.10)

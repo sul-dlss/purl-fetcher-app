@@ -43,7 +43,7 @@ group :deployment do
 end
 
 group :staging, :production, :development do
-  gem 'mysql2'
+  gem 'mysql'
 end
 
 group :test do
