@@ -19,13 +19,15 @@ end
 
 desc "Assuming jetty is already running - then migrate, reload all fixtures and run rspec"
 task :local_ci do  
-  Rails.env='test'
-  ENV['RAILS_ENV']='test'
-  Rake::Task["dorfetcher:refresh_fixtures"].invoke
-  Rake::Task["db:migrate"].invoke
-  Rake::Task["db:fixtures:load"].invoke
-  Rake::Task["db:seed"].invoke
-  system('bundle exec rspec spec --color')
+  unless Rails.env.test?  
+    system("bundle exec rake local_ci RAILS_ENV=test")
+  else
+    Rake::Task["dorfetcher:refresh_fixtures"].invoke
+    Rake::Task["db:migrate"].invoke
+    Rake::Task["db:fixtures:load"].invoke
+    Rake::Task["db:seed"].invoke
+    system('bundle exec rspec spec --color')
+  end
 end
 
 namespace :dorfetcher do
