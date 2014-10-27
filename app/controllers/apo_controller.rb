@@ -12,11 +12,11 @@ class ApoController < ApplicationController
   #   * last_modified = datetime in UTC (default: current time)
   #
   # Example:
-  #   http://localhost:3000/apo.json  # gives all APOs in json format
-  #   http://localhost:3000/apo?rows=0 # returns only the count of APOs in json format
-  #   http://localhost:3000/apo.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the APOs published in January of 2014 in XML format
-  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
-  #   http://localhost:3000/apo?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of APOs published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/apos.json  # gives all APOs in json format
+  #   http://localhost:3000/apos?rows=0 # returns only the count of APOs in json format
+  #   http://localhost:3000/apos.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the APOs published in January of 2014 in XML format
+  #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of APOs published SINCE January of 2014 up until today in json format
   def index
     #/apo/
     #TODO: Option for count
@@ -44,9 +44,9 @@ class ApoController < ApplicationController
   #   * last_modified = datetime in UTC (default: current time)
   #
   # Example:
-  #   http://localhost:3000/apo/druid:oo000oo0001.json  # gives all objects associated with this druid APO in json format
-  #   http://localhost:3000/apo/druid:oo000oo0001?rows=0 # returns only the count of APOs in json format
-  #   http://localhost:3000/apo/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this druid APO published in January of 2014 in XML format
+  #   http://localhost:3000/apos/druid:oo000oo0001.json  # gives all objects associated with this druid APO in json format
+  #   http://localhost:3000/apos/druid:oo000oo0001?rows=0 # returns only the count of APOs in json format
+  #   http://localhost:3000/apos/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this druid APO published in January of 2014 in XML format
   def show
   #TODO: Option for recursion 
   

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   #APO Routes
-  resources :apo, :defaults => { :format => 'json' }
-  resources :tag, :defaults => { :format => 'json' }
-  resources :collection, :defaults => { :format => 'json' }
-
+  resources :apo, :tag, :collection, :defaults => { :format => 'json' }
+  resources :apos, :controller=>:apo, :defaults => { :format => 'json' }
+  resources :tags, :controller=>:tag, :defaults => { :format => 'json' }
+  resources :collections, :controller=>:collection, :defaults => { :format => 'json' }
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

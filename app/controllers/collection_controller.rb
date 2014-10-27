@@ -10,11 +10,11 @@ class CollectionController < ApplicationController
   #   * last_modified = datetime in UTC (default: current time)
   #
   # Example:
-  #   http://localhost:3000/collection.json  # gives all collections in json format
-  #   http://localhost:3000/collection?rows=0 # returns only the count of collections in json format
-  #   http://localhost:3000/collection.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the collections published in January of 2014 in XML format
-  #   http://localhost:3000/collection?first_modified=2014-01-01T00:00:00Z # returns only the collections published SINCE January of 2014 up until today in json format
-  #   http://localhost:3000/collection?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of collections published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/collections.json  # gives all collections in json format
+  #   http://localhost:3000/collections?rows=0 # returns only the count of collections in json format
+  #   http://localhost:3000/collections.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the collections published in January of 2014 in XML format
+  #   http://localhost:3000/collections?first_modified=2014-01-01T00:00:00Z # returns only the collections published SINCE January of 2014 up until today in json format
+  #   http://localhost:3000/collections?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of collections published SINCE January of 2014 up until today in json format
   def index
 
     result=find_all_fedora_type(params,:collection)
@@ -35,9 +35,9 @@ class CollectionController < ApplicationController
   #   * last_modified = datetime in UTC (default: current time)
   #
   # Example:
-  #   http://localhost:3000/collection/druid:oo000oo0001.json  # gives all objects associated with this collection  in json format
-  #   http://localhost:3000/collection/druid:oo000oo0001?rows=0 # returns only the count of collection in json format
-  #   http://localhost:3000/collection/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this collection  published in January of 2014 in XML format  
+  #   http://localhost:3000/collections/druid:oo000oo0001.json  # gives all objects associated with this collection  in json format
+  #   http://localhost:3000/collections/druid:oo000oo0001?rows=0 # returns only the count of collection in json format
+  #   http://localhost:3000/collections/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this collection  published in January of 2014 in XML format  
   def show
   
   result=find_all_under(params, :collection)
