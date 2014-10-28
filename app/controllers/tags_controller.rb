@@ -1,4 +1,4 @@
-class TagController < ApplicationController
+class TagsController < ApplicationController
 
   # API call to get a list of druids associated with a specific tag 
   #

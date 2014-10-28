@@ -74,14 +74,6 @@ class FixtureData
   def apo_druids_list
     return @@apo_druids
   end
-  
-  def base_collections_url
-    return "/collection/"
-  end
-  
-  def base_apos_url
-    return "/apo/"
-  end
  
   def add_params_to_url(url, params)
     count = 0 
@@ -104,10 +96,5 @@ class FixtureData
   def get_response_body(url)
     return JSON.parse(get_response(url).body)
   end
-  
-  
-  
- 
- 
-  
+
 end

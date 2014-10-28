@@ -59,7 +59,8 @@ describe("Fetcher lib")  do
   end
   
   it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
-     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
+#     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
+     target_url = @fixture_data.add_params_to_url(collections_path, {})
      visit target_url
      response = JSON.parse(page.body)
      
@@ -79,7 +80,7 @@ describe("Fetcher lib")  do
   
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    target_url = @fixture_data.add_params_to_url(@fixture_data.base_apos_url, {})
+    target_url = @fixture_data.add_params_to_url(apos_path, {})
     visit target_url
     response = JSON.parse(page.body)
     
@@ -103,7 +104,7 @@ describe("Fetcher lib")  do
     
     #Set the dates
     solrparams = {:first_modified =>'2014-01-01T00:00:00Z', :last_modified => '2014-05-06T00:00:00Z'}
-    target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, solrparams)
+    target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
     visit target_url
     response = JSON.parse(page.body)
     

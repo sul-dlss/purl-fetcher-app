@@ -1,4 +1,4 @@
-class CollectionController < ApplicationController
+class CollectionsController < ApplicationController
 
   # API call to get a full list of all collections
   #

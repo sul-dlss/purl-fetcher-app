@@ -1,6 +1,4 @@
-#include Fetcher
-
-class ApoController < ApplicationController
+class AposController < ApplicationController
 
   # API call to get a full list of all APOs
   #
