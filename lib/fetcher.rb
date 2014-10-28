@@ -158,12 +158,12 @@ module Fetcher
     params.has_key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000)  # if user passes in the rows they want, use that, else just return everything
   end
   
-  #Given a solr response hash, create a json string to properly return the data.
+  # Given a solr response hash, create a json string to properly return the data.
   #
+  # @return [hash] formatted json
   #
-  #
-  #
-  #
+  # @param params [hash] query string params from user
+  # @param response [hash] solr response
   #
   def format_json(params, response)
     
@@ -204,11 +204,13 @@ module Fetcher
     
   end
   
-  #This function determines if the user asked for just a count of the item or a full druid list from the item and will return the proper choice
+  # Determines if the user asked for just a count of the item or a full druid list for the item and
+  # returns the proper response
   #
+  # @return [hash] properly formatted json
   #
-  #
-  #
+  # @param params [hash] query string params from user
+  # @param response [hash] solr response
   #
   def determine_proper_response(params, response)
     # :rows=0 indicates they just want a count
@@ -220,10 +222,16 @@ module Fetcher
   
   end
   
-  # This function determines the latest date modified/changed in the appropriate timeframe
+  # Determine the latest date modified/changed in the appropriate timeframe
   # If no timeframe provided in the params, it is just the latest date.  Otherwise it uses
   # first_modified and/or last_modified as the bounding dates and returns the latest date in
   # the requested timeframe
+  #
+  # @return [string] latest modified/changed date
+  #
+  # @param times [hash] properly formatted first_modified and/or last_modified dates
+  # @param last_changed [hash] change dates from solr response
+  #
   def determine_latest_date(times, last_changed)
 
       #Sort with latest date first
@@ -231,7 +239,8 @@ module Fetcher
       
       changes_sorted.each do |c|
         
-        #all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had zero results for this, we just want the first one earlier than :last
+        # all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had
+        # zero results for this, we just want the first one earlier than :last
         if c <= times[:last]
           return c
         end
