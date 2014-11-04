@@ -35,6 +35,7 @@ group :test do
   gem "webmock"
   gem "rspec-rails"
   gem 'capybara'
+  gem 'coveralls'
 end
 
 group :deployment do
