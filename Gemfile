@@ -31,6 +31,7 @@ group :test do
   gem 'sqlite3'
   gem 'awesome_print'
   gem 'yard'
+  gem 'vcr'
 end
 
 group :deployment do
