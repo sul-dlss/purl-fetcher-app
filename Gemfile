@@ -44,6 +44,11 @@ end
 
 group :staging, :production, :development do
   gem 'mysql'
+  
+end
+
+group :development do
+  gem 'jettywrapper'
 end
 
 group :test do
