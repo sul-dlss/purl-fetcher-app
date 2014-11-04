@@ -1,5 +1,5 @@
 language: ruby
-script: bundlex exec rake rspec
+script: bundle exec rake rspec
 rvm:
   - 2.1.2
 notifications:
