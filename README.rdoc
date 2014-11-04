@@ -40,6 +40,8 @@ A web service app that queries the DOR solr service to return info needed for in
 
 ===To run the tests against the current VCR Cassettes:
 
+* Setup database.yml if you haven't already
+   cp config/database.yml.example config/database.yml
 * Install all gems via:
    bundle install
 * Run the tests via:
