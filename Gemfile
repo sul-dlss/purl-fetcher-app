@@ -32,6 +32,7 @@ group :test do
   gem 'awesome_print'
   gem 'yard'
   gem 'vcr'
+  gem "webmock"
 end
 
 group :deployment do
