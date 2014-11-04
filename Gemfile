@@ -28,7 +28,6 @@ gem 'turbolinks'
 
 
 group :test do
-  gem 'jettywrapper'
   gem 'sqlite3'
   gem 'awesome_print'
   gem 'yard'
@@ -47,7 +46,7 @@ group :staging, :production, :development do
   
 end
 
-group :development do
+group :development, :test do
   gem 'jettywrapper'
 end
 
