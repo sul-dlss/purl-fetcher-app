@@ -60,69 +60,74 @@ describe("Fetcher lib")  do
   
   it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
 #     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-     target_url = @fixture_data.add_params_to_url(collections_path, {})
-     visit target_url
-     response = JSON.parse(page.body)
+    VCR.use_cassette('all_collections_call') do
+       target_url = @fixture_data.add_params_to_url(collections_path, {})
+       visit target_url
+       response = JSON.parse(page.body)
      
-     #We Should Only Have The Four Collection Objects
-     expect(response['collection'].size).to eq(@fixture_data.number_of_collections)
+       #We Should Only Have The Four Collection Objects
+       expect(response['collection'].size).to eq(@fixture_data.number_of_collections)
       
-     #Ensure All Four Collection Druids Are Present
-     result_should_contain_druids(@fixture_data.collection_druids_list,response['collection'])
+       #Ensure All Four Collection Druids Are Present
+       result_should_contain_druids(@fixture_data.collection_druids_list,response['collection'])
     
-     #Ensure No Items Were Returned
-     expect(response['items']).to be nil
+       #Ensure No Items Were Returned
+       expect(response['items']).to be nil
     
-     #Ensure No APOS Were Returned
-     expect(response['adminpolicy']).to be nil
+       #Ensure No APOS Were Returned
+       expect(response['adminpolicy']).to be nil
+     end
      
   end
   
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    target_url = @fixture_data.add_params_to_url(apos_path, {})
-    visit target_url
-    response = JSON.parse(page.body)
+    VCR.use_cassette('all_apos_call') do
+      target_url = @fixture_data.add_params_to_url(apos_path, {})
+      visit target_url
+      response = JSON.parse(page.body)
     
-    #We Should Only Have The Four Collection Objects
-    expect(response['adminpolicy'].size).to eq(@fixture_data.number_of_apos)
+      #We Should Only Have The Four Collection Objects
+      expect(response['adminpolicy'].size).to eq(@fixture_data.number_of_apos)
      
-    #Ensure All Four Collection Druids Are Present
-    result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicy'])
+      #Ensure All Four Collection Druids Are Present
+      result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicy'])
    
-    #Ensure No Items Were Returned
-    expect(response['items']).to be nil
+      #Ensure No Items Were Returned
+      expect(response['items']).to be nil
    
-    #Ensure No Collections Were Returned
-    expect(response['collection']).to be nil
+      #Ensure No Collections Were Returned
+      expect(response['collection']).to be nil
+    end
   end
  
   
   it "It should only return Revs collection objects between these two dates" do
-    #All Revs Collection Objects Should Be Here
-    #The Stafford Collection Object Should Not Be Here
+     VCR.use_cassette('revs_objects_dates') do
+      #All Revs Collection Objects Should Be Here
+      #The Stafford Collection Object Should Not Be Here
     
-    #Set the dates
-    solrparams = {:first_modified =>'2014-01-01T00:00:00Z', :last_modified => '2014-05-06T00:00:00Z'}
-    target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
-    visit target_url
-    response = JSON.parse(page.body)
+      #Set the dates
+      solrparams = {:first_modified =>'2014-01-01T00:00:00Z', :last_modified => '2014-05-06T00:00:00Z'}
+      target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
+      visit target_url
+      response = JSON.parse(page.body)
     
-    #We Should Only Have The Three Revs Fixtures
-    expect(page).to have_content('"counts":[{"collection":3},{"total_count":3}]}')
+      #We Should Only Have The Three Revs Fixtures
+      expect(page).to have_content('"counts":[{"collection":3},{"total_count":3}]}')
     
-    #Ensure The Three Revs Collection Driuds Are Present
-    result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collection'])
+      #Ensure The Three Revs Collection Driuds Are Present
+      result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collection'])
     
-    #Ensure The Stafford Collection Druid Is Not Present
-    result_should_not_contain_druids(['druid:yg867hg1375'], response['collection'])
+      #Ensure The Stafford Collection Druid Is Not Present
+      result_should_not_contain_druids(['druid:yg867hg1375'], response['collection'])
     
-    #Ensure No Items Were Returned
-    expect(response['items']).to be nil
+      #Ensure No Items Were Returned
+      expect(response['items']).to be nil
     
-    #Ensure No APOS Were Returned
-    expect(response['adminpolicy']).to be nil
-    
+      #Ensure No APOS Were Returned
+      expect(response['adminpolicy']).to be nil
+    end
   end
   
   def result_should_contain_druids(druids, response)

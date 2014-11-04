@@ -33,6 +33,8 @@ group :test do
   gem 'yard'
   gem 'vcr'
   gem "webmock"
+  gem "rspec-rails"
+  gem 'capybara'
 end
 
 group :deployment do
@@ -52,10 +54,6 @@ group :development, :test do
   gem 'jettywrapper'
 end
 
-group :test do
-  gem 'rspec-rails'
-  gem 'capybara'
-end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
