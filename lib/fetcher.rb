@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
   @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field}"
@@ -172,7 +174,7 @@ module Fetcher
 
     #Create A Hash that contains an empty list for each Fedora Type
     Fedora_Types.each do |key, value|
-      all_json.store(value.to_sym, [])
+      all_json.store(value.pluralize.to_sym, [])
     end
     
     response[:response][:docs].each do |doc|
@@ -180,10 +182,10 @@ module Fetcher
       type = doc[Type_Field.to_sym][0]
       
       #Make the JSON for this druid
-      j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => doc[Title_Field.to_sym]}
+      j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => doc[Title_Field.to_sym][0]}
 
       #Append this little json stub to its proper parent array
-      all_json[type.to_sym] << j
+      all_json[type.pluralize.to_sym] << j
     end
     
     #Now we need to delete any nil arrays and sum the ones that aren't nil 
