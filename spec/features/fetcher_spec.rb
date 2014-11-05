@@ -60,7 +60,7 @@ describe("Fetcher lib")  do
   
   it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
 #     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-    VCR.use_cassette('all_collections_call') do
+    VCR.use_cassette('all_collections_call',  :allow_unused_http_interactions => true) do
        target_url = @fixture_data.add_params_to_url(collections_path, {})
        visit target_url
        response = JSON.parse(page.body)
@@ -82,7 +82,7 @@ describe("Fetcher lib")  do
   
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    VCR.use_cassette('all_apos_call') do
+    VCR.use_cassette('all_apos_call',  :allow_unused_http_interactions => true) do
       target_url = @fixture_data.add_params_to_url(apos_path, {})
       visit target_url
       response = JSON.parse(page.body)
@@ -103,7 +103,7 @@ describe("Fetcher lib")  do
  
   
   it "It should only return Revs collection objects between these two dates" do
-     VCR.use_cassette('revs_objects_dates') do
+     VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
       #All Revs Collection Objects Should Be Here
       #The Stafford Collection Object Should Not Be Here
     
