@@ -43,6 +43,12 @@ module DorFetcherService
     rescue
       puts 'WARNING: config/solr_terms.yml config not found'
     end
+    
+    begin
+      config.time_zone = "UTC"
+    rescue
+      puts 'WARNING: could not configure time zone to utc'
+    end
   
   end
   

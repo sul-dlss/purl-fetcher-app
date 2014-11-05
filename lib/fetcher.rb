@@ -133,8 +133,8 @@ module Fetcher
   #   get_times(:first_modified=>'01/01/2014',:last_modified=>'01/01/2015') # returns {:first=>'2014-01-01T00:00:00Z',last:'2015-01-01T00:00:00Z'}
   def get_times(p = {})
     params = p || {}
-    first_modified = params[:first_modified] || Time.at(0).utc.iso8601
-    last_modified = params[:last_modified] || Date.tomorrow.to_time.utc.iso8601
+    first_modified = params[:first_modified] || Time.zone.at(0).iso8601
+    last_modified = params[:last_modified] || Time.zone.tomorrow.to_time.iso8601
     begin 
       first_modified_time=Time.parse(first_modified)
       last_modified_time=Time.parse(last_modified)
