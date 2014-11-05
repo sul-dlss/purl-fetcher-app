@@ -13,7 +13,7 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Wed, 05 Nov 2014 00:39:37 GMT
+      - Wed, 05 Nov 2014 04:23:04 GMT
       Etag:
       - '"ZWY4MDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":3,"start":0,"docs":[{"id":"druid:nt028fd5773","title_t":["The Revs Institute for Automotive Research, Inc."],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:yt502zj0924","title_t":["TThe Bruce R. Craig Collection of the Revs Institutee"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
+        {"responseHeader":{"status":0,"QTime":255},"response":{"numFound":3,"start":0,"docs":[{"id":"druid:nt028fd5773","title_t":["The Revs Institute for Automotive Research, Inc."],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:yt502zj0924","title_t":["TThe Bruce R. Craig Collection of the Revs Institutee"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
     http_version: 
-  recorded_at: Wed, 05 Nov 2014 00:39:43 GMT
+  recorded_at: Wed, 05 Nov 2014 04:23:12 GMT
 recorded_with: VCR 2.9.3
