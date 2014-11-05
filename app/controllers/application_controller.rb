@@ -9,11 +9,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
     
   protected 
-  # TODO this is where we take a solr response and convert it to the correct format
   def render_result(result)
     respond_to do |format|
       format.json {render :json=>result.to_json}
-      format.xml {render :json=>result.to_xml}
+      format.xml {render :json=>result.to_xml(:root => 'results')}
     end  
   end
 end
