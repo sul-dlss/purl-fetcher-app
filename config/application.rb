@@ -32,14 +32,22 @@ module DorFetcherService
     
     begin
       config.solr_url=load_yaml_config.call('solr.yml')['url']
-      config.solr_terms = load_yaml_config.call('solr_terms.yml')
+      #puts load_yaml_config.call('solr.yml')['url']
     rescue
       puts 'WARNING: config/solr.yml config not found'
+    end
+    
+    begin
+      config.solr_terms = load_yaml_config.call('solr_terms.yml')
+      #puts load_yaml_config.call('solr_terms.yml')
+    rescue
+      puts 'WARNING: config/solr_terms.yml config not found'
     end
   
   end
   
 end
+
 
 Conf = DorFetcherService::Application.config
 
@@ -47,6 +55,11 @@ Conf = DorFetcherService::Application.config
 begin
   Solr_URL = Conf.solr_url
   Solr= RSolr.connect :url => Solr_URL
+rescue
+  puts "WARNING: Could not configure solr url"
+end
+
+begin
   Solr_terms = Conf.solr_terms
 
   #Convience constants for Solr Fields
@@ -60,8 +73,9 @@ begin
   Fedora_Types = {:collection =>Solr_terms['collection_type'], :apo =>Solr_terms['apo_type'], :item=>Solr_terms['item_type']}
   Controller_Types = {:collection => Solr_terms['collection_field'], :apo=>Solr_terms['apo_field'], :tag=> Solr_terms['tag_field']}
 rescue
-  puts 'WARNING: configuration not complete'
+  puts 'WARNING: Could not configure solr terms'
 end
+
 
 
 #solr_fields = {:apo_field => apo_field, :collection_field => collection_field}
