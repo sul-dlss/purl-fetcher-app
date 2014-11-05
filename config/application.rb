@@ -45,7 +45,7 @@ module DorFetcherService
     end
     
     begin
-      config.time_zone = "UTC"
+      config.time_zone = "Pacific Time (US & Canada)"
     rescue
       puts 'WARNING: could not configure time zone to utc'
     end

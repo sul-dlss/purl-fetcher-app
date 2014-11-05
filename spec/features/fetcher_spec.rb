@@ -8,7 +8,7 @@ describe("Fetcher lib")  do
   end
 
   it "should return the current date and time when time not passed in" do
-    last_date=Date.tomorrow.to_time.utc.iso8601
+    last_date=Time.zone.now.end_of_day.utc.iso8601
     expect(@fetcher.get_times(nil)).to eq({first:'1970-01-01T00:00:00Z',last:last_date})
     expect(@fetcher.get_times({})).to eq({first:'1970-01-01T00:00:00Z',last:last_date})
     expect(@fetcher.get_times({first_modified:nil,last_modified:'01/01/2014'})).to eq({first:'1970-01-01T00:00:00Z',last:"2014-01-01T08:00:00Z"})
