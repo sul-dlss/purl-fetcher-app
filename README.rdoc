@@ -1,3 +1,4 @@
+{<img src="https://travis-ci.org/sul-dlss/dor-fetcher-service.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/sul-dlss/dor-fetcher-service]{<img src="https://coveralls.io/repos/sul-dlss/dor-fetcher-service/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/sul-dlss/dor-fetcher-service]
 = dor-fetcher-service
 
 A web service app that queries the DOR solr service to return info needed for indexing or other purposes.
