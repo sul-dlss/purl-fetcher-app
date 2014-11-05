@@ -11,7 +11,8 @@ set :user, ask("User", 'enter in the app username')
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-ask :deploy_to, '/opt/app/dor-fetcher-service'
+set :home_directory, "/opt/app/#{fetch(:user)}"
+set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 
 # Default value for :scm is :git
 # set :scm, :git
