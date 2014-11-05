@@ -67,16 +67,16 @@ describe("Fetcher lib")  do
        response = JSON.parse(page.body)
      
        #We Should Only Have The Four Collection Objects
-       expect(response['collection'].size).to eq(@fixture_data.number_of_collections)
+       expect(response['collections'].size).to eq(@fixture_data.number_of_collections)
       
        #Ensure All Four Collection Druids Are Present
-       result_should_contain_druids(@fixture_data.collection_druids_list,response['collection'])
+       result_should_contain_druids(@fixture_data.collection_druids_list,response['collections'])
     
        #Ensure No Items Were Returned
        expect(response['items']).to be nil
     
        #Ensure No APOS Were Returned
-       expect(response['adminpolicy']).to be nil
+       expect(response['adminpolicies']).to be nil
      end
      
   end
@@ -90,16 +90,16 @@ describe("Fetcher lib")  do
       response = JSON.parse(page.body)
     
       #We Should Only Have The Four Collection Objects
-      expect(response['adminpolicy'].size).to eq(@fixture_data.number_of_apos)
+      expect(response['adminpolicies'].size).to eq(@fixture_data.number_of_apos)
      
       #Ensure All Four Collection Druids Are Present
-      result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicy'])
+      result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicies'])
    
       #Ensure No Items Were Returned
       expect(response['items']).to be nil
    
       #Ensure No Collections Were Returned
-      expect(response['collection']).to be nil
+      expect(response['collections']).to be nil
     end
   end
  
@@ -116,13 +116,13 @@ describe("Fetcher lib")  do
       response = JSON.parse(page.body)
     
       #We Should Only Have The Three Revs Fixtures
-      expect(page).to have_content('"counts":[{"collection":3},{"total_count":3}]}')
+      expect(page).to have_content('"counts":[{"collections":3},{"total_count":3}]}')
     
       #Ensure The Three Revs Collection Driuds Are Present
-      result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collection'])
+      result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collections'])
     
       #Ensure The Stafford Collection Druid Is Not Present
-      result_should_not_contain_druids(['druid:yg867hg1375'], response['collection'])
+      result_should_not_contain_druids(['druid:yg867hg1375'], response['collections'])
     
       #Ensure No Items Were Returned
       expect(response['items']).to be nil
