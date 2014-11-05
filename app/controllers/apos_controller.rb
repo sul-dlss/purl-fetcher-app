@@ -16,14 +16,6 @@ class AposController < ApplicationController
   #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
   #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of APOs published SINCE January of 2014 up until today in json format
   def index
-    #/apo/
-    #TODO: Option for count
-    #Currently have no publically visible APOS
-    #objectType_t = adminpolicy
-    #"active_fedora_model_s": ["Dor::AdminPolicyObject"]
-    #target_type = "Dor::AdminPolicyObject"
-    #response = Solr.get 'select', :params => {:q => "(#{type_field}):\"#{target_type}\")", :wt => :json, :fl ="#{id}" }
-    
     result=find_all_fedora_type(params,:apo)
     render_result(result)
     
