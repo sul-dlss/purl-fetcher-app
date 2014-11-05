@@ -39,6 +39,8 @@ config/solr.yml
 nohup.out
 REVISION
 
+coverage/*
+coverage
 .yardoc
 doc
 .yardoc/*

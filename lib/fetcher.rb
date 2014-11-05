@@ -134,7 +134,7 @@ module Fetcher
   def get_times(p = {})
     params = p || {}
     first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    last_modified = params[:last_modified] || Time.zone.tomorrow.to_time.iso8601
+    last_modified = params[:last_modified] || Time.zone.now.end_of_day.iso8601
     begin 
       first_modified_time=Time.parse(first_modified)
       last_modified_time=Time.parse(last_modified)
