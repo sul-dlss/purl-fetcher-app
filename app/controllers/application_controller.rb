@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def render_result(result)
     respond_to do |format|
       format.json {render :json=>result.to_json}
-      format.xml {render :json=>result.to_xml}
+      format.xml {render :json=>result.to_xml(:root => 'results')}
     end  
   end
 end
