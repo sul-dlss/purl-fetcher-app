@@ -8,7 +8,7 @@ describe("Fetcher lib")  do
   end
 
   it "should return the current date and time when time not passed in" do
-    last_date=Date.tomorrow.to_time.utc.iso8601
+    last_date=Time.zone.now.end_of_day.utc.iso8601
     expect(@fetcher.get_times(nil)).to eq({first:'1970-01-01T00:00:00Z',last:last_date})
     expect(@fetcher.get_times({})).to eq({first:'1970-01-01T00:00:00Z',last:last_date})
     expect(@fetcher.get_times({first_modified:nil,last_modified:'01/01/2014'})).to eq({first:'1970-01-01T00:00:00Z',last:"2014-01-01T08:00:00Z"})
@@ -60,8 +60,9 @@ describe("Fetcher lib")  do
   
   it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
 #     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-    VCR.use_cassette('all_collections_call') do
-       target_url = @fixture_data.add_params_to_url(collections_path, {})
+    VCR.use_cassette('all_collections_call',  :allow_unused_http_interactions => true) do
+       solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
+       target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
        visit target_url
        response = JSON.parse(page.body)
      
@@ -82,8 +83,9 @@ describe("Fetcher lib")  do
   
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    VCR.use_cassette('all_apos_call') do
-      target_url = @fixture_data.add_params_to_url(apos_path, {})
+    VCR.use_cassette('all_apos_call',  :allow_unused_http_interactions => true) do
+      solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
+      target_url = @fixture_data.add_params_to_url(apos_path, solrparams)
       visit target_url
       response = JSON.parse(page.body)
     
@@ -103,7 +105,7 @@ describe("Fetcher lib")  do
  
   
   it "It should only return Revs collection objects between these two dates" do
-     VCR.use_cassette('revs_objects_dates') do
+     VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
       #All Revs Collection Objects Should Be Here
       #The Stafford Collection Object Should Not Be Here
     

@@ -1,4 +1,4 @@
-development: &default
+defaults: &defaults
   apo_field: "is_governed_by_s"
   collection_field: "is_member_of_collection_s"
   tag_field: "tag_facet"
@@ -11,9 +11,12 @@ development: &default
   item_type: "item"
   fedora_prefix: "info:fedora/"
   title_field: "title_t"
+
+development:
+  <<: *defaults
 test: 
-  <<: *default
+  <<: *defaults
 staging: 
-  <<: *default
+  <<: *defaults
 production: 
-  <<: *default
+  <<: *defaults

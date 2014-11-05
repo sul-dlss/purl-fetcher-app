@@ -1,0 +1,15 @@
+language: ruby
+before_script:
+      - echo 'Canada/Pacific' | sudo tee /etc/timezone
+      - sudo dpkg-reconfigure --frontend noninteractive tzdata
+      - sudo ntpdate ntp.ubuntu.com
+script: bundle exec rake travis_spec
+rvm:
+  - 2.1.2
+notifications:
+  email:
+    - carrickr@stanford.edu
+    - pmangiafico@stanford.edu
+    - laneymcg@stanford.edu
+    - bess@stanford.edu
+    
