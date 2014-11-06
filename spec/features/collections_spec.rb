@@ -86,19 +86,19 @@ describe("Collections Controller")  do
     VCR.use_cassette('prefix_and_no_prefix_calls_to_collection') do
       
       #Check For JSON
-      visit collections_path + '/druid:nt028fd5773'
+      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid
       with_prefix_response = JSON.parse(page.body)
       
-      visit collections_path + '/nt028fd5773'
+      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid.split(':')[1]
       no_prefix_response = JSON.parse(page.body)
       
       expect(with_prefix_response).to eq(no_prefix_response)
       
       #Check For XML
-      visit collections_path + '/druid:nt028fd5773.xml'
+      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid + '.xml'
       with_prefix_response = page.body
       
-      visit collections_path + '/nt028fd5773.xml'
+      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid.split(':')[1] + '.xml'
       no_prefix_response = page.body
       
       expect(with_prefix_response).to eq(no_prefix_response)
@@ -107,7 +107,7 @@ describe("Collections Controller")  do
   
   it "should return only the Revs Druids when a collection is queried with the top level Revs Collection" do
     VCR.use_cassette('revs_collection_call') do
-      visit collections_path + '/druid:nt028fd5773'
+      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid
       response = JSON.parse(page.body)
       exclude_druids = @fixture_data.revs_items_druids+@fixture_data.revs_collections_druids
       
