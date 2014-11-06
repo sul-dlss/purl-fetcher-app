@@ -162,7 +162,7 @@ end
 #Automatically gets total counts, don't need to add it
 def verify_counts_section(response, counts)
   total_count = 0 
-  nil_keys = all_counts_keys
+  nil_keys = all_counts_keys-[total_count_key]
   counts.each do |key,value|
     
     #Make the count is what we expect it to be
@@ -174,14 +174,14 @@ def verify_counts_section(response, counts)
     total_count += value
     
     #This key was present, so we don't expect it to be nil
-    nil_keys -= [key]
+    nil_keys -= [key]  
     
   end
   #If the tester didn't specify total count above, check it
   expect(total_count).to eq(response[counts_key][total_count_key]) if counts[total_count_key = nil]
   
   #Make sure the keys we expect to be nil aren't in the counts section
-  nil_keys.each do key
+  nil_keys.each do |key|
     expect(response[counts_key][key]).to be nil
   end
   
