@@ -158,7 +158,13 @@ end
 def verify_counts_section(response, counts)
   total_count = 0 
   counts.each do |key,value|
+    
+    #Make the count is what we expect it to be
     expect(response[counts_key][key]).to eq(value)
+    
+    #Go back to the JSON section that lists all the druids and make sure its size equals the value listed in count
+    expect(response[key].size).to eq(value)
+    
     total_count += value
   end
   #If the tester didn't specify total count above, check it

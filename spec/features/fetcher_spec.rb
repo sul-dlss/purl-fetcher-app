@@ -70,10 +70,10 @@ describe("Fetcher lib")  do
       response = JSON.parse(page.body)
     
       #We Should Only Have The Four Collection Objects
-      expect(response['adminpolicies'].size).to eq(@fixture_data.number_of_apos)
+      expect(response['adminpolicies'].size).to eq(@fixture_data.apo_druids.size)
      
       #Ensure All Four Collection Druids Are Present
-      result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicies'])
+      result_should_contain_druids(@fixture_data.apo_druids,response['adminpolicies'])
    
       #Ensure No Items Were Returned
       expect(response['items']).to be nil

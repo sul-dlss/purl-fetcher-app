@@ -89,12 +89,8 @@ class FixtureData
   def revs_collections_druids
     @@revs_collection_druids
   end
-  
-  def number_of_apos
-    return @@apo_druids.size
-  end
-  
-  def apo_druids_list
+   
+  def apo_druids
     return @@apo_druids
   end
   

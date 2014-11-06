@@ -15,9 +15,6 @@ describe("Collections Controller")  do
        visit target_url
        response = JSON.parse(page.body)
      
-       #We Should Only Have The Four Collection Objects
-       expect(response[collections_key].size).to eq(@fixture_data.all_collection_druids.size)
-      
        #Ensure All Four Collection Druids Are Present
        result_should_contain_druids(@fixture_data.all_collection_druids,response[collections_key])
        
@@ -43,9 +40,6 @@ describe("Collections Controller")  do
       visit target_url
       response = JSON.parse(page.body)
       
-      #We Should Only Have The One Collection Object
-      expect(response[collections_key].size).to eq(@fixture_data.stafford_collections_druids.size)
-      
       #Ensure the Stafford Collection Druid is Present
       result_should_contain_druids(@fixture_data.stafford_collections_druids,response[collections_key]) 
       
@@ -69,9 +63,6 @@ describe("Collections Controller")  do
         target_url = add_params_to_url(collections_path, solrparams)
         visit target_url
         response = JSON.parse(page.body)
-      
-        #We Should Only Have The Three Revs Collection Objects
-        expect(response[collections_key].size).to eq(@fixture_data.revs_collections_druids.size)
       
         #Ensure All Three Revs Collection Druids Are Present
         result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
@@ -114,9 +105,29 @@ describe("Collections Controller")  do
     end
   end
   
-  xit "should return only the Revs Druids when a collection is queried with the top level Revs Collection" do
+  it "should return only the Revs Druids when a collection is queried with the top level Revs Collection" do
     VCR.use_cassette('revs_collection_call') do
       visit collections_path + '/druid:nt028fd5773'
+      response = JSON.parse(page.body)
+      exclude_druids = @fixture_data.revs_items_druids+@fixture_data.revs_collections_druids
+      
+      #Ensure All Revs Collection Druids Are Present
+      result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
+      
+      #Ensure Not Other Collections Are Present
+      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[collections_key]) 
+      
+      #Ensure All Revs Items Are Present
+      result_should_contain_druids(@fixture_data.revs_items_druids,response[items_key])
+      
+      #Ensure No Other Items Are Present
+      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[items_key]) 
+      
+      #Ensure No APOS Are Present
+      expect(response[apos_key]).to be nil
+      
+      #Verify the Counts
+      verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size, items_key => @fixture_data.revs_items_druids.size})
     end
     
     
