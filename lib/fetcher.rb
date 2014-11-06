@@ -183,7 +183,7 @@ module Fetcher
       j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => doc[Title_Field.to_sym][0]}
 
       #Append this little json stub to its proper parent array
-      all_json[type.pluralize.to_sym] << j
+      all_json[type.downcase.pluralize.to_sym] << j
     end
     
     #Now we need to delete any nil arrays and sum the ones that aren't nil 
