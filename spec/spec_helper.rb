@@ -93,5 +93,23 @@ VCR.configure do |c|
   c.hook_into :webmock
 end
 
+def result_should_contain_druids(druids, response)
+  response.each do |r|
+    expect(druids.include?(r['druid'])).to be true
+  end
+end
+
+def result_should_not_contain_druids(druids, response)
+  response.each do |r|
+    expect(druids.include?(r['druid'])).to be false
+  end
+end
+
+#Due to VCR we need to have a fixed last_modified date, since time now will vary
+#You'll have one time now from when you recorded and another from when travis_ci or such runs the tests
+def add_late_end_date(params)
+  #Warning: Not Y10K Compliant!  
+  return params[:last_modified] = :last_modified => '9999-12-31T23:59:59Z'
+end
 
 
