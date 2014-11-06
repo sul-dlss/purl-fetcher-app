@@ -147,4 +147,11 @@ describe("Collections Controller")  do
     end
   end
   
+  it "should respect last modified when asked for just a count" do
+    VCR.use_cassette('collection_count_call_last_modified') do
+      visit add_params_to_url(collections_path, just_count_param.merge(:last_modified => last_mod_test_date))
+      expect(page.body.to_i).to eq(@fixture_data.stafford_collections_druids.size)
+    end
+  end
+  
 end
