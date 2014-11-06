@@ -65,8 +65,9 @@ class FixtureData
   @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
   
   #Collections
+  @@top_level_revs_collection_druid = 'druid:nt028fd5773'
   @@stafford_collection_druids = ['druid:yg867hg1375']
-  @@revs_collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yt502zj0924']
+  @@revs_collection_druids = [@@top_level_revs_collection_druid, 'druid:wy149zp6932', 'druid:yt502zj0924']
   @@collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
   
   #Items
@@ -88,6 +89,10 @@ class FixtureData
   
   def revs_collections_druids
     @@revs_collection_druids
+  end
+  
+  def top_level_revs_collection_druid
+    return @@top_level_revs_collection_druid
   end
    
   def apo_druids
