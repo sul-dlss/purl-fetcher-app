@@ -35,7 +35,7 @@ describe("Collections Controller")  do
   
   it "the index of Collections should respect :last_modified and return only Stafford" do
     VCR.use_cassette('last_modified_date_collections_index_call') do
-      solrparams = {:last_modified => '2013-12-31T23:59:59Z'}
+      solrparams = {:last_modified =>  last_mod_test_date}
       target_url = add_params_to_url(collections_path, solrparams)
       visit target_url
       response = JSON.parse(page.body)
@@ -59,7 +59,7 @@ describe("Collections Controller")  do
     
     it "the index of Collections should respect :first_modified and return only Revs" do
       VCR.use_cassette('first_modified_date_collections_index_call') do
-        solrparams = {:first_modified => '2014-1-1T00:00:00Z'}
+        solrparams = {:first_modified => first_mod_test_date}
         target_url = add_params_to_url(collections_path, solrparams)
         visit target_url
         response = JSON.parse(page.body)
@@ -138,6 +138,13 @@ describe("Collections Controller")  do
       expect(page.body.to_i).to eq((@fixture_data.revs_items_druids+@fixture_data.revs_collections_druids).size)
     end
     
+  end
+  
+  it "should respect first modified when asked for just a count" do
+    VCR.use_cassette('collection_count_call_first_modified') do
+      visit add_params_to_url(collections_path, just_count_param.merge(:first_modified => first_mod_test_date))
+      expect(page.body.to_i).to eq(@fixture_data.revs_collections_druids.size)
+    end
   end
   
 end

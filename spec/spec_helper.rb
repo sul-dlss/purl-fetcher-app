@@ -191,3 +191,11 @@ def just_count_param
   return {"rows"=> 0}
 end
 
+def last_mod_test_date
+  return '2013-12-31T23:59:59Z'
+end
+
+def first_mod_test_date
+  return '2014-1-1T00:00:00Z'
+end
+
