@@ -188,16 +188,16 @@ module Fetcher
     
     #Now we need to delete any nil arrays and sum the ones that aren't nil 
     total_count = 0 
-    a = []
+    a = {}
     all_json.each do |key, value|
       if value.size == 0
         all_json.delete(key)
       else
-        a << {key => value.size}
+        a[key] = value.size
         total_count += value.size
       end
     end
-    a << {:total_count => total_count}
+    a[:total_count] = total_count
     all_json.store(:counts, a)
     
     return all_json

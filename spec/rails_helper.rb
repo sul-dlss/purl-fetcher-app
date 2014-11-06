@@ -61,6 +61,7 @@ end
 
 class FixtureData
   
+  
   @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
   
   #Collections
@@ -68,11 +69,16 @@ class FixtureData
   @@revs_collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yt502zj0924']
   @@collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
   
-  def number_of_collections
-    return @@collection_druids.size
-  end
+  #Items
+  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722','druid:ww689vs6534']
+  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137','druid:bb027yn4436','druid:bb048rn5648', 'druid:bb113tm9924']
+  @@items_druids = @@stafford_items_druids + @@revs_items_druids
   
-  def collection_druids_list
+  def all_druids
+    return @@apo_druids + @@collection_druids + @@items_druids
+  end
+   
+  def all_collection_druids
     return @@collection_druids
   end
   
@@ -90,6 +96,18 @@ class FixtureData
   
   def apo_druids_list
     return @@apo_druids
+  end
+  
+  def revs_items_druids
+     return @@revs_items_druids
+  end
+  
+  def stafford_items_druids
+    return @@stafford_items_druids 
+  end
+  
+  def all_items_druids
+    return @@items_druids = @@stafford_items_druids
   end
    
   def get_response(url)

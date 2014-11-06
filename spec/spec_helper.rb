@@ -146,3 +146,25 @@ def apos_key
   return 'adminpolicies'
 end
 
+def counts_key
+  return 'counts'
+end
+
+def total_count_key
+  return 'total_count'
+end
+
+#Automatically gets total counts, don't need to add it
+def verify_counts_section(response, counts)
+  total_count = 0 
+  counts.each do |key,value|
+    expect(response[counts_key][key]).to eq(value)
+    total_count += value
+  end
+  #If the tester didn't specify total count above, check it
+  expect(total_count).to eq(response[counts_key][total_count_key]) if counts[total_count_key = nil]
+end
+
+def verify_counts_section_is_zero(response)
+end
+

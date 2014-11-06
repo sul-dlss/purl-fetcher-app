@@ -16,16 +16,22 @@ describe("Collections Controller")  do
        response = JSON.parse(page.body)
      
        #We Should Only Have The Four Collection Objects
-       expect(response[collections_key].size).to eq(@fixture_data.number_of_collections)
+       expect(response[collections_key].size).to eq(@fixture_data.all_collection_druids.size)
       
        #Ensure All Four Collection Druids Are Present
-       result_should_contain_druids(@fixture_data.collection_druids_list,response['collections'])
+       result_should_contain_druids(@fixture_data.all_collection_druids,response[collections_key])
+       
+       #Ensure No Other Druids Are Present
+       result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.all_collection_druids,response[collections_key]) 
     
        #Ensure No Items Were Returned
        expect(response[items_key]).to be nil
     
        #Ensure No APOS Were Returned
        expect(response[apos_key]).to be nil
+       
+       #Verify the Counts
+       verify_counts_section(response, {collections_key => @fixture_data.all_collection_druids.size})
      end
      
   end
@@ -38,19 +44,22 @@ describe("Collections Controller")  do
       response = JSON.parse(page.body)
       
       #We Should Only Have The One Collection Object
-      expect(response[collections_key].size).to eq(1)
+      expect(response[collections_key].size).to eq(@fixture_data.stafford_collections_druids.size)
       
       #Ensure the Stafford Collection Druid is Present
       result_should_contain_druids(@fixture_data.stafford_collections_druids,response[collections_key]) 
       
-      #Ensure the Revs Collection Druids Are Not Present
-      result_should_not_contain_druids(@fixture_data.revs_collections_druids,response[collections_key]) 
+      #Ensure No Other Collection Druids Are Present
+      result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.stafford_collections_druids,response[collections_key]) 
       
       #Ensure No Items Were Returned
       expect(response[items_key]).to be nil
    
       #Ensure No APOS Were Returned
       expect(response[apos_key]).to be nil
+      
+      #Verify the Counts
+      verify_counts_section(response, {collections_key => @fixture_data.stafford_collections_druids.size})
     end
   end
     
@@ -62,20 +71,55 @@ describe("Collections Controller")  do
         response = JSON.parse(page.body)
       
         #We Should Only Have The Three Revs Collection Objects
-        expect(response[collections_key].size).to eq(3)
+        expect(response[collections_key].size).to eq(@fixture_data.revs_collections_druids.size)
       
         #Ensure All Three Revs Collection Druids Are Present
         result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
         
-        #Ensure The Stafford Collection Druid Is Not Present
-        result_should_not_contain_druids(@fixture_data.stafford_collections_druids,response[collections_key]) 
+        #Ensure Not Other Collections Are Present
+        result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.revs_collections_druids,response[collections_key]) 
       
         #Ensure No Items Were Returned
         expect(response[items_key]).to be nil
    
         #Ensure No APOS Were Returned
         expect(response[apos_key]).to be nil
+        
+        #Verify the Counts
+        verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size})
       end
     
   end
+  
+  it "should not need the druid: prefix to query a list of druids from collections" do
+    VCR.use_cassette('prefix_and_no_prefix_calls_to_collection') do
+      
+      #Check For JSON
+      visit collections_path + '/druid:nt028fd5773'
+      with_prefix_response = JSON.parse(page.body)
+      
+      visit collections_path + '/nt028fd5773'
+      no_prefix_response = JSON.parse(page.body)
+      
+      expect(with_prefix_response).to eq(no_prefix_response)
+      
+      #Check For XML
+      visit collections_path + '/druid:nt028fd5773.xml'
+      with_prefix_response = page.body
+      
+      visit collections_path + '/nt028fd5773.xml'
+      no_prefix_response = page.body
+      
+      expect(with_prefix_response).to eq(no_prefix_response)
+    end
+  end
+  
+  xit "should return only the Revs Druids when a collection is queried with the top level Revs Collection" do
+    VCR.use_cassette('revs_collection_call') do
+      visit collections_path + '/druid:nt028fd5773'
+    end
+    
+    
+  end
+  
 end

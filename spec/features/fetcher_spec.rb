@@ -84,7 +84,7 @@ describe("Fetcher lib")  do
   end
  
   
-  it "It should only return Revs collection objects between these two dates" do
+  xit "It should only return Revs collection objects between these two dates" do
      VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
       #All Revs Collection Objects Should Be Here
       #The Stafford Collection Object Should Not Be Here
