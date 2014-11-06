@@ -4,7 +4,6 @@ describe("Collections Controller")  do
   before :each do
     @fetcher=FetcherTester.new
     @fixture_data = FixtureData.new
-    #@earliest='1970-01-01T00:00:00Z'
   end
   
   it "the index of Collections found should be all collections when not supplied a date range and all their druids should be present" do
@@ -153,5 +152,25 @@ describe("Collections Controller")  do
       expect(page.body.to_i).to eq(@fixture_data.stafford_collections_druids.size)
     end
   end
+  
+  it "should return just the subcollection for revs when called with a revs subcollection druid" do
+    VCR.use_cassette('revs_subcollection_call_last_modified') do
+      visit collections_path + '/' + @fixture_data.revs_subcollection_druid
+      response = JSON.parse(page.body)
+      collections_list = [@fixture_data.revs_subcollection_druid]
+     
+      
+      #Ensure Subcollection Druid is Present
+      result_should_contain_druids(collections_list,response[collections_key]) 
+      
+      #Ensure No Other Collection Druids Are Present
+      result_should_not_contain_druids(@fixture_data.all_collection_druids-collections_list,response[collections_key]) 
+      
+      #Verify the Counts
+      verify_counts_section(response, {collections_key => collections_list.size, items_key => 4})
+      
+    end
+  end
+  
   
 end
