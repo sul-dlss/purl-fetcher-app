@@ -10,7 +10,7 @@ describe("Collections Controller")  do
   it "the index of Collections found should be all collections when not supplied a date range and all their druids should be present" do
 #     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
     VCR.use_cassette('all_collections_call',  :allow_unused_http_interactions => true) do
-       solrparams = add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
+       solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
        target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
        visit target_url
        response = JSON.parse(page.body)
@@ -32,7 +32,7 @@ describe("Collections Controller")  do
   
   xit "the index of Collections should respect the date" do
     VCR.use_cassette('all_collections_call') do
-      solrparams = {}
+      solrparams = just_late_end_date
     end
     
   end

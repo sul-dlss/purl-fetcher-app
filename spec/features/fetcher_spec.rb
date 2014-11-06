@@ -64,7 +64,7 @@ describe("Fetcher lib")  do
  
   it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
     VCR.use_cassette('all_apos_call',  :allow_unused_http_interactions => true) do
-      solrparams = add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
+      solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
       target_url = @fixture_data.add_params_to_url(apos_path, solrparams)
       visit target_url
       response = JSON.parse(page.body)

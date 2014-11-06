@@ -112,4 +112,9 @@ def add_late_end_date(params)
   return params[:last_modified] = :last_modified => '9999-12-31T23:59:59Z'
 end
 
+def just_late_end_date
+  return add_late_end_date({})
+end
+  
+
 
