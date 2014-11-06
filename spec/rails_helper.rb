@@ -60,8 +60,13 @@ class FetcherTester
 end
 
 class FixtureData
-  @@collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yg867hg1375', 'druid:yt502zj0924'] 
+  
   @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
+  
+  #Collections
+  @@stafford_collection_druids = ['druid:yg867hg1375']
+  @@revs_collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yt502zj0924']
+  @@collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
   
   def number_of_collections
     return @@collection_druids.size
@@ -69,6 +74,14 @@ class FixtureData
   
   def collection_druids_list
     return @@collection_druids
+  end
+  
+  def stafford_collections_druids
+    return @@stafford_collection_druids
+  end
+  
+  def revs_collections_druids
+    @@revs_collection_druids
   end
   
   def number_of_apos

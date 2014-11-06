@@ -88,11 +88,15 @@ RSpec.configure do |config|
 =end
 end
 
+
+
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr_cassettes'
   c.hook_into :webmock
 end
 
+#This only checks to see if the druids you are looking for are present
+#Other druids may be present as well, so I suggest you also test for total number returned
 def result_should_contain_druids(druids, response)
   response.each do |r|
     expect(druids.include?(r['druid'])).to be true
@@ -128,5 +132,17 @@ def add_params_to_url(url, params)
     url << "#{key.to_s}=#{value}"
   end
   return url
+end
+
+def collections_key
+  return 'collections'
+end
+
+def items_key
+  return 'items'
+end
+
+def apos_key
+  return 'adminpolicies'
 end
 
