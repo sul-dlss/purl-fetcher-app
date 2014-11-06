@@ -115,6 +115,18 @@ end
 def just_late_end_date
   return add_late_end_date({})
 end
-  
 
+def add_params_to_url(url, params)
+  count = 0 
+  params.each do |key,value|
+    if count == 0 
+      url << "?"
+    else
+      url << "&"
+    end
+    count += 1
+    url << "#{key.to_s}=#{value}"
+  end
+  return url
+end
 

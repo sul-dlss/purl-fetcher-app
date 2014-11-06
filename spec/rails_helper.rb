@@ -78,21 +78,7 @@ class FixtureData
   def apo_druids_list
     return @@apo_druids
   end
- 
-  def add_params_to_url(url, params)
-    count = 0 
-    params.each do |key,value|
-      if count == 0 
-        url << "?"
-      else
-        url << "&"
-      end
-      count += 1
-      url << "#{key.to_s}=#{value}"
-    end
-    return url
-  end
-  
+   
   def get_response(url)
     return Net::HTTP.get_response(URI.parse(url))
   end
