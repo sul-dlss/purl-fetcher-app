@@ -129,7 +129,14 @@ describe("Collections Controller")  do
       #Verify the Counts
       verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size, items_key => @fixture_data.revs_items_druids.size})
     end
-    
+  end
+  
+  it "should only return a count of the Revs Druids when called with the count only parameter" do
+    VCR.use_cassette('revs_collection_count_call') do
+      visit add_params_to_url(collections_path + '/' + @fixture_data.top_level_revs_collection_druid, just_count_param)
+      
+      expect(page.body.to_i).to eq((@fixture_data.revs_items_druids+@fixture_data.revs_collections_druids).size)
+    end
     
   end
   

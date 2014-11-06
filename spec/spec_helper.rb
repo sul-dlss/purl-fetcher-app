@@ -187,6 +187,7 @@ def verify_counts_section(response, counts)
   
 end
 
-def verify_counts_section_is_zero(response)
+def just_count_param
+  return {"rows"=> 0}
 end
 
