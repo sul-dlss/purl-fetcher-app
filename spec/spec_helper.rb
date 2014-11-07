@@ -199,3 +199,6 @@ def first_mod_test_date_collections
   return '2014-1-1T00:00:00Z'
 end
 
+def mod_test_date_apos
+  return '2013-03-13T12:13:14Z'
+end
