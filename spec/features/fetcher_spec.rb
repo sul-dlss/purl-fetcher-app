@@ -60,30 +60,6 @@ describe("Fetcher lib")  do
   end
   
   
-  
- 
-  it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    VCR.use_cassette('all_apos_call',  :allow_unused_http_interactions => true) do
-      solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
-      target_url = add_params_to_url(apos_path, solrparams)
-      visit target_url
-      response = JSON.parse(page.body)
-    
-      #We Should Only Have The Four Collection Objects
-      expect(response['adminpolicies'].size).to eq(@fixture_data.apo_druids.size)
-     
-      #Ensure All Four Collection Druids Are Present
-      result_should_contain_druids(@fixture_data.apo_druids,response['adminpolicies'])
-   
-      #Ensure No Items Were Returned
-      expect(response['items']).to be nil
-   
-      #Ensure No Collections Were Returned
-      expect(response['collections']).to be nil
-    end
-  end
- 
-  
   xit "It should only return Revs collection objects between these two dates" do
      VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
       #All Revs Collection Objects Should Be Here

@@ -8,7 +8,7 @@ describe("Collections Controller")  do
   
   it "the index of Collections found should be all collections when not supplied a date range and all their druids should be present" do
 #     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-    VCR.use_cassette('all_collections_index_call',  :allow_unused_http_interactions => true) do
+    VCR.use_cassette('all_collections_index_call') do
        solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
        target_url = add_params_to_url(collections_path, solrparams)
        visit target_url
@@ -34,7 +34,7 @@ describe("Collections Controller")  do
   
   it "the index of Collections should respect :last_modified and return only Stafford" do
     VCR.use_cassette('last_modified_date_collections_index_call') do
-      solrparams = {:last_modified =>  last_mod_test_date}
+      solrparams = {:last_modified =>  last_mod_test_date_collections}
       target_url = add_params_to_url(collections_path, solrparams)
       visit target_url
       response = JSON.parse(page.body)
@@ -58,7 +58,7 @@ describe("Collections Controller")  do
     
     it "the index of Collections should respect :first_modified and return only Revs" do
       VCR.use_cassette('first_modified_date_collections_index_call') do
-        solrparams = {:first_modified => first_mod_test_date}
+        solrparams = {:first_modified => first_mod_test_date_collections}
         target_url = add_params_to_url(collections_path, solrparams)
         visit target_url
         response = JSON.parse(page.body)
@@ -141,14 +141,14 @@ describe("Collections Controller")  do
   
   it "should respect first modified when asked for just a count" do
     VCR.use_cassette('collection_count_call_first_modified') do
-      visit add_params_to_url(collections_path, just_count_param.merge(:first_modified => first_mod_test_date))
+      visit add_params_to_url(collections_path, just_count_param.merge(:first_modified => first_mod_test_date_collections))
       expect(page.body.to_i).to eq(@fixture_data.revs_collections_druids.size)
     end
   end
   
   it "should respect last modified when asked for just a count" do
     VCR.use_cassette('collection_count_call_last_modified') do
-      visit add_params_to_url(collections_path, just_count_param.merge(:last_modified => last_mod_test_date))
+      visit add_params_to_url(collections_path, just_count_param.merge(:last_modified => last_mod_test_date_collections))
       expect(page.body.to_i).to eq(@fixture_data.stafford_collections_druids.size)
     end
   end

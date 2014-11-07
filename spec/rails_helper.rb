@@ -61,8 +61,10 @@ end
 
 class FixtureData
   
-  
-  @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
+  #APOS
+  @@revs_apo ='druid:qv648vd4392'
+  @@stafford_apo = 'druid:vb546ms7107'
+  @@apo_druids = [ @@revs_apo, @@stafford_apo] 
   
   #Collections
   @@top_level_revs_collection_druid = 'druid:nt028fd5773'
@@ -100,8 +102,16 @@ class FixtureData
     return @@top_level_revs_collection_druid
   end
    
-  def apo_druids
+  def all_apo_druids
     return @@apo_druids
+  end
+  
+  def revs_apo_druid
+    return @@revs_apo
+  end
+  
+  def stafford_apo_druid
+    return @@stafford_apo
   end
   
   def revs_items_druids
