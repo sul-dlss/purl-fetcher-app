@@ -81,7 +81,10 @@ describe("Fetcher lib")  do
      end 
   end
   
-  
-  
+  xit "should raise an error when selected for an invalid date range" do
+    times = {:first_modified => yTenK, :Last_modified => yTenK}
+    last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
+    expect(@fetcher.determine_latest_date(times, last_changed)).to raise_error
+  end
   
 end
