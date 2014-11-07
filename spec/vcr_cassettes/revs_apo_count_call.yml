@@ -1,0 +1,29 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t&q=(is_governed_by_s:%22info:fedora/druid:qv648vd4392%22%20OR%20id:%22druid:qv648vd4392%22)%20AND%20published_dt:%5B%221970-01-01T00:00:00Z%22%20TO%20%222014-11-07T23:59:59Z%22%5D&rows=0&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Last-Modified:
+      - Fri, 07 Nov 2014 22:57:33 GMT
+      Etag:
+      - '"YzAwMDAwMDAwMDAwMDAwMFNvbHI="'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":12,"start":0,"docs":[]}}
+    http_version: 
+  recorded_at: Fri, 07 Nov 2014 23:07:23 GMT
+recorded_with: VCR 2.9.3

@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Wed, 05 Nov 2014 18:56:21 GMT
+      - Fri, 07 Nov 2014 22:57:33 GMT
       Etag:
-      - '"ZWY4MDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YzAwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -25,5 +25,5 @@ http_interactions:
       string: |
         {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":4,"start":0,"docs":[{"id":"druid:nt028fd5773","title_t":["The Revs Institute for Automotive Research, Inc."],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:yg867hg1375","title_t":["Francis E. Stafford photographs, 1909-1933"],"identityMetadata_objectType_t":["collection"],"published_dt":["2013-11-11T23:34:29Z"]},{"id":"druid:yt502zj0924","title_t":["TThe Bruce R. Craig Collection of the Revs Institutee"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
     http_version: 
-  recorded_at: Wed, 05 Nov 2014 19:03:37 GMT
+  recorded_at: Fri, 07 Nov 2014 23:07:23 GMT
 recorded_with: VCR 2.9.3

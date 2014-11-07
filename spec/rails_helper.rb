@@ -60,52 +60,78 @@ class FetcherTester
 end
 
 class FixtureData
-  @@collection_druids = ['druid:nt028fd5773', 'druid:wy149zp6932', 'druid:yg867hg1375', 'druid:yt502zj0924'] 
-  @@apo_druids = ['druid:qv648vd4392', 'druid:vb546ms7107'] 
   
-  def number_of_collections
-    return @@collection_druids.size
+  #APOS
+  @@revs_apo ='druid:qv648vd4392'
+  @@stafford_apo = 'druid:vb546ms7107'
+  @@apo_druids = [ @@revs_apo, @@stafford_apo] 
+  
+  #Collections
+  @@top_level_revs_collection_druid = 'druid:nt028fd5773'
+  @@revs_subcollection_druid = 'druid:wy149zp6932'
+  @@stafford_collection_druids = ['druid:yg867hg1375']
+  @@revs_collection_druids = [@@top_level_revs_collection_druid, @@revs_subcollection_druid , 'druid:yt502zj0924']
+  @@collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
+  
+  #Items
+  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722','druid:ww689vs6534']
+  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137','druid:bb027yn4436','druid:bb048rn5648', 'druid:bb113tm9924']
+  @@items_druids = @@stafford_items_druids + @@revs_items_druids
+  
+  def all_druids
+    return @@apo_druids + @@collection_druids + @@items_druids
   end
-  
-  def collection_druids_list
+   
+  def all_collection_druids
     return @@collection_druids
   end
   
-  def number_of_apos
-    return @@apo_druids.size
+  def stafford_collections_druids
+    return @@stafford_collection_druids
   end
   
-  def apo_druids_list
+  def revs_collections_druids
+    return @@revs_collection_druids
+  end
+  
+  def revs_subcollection_druid
+    return @@revs_subcollection_druid 
+  end
+  
+  def top_level_revs_collection_druid
+    return @@top_level_revs_collection_druid
+  end
+   
+  def all_apo_druids
     return @@apo_druids
   end
- 
-  def add_params_to_url(url, params)
-    count = 0 
-    params.each do |key,value|
-      if count == 0 
-        url << "?"
-      else
-        url << "&"
-      end
-      count += 1
-      url << "#{key.to_s}=#{value}"
-    end
-    return url
+  
+  def revs_apo_druid
+    return @@revs_apo
   end
   
+  def stafford_apo_druid
+    return @@stafford_apo
+  end
+  
+  def revs_items_druids
+     return @@revs_items_druids
+  end
+  
+  def stafford_items_druids
+    return @@stafford_items_druids 
+  end
+  
+  def all_items_druids
+    return @@items_druids = @@stafford_items_druids
+  end
+   
   def get_response(url)
     return Net::HTTP.get_response(URI.parse(url))
   end
   
   def get_response_body(url)
     return JSON.parse(get_response(url).body)
-  end
-  
-  #Due to VCR we need to have a fixed last_modified date, since time now will vary
-  #You'll have one time now from when you recorded and another from when travis_ci or such runs the tests
-  def add_late_end_date(params)
-    #Warning: Not Y10K Compliant!  
-    return params[:last_modified] = :last_modified => '9999-12-31T23:59:59Z'
   end
 
 end
