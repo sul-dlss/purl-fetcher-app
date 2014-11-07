@@ -12,7 +12,8 @@ defaults: &defaults
   item_type: "item"
   fedora_prefix: "info:fedora/"
   title_field: "title_t"
-
+  title_field_alt: "public_dc_title_t"
+  
 development:
   <<: *defaults
 test: 

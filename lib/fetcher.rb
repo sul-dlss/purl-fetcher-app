@@ -2,7 +2,7 @@ require 'active_support/inflector'
 
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
-  @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field}"
+  @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field} AND #{Title_Field_Alt}"
   
 
   # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type (potentially limited by rows or date if specified by the user)
@@ -180,7 +180,12 @@ module Fetcher
       type = doc[Type_Field.to_sym][0]
       
       #Make the JSON for this druid
-      j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => doc[Title_Field.to_sym][0]}
+      
+      title1=doc[Title_Field.to_sym]
+      title2=doc[Title_Field_Alt.to_sym]      
+      title = title1.nil? ? title2.nil? ? "" : title2[0] : title1[0] # look in two different fields for a title and grab the other if the first is nil (setting title to blank if both are nil)
+      
+      j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => title}
 
       #Append this little json stub to its proper parent array
       all_json[type.downcase.pluralize.to_sym] << j

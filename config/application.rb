@@ -73,6 +73,7 @@ begin
   ID_Field = Solr_terms['id_field']
   Type_Field = Solr_terms['fedora_type_field']
   Title_Field = Solr_terms['title_field'] 
+  Title_Field_Alt = Solr_terms['title_field_alt'] 
   Last_Changed_Field = Solr_terms['last_changed']
   Fedora_Prefix = Solr_terms['fedora_prefix']
   Druid_Prefix = Solr_terms['druid_prefix']
