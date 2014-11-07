@@ -88,6 +88,9 @@ describe("Fetcher lib")  do
     end
   end
   
+  xit "It should test for picking the proper date out of a range" do
+  end
+  
   
   
   
