@@ -1,0 +1,29 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t&q=(tag_facet:%22%22)%20AND%20published_dt:%5B%221970-01-01T00:00:00Z%22%20TO%20%222014-11-07T23:59:59Z%22%5D&rows=100000000&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Last-Modified:
+      - Fri, 07 Nov 2014 21:25:18 GMT
+      Etag:
+      - '"ZWY4MDAwMDAwMDAwMDAwMFNvbHI="'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":0,"start":0,"docs":[]}}
+    http_version: 
+  recorded_at: Fri, 07 Nov 2014 21:37:06 GMT
+recorded_with: VCR 2.9.3
