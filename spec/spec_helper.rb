@@ -214,3 +214,12 @@ end
 def first_mod_test_date_apos
   return '2014-03-13T12:13:14Z'
 end
+
+
+def find_druid_in_array(array, target)
+  array.each do |entry|
+    return entry if entry['druid'] = target
+  end
+  return nil
+end
+  

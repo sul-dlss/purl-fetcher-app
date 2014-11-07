@@ -61,7 +61,24 @@ describe("Fetcher lib")  do
   
 
     
-  xit "It should test for picking the proper date out of a range" do
+  it "It should test for picking the proper date out of a range" do
+    VCR.use_cassette('last_changed_testing') do
+       latest_change = 'latest_change'
+       solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
+       target_url = add_params_to_url(collections_path + '/' + @fixture_data.top_level_revs_collection_druid, solrparams)
+       visit target_url
+       response = JSON.parse(page.body)
+       collections = response[collections_key]
+       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
+       expect(d[latest_change]).to eq('2014-06-06T05:06:06Z')
+      
+       new_url= add_params_to_url(collections_path + '/' + @fixture_data.top_level_revs_collection_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
+       visit new_url
+       response = JSON.parse(page.body)
+       collections = response[collections_key]
+       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
+       expect(d[latest_change]).to eq('2014-05-05T05:04:13Z')
+     end 
   end
   
   
