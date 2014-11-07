@@ -229,11 +229,10 @@ module Fetcher
   #
   # @return [string] latest modified/changed date
   #
-  # @param times [hash] properly formatted first_modified and/or last_modified dates
-  # @param last_changed [hash] change dates from solr response
+  # @param times [hash] properly formatted :first and/or :last dates
+  # @param last_changed [array] change dates from solr response
   #
   def determine_latest_date(times, last_changed)
-
       #Sort with latest date first
       changes_sorted = last_changed.sort.reverse
       
@@ -241,7 +240,7 @@ module Fetcher
         
         # all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had
         # zero results for this, we just want the first one earlier than :last
-        if c <= times[:last]
+        if c <= times[:last] and c >= times[:first]
           return c
         end
       end

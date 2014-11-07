@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Fri, 07 Nov 2014 21:25:18 GMT
+      - Fri, 07 Nov 2014 22:57:33 GMT
       Etag:
-      - '"ZWY4MDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YzAwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":0,"start":0,"docs":[]}}
+        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":0,"start":0,"docs":[]}}
     http_version: 
-  recorded_at: Fri, 07 Nov 2014 21:37:06 GMT
+  recorded_at: Fri, 07 Nov 2014 23:07:24 GMT
 recorded_with: VCR 2.9.3

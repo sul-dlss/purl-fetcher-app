@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Thu, 06 Nov 2014 18:56:24 GMT
+      - Fri, 07 Nov 2014 22:57:33 GMT
       Etag:
-      - '"ZWY4MDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YzAwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":5,"start":0,"docs":[{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb001zc5754","title_t":["French Grand Prix and 12 Hour Rheims: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb023nj3137","title_t":["Snetterton Vanwall Trophy: 1958"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb027yn4436","title_t":["Crystal Palace BARC: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb048rn5648","title_t":["Tourist Trophy Goodwood: 1959"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
+        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":5,"start":0,"docs":[{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb001zc5754","title_t":["French Grand Prix and 12 Hour Rheims: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb023nj3137","title_t":["Snetterton Vanwall Trophy: 1958"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb027yn4436","title_t":["Crystal Palace BARC: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb048rn5648","title_t":["Tourist Trophy Goodwood: 1959"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
     http_version: 
-  recorded_at: Fri, 07 Nov 2014 00:02:17 GMT
+  recorded_at: Fri, 07 Nov 2014 23:07:24 GMT
 recorded_with: VCR 2.9.3
