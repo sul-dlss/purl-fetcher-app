@@ -37,7 +37,7 @@ class TagsController < ApplicationController
   #   http://localhost:3000/tags.json  # gives all tags in json format  
   def index
     #TODO: Return a list of all tag_facet entries or their counts
-    render_result('pending')
+    render_result(200)
   end
   
 end
