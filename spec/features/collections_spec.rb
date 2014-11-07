@@ -190,13 +190,13 @@ describe("Collections Controller")  do
       result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
     
       #Ensure The Stafford Collection Druid Is Not Present
-      result_should_not_contain_druids(['druid:yg867hg1375'], response['collections'])
+      result_should_not_contain_druids(@fixture_data.all_collection_druids-@fixture_data.revs_collections_druids, response[collections_key])
     
       #Ensure No Items Were Returned
-      expect(response['items']).to be nil
+      expect(response[items_key]).to be nil
     
       #Ensure No APOS Were Returned
-      expect(response['adminpolicy']).to be nil
+      expect(response[apos_key]).to be nil
     end
   end
   
