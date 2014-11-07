@@ -4,6 +4,7 @@ defaults: &defaults
   tag_field: "tag_facet"
   id_field: "id"
   collection_type: "collection"
+  set_type: "set"
   apo_type: "adminpolicy"
   fedora_type_field: "identityMetadata_objectType_t" 
   druid_prefix: "druid:"
