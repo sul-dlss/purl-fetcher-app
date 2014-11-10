@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+VERSION = File.read('VERSION')
+
 module DorFetcherService
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -23,6 +25,7 @@ module DorFetcherService
     #Add in files in lib/ such as the fetcher module
     config.autoload_paths << Rails.root.join('lib')
     
+    config.version = VERSION # read from VERSION file at base of website                                                                                                                                                                                                                                                   
     load_yaml_config = lambda { |yaml_file|
       full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
       yaml_erb  = ERB.new(IO.read(full_path)).result(binding)
