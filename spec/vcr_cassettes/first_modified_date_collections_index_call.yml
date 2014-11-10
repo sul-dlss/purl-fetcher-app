@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=identityMetadata_objectType_t:%22collection%22%20AND%20published_dt:%5B%222014-01-01T00:00:00Z%22%20TO%20%222014-05-06T00:00:00Z%22%5D&rows=100000000&wt=json
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=identityMetadata_objectType_t:%22collection%22%20AND%20published_dt:%5B%222014-01-01T00:00:00Z%22%20TO%20%222014-11-10T23:59:59Z%22%5D&rows=100000000&wt=json
     body:
       encoding: US-ASCII
       string: ''

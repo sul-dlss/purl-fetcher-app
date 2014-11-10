@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-describe("Queries",:type=>:request,:integration=>true)  do
-  
-  before :each do
-    
-  end
+describe("Ping",:type=>:request,:integration=>true)  do
   
   it "should return an OK status when calling the root url" do
     visit root_path

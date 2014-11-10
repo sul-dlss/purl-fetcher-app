@@ -59,112 +59,32 @@ describe("Fetcher lib")  do
     expect(@fetcher.get_rows(solrparams,{:rows=>'500'})).to eq(solrparams.merge(:rows=>'500'))    
   end
   
-  it "number of Collections found should be all collections when not supplied a date range and all their druids should be present" do
-#     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
-    VCR.use_cassette('all_collections_call',  :allow_unused_http_interactions => true) do
-       solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
-       target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
+
+    
+  it "It should test for picking the proper date out of a range" do
+    VCR.use_cassette('last_changed_testing') do
+       latest_change = 'latest_change'
+       solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
+       target_url = add_params_to_url(collections_path + '/' + @fixture_data.top_level_revs_collection_druid, solrparams)
        visit target_url
        response = JSON.parse(page.body)
-     
-       #We Should Only Have The Four Collection Objects
-       expect(response['collections'].size).to eq(@fixture_data.number_of_collections)
+       collections = response[collections_key]
+       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
+       expect(d[latest_change]).to eq('2014-06-06T05:06:06Z')
       
-       #Ensure All Four Collection Druids Are Present
-       result_should_contain_druids(@fixture_data.collection_druids_list,response['collections'])
-    
-       #Ensure No Items Were Returned
-       expect(response['items']).to be nil
-    
-       #Ensure No APOS Were Returned
-       expect(response['adminpolicies']).to be nil
-     end
-     
+       new_url= add_params_to_url(collections_path + '/' + @fixture_data.top_level_revs_collection_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
+       visit new_url
+       response = JSON.parse(page.body)
+       collections = response[collections_key]
+       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
+       expect(d[latest_change]).to eq('2014-05-05T05:04:13Z')
+     end 
   end
   
- 
-  it "number of APOs found should be all APOs when not supplied a date range and all their druids should be present" do
-    VCR.use_cassette('all_apos_call',  :allow_unused_http_interactions => true) do
-      solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
-      target_url = @fixture_data.add_params_to_url(apos_path, solrparams)
-      visit target_url
-      response = JSON.parse(page.body)
-    
-      #We Should Only Have The Four Collection Objects
-      expect(response['adminpolicies'].size).to eq(@fixture_data.number_of_apos)
-     
-      #Ensure All Four Collection Druids Are Present
-      result_should_contain_druids(@fixture_data.apo_druids_list,response['adminpolicies'])
-   
-      #Ensure No Items Were Returned
-      expect(response['items']).to be nil
-   
-      #Ensure No Collections Were Returned
-      expect(response['collections']).to be nil
-    end
+  it "should raise an error when selected for an invalid date range" do
+    times = {:first => yTenK, :last => yTenK}
+    last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
+    expect{@fetcher.determine_latest_date(times, last_changed)}.to raise_error(RuntimeError)
   end
- 
-  it "should return a blank title if both expected title fields are not present in a solr doc" do
-    VCR.use_cassette('nt028fd5773 collection', :allow_unused_http_interactions => true) do
-      solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
-      target_url = @fixture_data.add_params_to_url(collection_path(:id=>"nt028fd5773"), solrparams)
-      visit target_url
-      response = JSON.parse(page.body)
-      expect(response['items'].size).to eq(8) # there should be 8 items in this collection
-      response['items'].each do |item|
-        if item['druid'] == 'druid:bb048rn5648' # this item is missing the title field in both places, and so the title should be blank
-          expect(item['title']).to eq("")
-        elsif item['druid'] == 'druid:bb113tm9924' # this item has the title field in the alternate spot, and should still come through ok
-          expect(item['title']).to eq("Permatex 300 NASCAR Race: 1968")
-        else
-          expect(item['title']).not_to eq("") # the rest should have a title
-        end
-      end
-    end
-  end
-  
-  
-  it "It should only return Revs collection objects between these two dates" do
-     VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
-      #All Revs Collection Objects Should Be Here
-      #The Stafford Collection Object Should Not Be Here
-    
-      #Set the dates
-      solrparams = {:first_modified =>'2014-01-01T00:00:00Z', :last_modified => '2014-05-06T00:00:00Z'}
-      target_url = @fixture_data.add_params_to_url(collections_path, solrparams)
-      visit target_url
-      response = JSON.parse(page.body)
-    
-      #We Should Only Have The Three Revs Fixtures
-      expect(page).to have_content('"counts":[{"collections":3},{"total_count":3}]}')
-    
-      #Ensure The Three Revs Collection Driuds Are Present
-      result_should_contain_druids(['druid:wy149zp6932','druid:nt028fd5773', 'druid:yt502zj0924'],response['collections'])
-    
-      #Ensure The Stafford Collection Druid Is Not Present
-      result_should_not_contain_druids(['druid:yg867hg1375'], response['collections'])
-    
-      #Ensure No Items Were Returned
-      expect(response['items']).to be nil
-    
-      #Ensure No APOS Were Returned
-      expect(response['adminpolicy']).to be nil
-    end
-  end
-  
-  def result_should_contain_druids(druids, response)
-    response.each do |r|
-      expect(druids.include?(r['druid'])).to be true
-    end
-  
-  end
-  
-  def result_should_not_contain_druids(druids, response)
-    response.each do |r|
-      expect(druids.include?(r['druid'])).to be false
-    end
-  
-  end
-  
   
 end
