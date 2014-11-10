@@ -104,6 +104,25 @@ describe("Fetcher lib")  do
     end
   end
  
+  it "should return a blank title if both expected title fields are not present in a solr doc" do
+    VCR.use_cassette('nt028fd5773 collection', :allow_unused_http_interactions => true) do
+      solrparams = @fixture_data.add_late_end_date({})  #We need the time to be a stable time way in the future for VCR recordings
+      target_url = @fixture_data.add_params_to_url(collection_path(:id=>"nt028fd5773"), solrparams)
+      visit target_url
+      response = JSON.parse(page.body)
+      expect(response['items'].size).to eq(8) # there should be 8 items in this collection
+      response['items'].each do |item|
+        if item['druid'] == 'druid:bb048rn5648' # this item is missing the title field in both places, and so the title should be blank
+          expect(item['title']).to eq("")
+        elsif item['druid'] == 'druid:bb113tm9924' # this item has the title field in the alternate spot, and should still come through ok
+          expect(item['title']).to eq("Permatex 300 NASCAR Race: 1968")
+        else
+          expect(item['title']).not_to eq("") # the rest should have a title
+        end
+      end
+    end
+  end
+  
   
   it "It should only return Revs collection objects between these two dates" do
      VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
