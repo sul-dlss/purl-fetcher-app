@@ -25,7 +25,9 @@ module DorFetcherService
     #Add in files in lib/ such as the fetcher module
     config.autoload_paths << Rails.root.join('lib')
     
-    config.version = VERSION # read from VERSION file at base of website                                                                                                                                                                                                                                                   
+    config.version = VERSION # read from VERSION file at base of website
+    config.app_name = 'DORFetcherService'
+    
     load_yaml_config = lambda { |yaml_file|
       full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
       yaml_erb  = ERB.new(IO.read(full_path)).result(binding)

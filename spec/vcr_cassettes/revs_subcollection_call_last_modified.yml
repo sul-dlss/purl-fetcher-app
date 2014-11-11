@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=(is_member_of_collection_s:%22info:fedora/druid:wy149zp6932%22%20OR%20id:%22druid:wy149zp6932%22)%20AND%20published_dt:%5B%221970-01-01T00:00:00Z%22%20TO%20%222014-11-10T23:59:59Z%22%5D&rows=100000000&wt=json
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=(is_member_of_collection_s:%22info:fedora/druid:wy149zp6932%22%20OR%20id:%22druid:wy149zp6932%22)%20AND%20published_dt:%5B%221970-01-01T00:00:00Z%22%20TO%20%222014-11-11T23:59:59Z%22%5D&rows=100000000&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -13,7 +13,7 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Mon, 10 Nov 2014 19:36:00 GMT
+      - Tue, 11 Nov 2014 23:01:04 GMT
       Etag:
       - '"ZmMwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":0},"response":{"numFound":5,"start":0,"docs":[{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb001zc5754","title_t":["French Grand Prix and 12 Hour Rheims: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb023nj3137","title_t":["Snetterton Vanwall Trophy: 1958"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb027yn4436","title_t":["Crystal Palace BARC: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb048rn5648","identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
+        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":5,"start":0,"docs":[{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb001zc5754","title_t":["French Grand Prix and 12 Hour Rheims: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb023nj3137","title_t":["Snetterton Vanwall Trophy: 1958"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb027yn4436","title_t":["Crystal Palace BARC: 1954"],"identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:bb048rn5648","identityMetadata_objectType_t":["item"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
     http_version: 
-  recorded_at: Mon, 10 Nov 2014 19:36:03 GMT
+  recorded_at: Tue, 11 Nov 2014 23:01:13 GMT
 recorded_with: VCR 2.9.3
