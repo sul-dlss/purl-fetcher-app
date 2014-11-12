@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Tue, 11 Nov 2014 23:01:04 GMT
+      - Wed, 12 Nov 2014 00:14:37 GMT
       Etag:
-      - '"ZmMwMDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YzIwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"responseHeader":{"status":0,"QTime":2},"response":{"numFound":1,"start":0,"docs":[{"id":"druid:yg867hg1375","title_t":["Francis E. Stafford photographs, 1909-1933"],"identityMetadata_objectType_t":["collection"],"published_dt":["2013-11-11T23:34:29Z"]}]}}
+        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[{"id":"druid:yg867hg1375","title_t":["Francis E. Stafford photographs, 1909-1933"],"identityMetadata_objectType_t":["collection"],"published_dt":["2013-11-11T23:34:29Z"]}]}}
     http_version: 
-  recorded_at: Tue, 11 Nov 2014 23:01:13 GMT
+  recorded_at: Wed, 12 Nov 2014 00:14:40 GMT
 recorded_with: VCR 2.9.3
