@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   
   root :controller=>'about', :action=>'index'
   get 'about/version' => 'about#version'
+  mount AboutPage::Engine => '/about(.:format)' # Or whever you want to access the about page
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

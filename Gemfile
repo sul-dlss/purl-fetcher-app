@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'turbolinks'
 
 gem 'is_it_working'
+gem 'about_page'
 
 group :test do
   gem 'sqlite3'
