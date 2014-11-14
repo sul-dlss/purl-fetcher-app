@@ -91,3 +91,7 @@ end
 
 
 #solr_fields = {:apo_field => apo_field, :collection_field => collection_field}
+
+Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
+                       :api_key => '8fe52f71-2c03-44dd-8e59-42547f91a9ac',
+                       :disabled => (Rails.env.development? || Rails.env.test?)
