@@ -3,7 +3,25 @@ require 'active_support/inflector'
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
   @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field} AND #{Title_Field_Alt}"
-  
+
+  # Run a solr query, and do some logging
+  #
+  # @return [hash] solr response
+  #
+  # @param params [hash] params to send to solr
+  # @param method [string] type of query to send to solr (defaults to "select")
+  #
+  # Example:
+  #   response=run_solr_query(:q=>'dude')
+  def run_solr_query(params,method="select")
+    start_time=Time.now
+    response=Solr.get method, :params => params
+    elapsed_time=Time.now - start_time
+    Rails.logger.info "Request from #{request.remote_ip} to #{request.fullpath} at #{Time.now}"
+    Rails.logger.info "Solr query: #{params}"
+    Rails.logger.info "Query run time: #{elapsed_time.round(3)} seconds (#{(elapsed_time/60.0).round(2)} minutes)"
+    return response
+ end
 
   # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type (potentially limited by rows or date if specified by the user)
   #
@@ -23,7 +41,7 @@ module Fetcher
     solrparams={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", :wt => :json, :fl => @@field_return_list}
     get_rows(solrparams,params)
     
-    response = Solr.get 'select', :params => solrparams
+    response = run_solr_query(solrparams)
     
     return determine_proper_response(params, response)
   end
@@ -48,7 +66,7 @@ module Fetcher
       }
       get_rows(solrparams,params)
 
-    response = Solr.get 'select', :params => solrparams
+    response = run_solr_query(solrparams)
   
     #TODO: If APO in response and said APO's druid != user provided druid, recursion!  
     
@@ -74,7 +92,7 @@ module Fetcher
 
       get_rows(solrparams,params)
     
-    response = Solr.get 'select', :params => solrparams
+    response = run_solr_query(solrparams)
 
     return determine_proper_response(params, response)
 
