@@ -7,10 +7,8 @@ describe("APOS Controller")  do
   end
   
   it "the index of APOS found should be all APOS when not supplied a date range and all their druids should be present" do
-#     target_url = @fixture_data.add_params_to_url(@fixture_data.base_collections_url, {})
     VCR.use_cassette('all_apos_index_call') do
-       solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
-       target_url = add_params_to_url(apos_path, solrparams)
+       target_url = apos_path(just_late_end_date)
        visit target_url
        response = JSON.parse(page.body)
      
@@ -35,7 +33,7 @@ describe("APOS Controller")  do
   it "the index of APOS should respect :last_modified and return only Stafford" do
     VCR.use_cassette('last_modified_date_apos_index_call') do
       solrparams = {:last_modified =>  mod_test_date_apos}
-      target_url = add_params_to_url(apos_path, solrparams)
+      target_url = apos_path(solrparams)
       visit target_url
       response = JSON.parse(page.body)
       #Ensure the Stafford Apo Druid is Present
@@ -58,7 +56,7 @@ describe("APOS Controller")  do
     it "the index of APOS should return both Revs and Stafford with first modifed date because Stafford APO has multiple edit dates" do
       VCR.use_cassette('first_modified_date_apos_index_call') do
         solrparams = {:first_modified => mod_test_date_apos}
-        target_url = add_params_to_url(apos_path, solrparams)
+        target_url = apos_path(add_late_end_date(solrparams))
         visit target_url
         response = JSON.parse(page.body)
         
@@ -84,7 +82,7 @@ describe("APOS Controller")  do
     VCR.use_cassette('prefix_and_no_prefix_calls_to_apo') do
       
       #Check For JSON
-      visit apos_path + '/' + @fixture_data.all_apo_druids[0]
+      visit apo_path(@fixture_data.all_apo_druids[0],just_late_end_date)
       with_prefix_response = JSON.parse(page.body)
       
       visit apos_path + '/' +  @fixture_data.all_apo_druids[0].split(':')[1]
@@ -105,7 +103,7 @@ describe("APOS Controller")  do
   
   it "should return only the Revs Druids when an APO is queried with the Revs APO" do
     VCR.use_cassette('revs_apo_call') do
-      visit apos_path + '/' + @fixture_data.revs_apo_druid
+      visit apo_path(@fixture_data.revs_apo_druid,just_late_end_date)
       response = JSON.parse(page.body)
       exclude_druids = @fixture_data.revs_items_druids+@fixture_data.revs_collections_druids+[@fixture_data.revs_apo_druid]
       
@@ -135,7 +133,7 @@ describe("APOS Controller")  do
   
   it "should only return a count of the Revs Druids when called with the count only parameter" do
     VCR.use_cassette('revs_apo_count_call') do
-      visit add_params_to_url(apos_path + '/' + @fixture_data.revs_apo_druid, just_count_param)
+      visit apo_path(@fixture_data.revs_apo_druid, just_count_param)
       
       #The One is the APO
       expect(page.body.to_i).to eq((@fixture_data.revs_items_druids+@fixture_data.revs_collections_druids).size+1)
@@ -145,7 +143,7 @@ describe("APOS Controller")  do
   
   it "should respect first modified when asked for just a count" do
     VCR.use_cassette('apo_count_call_first_modified') do
-      visit add_params_to_url(apos_path, just_count_param.merge(:first_modified => first_mod_test_date_apos))
+      visit apos_path(just_count_param.merge(:first_modified => first_mod_test_date_apos))
       
       #Only Stafford Druid
       expect(page.body.to_i).to eq(1)
@@ -154,7 +152,7 @@ describe("APOS Controller")  do
   
   it "should respect last modified when asked for just a count" do
     VCR.use_cassette('apos_count_call_last_modified') do
-      visit add_params_to_url(apos_path, just_count_param.merge(:last_modified =>mod_test_date_apos))
+      visit apos_path(just_count_param.merge(:last_modified =>mod_test_date_apos))
       expect(page.body.to_i).to eq(1)
     end
   end
