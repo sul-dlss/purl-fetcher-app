@@ -8,8 +8,7 @@ describe("APOS Controller")  do
   
   it "the index of APOS found should be all APOS when not supplied a date range and all their druids should be present" do
     VCR.use_cassette('all_apos_index_call') do
-       target_url = apos_path(just_late_end_date)
-       visit target_url
+       visit apos_path
        response = JSON.parse(page.body)
      
        #Ensure All APO Druids Are Present
@@ -55,8 +54,7 @@ describe("APOS Controller")  do
     
     it "the index of APOS should return both Revs and Stafford with first modifed date because Stafford APO has multiple edit dates" do
       VCR.use_cassette('first_modified_date_apos_index_call') do
-        solrparams = {:first_modified => mod_test_date_apos}
-        target_url = apos_path(add_late_end_date(solrparams))
+        target_url = apos_path(:first_modified => mod_test_date_apos)
         visit target_url
         response = JSON.parse(page.body)
         
@@ -82,19 +80,19 @@ describe("APOS Controller")  do
     VCR.use_cassette('prefix_and_no_prefix_calls_to_apo') do
       
       #Check For JSON
-      visit apo_path(@fixture_data.all_apo_druids[0],just_late_end_date)
+      visit apo_path(@fixture_data.all_apo_druids[0])
       with_prefix_response = JSON.parse(page.body)
       
-      visit apos_path + '/' +  @fixture_data.all_apo_druids[0].split(':')[1]
+      visit apo_path(@fixture_data.all_apo_druids[0].split(':')[1])
       no_prefix_response = JSON.parse(page.body)
       
       expect(with_prefix_response).to eq(no_prefix_response)
       
       #Check For XML
-      visit apos_path + '/' +  @fixture_data.all_apo_druids[0] + '.xml'
+      visit apo_path(@fixture_data.all_apo_druids[0],:format=>'xml')
       with_prefix_response = page.body
       
-      visit apos_path + '/' +  @fixture_data.all_apo_druids[0].split(':')[1] + '.xml'
+      visit apo_path(@fixture_data.all_apo_druids[0].split(':')[1],:format=>'xml')
       no_prefix_response = page.body
       
       expect(with_prefix_response).to eq(no_prefix_response)
@@ -103,7 +101,7 @@ describe("APOS Controller")  do
   
   it "should return only the Revs Druids when an APO is queried with the Revs APO" do
     VCR.use_cassette('revs_apo_call') do
-      visit apo_path(@fixture_data.revs_apo_druid,just_late_end_date)
+      visit apo_path(@fixture_data.revs_apo_druid)
       response = JSON.parse(page.body)
       exclude_druids = @fixture_data.revs_items_druids+@fixture_data.revs_collections_druids+[@fixture_data.revs_apo_druid]
       

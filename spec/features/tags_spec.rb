@@ -15,7 +15,7 @@ describe("Tags Controller")  do
   
   it "should return zero for a tag since this is not implemented yet" do
     VCR.use_cassette('tag_foo_call') do
-      visit tags_path + '/foo'
+      visit tag_path('foo')
       expect(page.body).to eq('{"counts":{"total_count":0}}')
     end
   end

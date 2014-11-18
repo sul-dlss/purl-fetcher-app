@@ -1,19 +1,20 @@
 require 'rails_helper'
 
 describe("Fetcher lib")  do
+  include ApplicationHelper
   
   before :each do
     @fetcher=FetcherTester.new
     @fixture_data = FixtureData.new
     @earliest='1970-01-01T00:00:00Z'
+    @latest=yTenK
   end
 
   it "should return the current date and time when time not passed in" do
-    last_date=Time.zone.now.end_of_day.iso8601
-    expect(@fetcher.get_times(nil)).to eq({first:@earliest,last:last_date})
-    expect(@fetcher.get_times({})).to eq({first:@earliest,last:last_date})
+    expect(@fetcher.get_times(nil)).to eq({first:@earliest,last:@latest})
+    expect(@fetcher.get_times({})).to eq({first:@earliest,last:@latest})
     expect(@fetcher.get_times({first_modified:nil,last_modified:'01/01/2014'})).to eq({first:'1970-01-01T00:00:00Z',last:"2014-01-01T00:00:00Z"})
-    expect(@fetcher.get_times({first_modified:'01/01/2014',last_modified:nil})).to eq({first:'2014-01-01T00:00:00Z',last:last_date})
+    expect(@fetcher.get_times({first_modified:'01/01/2014',last_modified:nil})).to eq({first:'2014-01-01T00:00:00Z',last:@latest})
   end  
   
   it "should raise an exception if the start date is not before the end date" do
@@ -64,15 +65,13 @@ describe("Fetcher lib")  do
   it "It should test for picking the proper date out of a range" do
     VCR.use_cassette('last_changed_testing') do
        latest_change = 'latest_change'
-       target_url = collection_path(@fixture_data.top_level_revs_collection_druid, just_late_end_date)
-       visit target_url
+       visit collection_path(@fixture_data.top_level_revs_collection_druid)
        response = JSON.parse(page.body)
        collections = response[collections_key]
        d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
        expect(d[latest_change]).to eq('2014-06-06T05:06:06Z')
       
-       new_url= collection_path(@fixture_data.top_level_revs_collection_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
-       visit new_url
+       visit collection_path(@fixture_data.top_level_revs_collection_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
        response = JSON.parse(page.body)
        collections = response[collections_key]
        d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)

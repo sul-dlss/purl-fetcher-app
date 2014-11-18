@@ -2,6 +2,9 @@ require 'active_support/inflector'
 
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
+  
+  include ApplicationHelper
+  
   @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field} AND #{Title_Field_Alt}"
 
   # Run a solr query, and do some logging
@@ -154,7 +157,7 @@ module Fetcher
   def get_times(p = {})
     params = p || {}
     first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    last_modified = params[:last_modified] || Time.zone.now.end_of_day.iso8601
+    last_modified = params[:last_modified] || yTenK
     begin 
       first_modified_time=Time.zone.parse(first_modified).iso8601 
       last_modified_time=Time.zone.parse(last_modified).iso8601 

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=identityMetadata_objectType_t:%22adminpolicy%22%20AND%20published_dt:%5B%222014-03-13T12:13:14Z%22%20TO%20%222014-11-17T23:59:59Z%22%5D&rows=0&wt=json
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dt%20AND%20identityMetadata_objectType_t%20AND%20title_t%20AND%20public_dc_title_t&q=identityMetadata_objectType_t:%22adminpolicy%22%20AND%20published_dt:%5B%222014-03-13T12:13:14Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=0&wt=json
     body:
       encoding: US-ASCII
       string: ''
@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Mon, 17 Nov 2014 22:43:25 GMT
+      - Tue, 18 Nov 2014 18:51:03 GMT
       Etag:
-      - '"ZmEwMDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YzYwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -25,5 +25,5 @@ http_interactions:
       string: |
         {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":1,"start":0,"docs":[]}}
     http_version: 
-  recorded_at: Mon, 17 Nov 2014 22:43:28 GMT
+  recorded_at: Tue, 18 Nov 2014 18:51:07 GMT
 recorded_with: VCR 2.9.3

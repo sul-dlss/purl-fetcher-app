@@ -8,9 +8,7 @@ describe("Collections Controller")  do
   
   it "the index of Collections found should be all collections when not supplied a date range and all their druids should be present" do
     VCR.use_cassette('all_collections_index_call') do
-       solrparams = just_late_end_date  #We need the time to be a stable time way in the future for VCR recordings
-       target_url = collections_path(solrparams)
-       visit target_url
+       visit collections_path
        response = JSON.parse(page.body)
      
        #Ensure All Four Collection Druids Are Present
@@ -84,19 +82,19 @@ describe("Collections Controller")  do
     VCR.use_cassette('prefix_and_no_prefix_calls_to_collection') do
       
       #Check For JSON
-      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid
+      visit collection_path(@fixture_data.top_level_revs_collection_druid)
       with_prefix_response = JSON.parse(page.body)
       
-      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid.split(':')[1]
+      visit collection_path(@fixture_data.top_level_revs_collection_druid.split(':')[1])
       no_prefix_response = JSON.parse(page.body)
       
       expect(with_prefix_response).to eq(no_prefix_response)
       
       #Check For XML
-      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid + '.xml'
+      visit collection_path(@fixture_data.top_level_revs_collection_druid,:format=>'xml')
       with_prefix_response = page.body
       
-      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid.split(':')[1] + '.xml'
+      visit collection_path(@fixture_data.top_level_revs_collection_druid.split(':')[1],:format=>'xml')
       no_prefix_response = page.body
       
       expect(with_prefix_response).to eq(no_prefix_response)
@@ -105,7 +103,7 @@ describe("Collections Controller")  do
   
   it "should return only the Revs Druids when a collection is queried with the top level Revs Collection" do
     VCR.use_cassette('revs_collection_call') do
-      visit collections_path + '/' + @fixture_data.top_level_revs_collection_druid
+      visit collection_path(@fixture_data.top_level_revs_collection_druid)
       response = JSON.parse(page.body)
       exclude_druids = @fixture_data.revs_items_druids+@fixture_data.revs_collections_druids
       
@@ -154,7 +152,7 @@ describe("Collections Controller")  do
   
   it "should return just the subcollection for revs when called with a revs subcollection druid" do
     VCR.use_cassette('revs_subcollection_call_last_modified') do
-      visit collections_path + '/' + @fixture_data.revs_subcollection_druid
+      visit collection_path(@fixture_data.revs_subcollection_druid)
       response = JSON.parse(page.body)
       collections_list = [@fixture_data.revs_subcollection_druid]
      
