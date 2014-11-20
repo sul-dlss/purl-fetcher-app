@@ -5,7 +5,7 @@ module Fetcher
   
   include ApplicationHelper
   
-  @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field} AND #{Title_Field_Alt}"
+  @@field_return_list = "#{ID_Field} AND #{Last_Changed_Field} AND #{Type_Field} AND #{Title_Field} AND #{Title_Field_Alt} AND #{CatKey_Field}"
 
   # Run a solr query, and do some logging
   #
@@ -207,6 +207,7 @@ module Fetcher
       title = title1.nil? ? title2.nil? ? "" : title2[0] : title1[0] # look in two different fields for a title and grab the other if the first is nil (setting title to blank if both are nil)
       
       j = {:druid => doc[ID_Field.to_sym], :latest_change => determine_latest_date(times, doc[Last_Changed_Field.to_sym]), :title => title}
+      j[:catkey] = doc[CatKey_Field.to_sym][0] if doc[CatKey_Field.to_sym] != nil
 
       #Append this little json stub to its proper parent array
       all_json[type.downcase.pluralize.to_sym] << j
@@ -229,7 +230,7 @@ module Fetcher
     return all_json
     
   end
-  
+   
   # Determines if the user asked for just a count of the item or a full druid list for the item and
   # returns the proper response
   #

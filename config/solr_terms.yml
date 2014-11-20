@@ -13,6 +13,7 @@ defaults: &defaults
   fedora_prefix: "info:fedora/"
   title_field: "title_t"
   title_field_alt: "public_dc_title_t"
+  catkey_field: "catkey_id_t"
   
 development:
   <<: *defaults

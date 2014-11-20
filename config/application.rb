@@ -77,6 +77,7 @@ begin
   #solr_field_yaml = DorFetcherService::Application.config.solr_terms
   ID_Field = Solr_terms['id_field']
   Type_Field = Solr_terms['fedora_type_field']
+  CatKey_Field = Solr_terms['catkey_field']
   Title_Field = Solr_terms['title_field'] 
   Title_Field_Alt = Solr_terms['title_field_alt'] 
   Last_Changed_Field = Solr_terms['last_changed']
