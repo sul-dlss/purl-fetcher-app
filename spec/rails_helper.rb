@@ -66,26 +66,41 @@ class FixtureData
   @@stafford_apo = 'druid:vb546ms7107'
   @@apo_druids = [ @@revs_apo, @@stafford_apo] 
   
+  #Items
+  @@not_accessioned_druid = ['druid:aa000bb0000']
+  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722','druid:ww689vs6534']
+  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137','druid:bb027yn4436','druid:bb048rn5648', 'druid:bb113tm9924']
+  @@items_druids = @@stafford_items_druids + @@revs_items_druids
+  
   #Collections
   @@top_level_revs_collection_druid = 'druid:nt028fd5773'
   @@revs_subcollection_druid = 'druid:wy149zp6932'
   @@stafford_collection_druids = ['druid:yg867hg1375']
   @@revs_collection_druids = [@@top_level_revs_collection_druid, @@revs_subcollection_druid , 'druid:yt502zj0924']
-  @@collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
+  @@accessioned_collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
   
-  #Items
-  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722','druid:ww689vs6534']
-  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137','druid:bb027yn4436','druid:bb048rn5648', 'druid:bb113tm9924']
-  @@items_druids = @@stafford_items_druids + @@revs_items_druids
+  @@all_collection_druids = @@accessioned_collection_druids + @@not_accessioned_druid
+  
+  def accessioned_druids
+    return @@apo_druids + @@accessioned_collection_druids + @@items_druids
+  end
   
   def all_druids
-    return @@apo_druids + @@collection_druids + @@items_druids
+    accessioned_druids + not_accessioned_druid
+  end
+  
+  def not_accessioned_druid
+    @@not_accessioned_druid
   end
    
   def all_collection_druids
-    return @@collection_druids
+    return @@all_collection_druids
   end
-  
+
+  def accessioned_collection_druids
+    return @@accessioned_collection_druids
+  end
+    
   def stafford_collections_druids
     return @@stafford_collection_druids
   end

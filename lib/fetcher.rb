@@ -39,9 +39,9 @@ module Fetcher
     
     #ftype should be :collection or :apo (or other symbol if we added more since this was updated)
 
-    times = get_times(params)
+    date_range_q = get_date_solr_query(params)
 
-    solrparams={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", :wt => :json, :fl => @@field_return_list}
+    solrparams={:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" #{date_range_q}", :wt => :json, :fl => @@field_return_list}
     get_rows(solrparams,params)
     
     response = run_solr_query(solrparams)
@@ -60,10 +60,10 @@ module Fetcher
   #   find_all_fedora_type(params,:apo)  
   def find_all_under(params, controlled_by)
     #controlled_by should be :collection or :apo (or other symbol if we added more since this was updated)
-    times = get_times(params)
+    date_range_q = get_date_solr_query(params)
     
     solrparams= {
-      :q => "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", 
+      :q => "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") #{date_range_q}", 
       :wt => :json,
       :fl => @@field_return_list
       }
@@ -85,10 +85,10 @@ module Fetcher
   # Example:
   #   find_by_tag(params)    
   def find_by_tag(params)
-    times = get_times(params)
+    date_range_q = get_date_solr_query(params)
 
     solrparams={
-      :q => "(#{Controller_Types[:tag]}:\"#{params[:tag]}\") AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]", 
+      :q => "(#{Controller_Types[:tag]}:\"#{params[:tag]}\") #{date_range_q}", 
       :wt => :json,
       :fl =>  @@field_return_list
       }
@@ -168,6 +168,23 @@ module Fetcher
     return {:first => first_modified_time, :last => last_modified_time}
   end
 
+  # Given a hash containing "first_modified" and "last_modified", returns the solr query part to append to the overall query to properly return dates, which my be blank if user asks for just registered objects
+  #
+  # @return [string] solr query part
+  #
+  # @param p [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
+  #
+  # Example:
+  #   get_date_solr_query(:first_modified=>'01/01/2014') # returns "and published_dt:["2014-01-01T00:00:00Z" TO "CURRENT_DATETIME"]"
+  #   get_date_solr_query(:first_modified=>'01/01/2014',:status=>'registered') # returns ""
+  
+  def get_date_solr_query(p={})
+    
+    times=get_times(p)
+    registered_only?(p) ? "" : "AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]" # unless the user has asked for only registered items, apply the date range for published date
+    
+  end
+
   # Given a params hash that will be passed to solr, adds in the proper :rows value depending on if we are requesting a certain number of rows or not
   #
   # @return [hash] solr params hash
@@ -177,6 +194,16 @@ module Fetcher
   #
   def get_rows(solrparams,params)
     params.has_key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000)  # if user passes in the rows they want, use that, else just return everything
+  end
+  
+  # Given a params hash from the user, tells us if they only want registered items (ignoring accessioning and date ranges)
+  #
+  # @return [boolean] true or false
+  #
+  # @param params [hash] query string params from user
+  #  
+  def registered_only?(params)
+    (params && params[:status] && params[:status].downcase) == 'registered'
   end
   
   # Given a solr response hash, create a json string to properly return the data.
@@ -261,20 +288,28 @@ module Fetcher
   #
   def determine_latest_date(times, last_changed)
       #Sort with latest date first
-      changes_sorted = last_changed.sort.reverse
       
-      changes_sorted.each do |c|
+      if last_changed
+        changes_sorted = last_changed.sort.reverse
+      
+        changes_sorted.each do |c|
         
-        # all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had
-        # zero results for this, we just want the first one earlier than :last
-        if c <= times[:last] and c >= times[:first]
-          return c
+          # all changes_sorted have to be equal or greater than times[:first], otherwise Solr would have had
+          # zero results for this, we just want the first one earlier than :last
+          if c <= times[:last] and c >= times[:first]
+            return c
+          end
         end
+      
+        #If we get down here we have a big problem, because there should have been at least one date earlier than times[:last]
+        raise("Error finding latest changed date, failed to find one")
+
+      else
+        
+        return nil
+        
       end
       
-      #If we get down here we have a big problem, because there should have been at least one date earlier than times[:last]
-      raise("Error finding latest changed date, failed to find one")
-
   end
   
 end
