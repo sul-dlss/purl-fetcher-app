@@ -10,10 +10,27 @@ describe("Fetcher lib")  do
     @latest=yTenK
   end
 
+  it "should let us know if the user only wants registered items" do
+    expect(@fetcher.registered_only?(nil)).to be false
+    expect(@fetcher.registered_only?({first_modified:nil,last_modified:'01/01/2014'})).to be false
+    expect(@fetcher.registered_only?({status:'registered',first_modified:nil,last_modified:'01/01/2014'})).to be true    
+    expect(@fetcher.registered_only?({status:'whateves',first_modified:nil,last_modified:'01/01/2014'})).to be false    
+  end
+
+  it "should return the correct date range query part" do
+    expect(@fetcher.get_date_solr_query(nil)).to eq("AND published_dt:[\"#{@earliest}\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({})).to eq("AND published_dt:[\"#{@earliest}\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({first_modified:nil,last_modified:'01/01/2014'})).to eq("AND published_dt:[\"#{@earliest}\" TO \"2014-01-01T00:00:00Z\"]")
+    expect(@fetcher.get_date_solr_query({first_modified:'01/01/2014',last_modified:nil})).to eq("AND published_dt:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({status:'registered',first_modified:'01/01/2014',last_modified:nil})).to eq("")
+    expect(@fetcher.get_date_solr_query({status:'wazzup',first_modified:'01/01/2014',last_modified:nil})).to eq("AND published_dt:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({status:'registered'})).to eq("")
+  end
+    
   it "should return the current date and time when time not passed in" do
     expect(@fetcher.get_times(nil)).to eq({first:@earliest,last:@latest})
     expect(@fetcher.get_times({})).to eq({first:@earliest,last:@latest})
-    expect(@fetcher.get_times({first_modified:nil,last_modified:'01/01/2014'})).to eq({first:'1970-01-01T00:00:00Z',last:"2014-01-01T00:00:00Z"})
+    expect(@fetcher.get_times({first_modified:nil,last_modified:'01/01/2014'})).to eq({first:@earliest,last:"2014-01-01T00:00:00Z"})
     expect(@fetcher.get_times({first_modified:'01/01/2014',last_modified:nil})).to eq({first:'2014-01-01T00:00:00Z',last:@latest})
   end  
   

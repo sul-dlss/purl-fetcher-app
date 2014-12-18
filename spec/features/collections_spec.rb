@@ -12,10 +12,10 @@ describe("Collections Controller")  do
        response = JSON.parse(page.body)
      
        #Ensure All Four Collection Druids Are Present
-       result_should_contain_druids(@fixture_data.all_collection_druids,response[collections_key])
+       result_should_contain_druids(@fixture_data.accessioned_collection_druids,response[collections_key])
        
        #Ensure No Other Druids Are Present
-       result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.all_collection_druids,response[collections_key]) 
+       result_should_not_contain_druids(@fixture_data.accessioned_druids-@fixture_data.accessioned_collection_druids,response[collections_key]) 
     
        #Ensure No Items Were Returned
        expect(response[items_key]).to be nil
@@ -24,7 +24,7 @@ describe("Collections Controller")  do
        expect(response[apos_key]).to be nil
        
        #Verify the Counts
-       verify_counts_section(response, {collections_key => @fixture_data.all_collection_druids.size})
+       verify_counts_section(response, {collections_key => @fixture_data.accessioned_collection_druids.size})
      end
      
   end
@@ -40,7 +40,7 @@ describe("Collections Controller")  do
       result_should_contain_druids(@fixture_data.stafford_collections_druids,response[collections_key]) 
       
       #Ensure No Other Collection Druids Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.stafford_collections_druids,response[collections_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-@fixture_data.stafford_collections_druids,response[collections_key]) 
       
       #Ensure No Items Were Returned
       expect(response[items_key]).to be nil
@@ -64,7 +64,7 @@ describe("Collections Controller")  do
         result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
         
         #Ensure Not Other Collections Are Present
-        result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.revs_collections_druids,response[collections_key]) 
+        result_should_not_contain_druids(@fixture_data.accessioned_druids-@fixture_data.revs_collections_druids,response[collections_key]) 
       
         #Ensure No Items Were Returned
         expect(response[items_key]).to be nil
@@ -76,6 +76,15 @@ describe("Collections Controller")  do
         verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size})
       end
     
+  end
+  
+  it "find all objects even if not accessioned when you specify the correct parameter" do
+    VCR.use_cassette('status=registered query') do
+      visit collections_path(:status=>'registered')
+      response = JSON.parse(page.body)
+      verify_counts_section(response, {collections_key => @fixture_data.all_collection_druids.size})
+      expect(response['collections'].include?({"druid"=>@fixture_data.not_accessioned_druid.first, "latest_change"=>nil, "title"=>"Only Registered - Not Accessioned"})).to be true # this is the unaccessioned item
+    end
   end
   
   it "should not need the druid: prefix to query a list of druids from collections" do
@@ -111,13 +120,13 @@ describe("Collections Controller")  do
       result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
       
       #Ensure Not Other Collections Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[collections_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-exclude_druids,response[collections_key]) 
       
       #Ensure All Revs Items Are Present
       result_should_contain_druids(@fixture_data.revs_items_druids,response[items_key])
       
       #Ensure No Other Items Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[items_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-exclude_druids,response[items_key]) 
       
       #Ensure No APOS Are Present
       expect(response[apos_key]).to be nil
@@ -161,7 +170,7 @@ describe("Collections Controller")  do
       result_should_contain_druids(collections_list,response[collections_key]) 
       
       #Ensure No Other Collection Druids Are Present
-      result_should_not_contain_druids(@fixture_data.all_collection_druids-collections_list,response[collections_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_collection_druids-collections_list,response[collections_key]) 
       
       #Verify the Counts
       verify_counts_section(response, {collections_key => collections_list.size, items_key => 4})
@@ -204,7 +213,7 @@ describe("Collections Controller")  do
       result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
     
       #Ensure The Stafford Collection Druid Is Not Present
-      result_should_not_contain_druids(@fixture_data.all_collection_druids-@fixture_data.revs_collections_druids, response[collections_key])
+      result_should_not_contain_druids(@fixture_data.accessioned_collection_druids-@fixture_data.revs_collections_druids, response[collections_key])
     
       #Ensure No Items Were Returned
       expect(response[items_key]).to be nil

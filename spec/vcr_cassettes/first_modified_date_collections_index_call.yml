@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Thu, 20 Nov 2014 23:27:15 GMT
+      - Thu, 18 Dec 2014 20:11:52 GMT
       Etag:
-      - '"ZDAwMDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"ZjYwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -25,5 +25,5 @@ http_interactions:
       string: |
         {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":3,"start":0,"docs":[{"id":"druid:nt028fd5773","title_t":["The Revs Institute for Automotive Research, Inc."],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]},{"id":"druid:wy149zp6932","title_t":["The George Phillips Collection of the Revs Institute"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"],"catkey_id_t":["3051740"]},{"id":"druid:yt502zj0924","title_t":["TThe Bruce R. Craig Collection of the Revs Institutee"],"identityMetadata_objectType_t":["collection"],"published_dt":["2014-05-05T05:04:13Z","2014-06-06T05:04:13Z","2014-06-06T05:06:06Z"]}]}}
     http_version: 
-  recorded_at: Thu, 20 Nov 2014 23:29:36 GMT
+  recorded_at: Thu, 18 Dec 2014 21:14:06 GMT
 recorded_with: VCR 2.9.3

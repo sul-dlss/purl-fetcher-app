@@ -15,7 +15,7 @@ describe("APOS Controller")  do
        result_should_contain_druids(@fixture_data.all_apo_druids,response[apos_key])
        
        #Ensure No Other Druids Are Present
-       result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.all_apo_druids,response[apos_key]) 
+       result_should_not_contain_druids(@fixture_data.accessioned_druids-@fixture_data.all_apo_druids,response[apos_key]) 
     
        #Ensure No Items Were Returned
        expect(response[items_key]).to be nil
@@ -39,7 +39,7 @@ describe("APOS Controller")  do
       result_should_contain_druids([@fixture_data.stafford_apo_druid],response[apos_key]) 
       
       #Ensure No Other Apos Druids Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-[@fixture_data.stafford_apo_druid],response[apos_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-[@fixture_data.stafford_apo_druid],response[apos_key]) 
       
       #Ensure No Items Were Returned
       expect(response[items_key]).to be nil
@@ -62,7 +62,7 @@ describe("APOS Controller")  do
         result_should_contain_druids(@fixture_data.all_apo_druids,response[apos_key]) 
 
         #Ensure No Other Druids Are Present
-        result_should_not_contain_druids(@fixture_data.all_druids-@fixture_data.all_apo_druids,response[apos_key]) 
+        result_should_not_contain_druids(@fixture_data.accessioned_druids-@fixture_data.all_apo_druids,response[apos_key]) 
 
         #Ensure No Items Were Returned
         expect(response[items_key]).to be nil
@@ -109,19 +109,19 @@ describe("APOS Controller")  do
       result_should_contain_druids(@fixture_data.revs_collections_druids,response[collections_key])
       
       #Ensure Not Other Collections Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[collections_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-exclude_druids,response[collections_key]) 
       
       #Ensure All Revs Items Are Present
       result_should_contain_druids(@fixture_data.revs_items_druids,response[items_key])
       
       #Ensure No Other Items Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[items_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-exclude_druids,response[items_key]) 
       
       #Ensure Revs APO Is Present
       result_should_contain_druids([@fixture_data.revs_apo_druid],response[apos_key]) 
       
       #Ensure No Other APOs Are Present
-      result_should_not_contain_druids(@fixture_data.all_druids-exclude_druids,response[apos_key]) 
+      result_should_not_contain_druids(@fixture_data.accessioned_druids-exclude_druids,response[apos_key]) 
       
       
       #Verify the Counts
