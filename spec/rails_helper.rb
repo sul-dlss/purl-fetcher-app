@@ -59,6 +59,10 @@ class FetcherTester
   include Fetcher
 end
 
+class IndexerTester
+  include Indexer
+end
+
 class FixtureData
   
   #APOS

@@ -49,6 +49,12 @@ module DorFetcherService
       puts 'WARNING: config/solr_terms.yml config not found'
     end
     
+    begin 
+      config.solr_indexing = load_yaml_config.call('solr_indexing.yml')
+    rescue
+      puts 'WARNING: config/solr_indexing.yml config not found'
+    end
+    
     begin
       config.time_zone = "UTC"
     rescue
