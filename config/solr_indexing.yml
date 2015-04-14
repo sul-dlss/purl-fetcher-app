@@ -1,5 +1,5 @@
 defaults: &defaults
-  purl_document_path: "/purl/document_cache"
+  purl_document_path: "/Users/carrickr/dor-fetcher-service/spec/purl/document_cache"
   deletes_dir: ".deletes"
   default_run_interval_in_minutes: 5
   files_to_reindex_on: ['identityMetadata', 'mods', 'public']
@@ -12,6 +12,7 @@ development:
   <<: *defaults
 test: 
   <<: *defaults
+  purl_document_path: "/purl/document_cache"
 staging: 
   <<: *defaults
 production: 

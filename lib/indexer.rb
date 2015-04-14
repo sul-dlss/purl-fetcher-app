@@ -9,7 +9,7 @@ module Indexer
     include ApplicationHelper
     
     @@indexer_config = DorFetcherService::Application.config.solr_indexing
-    @@log = Logger.new('indexing.log')
+    @@log = Logger.new('log/indexing.log')
     @@modified_at_or_later = @@indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago #default setting
     
     #Finds all objects modified in the specified number of minutes and indexes them into to solr
@@ -79,17 +79,17 @@ module Indexer
       object_paths = get_all_changed_objects_for_branch(branch)
       objects = []
       count = 0
-      objectPaths.each do |o_path|
-        object = solrizer_object(o_path)
+      object_paths.each do |o_path|
+        object = solrize_object(o_path)
         objects << object if object != {} #Only add it if we have a valid object, the function ret
-        if objects.size == @@indexer_config.items_commit_every
+        if objects.size == @@indexer_config['items_commit_every']
           add_and_commit_to_solr(objects)
           count += objects.size
           objects = []
         end
       end
     
-      add_and_commit_to_solr(documents) if objects.size != 0
+      add_and_commit_to_solr(objects) if objects.size != 0
       return count += objects.size
     end
     
@@ -109,7 +109,7 @@ module Indexer
       directories_to_reindex = []
       changed_files.each do |file|
         @@indexer_config['files_to_reindex_on'].each do |reindex_trigger|
-          directories_to_reindex = file.split(reindex_trigger)[0] if file.include? reindex_trigger
+          directories_to_reindex << file.split(reindex_trigger)[0] if file.include? reindex_trigger
         end
       end
       return directories_to_reindex.uniq #use uniq since mods and version_medata could have changed for the same one 
