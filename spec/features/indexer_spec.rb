@@ -109,5 +109,11 @@ describe("Indexer lib")  do
     expect(@indexer.path_to_deletes_dir.class).to eq(Pathname)
   end
   
+  it "adds the timestamp to documents" do 
+    documents = @indexer.add_timestamp_to_documents([{},{}])
+    expect(documents[0][:indexed_dtsi].class).to eq(String)
+    expect(documents[1][:indexed_dtsi].class).to eq(String)
+  end
+  
   
 end

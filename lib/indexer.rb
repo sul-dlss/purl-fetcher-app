@@ -218,7 +218,7 @@ module Indexer
       response = {}
       begin
         with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds=> 15, :rescue => RSolr::Error) {
-            response = solr.add documents 
+            response = solr.add add_timestamp_to_documents(documents)
         }
         success = parse_solr_response(response)
       rescue Exception => e
@@ -230,6 +230,18 @@ module Indexer
       commit_success = commit_to_solr(solr)
       @@log.error("Attempting to commit #{documents} failed.  The specifc error returned should be logged above this.") if not commit_success
       return commit_success
+    end
+    
+    #Adds in the timestamp attribute, using Time.now, to each document about to be committed to Solr
+    #
+    #@params documents [Array] An array of hashes, with each hash being one solr document
+    #
+    #@returns [Array] An array of hashes
+    def add_timestamp_to_documents(documents)
+      documents.each do |d|
+        d[:indexed_dtsi] = Time.now.iso8601
+      end
+      return documents 
     end
     
     def delete_document(id)
