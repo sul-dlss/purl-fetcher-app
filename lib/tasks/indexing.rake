@@ -9,6 +9,7 @@ task :index_changes_in_last_fifteen_minutes => :environment do
   indexing_log.info("Running of rake task index_changes_in_last_fifteen_minutes at #{Time.now} returned a result of #{result}")
 end
 
+desc "Search for all objects modified since the start of the Unix Epoch and add them to solr"
 task :index_since_beginning_of_unix_time => :environment do
   start_time = Time.now
   minutes_since_epoch = (Time.now.to_i/60.0).ceil

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+
   #APO Routes
-  resources :apos, :tags, :collections, :defaults => { :format => 'json' }
+  resources :apos, :tags, :collections, :changes, :defaults => { :format => 'json' }
   
   root :controller=>'about', :action=>'index'
   get 'about/version' => 'about#version'

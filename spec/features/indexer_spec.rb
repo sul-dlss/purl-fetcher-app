@@ -115,5 +115,13 @@ describe("Indexer lib")  do
     expect(documents[1][:indexed_dtsi].class).to eq(String)
   end
   
+  xit "queries solr for documents modified between two timestaps" do
+  end
+  
+  xit "returns an empty array when its query to solr for documents between two timestamps fails" do
+  end
+  
+  xit "formats the solr response of documents properly" do
+  end
   
 end
