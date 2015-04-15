@@ -341,8 +341,8 @@ module Indexer
       
       solr_resp["response"]["docs"].each do |doc|
         hash = {"druid"=>doc["id"], "latest_change"=>doc['timestamp']}
-        hash["true_targets"] = doc[@@indexer_config['released_true_field']] if doc[@@indexer_config['released_true_field']] != 'null'
-        hash["false_targets"] =doc[@@indexer_config['released_false_field']] if doc[@@indexer_config['released_false_field']] != 'null'
+        hash["true_targets"] = doc[@@indexer_config['released_true_field']] if doc[@@indexer_config['released_true_field']] != nil
+        hash["false_targets"] =doc[@@indexer_config['released_false_field']] if doc[@@indexer_config['released_false_field']] != nil
         response["changes"] << hash
       end
       return response
