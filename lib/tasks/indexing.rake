@@ -1,10 +1,10 @@
 require 'logger'
 
-desc "Search for all objects modified within a certain number of minutes and add them to solr"
-task :index_changes_in_last_fifteen_minutes => :environment do
+desc "Search for all objects modified within a 5 minutes and add them to solr"
+task :index_changes_in_last_five_minutes => :environment do
   start_time = Time.now
   indexer = IndexerController.new
-  result = indexer.index_all_modified_objects(mins_ago: 16) #adding one minute for slop
+  result = indexer.index_all_modified_objects(mins_ago: 6) #adding one minute for slop
   indexing_log = Logger.new('log/indexing_rake_task.log')
   indexing_log.info("Running of rake task index_changes_in_last_fifteen_minutes at #{Time.now} returned a result of #{result}")
 end

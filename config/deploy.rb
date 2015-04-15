@@ -1,6 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
+require "whenever/capistrano"
+
 set :application, 'dor-fetcher-service'
 set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
 
@@ -13,6 +15,11 @@ ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 # Default deploy_to directory is /var/www/my_app
 set :home_directory, "/opt/app/#{fetch(:user)}"
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
+
+#Whenever
+set :stages, %W(test development production)
+
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :scm is :git
 # set :scm, :git
