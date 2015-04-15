@@ -17,9 +17,7 @@ set :home_directory, "/opt/app/#{fetch(:user)}"
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 
 #Whenever
-set :stages, %W(test development production)
-
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_identifier, ->{ "#{fetch(:application)}" }
 
 # Default value for :scm is :git
 # set :scm, :git

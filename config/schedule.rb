@@ -19,8 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "/home/lyberadmin/editstore-updater/current/log/editstore_updater_cron.log"
-
 every 5.minutes do
    rake "index_changes_in_last_five_minutes"
  end
