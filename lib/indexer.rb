@@ -337,10 +337,13 @@ module Indexer
     #
     #@return [Hash] The respnse with unwanted fields removed
     def format_modified_response(solr_resp)
-      response = {"documents"=>[]}
+      response = {"changes"=>[]}
       
       solr_resp["response"]["docs"].each do |doc|
-        response["documents"] << {"druid"=>doc["id"], "title"=>doc[@@indexer_config['title_field']], "true"=>doc[@@indexer_config['released_true_field']], "false"=>doc[@@indexer_config['released_false_field']], "timestamp"=>doc['timestamp']}
+        hash = {"druid"=>doc["id"], "latest_change"=>doc['timestamp']}
+        hash["true_targets"] = doc[@@indexer_config['released_true_field']] if doc[@@indexer_config['released_true_field']] != 'null'
+        hash["false_targets"] =doc[@@indexer_config['released_false_field']] if doc[@@indexer_config['released_false_field']] != 'null'
+        response["changes"] << hash
       end
       return response
     end
