@@ -318,7 +318,7 @@ module Indexer
       begin
          response = {}
          with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds=> 15, :rescue => RSolr::Error) {
-             response = solr_client.get 'select', :params=>{:q=>"#{query}" }
+             response = solr_client.get 'select', :params=>{:q=>"#{query}" :rows => 100000000 }
 
          }
       rescue Exception => e
