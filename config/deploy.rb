@@ -1,7 +1,6 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-require "whenever/capistrano"
 
 set :application, 'dor-fetcher-service'
 set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
