@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
   #APO Routes
-  resources :apos, :tags, :collections, :changes, :defaults => { :format => 'json' }
+  resources :apos, :tags, :collections, :docs, :defaults => { :format => 'json' }
   
   root :controller=>'about', :action=>'index'
   get 'about/version' => 'about#version'
   mount AboutPage::Engine => '/about(.:format)' # Or whever you want to access the about page
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

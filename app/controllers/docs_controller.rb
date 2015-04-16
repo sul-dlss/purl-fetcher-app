@@ -1,4 +1,4 @@
-class ChangesController < ApplicationController
+class DocsController < ApplicationController
   include Indexer
   
   
@@ -29,8 +29,13 @@ class ChangesController < ApplicationController
    # Example:
    #   http://localhost:3000/changes  # gives all items modified from the Unix Epoch until now
    #   http://localhost:3000/changes?first_modified=2014-01-01T00:00:00Z # returns only the modified documents SINCE January of 2014 up until today in json format
+  def changes
+    result = get_modified_from_solr(first_modified:  params['first_modified'], last_modified: params['last_modified'])
+    render_result(result)
+  end
+  
   def show
-    presult = get_modified_from_solr(first_modified:  params['first_modified'], last_modified: params['last_modified'])
+    result = get_modified_from_solr(first_modified:  params['first_modified'], last_modified: params['last_modified'])
     render_result(result)
   end
 end
