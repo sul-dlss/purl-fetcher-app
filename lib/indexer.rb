@@ -49,7 +49,7 @@ module Indexer
     
     #Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion 
     def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i) 
-      minutes_ago = (Time.now-mins_ago.minutes.ago).ceil #use ceil to round up (2.3 becomes 3)
+      minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
       query_path = Pathname(path_to_deletes_dir.to_s+File::SEPARATOR+'*')
       deleted_objects = `find #{query_path} -mmin -#{minutes_ago}`.split
       deleted_objects.each do |d_o|
@@ -112,7 +112,7 @@ module Indexer
     #   index_druid_tree_branch('/purl/document_cache/bb')
     def get_all_changed_objects_for_branch(branch)
       minutes_ago = ((Time.now-@@modified_at_or_later)/60.0).ceil #use ceil to round up (2.3 becomes 3)
-      changed_files = `find #{branch} -mmin -#{minutes_ago}`.split
+      changed_files = `find #{branch} -mmin -#{minutesutes_ago}`.split
     
       #We only reindex if something in our changed file list has updated, scan the return list for those and 
       directories_to_reindex = []
@@ -121,7 +121,7 @@ module Indexer
           directories_to_reindex << file.split(reindex_trigger)[0] if file.include? reindex_trigger
         end
       end
-      return directories_to_reindex.uniq #use uniq since mods and version_medata could have changed for the same one 
+      return directories_to_reindex.uniq #use uniq since mods and version_medata could have changed for the same one and caused it to appear twice on this list
     end
     
     #Creates a hash that RSolr can use to to create a new solr document for an item
@@ -143,7 +143,7 @@ module Indexer
       
       #Get the Druid of the object 
       begin
-        doc_hash[:id] = get_druid_from_contentMetada(path)
+        doc_hash[:id] = get_druid_from_identityMetadata(path)
       rescue Exception => e
         @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
         return {}
@@ -184,7 +184,7 @@ module Indexer
       return releases
     end
     
-    #Given a path to a directory that contains a mods file, extract the druid for the item from contentMetadata
+    #Given a path to a directory that contains a mods file, extract the druid for the item from identityMetadata
     #
     #param path [String] The path to the directory that will contain the mods file
     #
@@ -193,11 +193,10 @@ module Indexer
     #@return [String] The druid in the form of druid:pid
     #
     #Example:
-    #   druid = get_druid_from_contentMetada('/purl/document_cache/bb')
-    def get_druid_from_contentMetada(path)
-      x = Nokogiri::XML(File.open(Pathname(path)+'contentMetadata'))
-      id = x.xpath('//contentMetadata').attribute('objectId').value
-      return "druid:" + id
+    #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
+    def get_druid_from_identityMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
+      return x.xpath("//identityMetadata/objectId")[0].text
     end
     
     #Given a path to a directory that contains a mods file, extract info on the object for indexing into solr

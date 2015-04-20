@@ -30,12 +30,12 @@ describe("Indexer lib")  do
     expect{@indexer.read_mods_for_object(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
-  it "gets the druid from contentMetadata" do
-    expect(@indexer.get_druid_from_contentMetada(@sample_docs)).to match("druid:bb050dj7711")
+  it "gets the druid from identityMetadata" do
+    expect(@indexer.get_druid_from_identityMetadata(@sample_docs)).to match("druid:bb050dj7711")
   end
   
-  it "raises an error when there is no contentMetadata" do
-    expect{@indexer.get_druid_from_contentMetada(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
+  it "raises an error when there is no identityMetadata" do
+    expect{@indexer.get_druid_from_identityMetadata(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
   it "gets true and false data from the public xml regarding release status" do
