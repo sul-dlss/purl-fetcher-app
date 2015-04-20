@@ -50,9 +50,17 @@ module Indexer
     #Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion 
     def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i) 
       minutes_ago = (Time.now-mins_ago.minutes.ago).ceil #use ceil to round up (2.3 becomes 3)
-      deleted_objects = `find #{branch} -mmin -#{minutes_ago}`.split
+      query_path = Pathname(path_to_deletes_dir.to_s+File::SEPARATOR+'*')
+      deleted_objects = `find #{query_path} -mmin -#{minutes_ago}`.split
       deleted_objects.each do |d_o|
-        #Ensure the object is really deleted, specifically no /purl/document_cache/etc exists for it
+        #Check to make sure that the object is really deleted 
+        docs = []
+        if is_deleted?(d_o) 
+          #delete_document(d_o) #delete the current document out of solr
+          docs << {:id => d_o, :deleted_tsi => 'true'}
+        end
+        #add_and_commit_to_solr(objects) if docs.size != 0 #load in the new documents with the market to show they are deleted
+        return docs
       end
       
     end
@@ -63,8 +71,9 @@ module Indexer
     #
     #return [Boolean] True or False
     def is_deleted?(druid)
-      d = DruidTools::Druid.new(druid, @@indexer_config['purl_document_path'])
-      d.base
+      d = DruidTools::PurlDruid.new(druid, @@indexer_config['purl_document_path'])
+      dir_name = Pathname(d.base+d.path) #This will include the full druid on the end of the path, we don't want that for purl
+      return !File.directory?(dir_name) #if the directory does not exist (so File returns false) then it is really deleted
     end
     
     #Move down one branch of the druid tree (ex: all druids starting with ab) and indexes them into solr
@@ -102,7 +111,7 @@ module Indexer
     #Example:
     #   index_druid_tree_branch('/purl/document_cache/bb')
     def get_all_changed_objects_for_branch(branch)
-      minutes_ago = (Time.now-@@modified_at_or_later).ceil #use ceil to round up (2.3 becomes 3)
+      minutes_ago = ((Time.now-@@modified_at_or_later)/60.0).ceil #use ceil to round up (2.3 becomes 3)
       changed_files = `find #{branch} -mmin -#{minutes_ago}`.split
     
       #We only reindex if something in our changed file list has updated, scan the return list for those and 
