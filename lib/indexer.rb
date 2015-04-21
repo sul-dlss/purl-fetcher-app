@@ -112,7 +112,7 @@ module Indexer
     #   index_druid_tree_branch('/purl/document_cache/bb')
     def get_all_changed_objects_for_branch(branch)
       minutes_ago = ((Time.now-@@modified_at_or_later)/60.0).ceil #use ceil to round up (2.3 becomes 3)
-      changed_files = `find #{branch} -mmin -#{minutesutes_ago}`.split
+      changed_files = `find #{branch} -mmin -#{minutes_ago}`.split
     
       #We only reindex if something in our changed file list has updated, scan the return list for those and 
       directories_to_reindex = []
