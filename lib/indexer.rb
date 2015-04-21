@@ -50,18 +50,22 @@ module Indexer
     #Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion 
     def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i) 
       minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
-      query_path = Pathname(path_to_deletes_dir.to_s+File::SEPARATOR+'*')
-      deleted_objects = `find #{query_path} -mmin -#{minutes_ago}`.split
+      query_path = Pathname(path_to_deletes_dir.to_s)
+      deleted_objects = `find #{query_path} -mmin -#{minutes_ago}`.split #If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
+      deleted_objects = deleted_objects-[query_path.to_s] # remove the deleted objects dir itself
+      
+      docs = []
+      result = false
       deleted_objects.each do |d_o|
         #Check to make sure that the object is really deleted 
-        docs = []
-        if is_deleted?(d_o) 
+        druid = d_o.split(query_path.to_s+File::SEPARATOR)[1]
+        if druid != nil && is_deleted?(druid) 
           #delete_document(d_o) #delete the current document out of solr
-          docs << {:id => d_o, :deleted_tsi => 'true'}
+          docs << {:id => druid, @@indexer_config['deleted_field'].to_sym => 'true'}
         end
-        #add_and_commit_to_solr(objects) if docs.size != 0 #load in the new documents with the market to show they are deleted
-        return docs
+        result = add_and_commit_to_solr(docs) if docs.size != 0 #load in the new documents with the market to show they are deleted
       end
+      return result, docs
       
     end
     
@@ -321,7 +325,7 @@ module Indexer
       app = ApplicationController.new
       times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
       mod_field = @@indexer_config['change_field']
-      query = "* AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
+      query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
       solr_client = establish_solr_connection
       begin
          response = {}

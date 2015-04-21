@@ -10,6 +10,7 @@ defaults: &defaults
   title_field: title_tsi
   released_true_field: true_releases_ssim
   released_false_field: false_releases_ssim
+  deleted_field: deleted_tsi
 
   
 development:
