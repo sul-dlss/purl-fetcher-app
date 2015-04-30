@@ -160,8 +160,31 @@ describe("Indexer lib")  do
       
     end
     
-    xit "does delete the druid when the files do not remain in the document cache" do
-      #Index the druid (we can't index 6667 
+    it "deletes the druid from solr the files do not remain in the document cache" do
+      #Index the druid into solr
+      VCR.use_cassette('successful_solr_delete') do
+        start_time = Time.now
+        sleep(1) #make sure at least one second passes for the timestamp checks
+        @indexer.add_and_commit_to_solr(@indexer.solrize_object(@dest_dir)) #commit 6667 to solr
+        FileUtils.rm_r @dest_dir #remove its files
+        @druid_object.creates_delete_record #create its delete record
+        
+        result = @indexer.remove_deleted_objects_from_solr(mins_ago: 5)
+        sleep(1) #make sure at least one second passes for the timestamp checks
+        end_time = Time.now
+        #Check the result
+        expect(result[:success]).to be_truthy
+        expect(result[:docs].size).to eq(1)
+        expect(result[:docs][0][:id]).to match("druid:bb050dj6667")
+        expect(result[:docs][0][:deleted_tsi]).to match("true")  
+        expect(result[:docs][0][:indexed_dtsi].class).to eq(String) #make sure it isn't a nill 
+        
+        #Make sure the index time stamp was set properly, it should be between the start time and end time
+        index_time = Time.parse(result[:docs][0][:indexed_dtsi])
+        expect(end_time > index_time).to be_truthy
+        expect(start_time < index_time).to be_truthy
+      end
+      
       
     end
   end

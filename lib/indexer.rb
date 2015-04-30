@@ -53,9 +53,9 @@ module Indexer
     #
     #@return [Hash] A hash stating if the deletion was successful or not and an array of the docs {:success=> true/false, :docs => [{doc1},{doc2},...]}
     def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i) 
-      minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
+      #minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
       query_path = Pathname(path_to_deletes_dir.to_s)
-      deleted_objects = `find #{query_path} -mmin -#{minutes_ago}`.split #If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
+      deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split #If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
       deleted_objects = deleted_objects-[query_path.to_s] # remove the deleted objects dir itself
       
       docs = []
@@ -69,7 +69,7 @@ module Indexer
         end
         result = add_and_commit_to_solr(docs) if docs.size != 0 #load in the new documents with the market to show they are deleted
       end
-      return {:success => result, :docs => []}
+      return {:success => result, :docs => docs}
       
     end
     
