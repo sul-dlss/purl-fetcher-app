@@ -47,7 +47,7 @@ describe("Indexer lib")  do
   end
   
   it "returns the doc hash when all needed files are present" do
-    expect(@indexer.solrize_object(@sample_doc_path)).to match({:identityMetadata_objectType_t => ["item"], :false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
+    expect(@indexer.solrize_object(@sample_doc_path)).to match({:identityMetadata_objectType_t => ["item"], :false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"], :is_member_of_collection_s => ["druid:nt028fd5773", "druid:wn860zc7322"],})
   end
   
   it "returns the empty doc hash when it cannot open a file" do
@@ -217,6 +217,10 @@ describe("Indexer lib")  do
   it "gets multiple object types when an object has multiple types" do
      @druid_object = DruidTools::PurlDruid.new('druid:ct961sj2730', @testing_doc_cache)
      expect(@indexer.get_objectType_from_identityMetadata( @druid_object.path)).to match(['collection','set'])
+  end
+  
+  it "gets the collections and sets the object is a member of" do
+    expect(@indexer.get_membership_from_publicxml(@sample_doc_path)).to match(['druid:nt028fd5773','druid:wn860zc7322'])
   end
   
   

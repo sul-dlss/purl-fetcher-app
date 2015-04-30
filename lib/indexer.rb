@@ -175,6 +175,16 @@ module Indexer
         return {}
       end
       
+      #Get membership of sets and collections for an object
+      begin
+        membership = get_membership_from_publicxml(path)
+        doc_hash[Solr_terms["collection_field"].to_sym] = membership if membership.size > 0 #only add this if we have a membership
+      rescue Exception => e
+        @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
+        return {}
+      end
+        
+      
       return doc_hash
 
     end
@@ -380,28 +390,14 @@ module Indexer
       return @@indexer_config['purl_document_path']
     end
     
-    #Given a path to a directory that contains an identityMetadata file, extract the objectType for the item from identityMetadata
-    #
-    #param path [String] The path to the directory that will contain the mods file
-    #
-    #@raises Errno::ENOENT If there is no identity Metadata File
-    #
-    #@return [String] The object type
-    #
-    #Example:
-    #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
-    def get_objectType_from_identityMetadata(path)
-      x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
-      return x.xpath("//identityMetadata/objectType")[0].text
-    end
     
     #Given a path to a directory that contains a public xml file, extract the collections and sets for the item from identityMetadata
     #
-    #param path [String] The path to the directory that will contain the mods file
+    #param path [String] The path to the directory that will contain the identityMetadata file
     #
     #@raises Errno::ENOENT If there is no identity Metadata File
     #
-    #@return [String] The object type
+    #@return [Array] The object types
     #
     #Example:
     #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
@@ -410,6 +406,26 @@ module Indexer
       types = []
       x.xpath("//identityMetadata/objectType").each do |n|
         types << n.text
+      end
+      return types
+    end
+    
+    #Given a path to a directory that contains a public xml file, extract collections and sets the item is a member of
+    #
+    #param path [String] The path to the directory that will contain the public xml
+    #
+    #@raises Errno::ENOENT If there is no identity Metadata File
+    #
+    #@return [Array] The collections and sets the item is a member of
+    #
+    #Example:
+    #   get_membership_from_publicxml('/purl/document_cache/bb')
+    def get_membership_from_publicxml(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'public'))
+      x.remove_namespaces!
+      types = []
+      x.xpath("//RDF/Description/isMemberOfCollection").each do |n|
+        types << n.attribute('resource').text.split('/')[1]
       end
       return types
     end
