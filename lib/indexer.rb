@@ -26,7 +26,7 @@ module Indexer
       @@modified_at_or_later = mins_ago.minutes.ago #Set this to a Timestamp that is X minutes this function was called 
       
       #get all the top level branches of the druid tree (currently 400) but remove the .deletes dir
-      top_branches_of_tree = Dir.glob(@@indexer_config['purl_document_path']+File::SEPARATOR+"*" ) - [path_to_deletes_dir.to_s]
+      top_branches_of_tree = Dir.glob(purl_mount_location+File::SEPARATOR+"*" ) - [path_to_deletes_dir.to_s]
       
       #Using parallels go down each branch and look for modified items, then index them
       branch_results = Parallel.map(top_branches_of_tree) do |branch|
@@ -49,6 +49,9 @@ module Indexer
     end
     
     #Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion 
+    #
+    #
+    #@return [Hash] A hash stating if the deletion was successful or not and an array of the docs {:success=> true/false, :docs => [{doc1},{doc2},...]}
     def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i) 
       minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
       query_path = Pathname(path_to_deletes_dir.to_s)
@@ -56,7 +59,7 @@ module Indexer
       deleted_objects = deleted_objects-[query_path.to_s] # remove the deleted objects dir itself
       
       docs = []
-      result = false
+      result = true #set this to true by default because if we get an empty list of documents, then it worked
       deleted_objects.each do |d_o|
         #Check to make sure that the object is really deleted 
         druid = d_o.split(query_path.to_s+File::SEPARATOR)[1]
@@ -66,7 +69,7 @@ module Indexer
         end
         result = add_and_commit_to_solr(docs) if docs.size != 0 #load in the new documents with the market to show they are deleted
       end
-      return result, docs
+      return {:success => result, :docs => []}
       
     end
     
@@ -313,7 +316,7 @@ module Indexer
     #
     #@return [Pathname] The absolute path
     def path_to_deletes_dir 
-      return Pathname(@@indexer_config['purl_document_path']+File::SEPARATOR+@@indexer_config['deletes_dir'])
+      return Pathname(purl_mount_location+File::SEPARATOR+@@indexer_config['deletes_dir'])
     end
   
     #Get a list of all documents modified between two times from solr

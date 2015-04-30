@@ -124,14 +124,20 @@ describe("Indexer lib")  do
   
   describe("deleting solr documents") do
     before :each do
+      #Paths for copying
+      @base_path = @sample_doc_path[0...-4]
+      @source_dir = @base_path+"6667.src"
+      @dest_dir = @source_dir[0...-4] #trim off the .src
+      
       @druid = 'bb050dj6667'
+      
       @druid_object = DruidTools::PurlDruid.new(@druid, @testing_doc_cache)
-      FileUtils.cp_r  @sample_doc_path, @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #copy bb050dj7771 just so we have the file to work with
+      FileUtils.cp_r  @source_dir, @dest_dir
       allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
     end
     
     after :each do
-      #FileUtils.rm_r @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #remove our testing druid
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir)
     end
      
     it "detects that the druid is not deleted when its files are still present in the document cache" do
@@ -139,11 +145,25 @@ describe("Indexer lib")  do
     end
     
     it "detects that the druid is deleted when its files are not present in the document cache" do
-      FileUtils.rm_r @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #remove our testing druid
+      FileUtils.rm_r @dest_dir #remove our testing druid
       expect(@indexer.is_deleted?(@druid)).to be_truthy
-      FileUtils.cp_r  @sample_doc_path, @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #copy bb050dj7771 just so we have the file to work with
     end
     
+    it "does not delete the test druid when the files still remain in the document cache" do
+      #Delete the druid to create the .deletes dir record
+      FileUtils.rm_r @dest_dir
+      @druid_object.creates_delete_record
+      #Copy the files back in
+      FileUtils.cp_r  @source_dir, @dest_dir
+      
+      expect(@indexer.remove_deleted_objects_from_solr(mins_ago: 5)).to match({:success=>true, :docs=>[]})
+      
+    end
+    
+    xit "does delete the druid when the files do not remain in the document cache" do
+      #Index the druid (we can't index 6667 
+      
+    end
   end
   
   
