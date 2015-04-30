@@ -17,7 +17,7 @@ module Indexer
     #
     #@param mins_ago [Fixnum] minutes ago modified, defaults to the interval set in solr_indexing.yml  
     #
-    #@return [Hash] A hash listing all the top level branches and the number of solr documents created/updated in each branch and the run time in seconds, ex: {'bb' => 4, 'bc' => 6,...,:runtime => 60}
+    #@return [Hash] A hash listing all documents sent to solr and the total run time {:docs => [{Doc1}, {Doc2},...], :run_time => Seconds_It_Took_To_Run}
     #
     #Example:
     #   results = index_all_modified_objects(mins_ago: 5) 
@@ -36,13 +36,14 @@ module Indexer
       
       #Prep the results for return
       results = {}
+      results[:docs] = []
       count = 0 
       top_branches_of_tree.each do |branch|
-        results[branch] = branch_results[count]
+        results[:docs] += branch_results[count]
         count += 1
       end
       results[:run_time] = end_time-start_time
-      @@log.info("Successfully completed an indexing run of the document_cache.  Runtime was #{end_time-start_time}. Results per top level branch: #{results}")
+      @@log.info("Successfully completed an indexing run of the document_cache.  Runtime was #{end_time-start_time}. The documents changed were: #{results}")
       return results
       
     end
@@ -85,25 +86,25 @@ module Indexer
     #param branch [String] The top level branch of the druid tree to scan
     #
     #
-    #@return [Fixnum] The number of druids found and updated on this branch
+    #@return [Array] A list of all objects added to solr
     #Example:
         #   index_druid_tree_branch('/purl/document_cache/bb')
     def index_druid_tree_branch(branch)
       object_paths = get_all_changed_objects_for_branch(branch)
+      all_objects = []
       objects = []
-      count = 0
       object_paths.each do |o_path|
         object = solrize_object(o_path)
         objects << object if object != {} #Only add it if we have a valid object, the function ret
         if objects.size == @@indexer_config['items_commit_every']
           add_and_commit_to_solr(objects)
-          count += objects.size
+          all_objects += objects
           objects = []
         end
       end
     
       add_and_commit_to_solr(objects) if objects.size != 0
-      return count += objects.size
+      return all_objects += objects
     end
     
     #Using the find command with mmin argument, find all files changed since @@modified_at_or_later
