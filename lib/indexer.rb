@@ -395,6 +395,25 @@ module Indexer
       return x.xpath("//identityMetadata/objectType")[0].text
     end
     
+    #Given a path to a directory that contains a public xml file, extract the collections and sets for the item from identityMetadata
+    #
+    #param path [String] The path to the directory that will contain the mods file
+    #
+    #@raises Errno::ENOENT If there is no identity Metadata File
+    #
+    #@return [String] The object type
+    #
+    #Example:
+    #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
+    def get_objectType_from_identityMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
+      types = []
+      x.xpath("//identityMetadata/objectType").each do |n|
+        types << n.text
+      end
+      return types
+    end
+    
    
     
 end
