@@ -137,7 +137,8 @@ describe("Indexer lib")  do
     end
     
     after :each do
-      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir)
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir) #remove the 6667 files
+      remove_delete_records(@testing_doc_cache+File::SEPARATOR+'.deletes', ['bb050dj6667'])
     end
      
     it "detects that the druid is not deleted when its files are still present in the document cache" do
@@ -185,6 +186,26 @@ describe("Indexer lib")  do
         expect(start_time < index_time).to be_truthy
       end
       
+      
+    end
+    
+    it "detects multiple deletes in one pass" do
+      fake_druids = ['bb050dj1817', 'bb050dj1885', 'bb050dj1971', 'bb050dj1927']
+      
+      fake_druids.each do |f_d|
+        d_o = DruidTools::PurlDruid.new(f_d, @testing_doc_cache)
+        d_o.creates_delete_record #Create the delete record, no files in the document_cache to delete except for 6667
+      end
+      FileUtils.rm_r @dest_dir #remove 6667 files
+      
+      VCR.use_cassette('multiple_druid_delete') do
+        result = @indexer.remove_deleted_objects_from_solr(mins_ago: 5)
+        expect(result[:success]).to be_truthy
+        expect(result[:docs].size == fake_druids.size).to be_truthy
+      end
+      
+      #Remove these delete records
+      remove_delete_records(@testing_doc_cache+File::SEPARATOR+'.deletes', fake_druids)
       
     end
   end

@@ -189,4 +189,17 @@ def find_druid_in_array(array, target)
   end
   return nil
 end
+
+#Remove records from the deletes dir to avoid having them picked up by other tests
+#
+#@dir_path [String] The path to the directory
+#@params records [Array] An array of strings of the records you want to be deleted
+#
+#@return [void]
+def remove_delete_records(dir_path, records)
+  records.each do |r|
+    file_path = Pathname(dir_path+File::SEPARATOR+r)
+    FileUtils.rm(file_path) if File.exist? file_path
+  end
+end
   
