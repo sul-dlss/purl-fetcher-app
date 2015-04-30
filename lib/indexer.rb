@@ -167,12 +167,13 @@ module Indexer
         return {}
       end
       
+      #Below these we log an error, but don't fail as we can still update the item and flag the indexer, we just don't have all the data we want
+      
       #Get the ObjectType for an object
       begin
         doc_hash[Type_Field.to_sym] = get_objectType_from_identityMetadata(path)
       rescue Exception => e
         @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
-        return {}
       end
       
       #Get membership of sets and collections for an object
@@ -181,9 +182,15 @@ module Indexer
         doc_hash[Solr_terms["collection_field"].to_sym] = membership if membership.size > 0 #only add this if we have a membership
       rescue Exception => e
         @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
-        return {}
       end
-        
+      
+      #Get the catkey of an object
+      begin
+        catkey = get_catkey_from_identityMetadata(path)
+        doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey if catkey.size > 0 #only add this if we have a catkey
+      rescue Exception => e
+        @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
+      end
       
       return doc_hash
 
@@ -414,7 +421,7 @@ module Indexer
     #
     #param path [String] The path to the directory that will contain the public xml
     #
-    #@raises Errno::ENOENT If there is no identity Metadata File
+    #@raises Errno::ENOENT If there is no public xml file
     #
     #@return [Array] The collections and sets the item is a member of
     #
@@ -430,6 +437,20 @@ module Indexer
       return types
     end
     
+    #Given a path to a directory that contains an indentityMetadata xml file, extract collections and sets the item is a member of
+    #
+    #param path [String] The path to the directory that will contain the identity Metadata File
+    #
+    #@raises Errno::ENOENT If there is no identity Metadata File
+    #
+    #@return [String] The cat key, an empty string is returned if there is no catkey
+    #
+    #Example:
+    #   get_catkey_from_identityMetadata('/purl/document_cache/bb')
+    def get_catkey_from_identityMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
+     return x.xpath("//otherId[@name='catkey']").text
+    end
    
     
 end

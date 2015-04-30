@@ -5,9 +5,11 @@ describe("Indexer lib")  do
   
   before :each do
     @indexer = IndexerTester.new
+    @testing_druid = 'bb050dj7711'
     @testing_doc_cache = Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl'+File::SEPARATOR+'document_cache')
-    @sample_doc_path =  @testing_doc_cache + (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'7711')
-    @sample_doc_path_files_missing = (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'0000')
+    @sample_doc_path =  DruidTools::PurlDruid.new(@testing_druid, @testing_doc_cache).path
+    @sample_doc_path_files_missing = DruidTools::PurlDruid.new('bb050dj0000', @testing_doc_cache).path
+    @ct961sj2730_path =  @druid_object = DruidTools::PurlDruid.new('ct961sj2730', @testing_doc_cache).path #this one has a catkey and is a top level collection
   end
   
   it "returns the path the deletes directory as a pathname" do
@@ -48,6 +50,10 @@ describe("Indexer lib")  do
   
   it "returns the doc hash when all needed files are present" do
     expect(@indexer.solrize_object(@sample_doc_path)).to match({:identityMetadata_objectType_t => ["item"], :false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"], :is_member_of_collection_s => ["druid:nt028fd5773", "druid:wn860zc7322"],})
+  end
+  
+  it "returns the doc hash with no membership but a catkey for a top level collection that has a catkey" do
+    expect(@indexer.solrize_object(@ct961sj2730_path)).to match({:title_tsi=>"Caroline Batchelor Map Collection.", :id=>"druid:ct961sj2730", :true_releases_ssim=>[], :false_releases_ssim=>[], :identityMetadata_objectType_t=>["collection", "set"], :catkey_tsi=>"10357851"})
   end
   
   it "returns the empty doc hash when it cannot open a file" do
@@ -221,6 +227,16 @@ describe("Indexer lib")  do
   
   it "gets the collections and sets the object is a member of" do
     expect(@indexer.get_membership_from_publicxml(@sample_doc_path)).to match(['druid:nt028fd5773','druid:wn860zc7322'])
+  end
+  
+  it "gets the cat key when one is present" do
+    
+    expect(@indexer.get_catkey_from_identityMetadata(@ct961sj2730_path)).to match('10357851')
+  end
+  
+  it "returns empty string when no cat key is present" do
+   
+    expect(@indexer.get_catkey_from_identityMetadata(@sample_doc_path)).to match('')
   end
   
   
