@@ -47,7 +47,7 @@ describe("Indexer lib")  do
   end
   
   it "returns the doc hash when all needed files are present" do
-    expect(@indexer.solrize_object(@sample_doc_path)).to match({:false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
+    expect(@indexer.solrize_object(@sample_doc_path)).to match({:identityMetadata_objectType_t => "item", :false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
   end
   
   it "returns the empty doc hash when it cannot open a file" do
@@ -210,7 +210,9 @@ describe("Indexer lib")  do
     end
   end
   
-  
+  it "gets the object type" do
+    expect(@indexer.get_objectType_from_identityMetadata(@sample_doc_path)).to match('item')
+  end
   
   xit "queries solr for documents modified between two timestaps" do
   end

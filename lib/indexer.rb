@@ -163,9 +163,18 @@ module Indexer
         doc_hash[@@indexer_config['released_true_field'].to_sym] = releases[:true]
         doc_hash[@@indexer_config['released_false_field'].to_sym] = releases[:false]
       rescue Exception => e
-        @@log.error("For #{path} no public for #{e.message} #{e.backtrace.inspect}")
+        @@log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
         return {}
       end
+      
+      #Get the ObjectType for an object
+      begin
+        doc_hash[Type_Field.to_sym] = get_objectType_from_identityMetadata(path)
+      rescue Exception => e
+        @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
+        return {}
+      end
+      
       return doc_hash
 
     end
@@ -370,6 +379,22 @@ module Indexer
     def purl_mount_location
       return @@indexer_config['purl_document_path']
     end
+    
+    #Given a path to a directory that contains an identityMetadata file, extract the objectType for the item from identityMetadata
+    #
+    #param path [String] The path to the directory that will contain the mods file
+    #
+    #@raises Errno::ENOENT If there is no identity Metadata File
+    #
+    #@return [String] The object type
+    #
+    #Example:
+    #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
+    def get_objectType_from_identityMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
+      return x.xpath("//identityMetadata/objectType")[0].text
+    end
+    
    
     
 end
