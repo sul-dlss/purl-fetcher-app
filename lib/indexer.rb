@@ -62,7 +62,7 @@ module Indexer
         druid = d_o.split(query_path.to_s+File::SEPARATOR)[1]
         if druid != nil && is_deleted?(druid) 
           #delete_document(d_o) #delete the current document out of solr
-          docs << {:id => druid, @@indexer_config['deleted_field'].to_sym => 'true'}
+          docs << {:id => ('druid:'+druid), @@indexer_config['deleted_field'].to_sym => 'true'}
         end
         result = add_and_commit_to_solr(docs) if docs.size != 0 #load in the new documents with the market to show they are deleted
       end
@@ -76,8 +76,8 @@ module Indexer
     #
     #return [Boolean] True or False
     def is_deleted?(druid)
-      d = DruidTools::PurlDruid.new(druid, @@indexer_config['purl_document_path'])
-      dir_name = Pathname(d.base+d.path) #This will include the full druid on the end of the path, we don't want that for purl
+      d = DruidTools::PurlDruid.new(druid, purl_mount_location)
+      dir_name = Pathname(d.path) #This will include the full druid on the end of the path, we don't want that for purl
       return !File.directory?(dir_name) #if the directory does not exist (so File returns false) then it is really deleted
     end
     
@@ -359,6 +359,13 @@ module Indexer
         response["changes"] << hash
       end
       return response
+    end
+    
+    #Accessor to get the purl document cache path
+    #
+    #@return [String] The path
+    def purl_mount_location
+      return @@indexer_config['purl_document_path']
     end
    
     

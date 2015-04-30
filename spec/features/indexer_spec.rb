@@ -6,8 +6,8 @@ describe("Indexer lib")  do
   before :each do
     @indexer = IndexerTester.new
     @testing_doc_cache = Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl'+File::SEPARATOR+'document_cache')
-    @sample_docs =  @testing_doc_cache + (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'7711')
-    @sample_docs_files_missing = (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'0000')
+    @sample_doc_path =  @testing_doc_cache + (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'7711')
+    @sample_doc_path_files_missing = (File::SEPARATOR+'bb'+File::SEPARATOR+'050'+File::SEPARATOR+'dj'+File::SEPARATOR+'0000')
   end
   
   it "returns the path the deletes directory as a pathname" do
@@ -23,35 +23,35 @@ describe("Indexer lib")  do
   end
   
   it "gets the title from the mods file" do
-    expect(@indexer.read_mods_for_object(@sample_docs)).to match({:title_tsi=>"This is Pete's New Test title for this object."})
+    expect(@indexer.read_mods_for_object(@sample_doc_path)).to match({:title_tsi=>"This is Pete's New Test title for this object."})
   end
   
   it "raises an error when there is no mods" do
-    expect{@indexer.read_mods_for_object(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
+    expect{@indexer.read_mods_for_object(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
   it "gets the druid from identityMetadata" do
-    expect(@indexer.get_druid_from_identityMetadata(@sample_docs)).to match("druid:bb050dj7711")
+    expect(@indexer.get_druid_from_identityMetadata(@sample_doc_path)).to match("druid:bb050dj7711")
   end
   
   it "raises an error when there is no identityMetadata" do
-    expect{@indexer.get_druid_from_identityMetadata(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
+    expect{@indexer.get_druid_from_identityMetadata(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
   it "gets true and false data from the public xml regarding release status" do
-    expect(@indexer.get_release_status(@sample_docs)).to match({:false => ["Atago"],:true => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
+    expect(@indexer.get_release_status(@sample_doc_path)).to match({:false => ["Atago"],:true => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
   end
   
   it "raises an error when there is no public xml" do
-    expect{@indexer.get_release_status(@sample_docs_files_missing)}.to raise_error(Errno::ENOENT)
+    expect{@indexer.get_release_status(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
   it "returns the doc hash when all needed files are present" do
-    expect(@indexer.solrize_object(@sample_docs)).to match({:false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
+    expect(@indexer.solrize_object(@sample_doc_path)).to match({:false_releases_ssim => ["Atago"],:id => "druid:bb050dj7711", :title_tsi => "This is Pete's New Test title for this object.",:true_releases_ssim => ["CARRICKR-TEST", "Robot_Testing_Feb_5_2015"]})
   end
   
   it "returns the empty doc hash when it cannot open a file" do
-   expect(@indexer.solrize_object(@sample_docs_files_missing)).to match({})
+   expect(@indexer.solrize_object(@sample_doc_path_files_missing)).to match({})
   end
   
   xit "logs an error when a file cannot be found for a purl object" do
@@ -63,7 +63,7 @@ describe("Indexer lib")  do
   
   it "determines when the addition and commit of solr documents was successful" do
     VCR.use_cassette('submit_one_doc') do
-      docs = [@indexer.solrize_object(@sample_docs)]
+      docs = [@indexer.solrize_object(@sample_doc_path)]
       expect(@indexer.add_and_commit_to_solr(docs)).to be_truthy
     end
   end
@@ -94,12 +94,15 @@ describe("Indexer lib")  do
   
   it "determines if the addition of solr documents was successful" do
     VCR.use_cassette('doc_submit_fails') do
-      docs = [@indexer.solrize_object(@sample_docs)]
+      docs = [@indexer.solrize_object(@sample_doc_path)]
       expect(@indexer.add_and_commit_to_solr(docs)).to be_falsey
     end
   end
   
   it "determines if the solr commit was successful" do
+    #FYI this will fail if you have your local solr running, because obviously you can connect to it 
+    #It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
+    #So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes 
     VCR.use_cassette('failed_solr_commit') do
       expect(@indexer.commit_to_solr(@indexer.establish_solr_connection)).to be_falsey
     end
@@ -114,6 +117,36 @@ describe("Indexer lib")  do
     expect(documents[0][:indexed_dtsi].class).to eq(String)
     expect(documents[1][:indexed_dtsi].class).to eq(String)
   end
+  
+  it "should return a string for the purl mount location" do
+    expect(@indexer.purl_mount_location.class).to eq(String)
+  end
+  
+  describe("deleting solr documents") do
+    before :each do
+      @druid = 'bb050dj6667'
+      @druid_object = DruidTools::PurlDruid.new(@druid, @testing_doc_cache)
+      FileUtils.cp_r  @sample_doc_path, @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #copy bb050dj7771 just so we have the file to work with
+      allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
+    end
+    
+    after :each do
+      #FileUtils.rm_r @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #remove our testing druid
+    end
+     
+    it "detects that the druid is not deleted when its files are still present in the document cache" do
+      expect(@indexer.is_deleted?(@druid)).to be_falsey
+    end
+    
+    it "detects that the druid is deleted when its files are not present in the document cache" do
+      FileUtils.rm_r @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #remove our testing druid
+      expect(@indexer.is_deleted?(@druid)).to be_truthy
+      FileUtils.cp_r  @sample_doc_path, @sample_doc_path[0...-4] + @druid[@druid.size-4...@druid.size] #copy bb050dj7771 just so we have the file to work with
+    end
+    
+  end
+  
+  
   
   xit "queries solr for documents modified between two timestaps" do
   end
