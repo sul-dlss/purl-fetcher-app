@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 describe("Docs Controller")  do
-  describe("Changes Response") do
+  before(:all) do
+    @generic_end_time = '9999-01-01T00:00:00Z'
+  end
+  
+  describe("Changes Response Format") do
     before(:all) do
       VCR.use_cassette('all_changes_call') do
-        visit 'docs/changes'
+        visit "docs/changes?last_modified=#{@generic_end_time}"
         @response = JSON.parse(page.body)
       end
     end
@@ -39,6 +43,9 @@ describe("Docs Controller")  do
       expect(@response[:changes.to_s][0][:false_targets.to_s][0].class).to eq(String)
     end
       
+  end
+  
+  describe("Changes Response Respects Time Keys") do
   end
 
 end

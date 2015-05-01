@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/test/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=100000000&wt=ruby
+    uri: http://localhost:8983/solr/test/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-01-01T00:00:00Z%22%5D&rows=100000000&wt=ruby
     body:
       encoding: US-ASCII
       string: ''
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>3,'params'=>{'wt'=>'ruby','q'=>'* AND -deleted_tsi:\'true\' AND indexed_dtsi:["1970-01-01T00:00:00Z" TO "9999-12-31T23:59:59Z"]','rows'=>'100000000'}},'response'=>{'numFound'=>1,'start'=>0,'docs'=>[{'title_tsi'=>'This is Pete\'s New Test title for this object.','id'=>'druid:bb050dj7711','true_releases_ssim'=>['CARRICKR-TEST','Robot_Testing_Feb_5_2015'],'false_releases_ssim'=>['Atago'],'indexed_dtsi'=>'2015-04-30T17:45:22Z','_version_'=>1499899806068244480,'timestamp'=>'2015-04-30T17:45:22.226Z'}]},'spellcheck'=>{'suggestions'=>['correctlySpelled',true]}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>4,'params'=>{'wt'=>'ruby','q'=>'* AND -deleted_tsi:\'true\' AND indexed_dtsi:["1970-01-01T00:00:00Z" TO "9999-01-01T00:00:00Z"]','rows'=>'100000000'}},'response'=>{'numFound'=>1,'start'=>0,'docs'=>[{'title_tsi'=>'This is Pete\'s New Test title for this object.','id'=>'druid:bb050dj7711','true_releases_ssim'=>['CARRICKR-TEST','Robot_Testing_Feb_5_2015'],'false_releases_ssim'=>['Atago'],'indexed_dtsi'=>'2015-04-30T17:45:22Z','_version_'=>1499899806068244480,'timestamp'=>'2015-04-30T17:45:22.226Z'}]},'spellcheck'=>{'suggestions'=>['correctlySpelled',true]}}
     http_version: 
-  recorded_at: Fri, 01 May 2015 23:13:41 GMT
+  recorded_at: Fri, 01 May 2015 23:43:38 GMT
 recorded_with: VCR 2.9.3
