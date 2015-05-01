@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/dev/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=100000000&wt=ruby
+    uri: http://localhost:8983/solr/test/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=100000000&wt=ruby
     body:
       encoding: US-ASCII
       string: ''
