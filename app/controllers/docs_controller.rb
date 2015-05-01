@@ -34,6 +34,11 @@ class DocsController < ApplicationController
     render_result(result)
   end
   
+  def deletes
+    result = "Hi"
+    render_result(result)
+  end
+  
   def show
     result = get_modified_from_solr(first_modified:  params['first_modified'], last_modified: params['last_modified'])
     render_result(result)

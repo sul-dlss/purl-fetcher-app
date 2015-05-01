@@ -356,21 +356,44 @@ module Indexer
       times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
       mod_field = @@indexer_config['change_field']
       query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
+      
+      response = run_solr_query(query)
+      return format_modified_response(response)
+     
+    end
+    
+    
+    
+    #Get a list of all documents deleted between two times from solr
+    #
+    #@params first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
+    #@params last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
+    #
+    #@return [Hash] JSon formatted solr response
+    def get_deletes_list(first_modified:  Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
+      times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
+      query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
+      response = run_solr_query(query)
+    end
+    
+    #Establishes a connection to solr and runs a select query and returns the response.  Logs errors and swallows them.
+    #
+    #@params query [String] A valid query that the RSolr gem will understand how to process via the get method
+    #
+    #@return [Hash] The solr response.  An empty hash is returned if nothing is found or there is an error.
+    def run_solr_query(query)
       solr_client = establish_solr_connection
+      response = {}
       begin
-         response = {}
          with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds=> 15, :rescue => RSolr::Error) {
              response = solr_client.get 'select', :params=>{:q=>"#{query}", :rows => 100000000 }
 
          }
       rescue Exception => e
         @@log.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
-        return {}
+        return {} #Could return the Exception as well if ever desired, just logs for now
       end
-
-      #return response
-      return format_modified_response(response)
-     
+      return response
     end
     
     #Takes a solr response and formats it into JSON for the users
@@ -380,6 +403,7 @@ module Indexer
     #@return [Hash] The respnse with unwanted fields removed
     def format_modified_response(solr_resp)
       response = {"changes"=>[]}
+   
       
       solr_resp["response"]["docs"].each do |doc|
         hash = {"druid"=>doc["id"], "latest_change"=>doc['timestamp']}
@@ -451,6 +475,9 @@ module Indexer
       x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
      return x.xpath("//otherId[@name='catkey']").text
     end
+    
+    
+   
    
     
 end
