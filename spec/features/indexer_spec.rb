@@ -6,7 +6,8 @@ describe("Indexer lib")  do
   before :each do
     @indexer = IndexerTester.new
     @testing_druid = 'bb050dj7711'
-    @testing_doc_cache = Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl'+File::SEPARATOR+'document_cache')
+    @testing_doc_cache = purl_fixture_path
+    #@testing_doc_cache = Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl-fixtures-testing'+File::SEPARATOR+'document_cache')
     @sample_doc_path =  DruidTools::PurlDruid.new(@testing_druid, @testing_doc_cache).path
     @sample_doc_path_files_missing = DruidTools::PurlDruid.new('bb050dj0000', @testing_doc_cache).path
     @ct961sj2730_path =  @druid_object = DruidTools::PurlDruid.new('ct961sj2730', @testing_doc_cache).path #this one has a catkey and is a top level collection

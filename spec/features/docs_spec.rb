@@ -1,7 +1,10 @@
 require 'rails_helper'
 
+#Before rerecording any tests here, make sure you've loaded the fixtures into the test solr core (or go into your solr.yml and point to the core you want to record from)
+#See indexer_spec.rb test (TODO: FILL ME IN) for an example
 describe("Docs Controller")  do
   before(:all) do
+    @fixture_path = purl_fixture_path
     @generic_end_time = '9999-01-01T00:00:00Z'
   end
   

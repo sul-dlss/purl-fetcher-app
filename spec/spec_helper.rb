@@ -190,6 +190,10 @@ def find_druid_in_array(array, target)
   return nil
 end
 
+def purl_fixture_path
+  return Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl-test-fixtures'+File::SEPARATOR+'document_cache')
+end
+
 #Remove records from the deletes dir to avoid having them picked up by other tests
 #
 #@dir_path [String] The path to the directory
