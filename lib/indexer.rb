@@ -370,10 +370,23 @@ module Indexer
     #@params last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
     #
     #@return [Hash] JSon formatted solr response
-    def get_deletes_list(first_modified:  Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
+    def get_deletes_list_from_solr(first_modified:  Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
+      app = ApplicationController.new
       times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
+      mod_field = @@indexer_config['change_field']
       query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
-      response = run_solr_query(query)
+      solr_resp = run_solr_query(query)
+      
+      #TODO: Refactor this and the stuff from format_modified_response into one function
+      response = {"deletes"=>[]}
+   
+      
+      solr_resp["response"]["docs"].each do |doc|
+        hash = {"druid"=>doc["id"], "latest_change"=>doc['timestamp']}
+        response["deletes"] << hash
+      end
+      return response
+      
     end
     
     #Establishes a connection to solr and runs a select query and returns the response.  Logs errors and swallows them.
