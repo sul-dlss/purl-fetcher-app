@@ -22,3 +22,7 @@
 every 5.minutes do
    rake "index_changes_in_last_five_minutes"
  end
+ 
+ ever 5.minutes do
+   rake "process_all_deletes_in_last_five_minutes"
+ end
