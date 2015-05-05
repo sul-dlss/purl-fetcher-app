@@ -19,7 +19,7 @@ task :index_since_beginning_of_unix_time => :environment do
   indexing_log.info("Running of rake task index_since_beginning_of_unix_time at #{start_time} returned a result of #{result}")
 end
 
-dec "Search for all objects deleted within the last 5 minutes and update solr"
+desc "Search for all objects deleted within the last 5 minutes and update solr"
 task :process_all_deletes_in_last_five_minutes => :environment do
   start_time = Time.now
   indexer = IndexerController.new
