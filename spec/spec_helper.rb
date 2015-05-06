@@ -193,7 +193,6 @@ end
 def purl_fixture_path
   return Rails.root.to_s + (File::SEPARATOR+'spec'+File::SEPARATOR+'purl-test-fixtures'+File::SEPARATOR+'document_cache')
 end
-
 #Remove records from the deletes dir to avoid having them picked up by other tests
 #
 #@dir_path [String] The path to the directory
@@ -202,8 +201,17 @@ end
 #@return [void]
 def remove_delete_records(dir_path, records)
   records.each do |r|
-    file_path = Pathname(dir_path+File::SEPARATOR+r)
-    FileUtils.rm(file_path) if File.exist? file_path
+    delete_file(Pathname(dir_path+File::SEPARATOR+r))
   end
 end
+
+def remove_purl_file(dir_path, purl_path)
+  delete_file(Pathname(dir_path+File::SEPARATOR+purl_path))
+end
+
+def delete_file(file_path)
+  FileUtils.rm(file_path) if File.exist? file_path
+end
+
+
   

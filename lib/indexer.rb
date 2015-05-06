@@ -9,8 +9,9 @@ module Indexer
     include ApplicationHelper
     
     @@indexer_config = DorFetcherService::Application.config.solr_indexing
-    @@log = Logger.new('log/indexing.log')
+    @@log = Logger.new("log/indexing.log")
     @@modified_at_or_later = @@indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago #default setting
+
     
     #Finds all objects modified in the specified number of minutes and indexes them into to solr
     #Note: This is not the function to use for processing deletes
@@ -140,7 +141,7 @@ module Indexer
     #
     def solrize_object(path)
       #Get Information from the mods
-      doc_hash = {:foo=>1}
+      doc_hash = {}
       begin
         doc_hash = read_mods_for_object(path)
       rescue Exception => e
@@ -153,7 +154,7 @@ module Indexer
       begin
         doc_hash[:id] = get_druid_from_identityMetadata(path)
       rescue Exception => e
-        @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
+        @@log.error("For #{path} could not load identityMetadata #{e.message} #{e.backtrace.inspect}")
         return {}
       end
     
@@ -487,6 +488,13 @@ module Indexer
     def get_catkey_from_identityMetadata(path)
       x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
      return x.xpath("//otherId[@name='catkey']").text
+    end
+    
+    #Method to return the indexing log to anyone interested (ex rspec tests)
+    #
+    #@returns [Logger] The log
+    def log_object
+      return @@log
     end
     
     

@@ -61,9 +61,44 @@ describe("Indexer lib")  do
    expect(@indexer.solrize_object(@sample_doc_path_files_missing)).to match({})
   end
   
-  xit "logs an error when a file cannot be found for a purl object" do
+  describe("Failure to find a needed file for building the solr document") do
+    before :each do
+      #Paths for copying
+      @base_path = @sample_doc_path[0...-4]
+      @source_dir = @base_path+"6667.src"
+      @dest_dir = @source_dir[0...-4] #trim off the .src
+      
+      @druid = 'bb050dj6667'
+      
+      @druid_object = DruidTools::PurlDruid.new(@druid, @testing_doc_cache)
+      FileUtils.cp_r  @source_dir, @dest_dir
+      allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
+    end
+    
+    after :each do
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir) #remove the 6667 files
+      remove_delete_records(@testing_doc_cache+File::SEPARATOR+'.deletes', ['bb050dj6667'])
+    end
+    
+    it "logs an error, but swallows the exception when mods is not present" do
+      remove_purl_file(@dest_dir, 'mods')
+      expect(@indexer.log_object).to receive(:error).once
+      expect(@indexer.solrize_object(@dest_dir)).to match({})
+    end
+    
+    it "logs an error, but swallows the exception when identityMetadata is not present" do
+      remove_purl_file(@dest_dir, 'identityMetadata')
+      expect(@indexer.log_object).to receive(:error).once
+      expect(@indexer.solrize_object(@dest_dir)).to match({})
+    end
+    
+    it "logs an error, but swallows the exception when the public xml is not present" do
+      remove_purl_file(@dest_dir, 'public')
+      expect(@indexer.log_object).to receive(:error).once
+      expect(@indexer.solrize_object(@dest_dir)).to match({})
+    end
   end
-  
+    
   it "returns an RSolr Client when connecting to solr" do
     expect(@indexer.establish_solr_connection.class).to eq(RSolr::Client)
   end
