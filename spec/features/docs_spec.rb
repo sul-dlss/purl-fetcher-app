@@ -75,6 +75,27 @@ describe("Docs Controller")  do
     end
   end
   
+  describe("Tests Show Functions") do
+    before(:all) do
+      VCR.use_cassette('show_call') do
+        visit "docs?last_modified=#{@generic_end_time}"
+        @docs_response_with_time = page.body
+        visit "docs"
+        @docs_response_without_time = page.body
+      end
+    end
+    
+    it "returns responses that are not JSON" do
+      expect{JSON.parse(@docs_response_with_time)}.to raise_error(JSON::ParserError)
+      expect{JSON.parse(@docs_response_without_time)}.to raise_error(JSON::ParserError)
+    end
+    
+    it "return response that are the same regardless of time params" do
+      expect(@doc_response_with_time).to match(@docs_reponse_without_time)
+    end
+    
+  end
+  
   describe("Changes Response Respects Time Keys") do
   end
 
