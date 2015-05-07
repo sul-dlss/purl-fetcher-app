@@ -273,40 +273,62 @@ describe("Indexer lib")  do
   #Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
   describe("Detecting changes to the file system") do
       before :each do
-#         #Paths for copying
+         #Paths for copying
          @base_path = @sample_doc_path[0...-4]
          @source_dir = @base_path+"6667.src"
          @dest_dir = @source_dir[0...-4] #trim off the .src
-#
+
          allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
          allow(@indexer).to receive(:add_and_commit_to_solr).and_return({"responseHeader"=>{"status"=>0, "QTime"=>36}}) #fake the solr commit part, we test that elsewhere
        end
-#
-#       after :all do
-#         FileUtils.rm_r @dest_dir if File.directory?(@dest_dir) #remove the 6667 files
-#         remove_delete_records(@testing_doc_cache+File::SEPARATOR+'.deletes', ['bb050dj6667'])
-#       end
-      
-    it "detects when a purl has been changed" do  
+
+    #Multiple functions are tested here to avoid having to repeat the sleep 
+    #This tests:
+    # index_all_modified_objects
+    # index_druid_tree_branch  
+    # get_all_changed_objects_for_branch
+    #
+    it "detects when a purl has been changed" do 
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir) #If this test failed and isreun, clear the directory 
+      branch = purl_fixture_path+File::SEPARATOR+'bb'
+      @indexer.instance_variable_set(:@modified_at_or_later, 1) #Set the default mod time to one minute
       sleep(61)
+            
+      
+      #Now nothing has changed in the last minute so when we search for things modified a minute ago, nothing should pop up
       expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([]) #nothing has changed in the last minute
-       
+      expect(@indexer.index_druid_tree_branch(branch)).to match([]) 
+      expect(@indexer.get_all_changed_objects_for_branch(branch)).to match([])
+      
+      #Make sure we filter only on files we want
+      empty_file = @sample_doc_path+File::SEPARATOR+'my_updates_do_not_count'
+      FileUtils.touch(@sample_doc_path+File::SEPARATOR+'my_updates_do_not_count') #add in a fake files who change should not trigger
+      
+      #Since this file does not matter, no function should pick up on it as a reason to update something
+      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([])
+      expect(@indexer.index_druid_tree_branch(branch)).to match([]) 
+      expect(@indexer.get_all_changed_objects_for_branch(branch)).to match([])
+      
+      
       #Simulate republishing the purl
       FileUtils.rm_r @dest_dir if File.directory?(@dest_dir)
       FileUtils.cp_r  @source_dir, @dest_dir 
       
+      #We should see this one file as a change
       r= @indexer.index_all_modified_objects(mins_ago: 1)
       expect(r[:docs].size).to eq(1)
+      expect(@indexer.index_druid_tree_branch(branch).size).to eq(1) #sweeping the branch returns the object that changed
+      expect(@indexer.get_all_changed_objects_for_branch(branch).size).to eq(1)
       
-    end
-  
-    xit "does not trigger a reindex when a nontracked file is touched" do
-      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([]) #nothing has changed in the last minute
-      FileUtils.touch(@sample_doc_path+File::SEPARATOR+'IIIF') #touch one of the files
-      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([])
-    end
-    
-    
+      #The index_all_modified_objects should sweep across all branches, so touch something in another branch
+      FileUtils.touch(@ct961sj2730_path+File::SEPARATOR+'mods')
+      r = @indexer.index_all_modified_objects(mins_ago: 1)
+      expect(r[:docs].size).to eq(2) #The bb and ct branches should now have a total of two modified
+      
+      #Clear the temp file back out
+      FileUtils.rm empty_file
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir)
+    end 
   end
   
 end
