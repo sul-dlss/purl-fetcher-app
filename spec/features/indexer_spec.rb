@@ -3,7 +3,7 @@ require 'rails_helper'
 describe("Indexer lib")  do
   include ApplicationHelper
   
-  before :each do
+  before :all do
     @indexer = IndexerTester.new
     @testing_druid = 'bb050dj7711'
     @testing_doc_cache = purl_fixture_path
@@ -20,11 +20,7 @@ describe("Indexer lib")  do
   it "places the specified .deletes dir should be in the root of the purl directory" do
     expect(@indexer.path_to_deletes_dir.to_s.downcase).to eq("/purl/document_cache/.deletes")
   end
-  
-  xit "gets all changed directory in a branch and returns one reference to each object directory" do
-    #TODO:  Figure out how to work touch times and make this test not take forever
-  end
-  
+
   it "gets the title from the mods file" do
     expect(@indexer.read_mods_for_object(@sample_doc_path)).to match({:title_tsi=>"This is Pete's New Test title for this object."})
   end
@@ -271,18 +267,46 @@ describe("Indexer lib")  do
   end
   
   it "returns empty string when no cat key is present" do
-   
     expect(@indexer.get_catkey_from_identityMetadata(@sample_doc_path)).to match('')
   end
   
+  #Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
+  describe("Detecting changes to the file system") do
+      before :each do
+#         #Paths for copying
+         @base_path = @sample_doc_path[0...-4]
+         @source_dir = @base_path+"6667.src"
+         @dest_dir = @source_dir[0...-4] #trim off the .src
+#
+         allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
+         allow(@indexer).to receive(:add_and_commit_to_solr).and_return({"responseHeader"=>{"status"=>0, "QTime"=>36}}) #fake the solr commit part, we test that elsewhere
+       end
+#
+#       after :all do
+#         FileUtils.rm_r @dest_dir if File.directory?(@dest_dir) #remove the 6667 files
+#         remove_delete_records(@testing_doc_cache+File::SEPARATOR+'.deletes', ['bb050dj6667'])
+#       end
+      
+    it "detects when a purl has been changed" do  
+      sleep(61)
+      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([]) #nothing has changed in the last minute
+       
+      #Simulate republishing the purl
+      FileUtils.rm_r @dest_dir if File.directory?(@dest_dir)
+      FileUtils.cp_r  @source_dir, @dest_dir 
+      
+      r= @indexer.index_all_modified_objects(mins_ago: 1)
+      expect(r[:docs].size).to eq(1)
+      
+    end
   
-  xit "queries solr for documents modified between two timestaps" do
-  end
-  
-  xit "returns an empty array when its query to solr for documents between two timestamps fails" do
-  end
-  
-  xit "formats the solr response of documents properly" do
+    xit "does not trigger a reindex when a nontracked file is touched" do
+      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([]) #nothing has changed in the last minute
+      FileUtils.touch(@sample_doc_path+File::SEPARATOR+'IIIF') #touch one of the files
+      expect(@indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([])
+    end
+    
+    
   end
   
 end
