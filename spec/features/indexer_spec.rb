@@ -332,10 +332,34 @@ describe("Indexer lib")  do
   end
   
   describe("deleting documents from solr") do
+    before :all do
+       @testing_solr_connection = RSolr.connect
+    end
+    
     it "calls rsolr delete by id" do
-        expect(@indexer).to receive(:establish_solr_connection).once
+        expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
+        expect(@testing_solr_connection).to receive(:delete_by_id).once.and_return({})
+        expect(@indexer).to receive(:commit_to_solr).once.and_return(true)
+        expect(@indexer).to receive(:parse_solr_response).once.and_return(true) #fake a successful call
         expect(@indexer.delete_document('foo')).to be_truthy
     end
+    
+    it "logs an error when rsolr cannot delete something" do
+      expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
+      expect(@indexer.log_object).to receive(:error).once
+      allow(@testing_solr_connect).to receive(:delete_by_id).and_raise(RSolr::Error)
+      expect(@indexer.delete_document('foo')).to be_falsey
+    end
+    
+    it "logs an error when rslor cannot commit after a delete operation" do
+      expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
+      expect(@testing_solr_connection).to receive(:delete_by_id).once.and_return({})
+      expect(@indexer).to receive(:commit_to_solr).once.and_return(false)
+      expect(@indexer.log_object).to receive(:error).once
+      expect(@indexer).to receive(:parse_solr_response).once.and_return(true) #fake a successful call
+      expect(@indexer.delete_document('foo')).to be_falsey
+    end
+    
   end
   
 end

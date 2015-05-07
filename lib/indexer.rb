@@ -297,10 +297,12 @@ module Indexer
         success = parse_solr_response(response)
       rescue Exception => e
         @@log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
+        return false
       end
       
       commit_success = commit_to_solr(solr)
       @@log.error("Attempting to commit after deleted the document with an id of #{id} failed.  The specifc error returned should be logged above this.") if not commit_success
+      return commit_success
     end
     
     #Create a object that can be used for RSolr Calls
