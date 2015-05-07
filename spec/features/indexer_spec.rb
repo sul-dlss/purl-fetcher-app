@@ -331,4 +331,11 @@ describe("Indexer lib")  do
     end 
   end
   
+  describe("deleting documents from solr") do
+    it "calls rsolr delete by id" do
+        expect(@indexer).to receive(:establish_solr_connection).once
+        expect(@indexer.delete_document('foo')).to be_truthy
+    end
+  end
+  
 end
