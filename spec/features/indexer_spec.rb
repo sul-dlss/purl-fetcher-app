@@ -33,8 +33,16 @@ describe("Indexer lib")  do
     expect(@indexer.get_druid_from_identityMetadata(@sample_doc_path)).to match("druid:bb050dj7711")
   end
   
+  it "gets the druid from contentMetadata" do
+    expect(@indexer.get_druid_from_contentMetadata(@sample_doc_path)).to match("druid:bb050dj7711")
+  end
+  
   it "raises an error when there is no identityMetadata" do
     expect{@indexer.get_druid_from_identityMetadata(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
+  end
+  
+  it "raises an error when there is no contentMetadata" do
+    expect{@indexer.get_druid_from_contentMetadata(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
   it "gets true and false data from the public xml regarding release status" do
@@ -82,7 +90,8 @@ describe("Indexer lib")  do
       expect(@indexer.solrize_object(@dest_dir)).to match({})
     end
     
-    it "logs an error, but swallows the exception when identityMetadata is not present" do
+    #This has been moved to pending due the fact we no longer have any core functions that raise an error when identityMetadata is not present
+    xit "logs an error, but swallows the exception when identityMetadata is not present" do
       remove_purl_file(@dest_dir, 'identityMetadata')
       expect(@indexer.log_object).to receive(:error).once
       expect(@indexer.solrize_object(@dest_dir)).to match({})

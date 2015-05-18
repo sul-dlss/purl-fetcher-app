@@ -152,9 +152,9 @@ module Indexer
       
       #Get the Druid of the object 
       begin
-        doc_hash[:id] = get_druid_from_identityMetadata(path)
+        doc_hash[:id] = get_druid_from_contentMetadata(path)
       rescue Exception => e
-        @@log.error("For #{path} could not load identityMetadata #{e.message} #{e.backtrace.inspect}")
+        @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
         return {}
       end
     
@@ -219,11 +219,11 @@ module Indexer
       return releases
     end
     
-    #Given a path to a directory that contains a mods file, extract the druid for the item from identityMetadata
+    #Given a path to a directory that contains an identityMetada file, extract the druid for the item from identityMetadata.  This is currently not used because as it turns out, not all identityMetadatas have this node in them.  Rather use get_druid_from_contentMetadata
     #
-    #param path [String] The path to the directory that will contain the mods file
+    #param path [String] The path to the directory that will contain the identityMetadata file
     #
-    #@raises Errno::ENOENT If there is no mods file
+    #@raises Errno::ENOENT If there is no identityMetadata file
     #
     #@return [String] The druid in the form of druid:pid
     #
@@ -232,6 +232,21 @@ module Indexer
     def get_druid_from_identityMetadata(path)
       x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
       return x.xpath("//identityMetadata/objectId")[0].text
+    end
+    
+    #Given a path to a directory that contains a contentMetadata file, extract the druid for the item from identityMetadata.  This is currently not used because as it turns out, not all identityMetadatas have this node in them.  
+    #
+    #param path [String] The path to the directory that will contain the contentMetadata file
+    #
+    #@raises Errno::ENOENT If there is no identityMetadata file
+    #
+    #@return [String] The druid in the form of druid:pid
+    #
+    #Example:
+    #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
+    def get_druid_from_contentMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'contentMetadata'))
+      return 'druid:' + x.xpath('//contentMetadata')[0].attr('objectId')
     end
     
     #Given a path to a directory that contains a mods file, extract info on the object for indexing into solr
