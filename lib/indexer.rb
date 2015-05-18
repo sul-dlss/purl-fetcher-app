@@ -152,7 +152,7 @@ module Indexer
       
       #Get the Druid of the object 
       begin
-        doc_hash[:id] = get_druid_from_contentMetadata(path)
+        doc_hash[:id] = get_druid_from_publicMetadata(path)
       rescue Exception => e
         @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
         return {}
@@ -234,19 +234,19 @@ module Indexer
       return x.xpath("//identityMetadata/objectId")[0].text
     end
     
-    #Given a path to a directory that contains a contentMetadata file, extract the druid for the item from identityMetadata.  This is currently not used because as it turns out, not all identityMetadatas have this node in them.  
+    #Given a path to a directory that contains a public metadata file, extract the druid for the item from identityMetadata.  
     #
-    #param path [String] The path to the directory that will contain the contentMetadata file
+    #param path [String] The path to the directory that will contain the public metadata file
     #
-    #@raises Errno::ENOENT If there is no identityMetadata file
+    #@raises Errno::ENOENT If there is no public metadata file
     #
     #@return [String] The druid in the form of druid:pid
     #
     #Example:
-    #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
-    def get_druid_from_contentMetadata(path)
-      x = Nokogiri::XML(File.open(Pathname(path)+'contentMetadata'))
-      return 'druid:' + x.xpath('//contentMetadata')[0].attr('objectId')
+    #   druid = get_druid_from_publicMetadata('/purl/document_cache/bb')
+    def get_druid_from_publicMetadata(path)
+      x = Nokogiri::XML(File.open(Pathname(path)+'public'))
+      return x.xpath('//publicObject')[0].attr('id')
     end
     
     #Given a path to a directory that contains a mods file, extract info on the object for indexing into solr
