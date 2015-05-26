@@ -13,6 +13,10 @@ gem 'retries'
 gem 'druid-tools'
 gem 'whenever', :require => false
 
+#Squash
+gem 'squash_ruby', :require => 'squash/ruby'
+gem 'squash_rails', :require => 'squash/rails'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets

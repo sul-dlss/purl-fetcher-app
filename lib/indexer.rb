@@ -467,7 +467,7 @@ module Indexer
       x = Nokogiri::XML(File.open(Pathname(path)+'identityMetadata'))
       types = []
       x.xpath("//identityMetadata/objectType").each do |n|
-        types << Fedora_Prefix + n.text
+        types << n.text
       end
       return types
     end
