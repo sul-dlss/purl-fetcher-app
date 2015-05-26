@@ -151,6 +151,7 @@ describe("Indexer lib")  do
     #FYI this will fail if you have your local solr running, because obviously you can connect to it 
     #It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
     #So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes 
+    allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('failed_solr_commit') do
       expect(@indexer.commit_to_solr(@indexer.establish_solr_connection)).to be_falsey
     end
