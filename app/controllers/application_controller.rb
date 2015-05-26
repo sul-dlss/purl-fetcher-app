@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
+  def alert_squash(exception)
+      notify_squash exception
+  end
+  
   protected 
   def clean_date_params
     # if user decides they only want registered objects, it is not possible to further qualify with dates, since the date solr field we look at comes from publication (i.e. after accessioning)
@@ -27,4 +31,5 @@ class ApplicationController < ActionController::Base
       format.xml {render :json=>result.to_xml(:root => 'results')}
     end  
   end
+
 end

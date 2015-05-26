@@ -11,6 +11,7 @@ describe("Indexer lib")  do
     @sample_doc_path =  DruidTools::PurlDruid.new(@testing_druid, @testing_doc_cache).path
     @sample_doc_path_files_missing = DruidTools::PurlDruid.new('bb050dj0000', @testing_doc_cache).path
     @ct961sj2730_path =  @druid_object = DruidTools::PurlDruid.new('ct961sj2730', @testing_doc_cache).path #this one has a catkey and is a top level collection
+   
   end
   
   it "returns the path the deletes directory as a pathname" do
@@ -58,6 +59,7 @@ describe("Indexer lib")  do
   end
   
   it "returns the empty doc hash when it cannot open a file" do
+   allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
    expect(@indexer.solrize_object(@sample_doc_path_files_missing)).to match({})
   end
   
@@ -81,6 +83,7 @@ describe("Indexer lib")  do
     end
     
     it "logs an error, but swallows the exception when mods is not present" do
+      allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(@dest_dir, 'mods')
       expect(@indexer.log_object).to receive(:error).once
       expect(@indexer.solrize_object(@dest_dir)).to match({})
@@ -94,6 +97,7 @@ describe("Indexer lib")  do
     end
     
     it "logs an error, but swallows the exception when the public xml is not present" do
+      allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(@dest_dir, 'public')
       expect(@indexer.log_object).to receive(:error).once
       expect(@indexer.solrize_object(@dest_dir)).to match({})
@@ -136,6 +140,7 @@ describe("Indexer lib")  do
   end
   
   it "determines if the addition of solr documents was successful" do
+    allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('doc_submit_fails') do
       docs = [@indexer.solrize_object(@sample_doc_path)]
       expect(@indexer.add_and_commit_to_solr(docs)).to be_falsey
@@ -205,6 +210,7 @@ describe("Indexer lib")  do
     end
     
     it "deletes the druid from solr the files do not remain in the document cache" do
+      allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       #Index the druid into solr
       VCR.use_cassette('successful_solr_delete') do
         start_time = Time.now
@@ -350,6 +356,7 @@ describe("Indexer lib")  do
     end
     
     it "logs an error when rsolr cannot delete something" do
+      allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
       expect(@indexer.log_object).to receive(:error).once
       allow(@testing_solr_connect).to receive(:delete_by_id).and_raise(RSolr::Error)
@@ -357,6 +364,7 @@ describe("Indexer lib")  do
     end
     
     it "logs an error when rslor cannot commit after a delete operation" do
+      allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
       expect(@testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(@indexer).to receive(:commit_to_solr).once.and_return(false)

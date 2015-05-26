@@ -4,13 +4,17 @@ require 'logger'
 require 'stanford-mods'
 require 'retries'
 require 'druid-tools'
+require 'squash/rails' 
+require 'action_controller'
 
 module Indexer
     include ApplicationHelper
+    include Squash::Ruby::ControllerMethods
     
     @@indexer_config = DorFetcherService::Application.config.solr_indexing
     @@log = Logger.new("log/indexing.log")
     @@modified_at_or_later = @@indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago #default setting
+    @@app = ApplicationController.new
 
     
     #Finds all objects modified in the specified number of minutes and indexes them into to solr
@@ -145,6 +149,7 @@ module Indexer
       begin
         doc_hash = read_mods_for_object(path)
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} could not load mods.  #{e.message} #{e.backtrace.inspect}")
         return {}
       end
@@ -154,6 +159,7 @@ module Indexer
       begin
         doc_hash[:id] = get_druid_from_publicMetadata(path)
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
         return {}
       end
@@ -164,6 +170,7 @@ module Indexer
         doc_hash[@@indexer_config['released_true_field'].to_sym] = releases[:true]
         doc_hash[@@indexer_config['released_false_field'].to_sym] = releases[:false]
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
         return {}
       end
@@ -174,6 +181,7 @@ module Indexer
       begin
         doc_hash[Type_Field.to_sym] = get_objectType_from_identityMetadata(path)
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
       end
       
@@ -182,6 +190,7 @@ module Indexer
         membership = get_membership_from_publicxml(path)
         doc_hash[Solr_terms["collection_field"].to_sym] = membership if membership.size > 0 #only add this if we have a membership
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
       end
       
@@ -190,6 +199,7 @@ module Indexer
         catkey = get_catkey_from_identityMetadata(path)
         doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey if catkey.size > 0 #only add this if we have a catkey
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
       end
       
@@ -280,6 +290,7 @@ module Indexer
         }
         success = parse_solr_response(response)
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("Unable to add the documents #{documents}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -311,6 +322,7 @@ module Indexer
         }
         success = parse_solr_response(response)
       rescue Exception => e
+         @@app.alert_squash e
         @@log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -350,6 +362,7 @@ module Indexer
             response = solr_client.commit
         }
       rescue Exception => e
+        @@app.alert_squash e
         @@log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -370,8 +383,7 @@ module Indexer
     #
     #@return [Hash] JSon formatted solr response
     def get_modified_from_solr(first_modified:  Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
-      app = ApplicationController.new
-      times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
+      times = @@app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
       mod_field = @@indexer_config['change_field']
       query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
       
@@ -389,8 +401,7 @@ module Indexer
     #
     #@return [Hash] JSon formatted solr response
     def get_deletes_list_from_solr(first_modified:  Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
-      app = ApplicationController.new
-      times = app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
+      times = @@app.get_times({:first_modified => first_modified, :last_modified=>last_modified})
       mod_field = @@indexer_config['change_field']
       query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
       solr_resp = run_solr_query(query)
@@ -512,6 +523,13 @@ module Indexer
     #@returns [Logger] The log
     def log_object
       return @@log
+    end
+    
+    #Method to return the application controller to anyone interested (ex rspec tests)
+    #
+    #@returns [ApplicatonController] application controller
+    def app_controller
+      return @@app
     end
     
     

@@ -76,3 +76,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+
+Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
+                       :api_key => '8fe52f71-2c03-44dd-8e59-42547f91a9ac',
+                       :disabled => false,
+                       :revision_file => 'REVISION'
