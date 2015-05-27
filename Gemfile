@@ -71,9 +71,6 @@ group :development, :test do
   gem 'thin'
 end
 
-gem 'squash_ruby', :require => 'squash/ruby'
-gem 'squash_rails', :require => 'squash/rails'
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
