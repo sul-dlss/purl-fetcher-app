@@ -19,8 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 5.minutes do
-   rake "index_changes_in_last_five_minutes"
+every 15.minutes do
+   rake "index_changes_in_last_fifteen_minutes"
  end
  
 every 5.minutes do
