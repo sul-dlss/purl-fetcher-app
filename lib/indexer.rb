@@ -144,6 +144,8 @@ module Indexer
     #@return [Hash] A hash that RSolr can commit to form a new solr document in the form of {:id => 'foo', :title => 'bar', '}, returns {} if a file is not present and a full hash cannot be generated
     #
     def solrize_object(path)
+      #TODO: Refactor me just to pop open the files in one block and then pull the stuff out.  So many begin/rescues...      
+      
       #Get Information from the mods
       doc_hash = {}
       begin
@@ -532,9 +534,9 @@ module Indexer
       return @@app
     end
     
-    #Test The Connect To the Solr Core
+    #Test The Connect To the Solr Core.  This establishes a connection to the solr cloud and then attempts a basic select against the core the app is configured to use
     #
-    #@
+    #@returns [Boolean] True/False, true if the select returned a status of 0, false if it did not
     
     
    
