@@ -290,7 +290,7 @@ module Indexer
         }
         success = parse_solr_response(response)
       rescue Exception => e
-        @@app.alert_squash e
+        #@@app.alert_squash e
         @@log.error("Unable to add the documents #{documents}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -322,7 +322,7 @@ module Indexer
         }
         success = parse_solr_response(response)
       rescue Exception => e
-         @@app.alert_squash e
+        #@@app.alert_squash e
         @@log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -362,7 +362,7 @@ module Indexer
             response = solr_client.commit
         }
       rescue Exception => e
-        @@app.alert_squash e
+        #@@app.alert_squash e
         @@log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
         return false
       end
@@ -531,6 +531,10 @@ module Indexer
     def app_controller
       return @@app
     end
+    
+    #Test The Connect To the Solr Core
+    #
+    #@
     
     
    
