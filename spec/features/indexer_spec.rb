@@ -72,9 +72,28 @@ describe("Indexer lib")  do
     expect{@indexer.read_mods_for_object(@sample_doc_path_files_missing)}.to raise_error(Errno::ENOENT)
   end
   
+  it "logs an error when there is no public xml, but does not fail" do
+    allow(@indexer).to receive(:get_release_status).and_raise(Errno::ENOENT)
+    expect(@indexer.log_object).to receive(:error).once
+    expect(@indexer.solrize_object(@sample_doc_path).class).to eq(Hash)
+  end
+  
+  it "logs an error when it cannot get membership from the public xml, but does not fail" do
+    allow(@indexer).to receive(:get_membership_from_publicxml).and_raise(Errno::ENOENT)
+    expect(@indexer.log_object).to receive(:error).once
+    expect(@indexer.solrize_object(@sample_doc_path).class).to eq(Hash)
+  end
+  
+  it "logs an error when there is no catkey in the identityMetadata, but does not fail" do
+    allow(@indexer).to receive(:get_catkey_from_identityMetadata).and_raise(Errno::ENOENT)
+    expect(@indexer.log_object).to receive(:error).once
+    expect(@indexer.solrize_object(@sample_doc_path).class).to eq(Hash)
+  end
+  
   it "gets the druid from identityMetadata" do
     expect(@indexer.get_druid_from_identityMetadata(@sample_doc_path)).to match("druid:bb050dj7711")
   end
+  
   
   it "gets the druid from publicMetadata" do
     expect(@indexer.get_druid_from_publicMetadata(@sample_doc_path)).to match("druid:bb050dj7711")
