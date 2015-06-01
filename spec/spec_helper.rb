@@ -213,5 +213,14 @@ def delete_file(file_path)
   FileUtils.rm(file_path) if File.exist? file_path
 end
 
+#Generate a number of stub solr paths
+def generate_fake_paths(number_of_objects)
+  paths = []
+  (0..number_of_objects).to_a.each do |i|
+    paths << "/purl/foo/bar/#{i}"
+  end
+  return paths
+end
+
 
   

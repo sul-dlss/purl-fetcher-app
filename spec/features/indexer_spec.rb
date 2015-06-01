@@ -32,6 +32,30 @@ describe("Indexer lib")  do
     end
   end
   
+  describe('incremental commits to solr') do
+    before :all do
+      @branch = '/test/branch'
+      @commit_every_n = DorFetcherService::Application.config.solr_indexing['items_commit_every'].to_i
+    end
+    
+    it "commits once to solr when the total number of solr documents is below the incremental commit threshold" do
+      allow(@indexer).to receive(:get_all_changed_objects_for_branch).and_return(generate_fake_paths(@commit_every_n-1))
+      allow(@indexer).to receive(:solrize_object).and_return({:id => 'foo', :title=>'bar'})
+      expect(@indexer).to receive(:add_and_commit_to_solr).once
+      expect(@indexer.index_druid_tree_branch(@branch).class).to eq(Array)
+    end
+    
+    it "commits once to solr when the total number of solr documents is below the incremental commit threshold" do
+      allow(@indexer).to receive(:get_all_changed_objects_for_branch).and_return(generate_fake_paths(@commit_every_n+1))
+      allow(@indexer).to receive(:solrize_object).and_return({:id => 'foo', :title=>'bar'})
+      expect(@indexer).to receive(:add_and_commit_to_solr).twice
+      expect(@indexer.index_druid_tree_branch(@branch).class).to eq(Array)
+    end
+    
+  end
+  
+
+  
   it "returns the path the deletes directory as a pathname" do
     expect(@indexer.path_to_deletes_dir.class).to eq(Pathname)
   end
