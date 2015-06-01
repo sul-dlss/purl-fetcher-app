@@ -536,7 +536,12 @@ module Indexer
     
     #Test The Connect To the Solr Core.  This establishes a connection to the solr cloud and then attempts a basic select against the core the app is configured to use
     #
-    #@returns [Boolean] True/False, true if the select returned a status of 0, false if it did not
+    #@returns [Boolean] True/False, true if the select returned a status of 0, false if any other status is returned
+    def check_solr_core
+      solr_client = establish_solr_connection
+      r = solr_client.get 'select', :params => {:q => '*:*', :rows=>1} #Just grab one row for the test
+      return parse_solr_response(r)
+    end
     
     
    

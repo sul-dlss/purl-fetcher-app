@@ -7,4 +7,13 @@ Rails.configuration.middleware.use(IsItWorking::Handler) do |h|
   
   #Check that Solr is Working
   h.check :rsolr, :client => IndexerController.new.establish_solr_connection
+  
+  # Check that the Solr Core is Working solr may be up but the core itself can be down
+    h.check :solr_okat do |status|
+      if IndexerController.new.check_solr_core
+        status.ok("solr core responds to select")
+      else
+        status.fail("solr core does not respond")
+      end
+    end
 end

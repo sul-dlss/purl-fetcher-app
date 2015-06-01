@@ -14,6 +14,24 @@ describe("Indexer lib")  do
    
   end
   
+  describe("testing connectivity to the solr core") do
+    before :all do
+      @s_c = @indexer.establish_solr_connection
+    end
+    
+    it "returns true when the solr core responds to a select" do
+      allow(@indexer).to receive(:establish_solr_connection).and_return(@s_c)
+      allow(@s_c).to receive(:get).and_return({'responseHeader'=>{'status'=>0}})
+      expect(@indexer.check_solr_core).to be_truthy
+    end
+    
+    it "returns false when the solr core does not respond to a select" do
+      allow(@indexer).to receive(:establish_solr_connection).and_return(@s_c)
+      allow(@s_c).to receive(:get).and_return({'responseHeader'=>{'status'=>1}})
+      expect(@indexer.check_solr_core).to be_falsey
+    end
+  end
+  
   it "returns the path the deletes directory as a pathname" do
     expect(@indexer.path_to_deletes_dir.class).to eq(Pathname)
   end
