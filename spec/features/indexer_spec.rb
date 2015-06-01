@@ -437,4 +437,12 @@ describe("Indexer lib")  do
     
   end
   
+  it "logs an error when it cannot query solr and returns an empty hash" do 
+    solr_client = @indexer.establish_solr_connection
+    allow(@indexer).to receive(:establish_solr_connection).and_return(solr_client)
+    allow(solr_client).to receive(:get).and_raise(RSolr::Error)
+    expect(@indexer.log_object).to receive(:error).once
+    expect(@indexer.run_solr_query('whatever')).to match({})  
+  end
+   
 end
