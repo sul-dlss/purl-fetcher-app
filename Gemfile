@@ -49,7 +49,7 @@ group :test do
 end
 
 group :deployment do
-  gem 'capistrano', '~> 3.0'
+  gem 'capistrano', '3.2.1'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
   gem 'lyberteam-capistrano-devel'
