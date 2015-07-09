@@ -1,4 +1,4 @@
-publicObject id="druid:ct961sj2730" published="2015-01-29T16:57:55-08:00">
+<publicObject id="druid:ct961sj2730" published="2015-01-29T16:57:55-08:00">
 <identityMetadata>
 <objectLabel>The Caroline Batchelor Map Collection</objectLabel>
 <adminPolicy>druid:dd051ys2703</adminPolicy>
@@ -67,5 +67,4 @@ This collection of primarily maps with a few prints and books portrays the conti
 <dc:coverage>Africa, Southern</dc:coverage>
 <dc:coverage>Africa, West</dc:coverage>
 </oai_dc:dc>
-<ReleaseDigest/>
 </publicObject>

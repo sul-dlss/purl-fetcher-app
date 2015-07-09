@@ -222,7 +222,7 @@ module Indexer
     def get_release_status(path)
       releases = {:true => [], :false => []}
       x = Nokogiri::XML(File.open(Pathname(path)+'public'))
-      nodes = x.xpath('//publicObject/ReleaseData/release')
+      nodes = x.xpath('//publicObject/releaseData/release')
       nodes.each do |node|
         target = node.attribute('to').text
         status = node.text

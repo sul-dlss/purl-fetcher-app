@@ -60,9 +60,9 @@
     <dc:relation type="collection">Revs Institute</dc:relation>
     <dc:relation type="collection">The John Dugdale Collection of the Revs Institute</dc:relation>
   </oai_dc:dc>
-  <ReleaseData>
+  <releaseData>
     <release to="CARRICKR-TEST">true</release>
     <release to="Atago">false</release>
     <release to="Robot_Testing_Feb_5_2015">true</release>
-  </ReleaseData>
+  </releaseData>
 </publicObject>
