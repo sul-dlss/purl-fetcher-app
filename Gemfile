@@ -6,7 +6,7 @@ ruby "2.1.2"
 gem 'rails', '>=4.1.6'
 gem 'rsolr', '>=1.0.10'
 
-gem 'rest_client'
+gem 'rest-client'
 gem 'parallel'
 gem 'stanford-mods'
 gem 'retries'
