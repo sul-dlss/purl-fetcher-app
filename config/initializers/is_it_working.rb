@@ -6,7 +6,7 @@ Rails.configuration.middleware.use(IsItWorking::Handler) do |h|
   h.check :directory, :path => "/purl", :permission => [:read]
   
   #Check that Solr is Working
-  h.check :rsolr, :client => IndexerController.new.establish_solr_connection
+  h.check :rsolr, client: IndexerController.new.establish_solr_connection
   
   # Check that the Solr Core is Working solr may be up but the core itself can be down
     h.check :solr_okay do |status|
