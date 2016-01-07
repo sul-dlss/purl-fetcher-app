@@ -34,7 +34,7 @@ namespace :dorfetcher do
   desc 'Copy just shared yml files'
   task :config_yml do
     config_files = %w{database.yml solr.yml secrets.yml}
-    config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}") unless File.exists?("#{Rails.root}/config/#{config_file}.yml")}
+    config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}") unless File.exist?("#{Rails.root}/config/#{config_file}.yml")}
   end
 
   desc 'Copy all configuration files'

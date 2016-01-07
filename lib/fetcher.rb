@@ -170,7 +170,7 @@ module Fetcher
   # @return [Hash] solr params hash
   #
   def get_rows(solrparams, params)
-    params.has_key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000) # if user passes in the rows they want, use that, else just return everything
+    params.key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000) # if user passes in the rows they want, use that, else just return everything
   end
 
   # Given a params hash from the user, tells us if they only want registered items (ignoring accessioning and date ranges)
