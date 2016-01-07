@@ -96,11 +96,10 @@ module Indexer
     object_paths.each do |o_path|
       object = solrize_object(o_path)
       objects << object if object != {} # Only add it if we have a valid object, the function ret
-      if objects.size == @@indexer_config['items_commit_every']
-        add_and_commit_to_solr(objects)
-        all_objects += objects
-        objects = []
-      end
+      next unless objects.size == @@indexer_config['items_commit_every']
+      add_and_commit_to_solr(objects)
+      all_objects += objects
+      objects = []
     end
 
     add_and_commit_to_solr(objects) if objects.size != 0

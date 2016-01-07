@@ -175,13 +175,6 @@ Style/NestedTernaryOperator:
   Exclude:
     - 'lib/fetcher.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.
-Style/Next:
-  Exclude:
-    - 'lib/indexer.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/NumericLiterals:
