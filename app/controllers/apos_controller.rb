@@ -1,5 +1,4 @@
 class AposController < ApplicationController
-
   # API call to get a full list of all APOs
   #
   # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published APOs.  If no format requested, defaults to json
@@ -16,9 +15,8 @@ class AposController < ApplicationController
   #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z # returns only the APOs published SINCE January of 2014 up until today in json format
   #   http://localhost:3000/apos?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of APOs published SINCE January of 2014 up until today in json format
   def index
-    result=find_all_fedora_type(params,:apo)
+    result = find_all_fedora_type(params, :apo)
     render_result(result)
-    
   end
 
   # API call to get a list of druids associated with a specific APO
@@ -38,11 +36,9 @@ class AposController < ApplicationController
   #   http://localhost:3000/apos/druid:oo000oo0001?rows=0 # returns only the count of APOs in json format
   #   http://localhost:3000/apos/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this druid APO published in January of 2014 in XML format
   def show
-  #TODO: Option for recursion 
-  
-  result=find_all_under(params, :apo)
-  render_result(result)
+  # TODO: Option for recursion
 
+  result = find_all_under(params, :apo)
+  render_result(result)
   end
-  
 end
