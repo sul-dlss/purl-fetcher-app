@@ -8,29 +8,29 @@ describe('APOS Controller') do
 
   it 'the index of APOS found should be all APOS when not supplied a date range and all their druids should be present' do
     VCR.use_cassette('all_apos_index_call') do
-       visit apos_path
-       response = JSON.parse(page.body)
+      visit apos_path
+      response = JSON.parse(page.body)
 
-       # Ensure All APO Druids Are Present
-       result_should_contain_druids(@fixture_data.all_apo_druids, response[apos_key])
+      # Ensure All APO Druids Are Present
+      result_should_contain_druids(@fixture_data.all_apo_druids, response[apos_key])
 
-       # Ensure No Other Druids Are Present
-       result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.all_apo_druids, response[apos_key])
+      # Ensure No Other Druids Are Present
+      result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.all_apo_druids, response[apos_key])
 
-       # Ensure No Items Were Returned
-       expect(response[items_key]).to be nil
+      # Ensure No Items Were Returned
+      expect(response[items_key]).to be nil
 
-       # Ensure No Collections Were Returned
-       expect(response[collections_key]).to be nil
+      # Ensure No Collections Were Returned
+      expect(response[collections_key]).to be nil
 
-       # Verify the Counts
-       verify_counts_section(response, {apos_key => @fixture_data.all_apo_druids.size})
-     end
+      # Verify the Counts
+      verify_counts_section(response, {apos_key => @fixture_data.all_apo_druids.size})
+    end
   end
 
   it 'the index of APOS should respect :last_modified and return only Stafford' do
     VCR.use_cassette('last_modified_date_apos_index_call') do
-      solrparams = {:last_modified =>  mod_test_date_apos}
+      solrparams = {:last_modified => mod_test_date_apos}
       target_url = apos_path(solrparams)
       visit target_url
       response = JSON.parse(page.body)
@@ -51,27 +51,27 @@ describe('APOS Controller') do
     end
   end
 
-    it 'the index of APOS should return both Revs and Stafford with first modifed date because Stafford APO has multiple edit dates' do
-      VCR.use_cassette('first_modified_date_apos_index_call') do
-        target_url = apos_path(:first_modified => mod_test_date_apos)
-        visit target_url
-        response = JSON.parse(page.body)
+  it 'the index of APOS should return both Revs and Stafford with first modifed date because Stafford APO has multiple edit dates' do
+    VCR.use_cassette('first_modified_date_apos_index_call') do
+      target_url = apos_path(:first_modified => mod_test_date_apos)
+      visit target_url
+      response = JSON.parse(page.body)
 
-        # Ensure the all Apo Druids are Present
-        result_should_contain_druids(@fixture_data.all_apo_druids, response[apos_key])
+      # Ensure the all Apo Druids are Present
+      result_should_contain_druids(@fixture_data.all_apo_druids, response[apos_key])
 
-        # Ensure No Other Druids Are Present
-        result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.all_apo_druids, response[apos_key])
+      # Ensure No Other Druids Are Present
+      result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.all_apo_druids, response[apos_key])
 
-        # Ensure No Items Were Returned
-        expect(response[items_key]).to be nil
+      # Ensure No Items Were Returned
+      expect(response[items_key]).to be nil
 
-        # Ensure No Collections Were Returned
-        expect(response[collections_key]).to be nil
+      # Ensure No Collections Were Returned
+      expect(response[collections_key]).to be nil
 
-        # Verify the Counts
-        verify_counts_section(response, {apos_key => @fixture_data.all_apo_druids.size})
-      end
+      # Verify the Counts
+      verify_counts_section(response, {apos_key => @fixture_data.all_apo_druids.size})
+    end
   end
 
   it 'should not need the druid: prefix to query a list of druids from apos' do

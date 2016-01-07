@@ -11,7 +11,6 @@
 Lint/AssignmentInCondition:
   Exclude:
     - 'bin/spring'
-    - 'spec/spec_helper.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.
@@ -49,12 +48,6 @@ Lint/UnusedBlockArgument:
     - 'lib/fetcher.rb'
     - 'lib/indexer.rb'
     - 'lib/tasks/ci.rake'
-
-# Offense count: 2
-Lint/UselessAssignment:
-  Exclude:
-    - 'lib/indexer.rb'
-    - 'spec/spec_helper.rb'
 
 # Offense count: 12
 Metrics/AbcSize:
@@ -171,32 +164,6 @@ Style/HashSyntax:
 # Configuration parameters: SupportedStyles.
 Style/IndentHash:
   EnforcedStyle: consistent
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentationConsistency:
-  Exclude:
-    - 'config/initializers/is_it_working.rb'
-    - 'lib/indexer.rb'
-    - 'spec/features/apos_spec.rb'
-    - 'spec/features/collections_spec.rb'
-    - 'spec/features/indexer_spec.rb'
-
-# Offense count: 22
-# Cop supports --auto-correct.
-# Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'app/controllers/apos_controller.rb'
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/collections_controller.rb'
-    - 'lib/indexer.rb'
-    - 'spec/features/apos_spec.rb'
-    - 'spec/features/collections_spec.rb'
-    - 'spec/features/docs_spec.rb'
-    - 'spec/features/indexer_spec.rb'
-    - 'spec/rails_helper.rb'
 
 # Offense count: 5
 # Configuration parameters: EnforcedStyle, SupportedStyles.

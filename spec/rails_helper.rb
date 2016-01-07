@@ -133,7 +133,7 @@ class FixtureData
   end
 
   def revs_items_druids
-     @@revs_items_druids
+    @@revs_items_druids
   end
 
   def stafford_items_druids

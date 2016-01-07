@@ -8,29 +8,29 @@ describe('Collections Controller') do
 
   it 'the index of Collections found should be all collections when not supplied a date range and all their druids should be present' do
     VCR.use_cassette('all_collections_index_call') do
-       visit collections_path
-       response = JSON.parse(page.body)
+      visit collections_path
+      response = JSON.parse(page.body)
 
-       # Ensure All Four Collection Druids Are Present
-       result_should_contain_druids(@fixture_data.accessioned_collection_druids, response[collections_key])
+      # Ensure All Four Collection Druids Are Present
+      result_should_contain_druids(@fixture_data.accessioned_collection_druids, response[collections_key])
 
-       # Ensure No Other Druids Are Present
-       result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.accessioned_collection_druids, response[collections_key])
+      # Ensure No Other Druids Are Present
+      result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.accessioned_collection_druids, response[collections_key])
 
-       # Ensure No Items Were Returned
-       expect(response[items_key]).to be nil
+      # Ensure No Items Were Returned
+      expect(response[items_key]).to be nil
 
-       # Ensure No APOS Were Returned
-       expect(response[apos_key]).to be nil
+      # Ensure No APOS Were Returned
+      expect(response[apos_key]).to be nil
 
-       # Verify the Counts
-       verify_counts_section(response, {collections_key => @fixture_data.accessioned_collection_druids.size})
-     end
+      # Verify the Counts
+      verify_counts_section(response, {collections_key => @fixture_data.accessioned_collection_druids.size})
+    end
   end
 
   it 'the index of Collections should respect :last_modified and return only Stafford' do
     VCR.use_cassette('last_modified_date_collections_index_call') do
-      solrparams = {:last_modified =>  last_mod_test_date_collections}
+      solrparams = {:last_modified => last_mod_test_date_collections}
       target_url = collections_path(solrparams)
       visit target_url
       response = JSON.parse(page.body)
@@ -52,28 +52,28 @@ describe('Collections Controller') do
     end
   end
 
-    it 'the index of Collections should respect :first_modified and return only Revs' do
-      VCR.use_cassette('first_modified_date_collections_index_call') do
-        solrparams = {:first_modified => first_mod_test_date_collections}
-        target_url = collections_path(solrparams)
-        visit target_url
-        response = JSON.parse(page.body)
+  it 'the index of Collections should respect :first_modified and return only Revs' do
+    VCR.use_cassette('first_modified_date_collections_index_call') do
+      solrparams = {:first_modified => first_mod_test_date_collections}
+      target_url = collections_path(solrparams)
+      visit target_url
+      response = JSON.parse(page.body)
 
-        # Ensure All Three Revs Collection Druids Are Present
-        result_should_contain_druids(@fixture_data.revs_collections_druids, response[collections_key])
+      # Ensure All Three Revs Collection Druids Are Present
+      result_should_contain_druids(@fixture_data.revs_collections_druids, response[collections_key])
 
-        # Ensure Not Other Collections Are Present
-        result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.revs_collections_druids, response[collections_key])
+      # Ensure Not Other Collections Are Present
+      result_should_not_contain_druids(@fixture_data.accessioned_druids - @fixture_data.revs_collections_druids, response[collections_key])
 
-        # Ensure No Items Were Returned
-        expect(response[items_key]).to be nil
+      # Ensure No Items Were Returned
+      expect(response[items_key]).to be nil
 
-        # Ensure No APOS Were Returned
-        expect(response[apos_key]).to be nil
+      # Ensure No APOS Were Returned
+      expect(response[apos_key]).to be nil
 
-        # Verify the Counts
-        verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size})
-      end
+      # Verify the Counts
+      verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size})
+    end
   end
 
   it 'find all objects even if not accessioned when you specify the correct parameter' do
@@ -136,7 +136,6 @@ describe('Collections Controller') do
   it 'should only return a count of the Revs Druids when called with the count only parameter' do
     VCR.use_cassette('revs_collection_count_call') do
       visit collection_path(@fixture_data.top_level_revs_collection_druid, just_count_param)
-
       expect(page.body.to_i).to eq((@fixture_data.revs_items_druids + @fixture_data.revs_collections_druids).size)
     end
   end
@@ -190,7 +189,7 @@ describe('Collections Controller') do
   end
 
   it 'It should only return Revs collection objects between these two dates' do
-     VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
+    VCR.use_cassette('revs_objects_dates', :allow_unused_http_interactions => true) do
       # All Revs Collection Objects Should Be Here
       # The Stafford Collection Object Should Not Be Here
 

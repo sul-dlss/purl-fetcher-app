@@ -115,17 +115,16 @@ describe('Indexer lib') do
   end
 
   it 'returns the empty doc hash when it cannot open a file' do
-   allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
-   expect(@indexer.solrize_object(@sample_doc_path_files_missing)).to match({})
+    allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
+    expect(@indexer.solrize_object(@sample_doc_path_files_missing)).to match({})
   end
 
   describe('Failure to find a needed file for building the solr document') do
     before :each do
       # Paths for copying
-      @base_path = @sample_doc_path[0...-4]
+      @base_path  = @sample_doc_path[0...-4]
       @source_dir = @base_path + '6667.src'
-      @dest_dir = @source_dir[0...-4] # trim off the .src
-
+      @dest_dir   = @source_dir[0...-4] # trim off the .src
       @druid = 'bb050dj6667'
 
       @druid_object = DruidTools::PurlDruid.new(@druid, @testing_doc_cache)
@@ -230,12 +229,10 @@ describe('Indexer lib') do
   describe('deleting solr documents') do
     before :each do
       # Paths for copying
-      @base_path = @sample_doc_path[0...-4]
+      @base_path  = @sample_doc_path[0...-4]
       @source_dir = @base_path + '6667.src'
-      @dest_dir = @source_dir[0...-4] # trim off the .src
-
+      @dest_dir   = @source_dir[0...-4] # trim off the .src
       @druid = 'bb050dj6667'
-
       @druid_object = DruidTools::PurlDruid.new(@druid, @testing_doc_cache)
       FileUtils.cp_r @source_dir, @dest_dir
       allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
@@ -317,8 +314,8 @@ describe('Indexer lib') do
   end
 
   it 'gets multiple object types when an object has multiple types' do
-     @druid_object = DruidTools::PurlDruid.new('druid:ct961sj2730', @testing_doc_cache)
-     expect(@indexer.get_objectType_from_identityMetadata( @druid_object.path)).to match(['collection', 'set'])
+    @druid_object = DruidTools::PurlDruid.new('druid:ct961sj2730', @testing_doc_cache)
+    expect(@indexer.get_objectType_from_identityMetadata( @druid_object.path)).to match(['collection', 'set'])
   end
 
   it 'gets the collections and sets the object is a member of' do
@@ -335,15 +332,15 @@ describe('Indexer lib') do
 
   # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
   describe('Detecting changes to the file system') do
-      before :each do
-         # Paths for copying
-         @base_path = @sample_doc_path[0...-4]
-         @source_dir = @base_path + '6667.src'
-         @dest_dir = @source_dir[0...-4] # trim off the .src
+    before :each do
+      # Paths for copying
+      @base_path = @sample_doc_path[0...-4]
+      @source_dir = @base_path + '6667.src'
+      @dest_dir = @source_dir[0...-4] # trim off the .src
 
-         allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
-         allow(@indexer).to receive(:add_and_commit_to_solr).and_return({'responseHeader' => {'status' => 0, 'QTime' => 36}}) # fake the solr commit part, we test that elsewhere
-       end
+      allow(@indexer).to receive(:purl_mount_location).and_return(@testing_doc_cache)
+      allow(@indexer).to receive(:add_and_commit_to_solr).and_return({'responseHeader' => {'status' => 0, 'QTime' => 36}}) # fake the solr commit part, we test that elsewhere
+    end
 
     # Multiple functions are tested here to avoid having to repeat the sleep
     # This tests:
@@ -394,15 +391,15 @@ describe('Indexer lib') do
 
   describe('deleting documents from solr') do
     before :all do
-       @testing_solr_connection = RSolr.connect
+      @testing_solr_connection = RSolr.connect
     end
 
     it 'calls rsolr delete by id' do
-        expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
-        expect(@testing_solr_connection).to receive(:delete_by_id).once.and_return({})
-        expect(@indexer).to receive(:commit_to_solr).once.and_return(true)
-        expect(@indexer).to receive(:parse_solr_response).once.and_return(true) # fake a successful call
-        expect(@indexer.delete_document('foo')).to be_truthy
+      expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
+      expect(@testing_solr_connection).to receive(:delete_by_id).once.and_return({})
+      expect(@indexer).to receive(:commit_to_solr).once.and_return(true)
+      expect(@indexer).to receive(:parse_solr_response).once.and_return(true) # fake a successful call
+      expect(@indexer.delete_document('foo')).to be_truthy
     end
 
     it 'logs an error when rsolr cannot delete something' do

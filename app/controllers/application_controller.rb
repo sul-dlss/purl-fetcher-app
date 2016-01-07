@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def alert_squash(exception)
-      notify_squash exception
+    notify_squash exception
   end
 
   protected

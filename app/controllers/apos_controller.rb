@@ -38,7 +38,7 @@ class AposController < ApplicationController
   def show
   # TODO: Option for recursion
 
-  result = find_all_under(params, :apo)
-  render_result(result)
+    result = find_all_under(params, :apo)
+    render_result(result)
   end
 end

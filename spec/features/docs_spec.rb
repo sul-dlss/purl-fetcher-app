@@ -26,12 +26,12 @@ describe('Docs Controller') do
     end
 
     it 'contains hashes in the changes array that have a key of druid that point to strings' do
-     expect(@response[:changes.to_s][0][:druid.to_s].class).to eq(String)
+      expect(@response[:changes.to_s][0][:druid.to_s].class).to eq(String)
     end
 
     it 'contains hashes in the changes array that have a key of latest_change that point to a string which can be parsed into a time' do
-     expect(@response[:changes.to_s][0][:latest_change.to_s].class).to eq(String)
-     expect(Time.parse(@response[:changes.to_s][0][:latest_change.to_s]).class).to eq(Time) # With throw exception if it cannot parse
+      expect(@response[:changes.to_s][0][:latest_change.to_s].class).to eq(String)
+      expect(Time.parse(@response[:changes.to_s][0][:latest_change.to_s]).class).to eq(Time) # With throw exception if it cannot parse
     end
 
     it 'contains hashes in the chanrges array that have a key of true_targets and point to an array of Strings' do
@@ -65,12 +65,12 @@ describe('Docs Controller') do
     end
 
     it 'contains hashes in the deletes array that have a key of druid that point to strings' do
-     expect(@response[:deletes.to_s][0][:druid.to_s].class).to eq(String)
+      expect(@response[:deletes.to_s][0][:druid.to_s].class).to eq(String)
     end
 
     it 'contains hashes in the deletes array that have a key of latest_change that point to a string which can be parsed into a time' do
-     expect(@response[:deletes.to_s][0][:latest_change.to_s].class).to eq(String)
-     expect(Time.parse(@response[:deletes.to_s][0][:latest_change.to_s]).class).to eq(Time) # With throw exception if it cannot parse
+      expect(@response[:deletes.to_s][0][:latest_change.to_s].class).to eq(String)
+      expect(Time.parse(@response[:deletes.to_s][0][:latest_change.to_s]).class).to eq(Time) # With throw exception if it cannot parse
     end
   end
 
