@@ -142,14 +142,13 @@ def verify_counts_section(response, counts)
 
     # Go back to the JSON section that lists all the druids and make sure its size equals the value listed in count
     expect(response[key].size).to eq(value)
-
     total_count += value
 
     # This key was present, so we don't expect it to be nil
     nil_keys -= [key]
   end
   # If the tester didn't specify total count above, check it
-  expect(total_count).to eq(response[counts_key][total_count_key]) if counts[total_count_key = nil]
+  expect(total_count).to eq(response[counts_key][total_count_key]) if counts[total_count_key]
 
   # Make sure the keys we expect to be nil aren't in the counts section
   nil_keys.each do |key|
