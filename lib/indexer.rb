@@ -57,7 +57,7 @@ module Indexer
     # minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
     query_path = Pathname(path_to_deletes_dir.to_s)
     deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split # If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
-    deleted_objects = deleted_objects - [query_path.to_s] # remove the deleted objects dir itself
+    deleted_objects -= [query_path.to_s] # remove the deleted objects dir itself
 
     docs = []
     result = true # set this to true by default because if we get an empty list of documents, then it worked
