@@ -200,7 +200,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the mods file
   # @return [Hash] A hash of all trues and falses in the form of {:true => ['Target1', 'Target2'], :false => ['Target3', 'Target4']}
-  # @raises Errno::ENOENT If there is no public file
+  # @raise Errno::ENOENT If there is no public file
   #
   # Example:
   #   release_status = get_druid_from_contentMetada('/purl/document_cache/bb')
@@ -220,7 +220,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [String] The druid in the form of druid:pid
-  # @raises Errno::ENOENT If there is no identityMetadata file
+  # @raise Errno::ENOENT If there is no identityMetadata file
   #
   # Example:
   #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
@@ -233,7 +233,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the public metadata file
   # @return [String] The druid in the form of druid:pid
-  # @raises Errno::ENOENT If there is no public metadata file
+  # @raise Errno::ENOENT If there is no public metadata file
   #
   # Example:
   #   druid = get_druid_from_publicMetadata('/purl/document_cache/bb')
@@ -245,8 +245,8 @@ module Indexer
   # Given a path to a directory that contains a mods file, extract info on the object for indexing into solr
   #
   # @param path [String] The path to the directory that will contain the mods file
-  # @return [Hash] An hash of mods information in the form of {}:solr_field_name => value}
-  # @raises Errno::ENOENT If there is no mods file
+  # @return [Hash{Symbol => String}] An hash of mods information in the form of {:solr_field_name => value}
+  # @raise Errno::ENOENT If there is no mods file
   #
   # Example:
   #   hash = index_druid_tree_branch('/purl/document_cache/bb')
@@ -431,7 +431,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [Array] The object types
-  # @raises Errno::ENOENT If there is no identity Metadata File
+  # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
   #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
@@ -444,7 +444,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the public xml
   # @return [Array] The collections and sets the item is a member of
-  # @raises Errno::ENOENT If there is no public xml file
+  # @raise Errno::ENOENT If there is no public xml file
   #
   # Example:
   #   get_membership_from_publicxml('/purl/document_cache/bb')
@@ -460,7 +460,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identity Metadata File
   # @return [String] The cat key, an empty string is returned if there is no catkey
-  # @raises Errno::ENOENT If there is no identity Metadata File
+  # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
   #   get_catkey_from_identityMetadata('/purl/document_cache/bb')
