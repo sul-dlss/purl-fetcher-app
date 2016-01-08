@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
   def clean_date_params
     # if user decides they only want registered objects, it is not possible to further qualify with dates, since the date solr field we look at comes from publication (i.e. after accessioning)
     if registered_only?(params)
