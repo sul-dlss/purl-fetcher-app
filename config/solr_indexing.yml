@@ -1,0 +1,25 @@
+defaults: &defaults
+  purl_document_path: "/purl/document_cache"
+  deletes_dir: ".deletes"
+  default_run_interval_in_minutes: 5
+  files_to_reindex_on: ['identityMetadata', 'mods', 'public']
+  items_commit_every: 50
+  sleep_seconds_if_overloaded: 5
+  sleep_when_response_time_exceeds: 4500
+  change_field: indexed_dtsi
+  title_field: title_tsi
+  released_true_field: true_releases_ssim
+  released_false_field: false_releases_ssim
+  deleted_field: deleted_tsi
+  catkey_field: catkey_tsi
+
+  
+development:
+  <<: *defaults
+test: 
+  <<: *defaults
+  purl_document_path: "/purl/document_cache"
+staging: 
+  <<: *defaults
+production: 
+  <<: *defaults

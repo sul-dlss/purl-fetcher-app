@@ -1,7 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'net/http'
 require 'capybara/rspec'
@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   config.include Capybara::DSL
-  
+
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -59,94 +59,96 @@ class FetcherTester
   include Fetcher
 end
 
+class IndexerTester
+  include Indexer
+end
+
 class FixtureData
-  
-  #APOS
-  @@revs_apo ='druid:qv648vd4392'
+  # APOS
+  @@revs_apo = 'druid:qv648vd4392'
   @@stafford_apo = 'druid:vb546ms7107'
-  @@apo_druids = [ @@revs_apo, @@stafford_apo] 
-  
-  #Items
+  @@apo_druids = [ @@revs_apo, @@stafford_apo]
+
+  # Items
   @@not_accessioned_druid = ['druid:aa000bb0000']
-  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722','druid:ww689vs6534']
-  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137','druid:bb027yn4436','druid:bb048rn5648', 'druid:bb113tm9924']
+  @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722', 'druid:ww689vs6534']
+  @@revs_items_druids = ['druid:bb001zc5754', 'druid:bb004bn8654', 'druid:bb013sq9803', 'druid:bb014bd3784', 'druid:bb023nj3137', 'druid:bb027yn4436', 'druid:bb048rn5648', 'druid:bb113tm9924']
   @@items_druids = @@stafford_items_druids + @@revs_items_druids
-  
-  #Collections
+
+  # Collections
   @@top_level_revs_collection_druid = 'druid:nt028fd5773'
   @@revs_subcollection_druid = 'druid:wy149zp6932'
   @@stafford_collection_druids = ['druid:yg867hg1375']
-  @@revs_collection_druids = [@@top_level_revs_collection_druid, @@revs_subcollection_druid , 'druid:yt502zj0924']
-  @@accessioned_collection_druids =  @@stafford_collection_druids + @@revs_collection_druids
-  
+  @@revs_collection_druids = [@@top_level_revs_collection_druid, @@revs_subcollection_druid, 'druid:yt502zj0924']
+  @@accessioned_collection_druids = @@stafford_collection_druids + @@revs_collection_druids
+
   @@all_collection_druids = @@accessioned_collection_druids + @@not_accessioned_druid
-  
+
   def accessioned_druids
-    return @@apo_druids + @@accessioned_collection_druids + @@items_druids
+    @@apo_druids + @@accessioned_collection_druids + @@items_druids
   end
-  
+
   def all_druids
     accessioned_druids + not_accessioned_druid
   end
-  
+
   def not_accessioned_druid
     @@not_accessioned_druid
   end
-   
+
   def all_collection_druids
-    return @@all_collection_druids
+    @@all_collection_druids
   end
 
   def accessioned_collection_druids
-    return @@accessioned_collection_druids
-  end
-    
-  def stafford_collections_druids
-    return @@stafford_collection_druids
-  end
-  
-  def revs_collections_druids
-    return @@revs_collection_druids
-  end
-  
-  def revs_subcollection_druid
-    return @@revs_subcollection_druid 
-  end
-  
-  def top_level_revs_collection_druid
-    return @@top_level_revs_collection_druid
-  end
-   
-  def all_apo_druids
-    return @@apo_druids
-  end
-  
-  def revs_apo_druid
-    return @@revs_apo
-  end
-  
-  def stafford_apo_druid
-    return @@stafford_apo
-  end
-  
-  def revs_items_druids
-     return @@revs_items_druids
-  end
-  
-  def stafford_items_druids
-    return @@stafford_items_druids 
-  end
-  
-  def all_items_druids
-    return @@items_druids = @@stafford_items_druids
-  end
-   
-  def get_response(url)
-    return Net::HTTP.get_response(URI.parse(url))
-  end
-  
-  def get_response_body(url)
-    return JSON.parse(get_response(url).body)
+    @@accessioned_collection_druids
   end
 
+  def stafford_collections_druids
+    @@stafford_collection_druids
+  end
+
+  def revs_collections_druids
+    @@revs_collection_druids
+  end
+
+  def revs_subcollection_druid
+    @@revs_subcollection_druid
+  end
+
+  def top_level_revs_collection_druid
+    @@top_level_revs_collection_druid
+  end
+
+  def all_apo_druids
+    @@apo_druids
+  end
+
+  def revs_apo_druid
+    @@revs_apo
+  end
+
+  def stafford_apo_druid
+    @@stafford_apo
+  end
+
+  def revs_items_druids
+    @@revs_items_druids
+  end
+
+  def stafford_items_druids
+    @@stafford_items_druids
+  end
+
+  def all_items_druids
+    @@items_druids = @@stafford_items_druids
+  end
+
+  def get_response(url)
+    Net::HTTP.get_response(URI.parse(url))
+  end
+
+  def get_response_body(url)
+    JSON.parse(get_response(url).body)
+  end
 end

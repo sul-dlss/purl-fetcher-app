@@ -5,7 +5,7 @@ set :application, 'dor-fetcher-service'
 set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
 
 # Prompt for the correct username
-set :user, ask("User", 'enter in the app username')
+set :user, ask('User', 'enter in the app username')
 
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -13,6 +13,9 @@ ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 # Default deploy_to directory is /var/www/my_app
 set :home_directory, "/opt/app/#{fetch(:user)}"
 set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
+
+# Whenever
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -41,7 +44,6 @@ set :keep_releases, 5
 before 'deploy:compile_assets', 'squash:write_revision'
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -60,5 +62,4 @@ namespace :deploy do
       # end
     end
   end
-
 end

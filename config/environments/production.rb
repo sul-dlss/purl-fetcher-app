@@ -20,7 +20,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -76,3 +76,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+Squash::Ruby.configure :api_host => 'https://sul-squash-prod.stanford.edu',
+                       :api_key => '8fe52f71-2c03-44dd-8e59-42547f91a9ac',
+                       :disabled => false,
+                       :revision_file => 'REVISION'

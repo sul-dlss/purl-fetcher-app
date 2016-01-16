@@ -76,15 +76,3 @@ To keep a local server running with up to date code documentation that you can v
 
 	yard server --reload    
 
-== Tunneling into Stanford Solr For Developmental Work 
-
-If you want to tunnel into production (or dev) Solr you can tunnel in.
-
-  Connect the Stanford VPN, even if on campus.
-  Open a terminal and run: ssh NAME_OF_SOLR_SERVER -L 8080:localhost:8080
-  To test this you can open a browser and go to: http://127.0.0.1:8080/solr, it should display Solr Admin.
-  Shut down dor-fetcher-services if running (console or webapp).
-  In your Solr.yml file comment out the current development url.
-  Add in url: http://localhost:8080/solr/CORENAME under development.
-  Restart the app, you will be using the solr server selected in step two.
-
