@@ -1,11 +1,9 @@
 class TagsController < ApplicationController
-  # API call to get a list of druids associated with a specific tag
-  #
-  # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published druids associated with a specific tag.
-  #  If no format requested, defaults to json
+  # List druids associated with a specific tag
+  # Will render JSON or XML (depending on what was requested) structure containing all of the published DRUIDs associated with a specific tag.
+  # Defaults to JSON.
   #
   # @param [string] tag requested, should be URL encoded if it contains special characters
-  #
   # @param [querystring] Parameters can be specified in the querystring
   #   * rows = number of results to return (set to 0 to only get count)
   #   * first_modified = datetime in UTC (default: earliest possible date)
@@ -20,10 +18,9 @@ class TagsController < ApplicationController
     render_result(result)
   end
 
-  # API call to get a list of all tags
-  #
-  # @return [requested_format] Will return json or xml (depending on what was requested) structure containing all of the published druids associated with a specific tag.
-  #  If no format requested, defaults to json
+  # List all tags.
+  # Will render JSON or XML (depending on what was requested) structure containing all of the published tags.
+  # Defaults to JSON.
   #
   # @param [querystring] Parameters can be specified in the querystring
   #   * rows = number of results to return (set to 0 to only get count)

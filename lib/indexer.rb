@@ -200,7 +200,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the mods file
   # @return [Hash] A hash of all trues and falses in the form of {:true => ['Target1', 'Target2'], :false => ['Target3', 'Target4']}
-  # @raises Errno::ENOENT If there is no public file
+  # @raise Errno::ENOENT If there is no public file
   #
   # Example:
   #   release_status = get_druid_from_contentMetada('/purl/document_cache/bb')
@@ -220,7 +220,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [String] The druid in the form of druid:pid
-  # @raises Errno::ENOENT If there is no identityMetadata file
+  # @raise Errno::ENOENT If there is no identityMetadata file
   #
   # Example:
   #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
@@ -233,7 +233,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the public metadata file
   # @return [String] The druid in the form of druid:pid
-  # @raises Errno::ENOENT If there is no public metadata file
+  # @raise Errno::ENOENT If there is no public metadata file
   #
   # Example:
   #   druid = get_druid_from_publicMetadata('/purl/document_cache/bb')
@@ -245,8 +245,8 @@ module Indexer
   # Given a path to a directory that contains a mods file, extract info on the object for indexing into solr
   #
   # @param path [String] The path to the directory that will contain the mods file
-  # @return [Hash] An hash of mods information in the form of {}:solr_field_name => value}
-  # @raises Errno::ENOENT If there is no mods file
+  # @return [Hash{Symbol => String}] An hash of mods information in the form of {:solr_field_name => value}
+  # @raise Errno::ENOENT If there is no mods file
   #
   # Example:
   #   hash = index_druid_tree_branch('/purl/document_cache/bb')
@@ -283,8 +283,8 @@ module Indexer
 
   # Adds in the timestamp attribute, using Time.now, to each document about to be committed to Solr
   #
-  # @params documents [Array] An array of hashes, with each hash being one solr document
-  # @returns [Array] An array of hashes
+  # @param documents [Array] An array of hashes, with each hash being one solr document
+  # @return [Array] An array of hashes
   def add_timestamp_to_documents(documents)
     documents.each do |d|
       d[@@indexer_config['change_field'].to_sym] = Time.now.utc.iso8601
@@ -320,7 +320,7 @@ module Indexer
 
   # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and sleeps the thread to give solr a chance to recover
   #
-  # @params resp [Hash] a hash provided by RSolr, ex: {"responseHeader"=>{"status"=>0, "QTime"=>77}}
+  # @param resp [Hash] a hash provided by RSolr, ex: {"responseHeader"=>{"status"=>0, "QTime"=>77}}
   # @return [Boolean] True or false
   def parse_solr_response(resp)
     success = resp['responseHeader']['status'].to_i == 0
@@ -355,9 +355,8 @@ module Indexer
 
   # Get a list of all documents modified between two times from solr
   #
-  # @params first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
-  # @params last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
-  #
+  # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
+  # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
     times = @@app.get_times({:first_modified => first_modified, :last_modified => last_modified})
@@ -369,8 +368,8 @@ module Indexer
 
   # Get a list of all documents deleted between two times from solr
   #
-  # @params first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
-  # @params last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
+  # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
+  # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_deletes_list_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
     times = @@app.get_times({:first_modified => first_modified, :last_modified => last_modified})
@@ -389,7 +388,7 @@ module Indexer
 
   # Establishes a connection to solr and runs a select query and returns the response.  Logs errors and swallows them.
   #
-  # @params query [String] A valid query that the RSolr gem will understand how to process via the get method
+  # @param query [String] A valid query that the RSolr gem will understand how to process via the get method
   # @return [Hash] The solr response.  An empty hash is returned if nothing is found or there is an error.
   def run_solr_query(query)
     solr_client = establish_solr_connection
@@ -407,7 +406,7 @@ module Indexer
 
   # Takes a solr response and formats it into JSON for the users
   #
-  # @params solr_resp [Hash] A Hash generated by an RSolr query
+  # @param solr_resp [Hash] A Hash generated by an RSolr query
   # @return [Hash] The respnse with unwanted fields removed
   def format_modified_response(solr_resp)
     response = {'changes' => []}
@@ -431,7 +430,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [Array] The object types
-  # @raises Errno::ENOENT If there is no identity Metadata File
+  # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
   #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
@@ -444,7 +443,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the public xml
   # @return [Array] The collections and sets the item is a member of
-  # @raises Errno::ENOENT If there is no public xml file
+  # @raise Errno::ENOENT If there is no public xml file
   #
   # Example:
   #   get_membership_from_publicxml('/purl/document_cache/bb')
@@ -460,7 +459,7 @@ module Indexer
   #
   # @param path [String] The path to the directory that will contain the identity Metadata File
   # @return [String] The cat key, an empty string is returned if there is no catkey
-  # @raises Errno::ENOENT If there is no identity Metadata File
+  # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
   #   get_catkey_from_identityMetadata('/purl/document_cache/bb')
@@ -471,21 +470,21 @@ module Indexer
 
   # Method to return the indexing log to anyone interested (ex rspec tests)
   #
-  # @returns [Logger] The log
+  # @return [Logger] The log
   def log_object
     @@log
   end
 
   # Method to return the application controller to anyone interested (ex rspec tests)
   #
-  # @returns [ApplicatonController] application controller
+  # @return [ApplicatonController] application controller
   def app_controller
     @@app
   end
 
   # Test The Connect To the Solr Core.  This establishes a connection to the solr cloud and then attempts a basic select against the core the app is configured to use
   #
-  # @returns [Boolean] true if the select returned a status of 0, false if any other status is returned
+  # @return [Boolean] true if the select returned a status of 0, false if any other status is returned
   def check_solr_core
     solr_client = establish_solr_connection
     r = solr_client.get 'select', :params => {:q => '*:*', :rows => 1} # Just grab one row for the test
