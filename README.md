@@ -65,10 +65,15 @@ rake dorfetcher:refresh_fixtures RAILS_ENV=test
 
 * If you are not using jetty, confirm you can connect to whatever you are recording from.
 * To replace cassettes, delete any current cassettes by renaming or removing the directory `spec/vcr_cassettes`.  If you are just adding cassettes this is not needed.
+* Edit the VCR config in `spec/spec_helper.rb` to enable recording new episodes.
 * Run the tests via:
-   bundle exec rspec
+```bash
+bundle exec rspec
+```
 * To confirm the cassettes recorded stop jetty via:
-   rake jetty:stop
+```bash
+rake jetty:stop
+```
 * If you are using something other than jetty, disable your connection (or turn your internet adapter off entirely)
 * Run the tests again, all should pass.
 
