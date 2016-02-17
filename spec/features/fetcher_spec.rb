@@ -49,9 +49,9 @@ describe('Fetcher lib') do
   it 'should return the properly formatted hash for various valid types of input date or time' do
     expected = {first: '2010-01-01T10:00:00Z', last: '2011-01-01T10:00:00Z'}
     inputs = [
-      {first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2011 10:00:00am UTC'},
+      {first_modified: '01/01/2010 10:00:00am',   last_modified: '01/01/2011 10:00:00am UTC'},
       {first_modified: '2010-01-01T02:00:00 PST', last_modified: '01/01/2011 2:00:00am PST'},
-      {first_modified: '01/01/2010 10:00:00am', last_modified: '2011-01-01T10:00:00Z'}
+      {first_modified: '01/01/2010 10:00:00am',   last_modified: '2011-01-01T10:00:00Z'}
     ]
     inputs.each do |input|
       expect(@fetcher.get_times(input)).to eq(expected)
@@ -79,19 +79,16 @@ describe('Fetcher lib') do
 
   it 'It should test for picking the proper date out of a range' do
     VCR.use_cassette('last_changed_testing') do
-       latest_change = 'latest_change'
-       visit collection_path(@fixture_data.top_level_revs_collection_druid)
-       response = JSON.parse(page.body)
-       collections = response[collections_key]
-       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
-       expect(d[latest_change]).to eq('2014-06-06T05:06:06Z')
-
-       visit collection_path(@fixture_data.top_level_revs_collection_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
-       response = JSON.parse(page.body)
-       collections = response[collections_key]
-       d = find_druid_in_array(collections, @fixture_data.top_level_revs_collection_druid)
-       expect(d[latest_change]).to eq('2014-05-05T05:04:13Z')
-     end
+      revs_druid = @fixture_data.top_level_revs_collection_druid
+      visit collection_path(revs_druid)
+      response = JSON.parse(page.body)
+      expect(response).to include(collections_key)
+      expect(response[collections_key]).to include a_hash_including('druid' => revs_druid, 'latest_change' => '2014-06-06T05:06:06Z')
+      visit collection_path(revs_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
+      response = JSON.parse(page.body)
+      expect(response).to include(collections_key)
+      expect(response[collections_key]).to include a_hash_including('druid' => revs_druid, 'latest_change' => '2014-05-05T05:04:13Z')
+    end
   end
 
   it 'should raise an error when selected for an invalid date range' do
