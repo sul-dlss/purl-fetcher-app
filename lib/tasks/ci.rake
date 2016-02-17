@@ -33,20 +33,20 @@ end
 namespace :dorfetcher do
   desc 'Copy just shared yml files'
   task :config_yml do
-    config_files = %w{database.yml solr.yml secrets.yml}
-    config_files.each {|config_file| cp("#{Rails.root}/config/#{config_file}.example", "#{Rails.root}/config/#{config_file}") unless File.exist?("#{Rails.root}/config/#{config_file}.yml")}
+    %w(database solr secrets).each do |f|
+      next if File.exist? "#{Rails.root}/config/#{f}.yml"
+      cp("#{Rails.root}/config/#{f}.yml.example", "#{Rails.root}/config/#{f}.yml", :verbose => true)
+    end
   end
 
   desc 'Copy all configuration files'
   task :config do
     Rake::Task['jetty:stop'].invoke
     Rake::Task['dorfetcher:config_yml'].invoke
-    system('rm -fr jetty/solr/dev/data/index')
-    system('rm -fr jetty/solr/test/data/index')
-    solr_files = %w{schema.xml solrconfig.xml}
-    solr_files.each do |solr_file|
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/dev/conf/#{solr_file}")
-      cp("#{Rails.root}/config/#{solr_file}", "#{Rails.root}/jetty/solr/test/conf/#{solr_file}")
+    system('rm -fr jetty/solr/dev/data/index jetty/solr/test/data/index')
+    %w(schema solrconfig).each do |f|
+      cp("#{Rails.root}/config/#{f}.xml", "#{Rails.root}/jetty/solr/dev/conf/#{f}.xml", :verbose => true)
+      cp("#{Rails.root}/config/#{f}.xml", "#{Rails.root}/jetty/solr/test/conf/#{f}.xml", :verbose => true)
     end
   end
 
@@ -64,10 +64,7 @@ namespace :dorfetcher do
 
   desc 'Index all fixtures into solr'
   task :index_fixtures do
-    add_docs = []
-    Dir.glob("#{Rails.root}/spec/fixtures/*.xml") do |file|
-      add_docs << File.read(file)
-    end
+    add_docs = Dir.glob("#{Rails.root}/spec/fixtures/*.xml").map { |file| File.read(file) }
     puts "Adding #{add_docs.count} documents to #{DorFetcherService::Application.config.solr_url}"
     RestClient.post "#{DorFetcherService::Application.config.solr_url}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => 'text/xml'
   end
