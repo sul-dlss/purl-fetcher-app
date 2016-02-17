@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>=4.1.6'
 gem 'rsolr', '>=1.0.10'
 
@@ -37,21 +36,16 @@ gem 'about_page'
 
 group :test do
   gem 'sqlite3'
-  gem 'awesome_print'
   gem 'yard'
   gem 'vcr'
   gem 'webmock'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
-  gem 'coveralls'
+  gem 'coveralls', require: false
 end
 
 group :deployment do
-  gem 'capistrano', '3.2.1'
-  gem 'capistrano-rails'
-  gem 'capistrano-bundler'
-  gem 'lyberteam-capistrano-devel'
-  gem 'capistrano-rvm'
+  gem 'dlss-capistrano'
 end
 
 group :staging, :production, :development do
@@ -61,21 +55,8 @@ end
 
 group :development, :test do
   gem 'jettywrapper'
-  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'launchy'
   gem 'thin'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
