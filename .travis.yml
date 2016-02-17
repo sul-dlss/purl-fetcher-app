@@ -1,11 +1,12 @@
+sudo: false
 language: ruby
 script: bundle exec rake travis_spec
 rvm:
   - 2.1.2
+  - 2.2.4
 notifications:
   email:
-    - carrickr@stanford.edu
     - pmangiafico@stanford.edu
     - laneymcg@stanford.edu
     - bess@stanford.edu
-    
+  on_failure: change # default: always
