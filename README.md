@@ -12,12 +12,12 @@ rvm install 2.1.2 # or use your favorite ruby manager
 
 git clone https://github.com/sul-dlss/purl-fetcher-app.git
 
-cd purl-fetcher-service
+cd purl-fetcher-app
 
 rvm use 2.1.2 # or switch as needed
 
 bundle install
-rake purlfetcher:config
+rake dorfetcher:config
 
 # Edit config/*.yml files, adding passwords, etc.
 
@@ -26,8 +26,8 @@ rake jetty:start
 rake db:migrate
 rake db:migrate RAILS_ENV=test
 
-rake purlfetcher:refresh_fixtures
-rake purlfetcher:refresh_fixtures RAILS_ENV=test
+rake dorfetcher:refresh_fixtures
+rake dorfetcher:refresh_fixtures RAILS_ENV=test
 ```
 
 ## Running the application
@@ -36,7 +36,7 @@ rake purlfetcher:refresh_fixtures RAILS_ENV=test
 rake jetty:start
 rails server
 ```
-  
+
 ## Running tests
 
 ### To run the tests against the current VCR Cassettes:
@@ -51,7 +51,7 @@ If you have a dependency related error, try the tests via:
 ```bash
 bundle exec rspec
 ```
-     
+
 ### To run the tests and generate new VCR Cassettes:
 
 This can be used to refresh outdated cassettes or record cassettes for new tests.
@@ -60,7 +60,7 @@ This can be used to refresh outdated cassettes or record cassettes for new tests
 
 ```bash
 rake jetty:start
-rake purlfetcher:refresh_fixtures RAILS_ENV=test
+rake dorfetcher:refresh_fixtures RAILS_ENV=test
 ```
 
 * If you are not using jetty, confirm you can connect to whatever you are recording from.
@@ -70,8 +70,8 @@ rake purlfetcher:refresh_fixtures RAILS_ENV=test
 * To confirm the cassettes recorded stop jetty via:
    rake jetty:stop
 * If you are using something other than jetty, disable your connection (or turn your internet adapter off entirely)
-* Run the tests again, all should pass.  
- 
+* Run the tests again, all should pass.
+
 ## Generate documentation
 
 To generate documentation into the "doc" folder:
@@ -83,5 +83,5 @@ yard
 To keep a local server running with up to date code documentation that you can view in your browser:
 
 ```bash
-yard server --reload    
+yard server --reload
 ```
