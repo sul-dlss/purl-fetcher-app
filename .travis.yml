@@ -9,4 +9,3 @@ notifications:
     - pmangiafico@stanford.edu
     - laneymcg@stanford.edu
     - bess@stanford.edu
-  on_failure: change # default: always

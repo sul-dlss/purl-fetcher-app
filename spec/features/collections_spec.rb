@@ -20,9 +20,6 @@ describe('Collections Controller') do
       # Ensure No Items Were Returned
       expect(response[items_key]).to be nil
 
-      # Ensure No APOS Were Returned
-      expect(response[apos_key]).to be nil
-
       # Verify the Counts
       verify_counts_section(response, {collections_key => @fixture_data.accessioned_collection_druids.size})
     end
@@ -44,9 +41,6 @@ describe('Collections Controller') do
       # Ensure No Items Were Returned
       expect(response[items_key]).to be nil
 
-      # Ensure No APOS Were Returned
-      expect(response[apos_key]).to be nil
-
       # Verify the Counts
       verify_counts_section(response, {collections_key => @fixture_data.stafford_collections_druids.size})
     end
@@ -67,9 +61,6 @@ describe('Collections Controller') do
 
       # Ensure No Items Were Returned
       expect(response[items_key]).to be nil
-
-      # Ensure No APOS Were Returned
-      expect(response[apos_key]).to be nil
 
       # Verify the Counts
       verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size})
@@ -124,9 +115,6 @@ describe('Collections Controller') do
 
       # Ensure No Other Items Are Present
       result_should_not_contain_druids(@fixture_data.accessioned_druids - exclude_druids, response[items_key])
-
-      # Ensure No APOS Are Present
-      expect(response[apos_key]).to be nil
 
       # Verify the Counts
       verify_counts_section(response, {collections_key => @fixture_data.revs_collections_druids.size, items_key => @fixture_data.revs_items_druids.size})
@@ -210,9 +198,6 @@ describe('Collections Controller') do
 
       # Ensure No Items Were Returned
       expect(response[items_key]).to be nil
-
-      # Ensure No APOS Were Returned
-      expect(response[apos_key]).to be nil
     end
   end
 end

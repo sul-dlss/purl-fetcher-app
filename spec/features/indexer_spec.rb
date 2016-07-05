@@ -34,7 +34,7 @@ describe('Indexer lib') do
   describe('incremental commits to solr') do
     before :all do
       @branch = '/test/branch'
-      @commit_every_n = DorFetcherService::Application.config.solr_indexing['items_commit_every'].to_i
+      @commit_every_n = PurlFetcher::Application.config.solr_indexing['items_commit_every'].to_i
     end
 
     it 'commits once to solr when the total number of solr documents is below the incremental commit threshold' do
@@ -187,11 +187,11 @@ describe('Indexer lib') do
   end
 
   it 'determines from the RSolr response if the solr cloud is overloaded and sleeps the thread' do
-    resp = {'responseHeader' => {'status' => 0, 'QTime' => DorFetcherService::Application.config.solr_indexing['sleep_when_response_time_exceeds'].to_i}}
+    resp = {'responseHeader' => {'status' => 0, 'QTime' => PurlFetcher::Application.config.solr_indexing['sleep_when_response_time_exceeds'].to_i}}
     begin_time = Time.now
     expect(@indexer.parse_solr_response(resp)).to be_truthy
     end_time = Time.now
-    expect(end_time - begin_time).to be >= DorFetcherService::Application.config.solr_indexing['sleep_seconds_if_overloaded'].to_i
+    expect(end_time - begin_time).to be >= PurlFetcher::Application.config.solr_indexing['sleep_seconds_if_overloaded'].to_i
   end
 
   it 'determines if the addition of solr documents was successful' do

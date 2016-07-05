@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 
 VERSION = File.read('VERSION')
 
-module DorFetcherService
+module PurlFetcher
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -27,7 +27,7 @@ module DorFetcherService
     config.autoload_paths << Rails.root.join('lib')
 
     config.version = VERSION # read from VERSION file at base of website
-    config.app_name = 'DORFetcherService'
+    config.app_name = 'PurlFetcher'
 
     load_yaml_config = lambda { |yaml_file|
       full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
@@ -64,7 +64,7 @@ module DorFetcherService
   end
 end
 
-Conf = DorFetcherService::Application.config
+Conf = PurlFetcher::Application.config
 
 # Convienence constant for SOLR_URL and SOLR
 begin
@@ -78,7 +78,7 @@ begin
   Solr_terms = Conf.solr_terms
 
   # Convience constants for Solr Fields
-  # solr_field_yaml = DorFetcherService::Application.config.solr_terms
+  # solr_field_yaml = PurlFetcher::Application.config.solr_terms
   ID_Field           = Solr_terms['id_field']
   Type_Field         = Solr_terms['fedora_type_field']
   CatKey_Field       = Solr_terms['catkey_field']
@@ -87,10 +87,10 @@ begin
   Last_Changed_Field = Solr_terms['last_changed']
   Fedora_Prefix      = Solr_terms['fedora_prefix']
   Druid_Prefix       = Solr_terms['druid_prefix']
-  Fedora_Types     = {:collection => Solr_terms['collection_type'], :apo => Solr_terms['apo_type'], :item => Solr_terms['item_type'], :set => Solr_terms['set_type']}
-  Controller_Types = {:collection => Solr_terms['collection_field'], :apo => Solr_terms['apo_field'], :tag => Solr_terms['tag_field']}
+  Fedora_Types     = {:collection => Solr_terms['collection_type'], :item => Solr_terms['item_type'], :set => Solr_terms['set_type']}
+  Controller_Types = {:collection => Solr_terms['collection_field'], :tag => Solr_terms['tag_field']}
 rescue
   puts 'WARNING: Could not configure solr terms'
 end
 
-# solr_fields = {:apo_field => apo_field, :collection_field => collection_field}
+# solr_fields = {:collection_field => collection_field}

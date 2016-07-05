@@ -1,8 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'dor-fetcher-service'
-set :repo_url, 'https://github.com/sul-dlss/dor-fetcher-service.git'
+set :application, 'purl-fetcher'
+set :repo_url, 'https://github.com/sul-dlss/purl-fetcher.git'
 
 # Prompt for the correct username
 set :user, ask('User', 'enter in the app username')

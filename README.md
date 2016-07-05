@@ -1,23 +1,23 @@
-[![Build Status](https://travis-ci.org/sul-dlss/purl-fetcher-app.png?branch=master)](https://travis-ci.org/sul-dlss/purl-fetcher-app) [![Coverage Status](https://coveralls.io/repos/sul-dlss/purl-fetcher-app/badge.svg?branch=develop&service=github)](https://coveralls.io/github/sul-dlss/purl-fetcher-app?branch=master)
+[![Build Status](https://travis-ci.org/sul-dlss/purl-fetcher.png?branch=master)](https://travis-ci.org/sul-dlss/purl-fetcher) [![Coverage Status](https://coveralls.io/repos/sul-dlss/purl-fetcher/badge.svg?branch=develop&service=github)](https://coveralls.io/github/sul-dlss/purl-fetcher?branch=master)
 
-# purl-fetcher-app
+# purl-fetcher
 
 A web service app that queries PURL to return info needed for indexing or other purposes.
-This was forked from `dor-fetcher-service`.
+This was forked from `purl-fetcher`.
 
 ## Setting up your environment
 
 ```bash
 rvm install 2.1.2 # or use your favorite ruby manager
 
-git clone https://github.com/sul-dlss/purl-fetcher-app.git
+git clone https://github.com/sul-dlss/purl-fetcher.git
 
-cd purl-fetcher-app
+cd purl-fetcher
 
 rvm use 2.1.2 # or switch as needed
 
 bundle install
-rake dorfetcher:config
+rake purlfetcher:config
 
 # Edit config/*.yml files, adding passwords, etc.
 
@@ -26,8 +26,8 @@ rake jetty:start
 rake db:migrate
 rake db:migrate RAILS_ENV=test
 
-rake dorfetcher:refresh_fixtures
-rake dorfetcher:refresh_fixtures RAILS_ENV=test
+rake purlfetcher:refresh_fixtures
+rake purlfetcher:refresh_fixtures RAILS_ENV=test
 ```
 
 ## Running the application
@@ -60,7 +60,7 @@ This can be used to refresh outdated cassettes or record cassettes for new tests
 
 ```bash
 rake jetty:start
-rake dorfetcher:refresh_fixtures RAILS_ENV=test
+rake purlfetcher:refresh_fixtures RAILS_ENV=test
 ```
 
 * If you are not using jetty, confirm you can connect to whatever you are recording from.

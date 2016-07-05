@@ -49,7 +49,7 @@ end
 
 def all_counts_keys
   # do not include counts_key, it is the parent
-  [collections_key, items_key, apos_key, total_count_key]
+  [collections_key, items_key, total_count_key]
 end
 
 def collections_key
@@ -58,10 +58,6 @@ end
 
 def items_key
   'items'
-end
-
-def apos_key
-  'adminpolicies'
 end
 
 def counts_key
@@ -103,14 +99,6 @@ end
 
 def first_mod_test_date_collections
   '2014-1-1T00:00:00Z'
-end
-
-def mod_test_date_apos
-  '2013-03-13T12:13:14Z'
-end
-
-def first_mod_test_date_apos
-  '2014-03-13T12:13:14Z'
 end
 
 def purl_fixture_path
