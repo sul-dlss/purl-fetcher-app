@@ -1,12 +1,12 @@
 <doc>
     <field name ="id">druid:bb113tm9924</field>
-    <field name ="public_dc_title_t">Permatex 300 NASCAR Race: 1968</field>
-    <field name ="identityMetadata_objectType_t">item</field>
-    <field name ="published_dt">2014-05-05T05:04:13Z</field>
-    <field name ="published_dt">2014-06-06T05:04:13Z</field>
-    <field name ="published_dt">2014-06-06T05:06:06Z</field>
-    <field name ="is_governed_by_s">info:fedora/druid:qv648vd4392</field>
-    <field name ="is_member_of_collection_s">info:fedora/druid:nt028fd5773</field>
-    <field name ="is_member_of_collection_s">info:fedora/druid:yt502zj0924</field>
-    <field name ="catkey_id_t">3051735</field>
+    <field name ="public_dc_title_tesim">Permatex 300 NASCAR Race: 1968</field>
+    <field name ="objectType_ssim">item</field>
+    <field name ="published_dttsim">2014-05-05T05:04:13Z</field>
+    <field name ="published_dttsim">2014-06-06T05:04:13Z</field>
+    <field name ="published_dttsim">2014-06-06T05:06:06Z</field>
+    <field name ="is_governed_by_ssim">info:fedora/druid:qv648vd4392</field>
+    <field name ="is_member_of_ssim">info:fedora/druid:nt028fd5773</field>
+    <field name ="is_member_of_ssim">info:fedora/druid:yt502zj0924</field>
+    <field name ="catkey_id_ssim">3051735</field>
 </doc>

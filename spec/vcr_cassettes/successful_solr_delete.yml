@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj6667</field><field
-        name="deleted_tsi">true</field><field name="indexed_dtsi">2015-04-30T19:58:52Z</field></doc></add>
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:56Z</field></doc></add>
     headers:
       Content-Type:
       - text/xml
@@ -22,9 +22,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>348}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>2}}
     http_version: 
-  recorded_at: Thu, 30 Apr 2015 19:58:52 GMT
+  recorded_at: Wed, 06 Jul 2016 22:28:56 GMT
 - request:
     method: post
     uri: http://localhost:8983/solr/test/update?wt=ruby
@@ -46,7 +46,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>150}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>18}}
     http_version: 
-  recorded_at: Thu, 30 Apr 2015 19:58:52 GMT
+  recorded_at: Wed, 06 Jul 2016 22:28:56 GMT
 recorded_with: VCR 2.9.3

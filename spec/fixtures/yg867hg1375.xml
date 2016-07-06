@@ -1,7 +1,7 @@
 <doc>
     <field name ="id">druid:yg867hg1375</field>
-    <field name ="title_t">Francis E. Stafford photographs, 1909-1933</field>
-    <field name ="identityMetadata_objectType_t">collection</field>
-    <field name ="published_dt">2013-11-11T23:34:29Z</field>
-    <field name ="is_governed_by_s">info:fedora/druid:vb546ms7107</field>
+    <field name ="title_tesim">Francis E. Stafford photographs, 1909-1933</field>
+    <field name ="objectType_ssim">collection</field>
+    <field name ="published_dttsim">2013-11-11T23:34:29Z</field>
+    <field name ="is_governed_by_ssim">info:fedora/druid:vb546ms7107</field>
 </doc>

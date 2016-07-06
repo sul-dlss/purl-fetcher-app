@@ -1,8 +1,6 @@
 <doc>
     <field name ="id">druid:qv648vd4392</field>
-    <field name ="title_t">The Revs Institute for Automotive Research</field>
-    <field name ="identityMetadata_objectType_t">adminpolicy</field>
-    <field name ="published_dt">2013-11-11T23:34:29Z</field>
+    <field name ="title_tesim">The Revs Institute for Automotive Research</field>
+    <field name ="objectType_ssim">adminpolicy</field>
+    <field name ="published_dttsim">2013-11-11T23:34:29Z</field>
 </doc>
-      
-    

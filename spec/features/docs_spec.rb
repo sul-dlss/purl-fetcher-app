@@ -34,13 +34,13 @@ describe('Docs Controller') do
       expect(Time.parse(@response[:changes.to_s][0][:latest_change.to_s]).class).to eq(Time) # With throw exception if it cannot parse
     end
 
-    it 'contains hashes in the chanrges array that have a key of true_targets and point to an array of Strings' do
+    it 'contains hashes in the changes array that have a key of true_targets and point to an array of Strings' do
       expect(@response[:changes.to_s][0][:true_targets.to_s].class).to eq(Array)
       expect(@response[:changes.to_s][0][:true_targets.to_s].size > 0).to be_truthy
       expect(@response[:changes.to_s][0][:true_targets.to_s][0].class).to eq(String)
     end
 
-    it 'contains hashes in the chanrges array that have a key of false_targets and point to an array of Strings' do
+    it 'contains hashes in the changes array that have a key of false_targets and point to an array of Strings' do
       expect(@response[:changes.to_s][0][:false_targets.to_s].class).to eq(Array)
       expect(@response[:changes.to_s][0][:false_targets.to_s].size > 0).to be_truthy
       expect(@response[:changes.to_s][0][:false_targets.to_s][0].class).to eq(String)

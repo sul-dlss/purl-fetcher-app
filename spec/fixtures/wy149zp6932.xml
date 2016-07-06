@@ -1,11 +1,11 @@
 <doc>
     <field name ="id">druid:wy149zp6932</field>
-    <field name ="title_t">The George Phillips Collection of the Revs Institute</field>
-    <field name ="identityMetadata_objectType_t">collection</field>
-    <field name ="published_dt">2014-05-05T05:04:13Z</field>
-    <field name ="published_dt">2014-06-06T05:04:13Z</field>
-    <field name ="published_dt">2014-06-06T05:06:06Z</field>
-    <field name ="is_governed_by_s">info:fedora/druid:qv648vd4392</field>
-    <field name ="is_member_of_collection_s">info:fedora/druid:nt028fd5773</field>
-    <field name ="catkey_id_t">3051740</field>
+    <field name ="title_tesim">The George Phillips Collection of the Revs Institute</field>
+    <field name ="objectType_ssim">collection</field>
+    <field name ="published_dttsim">2014-05-05T05:04:13Z</field>
+    <field name ="published_dttsim">2014-06-06T05:04:13Z</field>
+    <field name ="published_dttsim">2014-06-06T05:06:06Z</field>
+    <field name ="is_governed_by_ssim">info:fedora/druid:qv648vd4392</field>
+    <field name ="is_member_of_ssim">info:fedora/druid:nt028fd5773</field>
+    <field name ="catkey_id_ssim">3051740</field>
 </doc>

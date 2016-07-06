@@ -1,9 +1,9 @@
 <doc>
    <field name ="id">druid:th998nk0722</field>
-   <field name ="title_t">Album C: Photographs of the Chinese Revolution of 1911 and the Shanghai Commercial Press</field>
-   <field name ="identityMetadata_objectType_t">item</field>
-   <field name ="published_dt">2013-11-11T23:34:29Z</field>
-   <field name ="is_governed_by_s">info:fedora/druid:vb546ms7107</field>
-   <field name ="is_member_of_collection_s">info:fedora/druid:yg867hg1375</field>
-   <field name ="catkey_id_t">3051738</field>
+   <field name ="title_tesim">Album C: Photographs of the Chinese Revolution of 1911 and the Shanghai Commercial Press</field>
+   <field name ="objectType_ssim">item</field>
+   <field name ="published_dttsim">2013-11-11T23:34:29Z</field>
+   <field name ="is_governed_by_ssim">info:fedora/druid:vb546ms7107</field>
+   <field name ="is_member_of_ssim">info:fedora/druid:yg867hg1375</field>
+   <field name ="catkey_id_ssim">3051738</field>
 </doc>
