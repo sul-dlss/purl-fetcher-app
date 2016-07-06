@@ -27,13 +27,13 @@ module Fetcher
   # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type (potentially limited by rows or date if specified by the user)
   #
   # @param params [Hash] querystring parameters from user, which could be an empty hash
-  # @param ftype [String] fedora object type, could be :apo or :collection
+  # @param ftype [String] fedora object type, could be :collection
   # @return [Hash] solr response
   #
   # Example:
-  #   find_all_fedora_type(params,:apo)
+  #   find_all_fedora_type(params,:collection)
   def find_all_fedora_type(params, ftype)
-    # ftype should be :collection or :apo (or other symbol if we added more since this was updated)
+    # ftype should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
     solrparams = {
       :q  => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" #{date_range_q}",
@@ -48,38 +48,18 @@ module Fetcher
   # Given the user's querystring parameters (including the ID paramater, which represents the druid), and a fedora object type, return a solr response containing all of the objects controlled by that druid of that type (potentially limited by rows or date if specified by the user)
   #
   # @param params [Hash] querystring parameters from user, which must include :id of the druid
-  # @param controlled_by [String] fedora object type, could be :apo or :collection
+  # @param controlled_by [String] fedora object type, could be :collection
   # @return [Hash] solr response
   #
   # Example:
-  #   find_all_fedora_type(params,:apo)
+  #   find_all_fedora_type(params,:collection)
   def find_all_under(params, controlled_by)
-    # controlled_by should be :collection or :apo (or other symbol if we added more since this was updated)
+    # controlled_by should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
     solrparams = {
       :q  => "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") #{date_range_q}",
       :wt => :json,
       :fl => @@field_return_list
-    }
-    get_rows(solrparams, params)
-    response = run_solr_query(solrparams)
-    # TODO: If APO in response and said APO's druid != user provided druid, recursion!
-    determine_proper_response(params, response)
-  end
-
-  # Given the user's querystring parameters (including the ID paramater, which represents the tag), return a solr response containing all of the objects associated with the supplied tag(potentially limited by rows or date if specified by the user)
-  #
-  # @param params [Hash] querystring parameters from user, which must include :id of the tag
-  # @return [Hash] solr response
-  #
-  # Example:
-  #   find_by_tag(params)
-  def find_by_tag(params)
-    date_range_q = get_date_solr_query(params)
-    solrparams = {
-      :q  => "(#{Controller_Types[:tag]}:\"#{params[:tag]}\") #{date_range_q}",
-      :wt => :json,
-      :fl =>  @@field_return_list
     }
     get_rows(solrparams, params)
     response = run_solr_query(solrparams)

@@ -17,7 +17,6 @@ Lint/AssignmentInCondition:
 Lint/BlockAlignment:
   Exclude:
     - 'config/schedule.rb'
-    - 'spec/features/apos_spec.rb'
     - 'spec/features/collections_spec.rb'
     - 'spec/features/fetcher_spec.rb'
     - 'spec/features/indexer_spec.rb'
@@ -97,7 +96,6 @@ Style/BracesAroundHashParameters:
   Exclude:
     - 'config/initializers/about_page.rb'
     - 'lib/indexer.rb'
-    - 'spec/features/apos_spec.rb'
     - 'spec/features/collections_spec.rb'
     - 'spec/features/fetcher_spec.rb'
     - 'spec/features/indexer_spec.rb'
@@ -127,17 +125,13 @@ Style/Documentation:
     - 'spec/**/*'
     - 'test/**/*'
     - 'app/controllers/about_controller.rb'
-    - 'app/controllers/apos_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/collections_controller.rb'
     - 'app/controllers/docs_controller.rb'
     - 'app/controllers/indexer_controller.rb'
-    - 'app/controllers/tags_controller.rb'
-    - 'app/helpers/apo_helper.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/helpers/changes_helper.rb'
     - 'app/helpers/collection_helper.rb'
-    - 'app/helpers/tag_helper.rb'
     - 'config/application.rb'
     - 'lib/indexer.rb'
 

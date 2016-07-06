@@ -11,7 +11,7 @@ module Indexer
   include ApplicationHelper
   include Squash::Ruby::ControllerMethods
 
-  @@indexer_config = DorFetcherService::Application.config.solr_indexing
+  @@indexer_config = PurlFetcher::Application.config.solr_indexing
   @@log = Logger.new('log/indexing.log')
   @@modified_at_or_later = @@indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago # default setting
   @@app = ApplicationController.new

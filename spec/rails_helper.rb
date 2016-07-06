@@ -64,11 +64,6 @@ class IndexerTester
 end
 
 class FixtureData
-  # APOS
-  @@revs_apo = 'druid:qv648vd4392'
-  @@stafford_apo = 'druid:vb546ms7107'
-  @@apo_druids = [ @@revs_apo, @@stafford_apo]
-
   # Items
   @@not_accessioned_druid = ['druid:aa000bb0000']
   @@stafford_items_druids = ['druid:jf275fd6276', 'druid:nz353cp1092', 'druid:tc552kq0798', 'druid:th998nk0722', 'druid:ww689vs6534']
@@ -85,7 +80,7 @@ class FixtureData
   @@all_collection_druids = @@accessioned_collection_druids + @@not_accessioned_druid
 
   def accessioned_druids
-    @@apo_druids + @@accessioned_collection_druids + @@items_druids
+    @@accessioned_collection_druids + @@items_druids
   end
 
   def all_druids
@@ -118,18 +113,6 @@ class FixtureData
 
   def top_level_revs_collection_druid
     @@top_level_revs_collection_druid
-  end
-
-  def all_apo_druids
-    @@apo_druids
-  end
-
-  def revs_apo_druid
-    @@revs_apo
-  end
-
-  def stafford_apo_druid
-    @@stafford_apo
   end
 
   def revs_items_druids
