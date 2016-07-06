@@ -1,10 +1,8 @@
 <doc>
     <field name ="id">druid:vb546ms7107</field>
-    <field name ="title_t">Stafford Photos</field>
-    <field name ="identityMetadata_objectType_t">adminpolicy</field>
-    <field name ="published_dt">2014-09-09T15:40:29Z</field>
-    <field name ="published_dt">2014-08-08T15:20:28Z</field>
-    <field name ="published_dt">2013-03-13T12:13:13Z</field>
+    <field name ="title_tesim">Stafford Photos</field>
+    <field name ="objectType_ssim">adminpolicy</field>
+    <field name ="published_dttsim">2014-09-09T15:40:29Z</field>
+    <field name ="published_dttsim">2014-08-08T15:20:28Z</field>
+    <field name ="published_dttsim">2013-03-13T12:13:13Z</field>
 </doc>
-      
-    

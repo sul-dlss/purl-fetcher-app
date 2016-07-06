@@ -1,16 +1,20 @@
+# the *_field values must match indexed solr field names
 defaults: &defaults
-  collection_field: "is_member_of_collection_s"
-  id_field: "id"
+  apo_type:        "adminpolicy"
   collection_type: "collection"
-  set_type: "set"
-  fedora_type_field: "identityMetadata_objectType_t"
-  druid_prefix: "druid:"
-  last_changed: "published_dt"
-  item_type: "item"
-  fedora_prefix: "info:fedora/"
-  title_field: "title_t"
-  title_field_alt: "public_dc_title_t"
-  catkey_field: "catkey_id_t"
+  item_type:       "item"
+  set_type:        "set"
+  druid_prefix:    "druid:"
+  fedora_prefix:   "info:fedora/"
+  id_field:          "id"
+  apo_field:         "is_governed_by_ssim"
+  collection_field:  "is_member_of_ssim"
+  tag_field:         "tag_tesim"
+  fedora_type_field: "objectType_ssim"
+  last_changed:      "published_dttsim"
+  title_field:       "title_tesim"
+  title_field_alt:   "public_dc_title_tesim"
+  catkey_field:      "catkey_id_ssim"
 
 development:
   <<: *defaults
