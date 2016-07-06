@@ -1,0 +1,29 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8983/solr/test/select?fl=id%20AND%20published_dttsim%20AND%20objectType_ssim%20AND%20title_tesim%20AND%20public_dc_title_tesim%20AND%20catkey_id_ssim&q=objectType_ssim:%22collection%22%20AND%20published_dttsim:%5B%222014-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=0&wt=json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Last-Modified:
+      - Wed, 06 Jul 2016 22:25:22 GMT
+      Etag:
+      - '"Y2MwMDAwMDAwMDAwMDAwMFNvbHI="'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"responseHeader":{"status":0,"QTime":1},"response":{"numFound":3,"start":0,"docs":[]}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:49 GMT
+recorded_with: VCR 2.9.3

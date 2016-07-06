@@ -26,7 +26,7 @@ end
 # To record new cassettes:
 #   remove old ones; update index or configure new source; uncomment default_cassette_options; and run tests
 VCR.configure do |c|
-  # c.default_cassette_options = { :record => :new_episodes }
+  #c.default_cassette_options = { :record => :new_episodes }
   c.cassette_library_dir = 'spec/vcr_cassettes'
   c.hook_into :webmock
 end

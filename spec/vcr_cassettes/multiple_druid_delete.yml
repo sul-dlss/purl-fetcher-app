@@ -1,0 +1,209 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj1817</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>17}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj1817</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field
+        name="id">druid:bb050dj1885</field><field name="deleted_tsi">true</field><field
+        name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>19}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj1817</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field
+        name="id">druid:bb050dj1885</field><field name="deleted_tsi">true</field><field
+        name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field name="id">druid:bb050dj1927</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>19}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj1817</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field
+        name="id">druid:bb050dj1885</field><field name="deleted_tsi">true</field><field
+        name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field name="id">druid:bb050dj1927</field><field
+        name="deleted_tsi">true</field><field name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc><doc><field
+        name="id">druid:bb050dj1971</field><field name="deleted_tsi">true</field><field
+        name="indexed_dtsi">2016-07-06T22:28:57Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>20}}
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 22:28:57 GMT
+recorded_with: VCR 2.9.3

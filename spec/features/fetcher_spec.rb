@@ -18,12 +18,12 @@ describe('Fetcher lib') do
   end
 
   it 'should return the correct date range query part' do
-    expect(@fetcher.get_date_solr_query(nil)).to eq("AND published_dt:[\"#{@earliest}\" TO \"#{@latest}\"]")
-    expect(@fetcher.get_date_solr_query({})).to eq("AND published_dt:[\"#{@earliest}\" TO \"#{@latest}\"]")
-    expect(@fetcher.get_date_solr_query({first_modified: nil, last_modified: '01/01/2014'})).to eq("AND published_dt:[\"#{@earliest}\" TO \"2014-01-01T00:00:00Z\"]")
-    expect(@fetcher.get_date_solr_query({first_modified: '01/01/2014', last_modified: nil})).to eq("AND published_dt:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query(nil)).to eq("AND published_dttsim:[\"#{@earliest}\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({})).to eq("AND published_dttsim:[\"#{@earliest}\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({first_modified: nil, last_modified: '01/01/2014'})).to eq("AND published_dttsim:[\"#{@earliest}\" TO \"2014-01-01T00:00:00Z\"]")
+    expect(@fetcher.get_date_solr_query({first_modified: '01/01/2014', last_modified: nil})).to eq("AND published_dttsim:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
     expect(@fetcher.get_date_solr_query({status: 'registered', first_modified: '01/01/2014', last_modified: nil})).to eq('')
-    expect(@fetcher.get_date_solr_query({status: 'wazzup', first_modified: '01/01/2014', last_modified: nil})).to eq("AND published_dt:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
+    expect(@fetcher.get_date_solr_query({status: 'wazzup', first_modified: '01/01/2014', last_modified: nil})).to eq("AND published_dttsim:[\"2014-01-01T00:00:00Z\" TO \"#{@latest}\"]")
     expect(@fetcher.get_date_solr_query({status: 'registered'})).to eq('')
   end
 

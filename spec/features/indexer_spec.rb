@@ -107,11 +107,11 @@ describe('Indexer lib') do
   end
 
   it 'returns the doc hash when all needed files are present' do
-    expect(@indexer.solrize_object(@sample_doc_path)).to match({:identityMetadata_objectType_t => ['item'], :false_releases_ssim => ['Atago'], :id => 'druid:bb050dj7711', :title_tsi => "This is Pete's New Test title for this object.", :true_releases_ssim => ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'], :is_member_of_collection_s => ['druid:nt028fd5773', 'druid:wn860zc7322'] })
+    expect(@indexer.solrize_object(@sample_doc_path)).to match({:objectType_ssim => ['item'], :false_releases_ssim => ['Atago'], :id => 'druid:bb050dj7711', :title_tsi => "This is Pete's New Test title for this object.", :true_releases_ssim => ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'], :is_member_of_ssim => ['druid:nt028fd5773', 'druid:wn860zc7322'] })
   end
 
   it 'returns the doc hash with no membership but a catkey for a top level collection that has a catkey' do
-    expect(@indexer.solrize_object(@ct961sj2730_path)).to match({:title_tsi => 'Caroline Batchelor Map Collection.', :id => 'druid:ct961sj2730', :true_releases_ssim => [], :false_releases_ssim => [], :identityMetadata_objectType_t => ['collection', 'set'], :catkey_tsi => '10357851'})
+    expect(@indexer.solrize_object(@ct961sj2730_path)).to match({:title_tsi => 'Caroline Batchelor Map Collection.', :id => 'druid:ct961sj2730', :true_releases_ssim => [], :false_releases_ssim => [], :objectType_ssim => ['collection', 'set'], :catkey_tsi => '10357851'})
   end
 
   it 'returns the empty doc hash when it cannot open a file' do
@@ -195,6 +195,9 @@ describe('Indexer lib') do
   end
 
   it 'determines if the addition of solr documents was successful' do
+    # FYI this will fail if you have your local solr running, because obviously you can connect to it
+    # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
+    # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
     allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('doc_submit_fails') do
       docs = [@indexer.solrize_object(@sample_doc_path)]
