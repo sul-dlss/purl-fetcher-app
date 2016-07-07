@@ -10,7 +10,7 @@ http_interactions:
         name="true_releases_ssim">CARRICKR-TEST</field><field name="true_releases_ssim">Robot_Testing_Feb_5_2015</field><field
         name="false_releases_ssim">Atago</field><field name="objectType_ssim">item</field><field
         name="is_member_of_ssim">druid:nt028fd5773</field><field name="is_member_of_ssim">druid:wn860zc7322</field><field
-        name="indexed_dtsi">2016-07-06T22:28:49Z</field></doc></add>
+        name="indexed_dtsi">2016-07-07T17:58:20Z</field></doc></add>
     headers:
       Content-Type:
       - text/xml
@@ -26,9 +26,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>2}}
     http_version: 
-  recorded_at: Wed, 06 Jul 2016 22:28:49 GMT
+  recorded_at: Thu, 07 Jul 2016 17:58:20 GMT
 - request:
     method: post
     uri: http://localhost:8983/solr/test/update?wt=ruby
@@ -50,7 +50,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>20}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>32}}
     http_version: 
-  recorded_at: Wed, 06 Jul 2016 22:28:49 GMT
+  recorded_at: Thu, 07 Jul 2016 17:58:20 GMT
 recorded_with: VCR 2.9.3

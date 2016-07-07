@@ -1,15 +1,12 @@
 # the *_field values must match indexed solr field names
 defaults: &defaults
-  apo_type:        "adminpolicy"
   collection_type: "collection"
   item_type:       "item"
   set_type:        "set"
   druid_prefix:    "druid:"
   fedora_prefix:   "info:fedora/"
   id_field:          "id"
-  apo_field:         "is_governed_by_ssim"
   collection_field:  "is_member_of_ssim"
-  tag_field:         "tag_tesim"
   fedora_type_field: "objectType_ssim"
   last_changed:      "published_dttsim"
   title_field:       "title_tesim"

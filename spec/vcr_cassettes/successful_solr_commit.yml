@@ -21,7 +21,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>3}}
     http_version: 
-  recorded_at: Wed, 06 Jul 2016 22:28:49 GMT
+  recorded_at: Thu, 07 Jul 2016 17:58:20 GMT
 recorded_with: VCR 2.9.3

@@ -64,18 +64,15 @@ module PurlFetcher
   end
 end
 
-Conf = PurlFetcher::Application.config
-
-# Convienence constant for SOLR_URL and SOLR
+# Convenience constant for SOLR
 begin
-  Solr_URL = Conf.solr_url
-  Solr = RSolr.connect :url => Solr_URL
+  Solr = RSolr.connect :url => PurlFetcher::Application.config.solr_url
 rescue
   puts 'WARNING: Could not configure solr url'
 end
 
 begin
-  Solr_terms = Conf.solr_terms
+  Solr_terms = PurlFetcher::Application.config.solr_terms
 
   # Convience constants for Solr Fields
   # solr_field_yaml = PurlFetcher::Application.config.solr_terms

@@ -406,6 +406,7 @@ describe('Indexer lib') do
     end
 
     it 'logs an error when rsolr cannot delete something' do
+      allow_message_expectations_on_nil
       allow(@indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(@indexer).to receive(:establish_solr_connection).once.and_return(@testing_solr_connection)
       expect(@indexer.log_object).to receive(:error).once

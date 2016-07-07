@@ -3,7 +3,7 @@
 # purl-fetcher
 
 A web service app that queries PURL to return info needed for indexing or other purposes.
-This was forked from `purl-fetcher`.
+This was forked from `dor-fetcher`.
 
 ## Setting up your environment
 
