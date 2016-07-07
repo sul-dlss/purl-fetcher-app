@@ -44,7 +44,7 @@ end
 # @see #result_should_contain_druids for params and return
 def result_should_not_contain_druids(druids, response)
   expect(response).to be_an Array
-  druids.each { |d| expect(response).not_to include(a_hash_including 'druid' => d) }
+  druids.each { |d| expect(response).not_to include(a_hash_including('druid' => d)) }
 end
 
 def all_counts_keys

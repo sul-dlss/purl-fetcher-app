@@ -34,7 +34,8 @@ class CollectionsController < ApplicationController
   # Example:
   #   http://localhost:3000/collections/druid:oo000oo0001.json  # gives all objects associated with this collection  in json format
   #   http://localhost:3000/collections/druid:oo000oo0001?rows=0 # returns only the count of collection in json format
-  #   http://localhost:3000/collections/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z# returns only the objects associated with this collection  published in January of 2014 in XML format
+  # returns only the objects associated with this collection published in January of 2014 in XML format
+  #   http://localhost:3000/collections/druid:oo000oo0001.xml?first_modified=2014-01-01T00:00:00Z&last_modified=2014-02-01T00:00:00Z
   def show
     result = find_all_under(params, :collection)
     render_result(result)
