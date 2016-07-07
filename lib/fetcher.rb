@@ -19,7 +19,10 @@ module Fetcher
     response
  end
 
-  # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type (potentially limited by rows or date if specified by the user)
+  # Given the user's querystring parameters, and a fedora type, return a solr response
+  # containing all of the objects associated with that type (potentially limited by
+  # rows or date if specified by the user)
+  #
   # @param params [Hash] querystring parameters from user, which could be an empty hash
   # @param ftype [String] fedora object type, could be :collection
   # @return [Hash] solr response
@@ -33,7 +36,11 @@ module Fetcher
     determine_proper_response(params, response)
   end
 
-  # Given the user's querystring parameters (including the ID paramater, which represents the druid), and a fedora object type, return a solr response containing all of the objects controlled by that druid of that type (potentially limited by rows or date if specified by the user)
+  # Given the user's querystring parameters (including the ID paramater, which
+  # represents the druid), and a fedora object type, return a solr response
+  # containing all of the objects controlled by that druid of that type (potentially
+  # limited by rows or date if specified by the user)
+  #
   # @param params [Hash] querystring parameters from user, which must include :id of the druid
   # @param controlled_by [String] fedora object type, could be :collection
   # @return [Hash] solr response
@@ -103,7 +110,10 @@ module Fetcher
     {:first => first_modified_time, :last => last_modified_time}
   end
 
-  # Given a hash containing "first_modified" and "last_modified", returns the solr query part to append to the overall query to properly return dates, which my be blank if user asks for just registered objects
+  # Given a hash containing "first_modified" and "last_modified", returns the solr
+  # query part to append to the overall query to properly return dates, which may
+  # be blank if user asks for just registered objects
+  #
   # @param p [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
   # @return [string] solr query part
   # @example
@@ -157,7 +167,7 @@ module Fetcher
     total_count = 0
     a = {}
     all_json.each do |key, value|
-      if value.size == 0
+      if value.empty?
         all_json.delete(key)
       else
         a[key] = value.size

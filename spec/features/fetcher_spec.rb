@@ -85,7 +85,7 @@ describe('Fetcher lib') do
       response = JSON.parse(page.body)
       expect(response).to include(collections_key)
       expect(response[collections_key]).to include a_hash_including('druid' => revs_druid, 'latest_change' => '2014-06-06T05:06:06Z')
-      visit collection_path(revs_druid, {:last_modified =>  '2014-06-05T05:06:06Z'})
+      visit collection_path(revs_druid, {:last_modified => '2014-06-05T05:06:06Z'})
       response = JSON.parse(page.body)
       expect(response).to include(collections_key)
       expect(response[collections_key]).to include a_hash_including('druid' => revs_druid, 'latest_change' => '2014-05-05T05:04:13Z')

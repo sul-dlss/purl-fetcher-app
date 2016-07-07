@@ -41,6 +41,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     arel (6.0.0)
+    ast (2.2.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -91,6 +92,9 @@ GEM
       capistrano-bundle_audit (>= 0.0.3)
       capistrano-one_time_key
       capistrano-releaseboard
+    dlss_cops (0.0.3)
+      rubocop (~> 0.37.0)
+      rubocop-rspec (~> 1.4.0)
     docile (1.1.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
@@ -162,7 +166,10 @@ GEM
       i18n
       nokogiri
     parallel (1.6.0)
+    parser (2.3.0.6)
+      ast (~> 2.2)
     posix-spawn (0.3.11)
+    powerpack (0.1.1)
     rack (1.6.4)
     rack-contrib (1.3.0)
       git-version-bump (~> 0.15)
@@ -193,6 +200,7 @@ GEM
       activesupport (= 4.2.3)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (2.1.0)
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
@@ -221,6 +229,14 @@ GEM
       rspec-mocks (~> 3.3.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
+    rubocop (0.37.2)
+      parser (>= 2.3.0.4, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 0.3)
+    rubocop-rspec (1.4.0)
+    ruby-progressbar (1.7.5)
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
     sass (3.2.19)
@@ -279,6 +295,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    unicode-display_width (0.3.1)
     vcr (2.9.3)
     webmock (1.21.0)
       addressable (>= 2.3.6)
@@ -299,6 +316,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coveralls
   dlss-capistrano
+  dlss_cops
   druid-tools
   is_it_working-cbeer
   jbuilder (~> 2.0)
@@ -330,4 +348,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.11.2
+   1.12.4

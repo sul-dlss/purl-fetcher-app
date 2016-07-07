@@ -56,7 +56,10 @@ module Indexer
   def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i)
     # minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
     query_path = Pathname(path_to_deletes_dir.to_s)
-    deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split # If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
+    # If we called this with a /* on the end it would not return itself, however it
+    # would then throw errors on servers that don't yet have a deleted object and
+    # thus don't have a .deletes dir
+    deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split
     deleted_objects -= [query_path.to_s] # remove the deleted objects dir itself
 
     docs = []
@@ -68,7 +71,7 @@ module Indexer
         # delete_document(d_o) #delete the current document out of solr
         docs << {:id => ('druid:' + druid), @@indexer_config['deleted_field'].to_sym => 'true'}
       end
-      result = add_and_commit_to_solr(docs) if docs.size != 0 # load in the new documents with the market to show they are deleted
+      result = add_and_commit_to_solr(docs) if docs.empty? # load in the new documents with the market to show they are deleted
     end
     {:success => result, :docs => docs}
   end
@@ -102,7 +105,7 @@ module Indexer
       objects = []
     end
 
-    add_and_commit_to_solr(objects) if objects.size != 0
+    add_and_commit_to_solr(objects) if objects.empty?
     all_objects += objects
   end
 
@@ -178,7 +181,7 @@ module Indexer
     # Get membership of sets and collections for an object
     begin
       membership = get_membership_from_publicxml(path)
-      doc_hash[Solr_terms['collection_field'].to_sym] = membership if membership.size > 0 # only add this if we have a membership
+      doc_hash[Solr_terms['collection_field'].to_sym] = membership if membership.empty? # only add this if we have a membership
     rescue Exception => e
       # @@app.alert_squash e
       @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
@@ -187,7 +190,7 @@ module Indexer
     # Get the catkey of an object
     begin
       catkey = get_catkey_from_identityMetadata(path)
-      doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey if catkey.size > 0 # only add this if we have a catkey
+      doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey if catkey.empty? # only add this if we have a catkey
     rescue Exception => e
       # @@app.alert_squash e
       @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
@@ -216,7 +219,10 @@ module Indexer
     releases
   end
 
-  # Given a path to a directory that contains an identityMetada file, extract the druid for the item from identityMetadata.  This is currently not used because as it turns out, not all identityMetadatas have this node in them.  Rather use get_druid_from_contentMetadata
+  # Given a path to a directory that contains an identityMetada file, extract the
+  # druid for the item from identityMetadata.  This is currently not used because
+  # as it turns out, not all identityMetadatas have this node in them.  Rather
+  # use get_druid_from_contentMetadata
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [String] The druid in the form of druid:pid
@@ -318,13 +324,16 @@ module Indexer
     RSolr.connect(:url => PurlFetcher::Application.config.solr_url, :retry_503 => 5, :retry_after_limit => 15)
   end
 
-  # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and sleeps the thread to give solr a chance to recover
+  # This function determines if the solr action succeeded or not and based on solr's
+  # response.  It also determines if solr is showing high response times and sleeps
+  # the thread to give solr a chance to recover
   #
   # @param resp [Hash] a hash provided by RSolr, ex: {"responseHeader"=>{"status"=>0, "QTime"=>77}}
   # @return [Boolean] True or false
   def parse_solr_response(resp)
     success = resp['responseHeader']['status'].to_i == 0
-    sleep(@@indexer_config['sleep_seconds_if_overloaded'].to_i) if resp['responseHeader']['QTime'].to_i >= @@indexer_config['sleep_when_response_time_exceeds'].to_i # put this thread to sleep for five seconds if solr looks to be suffered
+    # put this thread to sleep for five seconds if solr looks to be suffered
+    sleep(@@indexer_config['sleep_seconds_if_overloaded'].to_i) if resp['responseHeader']['QTime'].to_i >= @@indexer_config['sleep_when_response_time_exceeds'].to_i
     success
   end
 
@@ -395,7 +404,7 @@ module Indexer
     response = {}
     begin
       with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds => 15, :rescue => RSolr::Error) {
-        response = solr_client.get 'select', :params => {:q => "#{query}", :rows => 100000000}
+        response = solr_client.get 'select', :params => {:q => query.to_s, :rows => 100000000}
       }
     rescue Exception => e
       @@log.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")

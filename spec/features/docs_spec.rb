@@ -21,7 +21,7 @@ describe('Docs Controller') do
     end
 
     it 'contains a changes array is made up of hashes' do
-      expect(@response[:changes.to_s].size > 0).to be_truthy
+      expect(!@response[:changes.to_s].empty?).to be_truthy
       expect(@response[:changes.to_s][0].class).to eq(Hash)
     end
 
@@ -36,13 +36,13 @@ describe('Docs Controller') do
 
     it 'contains hashes in the changes array that have a key of true_targets and point to an array of Strings' do
       expect(@response[:changes.to_s][0][:true_targets.to_s].class).to eq(Array)
-      expect(@response[:changes.to_s][0][:true_targets.to_s].size > 0).to be_truthy
+      expect(!@response[:changes.to_s][0][:true_targets.to_s].empty?).to be_truthy
       expect(@response[:changes.to_s][0][:true_targets.to_s][0].class).to eq(String)
     end
 
     it 'contains hashes in the changes array that have a key of false_targets and point to an array of Strings' do
       expect(@response[:changes.to_s][0][:false_targets.to_s].class).to eq(Array)
-      expect(@response[:changes.to_s][0][:false_targets.to_s].size > 0).to be_truthy
+      expect(!@response[:changes.to_s][0][:false_targets.to_s].empty?).to be_truthy
       expect(@response[:changes.to_s][0][:false_targets.to_s][0].class).to eq(String)
     end
   end
@@ -60,7 +60,7 @@ describe('Docs Controller') do
     end
 
     it 'contains a deletes array is made up of hashes' do
-      expect(@response[:deletes.to_s].size > 0).to be_truthy
+      expect(!@response[:deletes.to_s].empty?).to be_truthy
       expect(@response[:deletes.to_s][0].class).to eq(Hash)
     end
 
