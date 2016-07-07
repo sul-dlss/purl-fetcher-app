@@ -79,6 +79,7 @@ describe('Fetcher lib') do
 
   it 'It should test for picking the proper date out of a range' do
     VCR.use_cassette('last_changed_testing') do
+      latest_change = 'latest_change'
       revs_druid = @fixture_data.top_level_revs_collection_druid
       visit collection_path(revs_druid)
       response = JSON.parse(page.body)
@@ -94,6 +95,6 @@ describe('Fetcher lib') do
   it 'should raise an error when selected for an invalid date range' do
     times = {:first => yTenK, :last => yTenK}
     last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
-    expect{@fetcher.determine_latest_date(times, last_changed)}.to raise_error(RuntimeError)
+    expect{ @fetcher.determine_latest_date(times, last_changed) }.to raise_error(RuntimeError)
   end
 end

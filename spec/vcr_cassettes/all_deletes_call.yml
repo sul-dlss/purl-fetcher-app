@@ -13,9 +13,9 @@ http_interactions:
       message: OK
     headers:
       Last-Modified:
-      - Wed, 06 Jul 2016 22:25:22 GMT
+      - Thu, 07 Jul 2016 16:44:18 GMT
       Etag:
-      - '"Y2MwMDAwMDAwMDAwMDAwMFNvbHI="'
+      - '"YjgwMDAwMDAwMDAwMDAwMFNvbHI="'
       Content-Type:
       - text/plain; charset=utf-8
       Transfer-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>1},'response'=>{'numFound'=>5,'start'=>0,'docs'=>[{'id'=>'druid:bb050dj6667','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-06T22:25:21Z','_version_'=>1539145907800375296,'timestamp'=>'2016-07-06T22:25:21.471Z'},{'id'=>'druid:bb050dj1817','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-06T22:25:22Z','_version_'=>1539145908982120448,'timestamp'=>'2016-07-06T22:25:22.597Z'},{'id'=>'druid:bb050dj1885','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-06T22:25:22Z','_version_'=>1539145908983169024,'timestamp'=>'2016-07-06T22:25:22.597Z'},{'id'=>'druid:bb050dj1927','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-06T22:25:22Z','_version_'=>1539145908983169025,'timestamp'=>'2016-07-06T22:25:22.597Z'},{'id'=>'druid:bb050dj1971','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-06T22:25:22Z','_version_'=>1539145908983169026,'timestamp'=>'2016-07-06T22:25:22.597Z'}]}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>1},'response'=>{'numFound'=>5,'start'=>0,'docs'=>[{'id'=>'druid:bb050dj6667','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-07T16:44:17Z','_version_'=>1539215046488358912,'timestamp'=>'2016-07-07T16:44:17.262Z'},{'id'=>'druid:bb050dj1817','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-07T16:44:18Z','_version_'=>1539215047733018624,'timestamp'=>'2016-07-07T16:44:18.449Z'},{'id'=>'druid:bb050dj1885','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-07T16:44:18Z','_version_'=>1539215047734067200,'timestamp'=>'2016-07-07T16:44:18.449Z'},{'id'=>'druid:bb050dj1927','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-07T16:44:18Z','_version_'=>1539215047735115776,'timestamp'=>'2016-07-07T16:44:18.449Z'},{'id'=>'druid:bb050dj1971','deleted_tsi'=>'true','indexed_dtsi'=>'2016-07-07T16:44:18Z','_version_'=>1539215047735115777,'timestamp'=>'2016-07-07T16:44:18.449Z'}]}}
     http_version: 
-  recorded_at: Wed, 06 Jul 2016 22:28:49 GMT
+  recorded_at: Thu, 07 Jul 2016 17:58:20 GMT
 recorded_with: VCR 2.9.3

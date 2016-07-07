@@ -315,7 +315,7 @@ module Indexer
   #
   # @return [RSolr::Client]
   def establish_solr_connection
-    RSolr.connect(:url => Solr_URL, :retry_503 => 5, :retry_after_limit => 15)
+    RSolr.connect(:url => PurlFetcher::Application.config.solr_url, :retry_503 => 5, :retry_after_limit => 15)
   end
 
   # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and sleeps the thread to give solr a chance to recover
