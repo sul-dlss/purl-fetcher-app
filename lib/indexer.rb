@@ -25,7 +25,7 @@ module Indexer
   # Example:
   #   results = index_all_modified_objects(mins_ago: 5)
   def index_all_modified_objects(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i)
-    start_time = Time.now
+    start_time = Time.zone.now
     @@modified_at_or_later = mins_ago.minutes.ago # Set this to a Timestamp that is X minutes this function was called
 
     # get all the top level branches of the druid tree (currently 400) but remove the .deletes dir
@@ -35,7 +35,7 @@ module Indexer
     branch_results = Parallel.map(top_branches_of_tree) do |branch|
       index_druid_tree_branch(branch) # This will sweep down the branch and index all files
     end
-    end_time = Time.now
+    end_time = Time.zone.now
 
     # Prep the results for return
     results = {}
@@ -54,9 +54,11 @@ module Indexer
   #
   # @return [Hash] A hash stating if the deletion was successful or not and an array of the docs {:success=> true/false, :docs => [{doc1},{doc2},...]}
   def remove_deleted_objects_from_solr(mins_ago: @@indexer_config.default_run_interval_in_minutes.to_i)
-    # minutes_ago = ((Time.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
+    # minutes_ago = ((Time.zone.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
     query_path = Pathname(path_to_deletes_dir.to_s)
-    deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split # If we called this with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have a deleted object and thus don't have a .deletes dir
+    # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
+    # a deleted object and thus don't have a .deletes dir
+    deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split
     deleted_objects -= [query_path.to_s] # remove the deleted objects dir itself
 
     docs = []
@@ -64,11 +66,11 @@ module Indexer
     deleted_objects.each do |d_o|
       # Check to make sure that the object is really deleted
       druid = d_o.split(query_path.to_s + File::SEPARATOR)[1]
-      if !druid.nil? && is_deleted?(druid)
+      if !druid.nil? && deleted?(druid)
         # delete_document(d_o) #delete the current document out of solr
         docs << { :id => ('druid:' + druid), @@indexer_config['deleted_field'].to_sym => 'true' }
       end
-      result = add_and_commit_to_solr(docs) if docs.size != 0 # load in the new documents with the market to show they are deleted
+      result = add_and_commit_to_solr(docs) unless docs.empty? # load in the new documents with the market to show they are deleted
     end
     { success: result, docs: docs }
   end
@@ -77,7 +79,7 @@ module Indexer
   #
   # @param druid [String] The druid you are interested in
   # @return [Boolean] True or False
-  def is_deleted?(druid)
+  def deleted?(druid)
     d = DruidTools::PurlDruid.new(druid, purl_mount_location)
     dir_name = Pathname(d.path) # This will include the full druid on the end of the path, we don't want that for purl
     !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
@@ -102,7 +104,7 @@ module Indexer
       objects = []
     end
 
-    add_and_commit_to_solr(objects) if objects.size != 0
+    add_and_commit_to_solr(objects) unless objects.empty?
     all_objects += objects
   end
 
@@ -114,7 +116,7 @@ module Indexer
   # Example:
   #   index_druid_tree_branch('/purl/document_cache/bb')
   def get_all_changed_objects_for_branch(branch)
-    minutes_ago = ((Time.now - @@modified_at_or_later) / 60.0).ceil # use ceil to round up (2.3 becomes 3)
+    minutes_ago = ((Time.zone.now - @@modified_at_or_later) / 60.0).ceil # use ceil to round up (2.3 becomes 3)
     changed_files = `find #{branch} -mmin -#{minutes_ago}`.split
 
     # We only reindex if something in our changed file list has updated, scan the return list for those and
@@ -139,7 +141,7 @@ module Indexer
     doc_hash = {}
     begin
       doc_hash = read_mods_for_object(path)
-    rescue Exception => e
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} could not load mods.  #{e.message} #{e.backtrace.inspect}")
       return {}
@@ -147,8 +149,8 @@ module Indexer
 
     # Get the Druid of the object
     begin
-      doc_hash[:id] = get_druid_from_publicMetadata(path)
-    rescue Exception => e
+      doc_hash[:id] = get_druid_from_public_metadata(path)
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
       return {}
@@ -159,7 +161,7 @@ module Indexer
       releases = get_release_status(path)
       doc_hash[@@indexer_config['released_true_field'].to_sym] = releases[:true]
       doc_hash[@@indexer_config['released_false_field'].to_sym] = releases[:false]
-    rescue Exception => e
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
       return {}
@@ -169,8 +171,8 @@ module Indexer
 
     # Get the ObjectType for an object
     begin
-      doc_hash[Type_Field.to_sym] = get_objectType_from_identityMetadata(path)
-    rescue Exception => e
+      doc_hash[Type_Field.to_sym] = get_object_type_from_identity_metadata(path)
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
     end
@@ -178,17 +180,17 @@ module Indexer
     # Get membership of sets and collections for an object
     begin
       membership = get_membership_from_publicxml(path)
-      doc_hash[Solr_terms['collection_field'].to_sym] = membership if membership.size > 0 # only add this if we have a membership
-    rescue Exception => e
+      doc_hash[Solr_terms['collection_field'].to_sym] = membership unless membership.empty? # only add this if we have a membership
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
     end
 
     # Get the catkey of an object
     begin
-      catkey = get_catkey_from_identityMetadata(path)
-      doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey if catkey.size > 0 # only add this if we have a catkey
-    rescue Exception => e
+      catkey = get_catkey_from_identity_metadata(path)
+      doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey unless catkey.empty? # only add this if we have a catkey
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
     end
@@ -216,15 +218,16 @@ module Indexer
     releases
   end
 
-  # Given a path to a directory that contains an identityMetada file, extract the druid for the item from identityMetadata.  This is currently not used because as it turns out, not all identityMetadatas have this node in them.  Rather use get_druid_from_contentMetadata
+  # Given a path to a directory that contains an identityMetada file, extract the druid for the item from identityMetadata.
+  # This is currently not used because as it turns out, not all identityMetadatas have this node in them.  Rather use get_druid_from_content_metadata
   #
   # @param path [String] The path to the directory that will contain the identityMetadata file
   # @return [String] The druid in the form of druid:pid
   # @raise Errno::ENOENT If there is no identityMetadata file
   #
   # Example:
-  #   druid = get_druid_from_identityMetadata('/purl/document_cache/bb')
-  def get_druid_from_identityMetadata(path)
+  #   druid = get_druid_from_identity_metadata('/purl/document_cache/bb')
+  def get_druid_from_identity_metadata(path)
     x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
     x.xpath('//identityMetadata/objectId')[0].text
   end
@@ -236,8 +239,8 @@ module Indexer
   # @raise Errno::ENOENT If there is no public metadata file
   #
   # Example:
-  #   druid = get_druid_from_publicMetadata('/purl/document_cache/bb')
-  def get_druid_from_publicMetadata(path)
+  #   druid = get_druid_from_public_metadata('/purl/document_cache/bb')
+  def get_druid_from_public_metadata(path)
     x = Nokogiri::XML(File.open(Pathname(path) + 'public'))
     x.xpath('//publicObject')[0].attr('id')
   end
@@ -269,7 +272,7 @@ module Indexer
         response = solr.add add_timestamp_to_documents(documents)
       end
       success = parse_solr_response(response)
-    rescue Exception => e
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("Unable to add the documents #{documents}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
@@ -281,13 +284,13 @@ module Indexer
     commit_success
   end
 
-  # Adds in the timestamp attribute, using Time.now, to each document about to be committed to Solr
+  # Adds in the timestamp attribute, using  Time.zone.now, to each document about to be committed to Solr
   #
   # @param documents [Array] An array of hashes, with each hash being one solr document
   # @return [Array] An array of hashes
   def add_timestamp_to_documents(documents)
     documents.each do |d|
-      d[@@indexer_config['change_field'].to_sym] = Time.now.utc.iso8601
+      d[@@indexer_config['change_field'].to_sym] = Time.zone.now.utc.iso8601
     end
     documents
   end
@@ -300,7 +303,7 @@ module Indexer
         solr.delete_by_id id
       end
       parse_solr_response(response)
-    rescue Exception => e
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
@@ -318,13 +321,15 @@ module Indexer
     RSolr.connect(url: PurlFetcher::Application.config.solr_url, retry_503: 5, retry_after_limit: 15)
   end
 
-  # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and sleeps the thread to give solr a chance to recover
+  # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and
+  # sleeps the thread to give solr a chance to recover
   #
   # @param resp [Hash] a hash provided by RSolr, ex: {"responseHeader"=>{"status"=>0, "QTime"=>77}}
   # @return [Boolean] True or false
   def parse_solr_response(resp)
     success = resp['responseHeader']['status'].to_i == 0
-    sleep(@@indexer_config['sleep_seconds_if_overloaded'].to_i) if resp['responseHeader']['QTime'].to_i >= @@indexer_config['sleep_when_response_time_exceeds'].to_i # put this thread to sleep for five seconds if solr looks to be suffered
+    # put this thread to sleep for five seconds if solr looks to be suffered
+    sleep(@@indexer_config['sleep_seconds_if_overloaded'].to_i) if resp['responseHeader']['QTime'].to_i >= @@indexer_config['sleep_when_response_time_exceeds'].to_i
     success
   end
 
@@ -338,7 +343,7 @@ module Indexer
       with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr_client.commit
       end
-    rescue Exception => e
+    rescue StandardError => e
       # @@app.alert_squash e
       @@log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
@@ -358,7 +363,7 @@ module Indexer
   # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
-  def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
+  def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.zone.now + 5.minutes).utc.iso8601)
     times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
@@ -371,7 +376,7 @@ module Indexer
   # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
-  def get_deletes_list_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
+  def get_deletes_list_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.zone.now + 5.minutes).utc.iso8601)
     times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
@@ -397,7 +402,7 @@ module Indexer
       with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr_client.get 'select', params: { q: query.to_s, rows: 100_000_000 }
       end
-    rescue Exception => e
+    rescue StandardError => e
       @@log.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return {} # Could return the Exception as well if ever desired, just logs for now
     end
@@ -433,8 +438,8 @@ module Indexer
   # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
-  #   get_objectType_from_identityMetadata('/purl/document_cache/bb')
-  def get_objectType_from_identityMetadata(path)
+  #   get_object_type_from_identity_metadata('/purl/document_cache/bb')
+  def get_object_type_from_identity_metadata(path)
     x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
     x.xpath('//identityMetadata/objectType').map(&:text)
   end
@@ -462,8 +467,8 @@ module Indexer
   # @raise Errno::ENOENT If there is no identity Metadata File
   #
   # Example:
-  #   get_catkey_from_identityMetadata('/purl/document_cache/bb')
-  def get_catkey_from_identityMetadata(path)
+  #   get_catkey_from_identity_metadata('/purl/document_cache/bb')
+  def get_catkey_from_identity_metadata(path)
     x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
     x.xpath("//otherId[@name='catkey']").text
   end

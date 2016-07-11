@@ -22,4 +22,5 @@ AllCops:
     - 'config/**/*'
     - 'spec/fixtures/**/*'
     - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
     - 'vendor/**/*'
