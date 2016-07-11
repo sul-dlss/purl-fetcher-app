@@ -85,8 +85,8 @@ describe('Docs Controller') do
     end
 
     it 'returns responses that are not JSON' do
-      expect{JSON.parse(@docs_response_with_time)}.to raise_error(JSON::ParserError)
-      expect{JSON.parse(@docs_response_without_time)}.to raise_error(JSON::ParserError)
+      expect{ JSON.parse(@docs_response_with_time) }.to raise_error(JSON::ParserError)
+      expect{ JSON.parse(@docs_response_without_time) }.to raise_error(JSON::ParserError)
     end
 
     it 'return response that are the same regardless of time params' do
