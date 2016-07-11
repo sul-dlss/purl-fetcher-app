@@ -29,7 +29,7 @@ module Indexer
     @@modified_at_or_later = mins_ago.minutes.ago # Set this to a Timestamp that is X minutes this function was called
 
     # get all the top level branches of the druid tree (currently 400) but remove the .deletes dir
-    top_branches_of_tree = Dir.glob(purl_mount_location + File::SEPARATOR + '*' ) - [path_to_deletes_dir.to_s]
+    top_branches_of_tree = Dir.glob(purl_mount_location + File::SEPARATOR + '*') - [path_to_deletes_dir.to_s]
 
     # Using parallels go down each branch and look for modified items, then index them
     branch_results = Parallel.map(top_branches_of_tree) do |branch|
@@ -41,7 +41,7 @@ module Indexer
     results = {}
     results[:docs] = []
     count = 0
-    top_branches_of_tree.each do |branch|
+    top_branches_of_tree.each do |_branch|
       results[:docs] += branch_results[count]
       count += 1
     end
@@ -66,11 +66,11 @@ module Indexer
       druid = d_o.split(query_path.to_s + File::SEPARATOR)[1]
       if !druid.nil? && is_deleted?(druid)
         # delete_document(d_o) #delete the current document out of solr
-        docs << {:id => ('druid:' + druid), @@indexer_config['deleted_field'].to_sym => 'true'}
+        docs << { :id => ('druid:' + druid), @@indexer_config['deleted_field'].to_sym => 'true' }
       end
       result = add_and_commit_to_solr(docs) if docs.size != 0 # load in the new documents with the market to show they are deleted
     end
-    {:success => result, :docs => docs}
+    { success: result, docs: docs }
   end
 
   # Determine if a druid has been deleted and pruned from the document cache or not
@@ -205,7 +205,7 @@ module Indexer
   # Example:
   #   release_status = get_druid_from_contentMetada('/purl/document_cache/bb')
   def get_release_status(path)
-    releases = {:true => [], :false => []}
+    releases = { true: [], false: [] }
     x = Nokogiri::XML(File.open(Pathname(path) + 'public'))
     nodes = x.xpath('//publicObject/releaseData/release')
     nodes.each do |node|
@@ -254,7 +254,7 @@ module Indexer
     mods = Stanford::Mods::Record.new
     mods.from_str(IO.read(Pathname(path + File::SEPARATOR + 'mods')))
     title = mods.sw_full_title
-    {@@indexer_config['title_field'].to_sym => title}
+    { @@indexer_config['title_field'].to_sym => title }
   end
 
   # Add an array of documents to solr and commit
@@ -265,9 +265,9 @@ module Indexer
     solr = establish_solr_connection
     response = {}
     begin
-      with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds => 15, :rescue => RSolr::Error) {
+      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr.add add_timestamp_to_documents(documents)
-      }
+      end
       success = parse_solr_response(response)
     rescue Exception => e
       # @@app.alert_squash e
@@ -296,9 +296,9 @@ module Indexer
     solr = establish_solr_connection
     response = {}
     begin
-      with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds => 15, :rescue => RSolr::Error) {
+      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         solr.delete_by_id id
-      }
+      end
       parse_solr_response(response)
     rescue Exception => e
       # @@app.alert_squash e
@@ -315,7 +315,7 @@ module Indexer
   #
   # @return [RSolr::Client]
   def establish_solr_connection
-    RSolr.connect(:url => PurlFetcher::Application.config.solr_url, :retry_503 => 5, :retry_after_limit => 15)
+    RSolr.connect(url: PurlFetcher::Application.config.solr_url, retry_503: 5, retry_after_limit: 15)
   end
 
   # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and sleeps the thread to give solr a chance to recover
@@ -335,9 +335,9 @@ module Indexer
   def commit_to_solr(solr_client)
     response = {}
     begin
-      with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds => 15, :rescue => RSolr::Error) {
+      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr_client.commit
-      }
+      end
     rescue Exception => e
       # @@app.alert_squash e
       @@log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
@@ -359,7 +359,7 @@ module Indexer
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
-    times = @@app.get_times({:first_modified => first_modified, :last_modified => last_modified})
+    times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
     response = run_solr_query(query)
@@ -372,16 +372,16 @@ module Indexer
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_deletes_list_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.now + 5.minutes).utc.iso8601)
-    times = @@app.get_times({:first_modified => first_modified, :last_modified => last_modified})
+    times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
     solr_resp = run_solr_query(query)
 
     # TODO: Refactor this and the stuff from format_modified_response into one function
-    response = {'deletes' => []}
+    response = { 'deletes' => [] }
 
     solr_resp['response']['docs'].each do |doc|
-      response['deletes'] << {'druid' => doc['id'], 'latest_change' => doc['timestamp']}
+      response['deletes'] << { 'druid' => doc['id'], 'latest_change' => doc['timestamp'] }
     end
     response
   end
@@ -394,9 +394,9 @@ module Indexer
     solr_client = establish_solr_connection
     response = {}
     begin
-      with_retries(:max_retries => 5, :base_sleep_seconds => 3, :max_sleep_seconds => 15, :rescue => RSolr::Error) {
-        response = solr_client.get 'select', :params => {:q => "#{query}", :rows => 100000000}
-      }
+      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
+        response = solr_client.get 'select', params: { q: query.to_s, rows: 100_000_000 }
+      end
     rescue Exception => e
       @@log.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return {} # Could return the Exception as well if ever desired, just logs for now
@@ -409,9 +409,9 @@ module Indexer
   # @param solr_resp [Hash] A Hash generated by an RSolr query
   # @return [Hash] The respnse with unwanted fields removed
   def format_modified_response(solr_resp)
-    response = {'changes' => []}
+    response = { 'changes' => [] }
     solr_resp['response']['docs'].each do |doc|
-      hash = {'druid' => doc['id'], 'latest_change' => doc['timestamp']}
+      hash = { 'druid' => doc['id'], 'latest_change' => doc['timestamp'] }
       hash['true_targets']  = doc[@@indexer_config['released_true_field']] unless doc[@@indexer_config['released_true_field']].nil?
       hash['false_targets'] = doc[@@indexer_config['released_false_field']] unless doc[@@indexer_config['released_false_field']].nil?
       response['changes'] << hash
@@ -487,7 +487,7 @@ module Indexer
   # @return [Boolean] true if the select returned a status of 0, false if any other status is returned
   def check_solr_core
     solr_client = establish_solr_connection
-    r = solr_client.get 'select', :params => {:q => '*:*', :rows => 1} # Just grab one row for the test
+    r = solr_client.get 'select', params: { q: '*:*', rows: 1 } # Just grab one row for the test
     parse_solr_response(r)
   end
 end

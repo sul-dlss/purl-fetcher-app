@@ -11,7 +11,7 @@ module Fetcher
   # @example response=run_solr_query(:q=>'dude')
   def run_solr_query(params, method = 'select')
     start_time = Time.now
-    response = Solr.get method, :params => params
+    response = Solr.get method, params: params
     elapsed_time = Time.now - start_time
     Rails.logger.info "Request from #{request.remote_ip} to #{request.fullpath} at #{Time.now}"
     Rails.logger.info "Solr query: #{params}"
@@ -27,7 +27,7 @@ module Fetcher
   def find_all_fedora_type(params, ftype)
     # ftype should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
-    solrparams = {:q => "#{Type_Field}:\"#{Fedora_Types[ftype]}\" #{date_range_q}", :wt => :json}
+    solrparams = { q: "#{Type_Field}:\"#{Fedora_Types[ftype]}\" #{date_range_q}", wt: :json }
     get_rows(solrparams, params)
     response = run_solr_query(solrparams)
     determine_proper_response(params, response)
@@ -42,8 +42,8 @@ module Fetcher
     # controlled_by should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
     solrparams = {
-      :q  => "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") #{date_range_q}",
-      :wt => :json,
+      q: "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") #{date_range_q}",
+      wt: :json,
     }
     get_rows(solrparams, params)
     response = run_solr_query(solrparams)
@@ -100,7 +100,7 @@ module Fetcher
       raise 'invalid time paramaters'
     end
     raise 'start time is before end time' if first_modified_time >= last_modified_time
-    {:first => first_modified_time, :last => last_modified_time}
+    { first: first_modified_time, last: last_modified_time }
   end
 
   # Given a hash containing "first_modified" and "last_modified", returns the solr query part to append to the overall query to properly return dates, which my be blank if user asks for just registered objects
@@ -119,7 +119,7 @@ module Fetcher
   # @param params [Hash] query string params from user
   # @return [Hash] solr params hash
   def get_rows(solrparams, params)
-    params.key?(:rows) ? solrparams.merge!(:rows => params[:rows]) : solrparams.merge!(:rows => 100000000) # if user passes in the rows they want, use that, else just return everything
+    params.key?(:rows) ? solrparams.merge!(rows: params[:rows]) : solrparams.merge!(rows: 100_000_000) # if user passes in the rows they want, use that, else just return everything
   end
 
   # Given a params hash from the user, tells us if they only want registered items (ignoring accessioning and date ranges)
@@ -138,7 +138,7 @@ module Fetcher
     times = get_times(params)
 
     # Create A Hash that contains an empty list for each Fedora Type
-    Fedora_Types.each do |key, value|
+    Fedora_Types.each do |_key, value|
       all_json.store(value.pluralize.to_sym, [])
     end
 
@@ -148,7 +148,7 @@ module Fetcher
       title1 = doc[:title_tesim].first unless doc[:title_tesim].nil?
       title2 = doc[:public_dc_title_tesim].first unless doc[:public_dc_title_tesim].nil?
       title  = title1 || title2 || '' # empty string if both titles are nil
-      j = {:druid => doc[:id], :latest_change => determine_latest_date(times, doc[:published_dttsim]), :title => title}
+      j = { druid: doc[:id], latest_change: determine_latest_date(times, doc[:published_dttsim]), title: title }
       j[:catkey] = doc[:catkey_id_ssim].first unless doc[:catkey_id_ssim].nil?
       all_json[type.downcase.pluralize.to_sym] << j # Append this little json stub to its proper parent array
     end
