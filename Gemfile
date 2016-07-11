@@ -59,4 +59,5 @@ group :development, :test do
   gem 'meta_request'
   gem 'launchy'
   gem 'thin'
+  gem 'dlss_cops'
 end

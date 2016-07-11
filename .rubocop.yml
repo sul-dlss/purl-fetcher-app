@@ -1,4 +1,5 @@
-inherit_from: .rubocop_todo.yml
+inherit_gem:
+  dlss_cops: "config/dlss_baseline.yml"
 
 # rspec expect{...} is conventional
 Style/SpaceBeforeBlockBraces:
@@ -11,3 +12,14 @@ Style/EmptyLineBetweenDefs:
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 200
+
+AllCops:
+  TargetRubyVersion: 2.2
+  Exclude:
+    - 'Gemfile'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'spec/fixtures/**/*'
+    - 'spec/spec_helper.rb'
+    - 'vendor/**/*'
