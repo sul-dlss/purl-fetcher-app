@@ -79,21 +79,21 @@ describe('Indexer lib') do
   end
 
   it 'logs an error when there is no catkey in the identityMetadata, but does not fail' do
-    allow(indexer).to receive(:get_catkey_from_identityMetadata).and_raise(Errno::ENOENT)
+    allow(indexer).to receive(:get_catkey_from_identity_metadata).and_raise(Errno::ENOENT)
     expect(indexer.log_object).to receive(:error).once
     expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
   end
 
   it 'gets the druid from identityMetadata' do
-    expect(indexer.get_druid_from_identityMetadata(sample_doc_path)).to match('druid:bb050dj7711')
+    expect(indexer.get_druid_from_identity_metadata(sample_doc_path)).to match('druid:bb050dj7711')
   end
 
   it 'gets the druid from publicMetadata' do
-    expect(indexer.get_druid_from_publicMetadata(sample_doc_path)).to match('druid:bb050dj7711')
+    expect(indexer.get_druid_from_public_metadata(sample_doc_path)).to match('druid:bb050dj7711')
   end
 
   it 'raises an error when there is no identityMetadata' do
-    expect{ indexer.get_druid_from_identityMetadata(sample_doc_path_files_missing) }.to raise_error(Errno::ENOENT)
+    expect{ indexer.get_druid_from_identity_metadata(sample_doc_path_files_missing) }.to raise_error(Errno::ENOENT)
   end
 
   it 'gets true and false data from the public xml regarding release status' do
@@ -123,6 +123,7 @@ describe('Indexer lib') do
   end
 
   it 'returns the empty doc hash when it cannot open a file' do
+    allow_message_expectations_on_nil
     allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     expect(indexer.solrize_object(sample_doc_path_files_missing)).to match({})
   end
@@ -139,6 +140,7 @@ describe('Indexer lib') do
     end
 
     it 'logs an error, but swallows the exception when mods is not present' do
+      allow_message_expectations_on_nil
       allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(dest_dir, 'mods')
       expect(indexer.log_object).to receive(:error).once
@@ -153,6 +155,7 @@ describe('Indexer lib') do
     end
 
     it 'logs an error, but swallows the exception when the public xml is not present' do
+      allow_message_expectations_on_nil
       allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(dest_dir, 'public')
       expect(indexer.log_object).to receive(:error).once
@@ -199,6 +202,7 @@ describe('Indexer lib') do
     # FYI this will fail if you have your local solr running, because obviously you can connect to it
     # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
+    allow_message_expectations_on_nil
     allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('doc_submit_fails') do
       docs = [indexer.solrize_object(sample_doc_path)]
@@ -210,6 +214,7 @@ describe('Indexer lib') do
     # FYI this will fail if you have your local solr running, because obviously you can connect to it
     # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
+    allow_message_expectations_on_nil
     allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('failed_solr_commit') do
       expect(indexer.commit_to_solr(indexer.establish_solr_connection)).to be_falsey
@@ -243,12 +248,12 @@ describe('Indexer lib') do
     end
 
     it 'detects that the druid is not deleted when its files are still present in the document cache' do
-      expect(indexer.is_deleted?(druid)).to be_falsey
+      expect(indexer.deleted?(druid)).to be_falsey
     end
 
     it 'detects that the druid is deleted when its files are not present in the document cache' do
       FileUtils.rm_r dest_dir # remove our testing druid
-      expect(indexer.is_deleted?(druid)).to be_truthy
+      expect(indexer.deleted?(druid)).to be_truthy
     end
 
     it 'does not delete the test druid when the files still remain in the document cache' do
@@ -262,6 +267,7 @@ describe('Indexer lib') do
     end
 
     it 'deletes the druid from solr the files do not remain in the document cache' do
+      allow_message_expectations_on_nil
       allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       # Index the druid into solr
       VCR.use_cassette('successful_solr_delete') do
@@ -309,12 +315,12 @@ describe('Indexer lib') do
   end
 
   it 'gets the object type' do
-    expect(indexer.get_objectType_from_identityMetadata(sample_doc_path)).to match(['item'])
+    expect(indexer.get_object_type_from_identity_metadata(sample_doc_path)).to match(['item'])
   end
 
   it 'gets multiple object types when an object has multiple types' do
     druid_object = DruidTools::PurlDruid.new('druid:ct961sj2730', testing_doc_cache)
-    expect(indexer.get_objectType_from_identityMetadata(druid_object.path)).to match(['collection', 'set'])
+    expect(indexer.get_object_type_from_identity_metadata(druid_object.path)).to match(['collection', 'set'])
   end
 
   it 'gets the collections and sets the object is a member of' do
@@ -322,11 +328,11 @@ describe('Indexer lib') do
   end
 
   it 'gets the cat key when one is present' do
-    expect(indexer.get_catkey_from_identityMetadata(ct961sj2730_path)).to match('10357851')
+    expect(indexer.get_catkey_from_identity_metadata(ct961sj2730_path)).to match('10357851')
   end
 
   it 'returns empty string when no cat key is present' do
-    expect(indexer.get_catkey_from_identityMetadata(sample_doc_path)).to match('')
+    expect(indexer.get_catkey_from_identity_metadata(sample_doc_path)).to match('')
   end
 
   # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
@@ -404,6 +410,7 @@ describe('Indexer lib') do
     end
 
     it 'logs an error when rslor cannot commit after a delete operation' do
+      allow_message_expectations_on_nil
       allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
