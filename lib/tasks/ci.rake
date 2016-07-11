@@ -3,6 +3,7 @@ require 'rest_client'
 
 desc 'Run continuous integration suite (assuming jetty is not yet started)'
 task :ci do
+  Rake::Task['rubocop'].invoke
   unless Rails.env.test?
     system('bundle exec rake ci RAILS_ENV=test')
   else
@@ -13,6 +14,18 @@ task :ci do
       Rake::Task['db:fixtures:load'].invoke
       Rake::Task['db:seed'].invoke
       system('bundle exec rspec spec --color')
+    end
+  end
+end
+
+desc 'Run rubocop on ruby files'
+task :rubocop do
+  if Rails.env.test? || Rails.env.development?
+    begin
+      require 'rubocop/rake_task'
+      RuboCop::RakeTask.new
+    rescue LoadError
+      puts 'Unable to load RuboCop.'
     end
   end
 end
