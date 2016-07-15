@@ -8,7 +8,6 @@ require 'squash/rails'
 require 'action_controller'
 
 module Indexer
-  include ApplicationHelper
   include Squash::Ruby::ControllerMethods
 
   @@indexer_config = PurlFetcher::Application.config.solr_indexing
