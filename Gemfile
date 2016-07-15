@@ -49,7 +49,6 @@ group :deployment do
 end
 
 group :staging, :production, :development do
-  gem 'mysql'
   gem 'mysql2'
 end
 
