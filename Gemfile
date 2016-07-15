@@ -8,7 +8,7 @@ gem 'parallel'
 gem 'stanford-mods'
 gem 'retries'
 gem 'druid-tools'
-gem 'whenever', :require => false
+gem 'whenever'
 
 # Squash
 gem 'squash_ruby', :require => 'squash/ruby'
