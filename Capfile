@@ -21,10 +21,10 @@ require 'capistrano/deploy'
 # require 'capistrano/rails/assets'
 # require 'capistrano/rails/migrations'
 
-require 'capistrano/bundler'
-require 'capistrano/rails'
+#require 'capistrano/bundler'
+#require 'capistrano/rails'
 require 'dlss/capistrano'
-require 'capistrano/rvm'
+#require 'capistrano/rvm'
 require 'squash/rails/capistrano3'
 require 'whenever/capistrano'
 

@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+#lock '3.2.1'
 
 set :application, 'purl-fetcher'
 set :repo_url, 'https://github.com/sul-dlss/purl-fetcher.git'
@@ -41,7 +41,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
-before 'deploy:compile_assets', 'squash:write_revision'
+#before 'deploy:compile_assets', 'squash:write_revision'
 
 namespace :deploy do
   desc 'Restart application'
