@@ -2,7 +2,8 @@ require 'active_support/inflector'
 
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
-  include ApplicationHelper
+
+  Y_TEN_K = '9999-12-31T23:59:59Z'.freeze
 
   # Run a solr query, and do some logging
   # @param params [Hash] params to send to solr
@@ -94,7 +95,7 @@ module Fetcher
   def get_times(p = {})
     params = p || {}
     first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    last_modified = params[:last_modified] || yTenK
+    last_modified = params[:last_modified] || Y_TEN_K
     begin
       first_modified_time = Time.zone.parse(first_modified).iso8601
       last_modified_time = Time.zone.parse(last_modified).iso8601
