@@ -140,7 +140,6 @@ GEM
       nom-xml (~> 0.5.2)
     multi_json (1.12.1)
     multipart-post (2.0.0)
-    mysql (2.9.1)
     mysql2 (0.3.18)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -296,7 +295,6 @@ DEPENDENCIES
   jettywrapper
   launchy
   meta_request
-  mysql
   mysql2
   parallel
   rails (>= 4.1.6)
