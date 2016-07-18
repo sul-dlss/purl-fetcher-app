@@ -7,10 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
 # Ignore rvm files
 .rvmrc
 
@@ -30,7 +26,6 @@
 /jetty/*.log
 
 #Ignore Configuration Files 
-config/database.yml
 config/solr.yml
 config/secrets.yml
 

@@ -24,9 +24,6 @@ rake purlfetcher:config
 
 rake jetty:start
 
-rake db:migrate
-rake db:migrate RAILS_ENV=test
-
 rake purlfetcher:refresh_fixtures
 rake purlfetcher:refresh_fixtures RAILS_ENV=test
 ```
@@ -43,7 +40,6 @@ rails server
 ### To run the tests against the current VCR Cassettes:
 
 ```bash
-cp -n config/database.yml.example config/database.yml # Setup database.yml if you haven't already
 bundle install
 rspec
 ```

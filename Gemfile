@@ -23,7 +23,6 @@ gem 'is_it_working-cbeer'
 gem 'about_page'
 
 group :test do
-  gem 'sqlite3'
   gem 'yard'
   gem 'vcr'
   gem 'webmock'
@@ -34,10 +33,6 @@ end
 
 group :deployment do
   gem 'dlss-capistrano'
-end
-
-group :staging, :production, :development do
-  gem 'mysql2'
 end
 
 group :development, :test do
