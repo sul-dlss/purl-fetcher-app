@@ -18,7 +18,6 @@ AllCops:
   Exclude:
     - 'Gemfile'
     - 'bin/**/*'
-    - 'db/**/*'
     - 'config/**/*'
     - 'spec/fixtures/**/*'
     - 'spec/spec_helper.rb'

@@ -7,12 +7,8 @@ task :ci do
   unless Rails.env.test?
     system('bundle exec rake ci RAILS_ENV=test')
   else
-    system('bundle exec rake db:migrate RAILS_ENV=test')
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task['purlfetcher:refresh_fixtures'].invoke
-      Rake::Task['db:migrate'].invoke
-      Rake::Task['db:fixtures:load'].invoke
-      Rake::Task['db:seed'].invoke
       system('bundle exec rspec spec --color')
     end
   end
@@ -36,9 +32,6 @@ task :local_ci do
     system('bundle exec rake local_ci RAILS_ENV=test')
   else
     Rake::Task['purlfetcher:refresh_fixtures'].invoke
-    Rake::Task['db:migrate'].invoke
-    Rake::Task['db:fixtures:load'].invoke
-    Rake::Task['db:seed'].invoke
     system('bundle exec rspec spec --color')
   end
 end
@@ -46,7 +39,7 @@ end
 namespace :purlfetcher do
   desc 'Copy just shared yml files'
   task :config_yml do
-    %w(database solr secrets).each do |f|
+    %w(solr secrets).each do |f|
       next if File.exist? "#{Rails.root}/config/#{f}.yml"
       cp("#{Rails.root}/config/#{f}.yml.example", "#{Rails.root}/config/#{f}.yml", :verbose => true)
     end
