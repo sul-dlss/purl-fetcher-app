@@ -4,11 +4,9 @@ require 'logger'
 require 'stanford-mods'
 require 'retries'
 require 'druid-tools'
-require 'squash/rails'
 require 'action_controller'
 
 module Indexer
-  include Squash::Ruby::ControllerMethods
 
   @@indexer_config = PurlFetcher::Application.config.solr_indexing
   @@log = Logger.new('log/indexing.log')
@@ -141,7 +139,6 @@ module Indexer
     begin
       doc_hash = read_mods_for_object(path)
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} could not load mods.  #{e.message} #{e.backtrace.inspect}")
       return {}
     end
@@ -150,7 +147,6 @@ module Indexer
     begin
       doc_hash[:id] = get_druid_from_public_metadata(path)
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
       return {}
     end
@@ -161,7 +157,6 @@ module Indexer
       doc_hash[@@indexer_config['released_true_field'].to_sym] = releases[:true]
       doc_hash[@@indexer_config['released_false_field'].to_sym] = releases[:false]
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
       return {}
     end
@@ -172,7 +167,6 @@ module Indexer
     begin
       doc_hash[Type_Field.to_sym] = get_object_type_from_identity_metadata(path)
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
     end
 
@@ -181,7 +175,6 @@ module Indexer
       membership = get_membership_from_publicxml(path)
       doc_hash[Solr_terms['collection_field'].to_sym] = membership unless membership.empty? # only add this if we have a membership
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
     end
 
@@ -190,7 +183,6 @@ module Indexer
       catkey = get_catkey_from_identity_metadata(path)
       doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey unless catkey.empty? # only add this if we have a catkey
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
     end
 
@@ -272,7 +264,6 @@ module Indexer
       end
       success = parse_solr_response(response)
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("Unable to add the documents #{documents}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
     end
@@ -303,7 +294,6 @@ module Indexer
       end
       parse_solr_response(response)
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
     end
@@ -343,7 +333,6 @@ module Indexer
         response = solr_client.commit
       end
     rescue StandardError => e
-      # @@app.alert_squash e
       @@log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
     end
