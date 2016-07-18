@@ -10,10 +10,6 @@ gem 'retries'
 gem 'druid-tools'
 gem 'whenever', :require => false
 
-# Squash
-gem 'squash_ruby', :require => 'squash/ruby'
-gem 'squash_rails', :require => 'squash/rails'
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.

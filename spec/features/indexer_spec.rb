@@ -123,7 +123,6 @@ describe('Indexer lib') do
 
   it 'returns the empty doc hash when it cannot open a file' do
     allow_message_expectations_on_nil
-    allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     expect(indexer.solrize_object(sample_doc_path_files_missing)).to match({})
   end
 
@@ -140,7 +139,6 @@ describe('Indexer lib') do
 
     it 'logs an error, but swallows the exception when mods is not present' do
       allow_message_expectations_on_nil
-      allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(dest_dir, 'mods')
       expect(indexer.log_object).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
@@ -155,7 +153,6 @@ describe('Indexer lib') do
 
     it 'logs an error, but swallows the exception when the public xml is not present' do
       allow_message_expectations_on_nil
-      allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       remove_purl_file(dest_dir, 'public')
       expect(indexer.log_object).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
@@ -202,7 +199,6 @@ describe('Indexer lib') do
     # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
     allow_message_expectations_on_nil
-    allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('doc_submit_fails') do
       docs = [indexer.solrize_object(sample_doc_path)]
       expect(indexer.add_and_commit_to_solr(docs)).to be_falsey
@@ -214,7 +210,6 @@ describe('Indexer lib') do
     # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
     allow_message_expectations_on_nil
-    allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
     VCR.use_cassette('failed_solr_commit') do
       expect(indexer.commit_to_solr(indexer.establish_solr_connection)).to be_falsey
     end
@@ -267,7 +262,6 @@ describe('Indexer lib') do
 
     it 'deletes the druid from solr the files do not remain in the document cache' do
       allow_message_expectations_on_nil
-      allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       # Index the druid into solr
       VCR.use_cassette('successful_solr_delete') do
         start_time = Time.zone.now
@@ -401,7 +395,6 @@ describe('Indexer lib') do
 
     it 'logs an error when rsolr cannot delete something' do
       allow_message_expectations_on_nil
-      allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
       expect(indexer.log_object).to receive(:error).once
       allow(testing_solr_connection).to receive(:delete_by_id).and_raise(RSolr::Error)
@@ -410,7 +403,6 @@ describe('Indexer lib') do
 
     it 'logs an error when rslor cannot commit after a delete operation' do
       allow_message_expectations_on_nil
-      allow(indexer.app_controller).to receive(:alert_squash).and_return(true)
       expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(indexer).to receive(:commit_to_solr).once.and_return(false)
