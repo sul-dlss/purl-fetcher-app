@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get 'about/version' => 'about#version'
   mount AboutPage::Engine => '/about(.:format)' # Or whever you want to access the about page
 
-  resource :docs, :defaults => { :format => 'json' } do
-    match 'deletes', :on => :collection, :via => [:get, :post]
-    match 'changes', :on => :collection, :via => [:get, :post]
+  resource :docs, :defaults => { :format => 'json' }, :only => [:get] do
+    get 'deletes'
+    get 'changes'
   end
 end
