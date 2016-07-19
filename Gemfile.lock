@@ -113,6 +113,7 @@ GEM
       mime-types (~> 1.15)
       posix-spawn (~> 0.3.6)
     hike (1.2.3)
+    honeybadger (2.6.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -296,6 +297,7 @@ DEPENDENCIES
   dlss-capistrano
   dlss_cops
   druid-tools
+  honeybadger (~> 2.0)
   is_it_working-cbeer
   jbuilder (~> 2.0)
   jettywrapper
