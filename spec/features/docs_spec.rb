@@ -69,30 +69,6 @@ describe('Docs Controller') do
     end
   end
 
-  describe('Tests Show Functions') do
-    let(:docs_response_with_time) do
-      VCR.use_cassette('show_call') do
-        visit "docs?last_modified=9999-01-01T00:00:00Z"
-        page.body
-      end
-    end
-    let(:docs_response_without_time) do
-      VCR.use_cassette('show_call') do
-        visit 'docs'
-        page.body
-      end
-    end
-
-    it 'returns responses that are not JSON' do
-      expect{ JSON.parse(docs_response_with_time) }.to raise_error(JSON::ParserError)
-      expect{ JSON.parse(docs_response_without_time) }.to raise_error(JSON::ParserError)
-    end
-
-    it 'return response that are the same regardless of time params' do
-      expect(docs_response_with_time).to match(docs_response_without_time)
-    end
-  end
-
   describe('Changes Response Respects Time Keys') do
   end
 end
