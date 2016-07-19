@@ -93,17 +93,7 @@ module Fetcher
   #   get_times(:first_modified=>'junk') # throws exception
   #   get_times(:first_modified=>'01/01/2014',:last_modified=>'01/01/2015') # returns {:first=>'2014-01-01T00:00:00Z',last:'2015-01-01T00:00:00Z'}
   def get_times(p = {})
-    params = p || {}
-    first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    last_modified = params[:last_modified] || Y_TEN_K
-    begin
-      first_modified_time = Time.zone.parse(first_modified).iso8601
-      last_modified_time = Time.zone.parse(last_modified).iso8601
-    rescue
-      raise 'invalid time paramaters'
-    end
-    raise 'start time is before end time' if first_modified_time >= last_modified_time
-    { first: first_modified_time, last: last_modified_time }
+    ModificationTime.get_times(p)
   end
 
   # Given a hash containing "first_modified" and "last_modified", returns the solr query part to append to the overall query to properly return dates,
