@@ -11,7 +11,6 @@ module Indexer
   @@indexer_config = PurlFetcher::Application.config.solr_indexing
   @@log = Logger.new('log/indexing.log')
   @@modified_at_or_later = @@indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago # default setting
-  @@app = ApplicationController.new
 
   # Finds all objects modified in the specified number of minutes and indexes them into to solr
   # Note: This is not the function to use for processing deletes
@@ -352,7 +351,7 @@ module Indexer
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.zone.now + 5.minutes).utc.iso8601)
-    times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
+    times = ModificationTime.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND -#{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
     response = run_solr_query(query)
@@ -365,7 +364,7 @@ module Indexer
   # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
   # @return [Hash] JSon formatted solr response
   def get_deletes_list_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.zone.now + 5.minutes).utc.iso8601)
-    times = @@app.get_times(first_modified: first_modified, last_modified: last_modified)
+    times = ModificationTime.get_times(first_modified: first_modified, last_modified: last_modified)
     mod_field = @@indexer_config['change_field']
     query = "* AND #{@@indexer_config['deleted_field']}:'true' AND #{mod_field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]"
     solr_resp = run_solr_query(query)
@@ -466,13 +465,6 @@ module Indexer
   # @return [Logger] The log
   def log_object
     @@log
-  end
-
-  # Method to return the application controller to anyone interested (ex rspec tests)
-  #
-  # @return [ApplicatonController] application controller
-  def app_controller
-    @@app
   end
 
   # Test The Connect To the Solr Core.  This establishes a connection to the solr cloud and then attempts a basic select against the core the app is configured to use
