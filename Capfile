@@ -25,6 +25,7 @@ require 'capistrano/bundler'
 require 'dlss/capistrano'
 require 'capistrano/rvm'
 require 'whenever/capistrano'
+require 'capistrano/honeybadger'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

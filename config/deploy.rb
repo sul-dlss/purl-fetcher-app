@@ -22,3 +22,6 @@ set :keep_releases, 5
 
 # server uses standardized suffix
 server "purl-fetcher-#{fetch(:stage)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
+
+# honeybadger_env otherwise defaults to rails_env
+set :honeybadger_env, "#{fetch(:stage)}"
