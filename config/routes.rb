@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :collections, :defaults => { :format => 'json' }
+  resources :collections, defaults: { format: 'json' }, only: [:show, :index]
 
   root :controller => 'about', :action => 'index'
   get 'about/version' => 'about#version'
