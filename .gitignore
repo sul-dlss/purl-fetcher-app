@@ -25,10 +25,6 @@
 /jetty/solr/test/conf/solrconfig.xml
 /jetty/*.log
 
-#Ignore Configuration Files 
-config/solr.yml
-config/secrets.yml
-
 /public/*.gz
 /public/sitemap.xml
 
