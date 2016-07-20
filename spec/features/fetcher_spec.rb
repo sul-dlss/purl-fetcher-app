@@ -3,7 +3,7 @@ require 'rails_helper'
 describe('Fetcher lib') do
   let(:fetcher) { FetcherTester.new }
   let(:earliest) { '1970-01-01T00:00:00Z' }
-  let(:latest) { Fetcher::Y_TEN_K }
+  let(:latest) { ModificationTime::Y_TEN_K }
 
   it 'lets us know if the user only wants registered items' do
     expect(fetcher.registered_only?(nil)).to be false
@@ -53,7 +53,7 @@ describe('Fetcher lib') do
   end
 
   it 'raises an error when selected for an invalid date range' do
-    times = { first: Fetcher::Y_TEN_K, last: Fetcher::Y_TEN_K }
+    times = { first: ModificationTime::Y_TEN_K, last: ModificationTime::Y_TEN_K }
     last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
     expect{ fetcher.determine_latest_date(times, last_changed) }.to raise_error(RuntimeError)
   end

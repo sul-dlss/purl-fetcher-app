@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ModificationTime do
   describe '.get_times' do
     let(:earliest) { '1970-01-01T00:00:00Z' }
-    let(:latest) { Fetcher::Y_TEN_K }
+    let(:latest) { ModificationTime::Y_TEN_K }
     it 'returns the current date and time when time not passed in' do
       expect(described_class.get_times(nil)).to eq(first: earliest, last: latest)
       expect(described_class.get_times({})).to eq(first: earliest, last: latest)
@@ -36,6 +36,35 @@ describe ModificationTime do
       expect(described_class.get_times(first_modified: '01/01/2010', last_modified: '2011-01-01T18:00:00Z')).to eq(first: '2010-01-01T00:00:00Z', last: '2011-01-01T18:00:00Z')
       expect(described_class.get_times(first_modified: '2011-01-01T18:00:00Z', last_modified: '2014-12-01')).to eq(first: '2011-01-01T18:00:00Z', last: '2014-12-01T00:00:00Z')
       expect(described_class.get_times(first_modified: 'January 1, 2009', last_modified: '2012-01-01T18:00:00Z')).to eq(first: '2009-01-01T00:00:00Z', last: '2012-01-01T18:00:00Z')
+    end
+  end
+  describe '#initialize' do
+    it 'sets default times' do
+      expect(subject.first_modified).to eq '1970-01-01T00:00:00Z'
+      expect(subject.last_modified).to eq '9999-12-31T23:59:59Z'
+    end
+    it 'validates inputs' do
+      expect do
+        described_class.new(first_modified: 'not a time')
+      end.to raise_error 'invalid time paramaters'
+      expect do
+        described_class.new(last_modified: 'not a time')
+      end.to raise_error 'invalid time paramaters'
+      expect do
+        described_class.new(
+          last_modified: Time.zone.at(0).iso8601,
+          first_modified: described_class::Y_TEN_K
+        )
+      end.to raise_error 'start time is before end time'
+    end
+  end
+  describe '#convert_to_iso8601' do
+    it 'returns a Hash with first/last keys' do
+      expect(subject.convert_to_iso8601).to include(:first, :last)
+    end
+    it 'returns a properly converted ISO8601 formatted date' do
+      expect(subject.convert_to_iso8601)
+        .to eq first: '1970-01-01T00:00:00Z', last: '9999-12-31T23:59:59Z'
     end
   end
 end

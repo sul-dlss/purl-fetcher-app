@@ -3,8 +3,6 @@ require 'active_support/inflector'
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
 
-  Y_TEN_K = '9999-12-31T23:59:59Z'.freeze
-
   # Run a solr query, and do some logging
   # @param params [Hash] params to send to solr
   # @param method [String] type of query to send to solr (defaults to "select")
