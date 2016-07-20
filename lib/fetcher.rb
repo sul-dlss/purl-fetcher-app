@@ -3,8 +3,6 @@ require 'active_support/inflector'
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
 
-  Y_TEN_K = '9999-12-31T23:59:59Z'.freeze
-
   # Run a solr query, and do some logging
   # @param params [Hash] params to send to solr
   # @param method [String] type of query to send to solr (defaults to "select")
@@ -82,30 +80,6 @@ module Fetcher
     matches.nil? ? raise('invalid druid') : matches[0]
   end
 
-  # Given a hash containing "first_modified" and "last_modified", ensures the date formats are valid, converts to proper ISO8601 if they are.
-  # If first_modified is missing, sets to the earliest possible date.
-  # If last_modified is missing, sets to current date/time.
-  # If invalid dates are passed in, throws an exception.
-  # @param p [Hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
-  # @return [Hash] containing :first and :last keys with proper vaues
-  # @example
-  #   get_times(:first_modified=>'01/01/2014') # returns {:first=>'2014-01-01T00:00:00Z',last:'CURRENT_DATETIME_IN_UTC_ISO8601'}
-  #   get_times(:first_modified=>'junk') # throws exception
-  #   get_times(:first_modified=>'01/01/2014',:last_modified=>'01/01/2015') # returns {:first=>'2014-01-01T00:00:00Z',last:'2015-01-01T00:00:00Z'}
-  def get_times(p = {})
-    params = p || {}
-    first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    last_modified = params[:last_modified] || Y_TEN_K
-    begin
-      first_modified_time = Time.zone.parse(first_modified).iso8601
-      last_modified_time = Time.zone.parse(last_modified).iso8601
-    rescue
-      raise 'invalid time paramaters'
-    end
-    raise 'start time is before end time' if first_modified_time >= last_modified_time
-    { first: first_modified_time, last: last_modified_time }
-  end
-
   # Given a hash containing "first_modified" and "last_modified", returns the solr query part to append to the overall query to properly return dates,
   # which my be blank if user asks for just registered objects
   # @param p [hash] which includes :first_modified and :last_modified keys as coming in from the querystring from the user
@@ -114,7 +88,7 @@ module Fetcher
   #   get_date_solr_query(:first_modified=>'01/01/2014') # returns "and published_dt:["2014-01-01T00:00:00Z" TO "CURRENT_DATETIME"]"
   #   get_date_solr_query(:first_modified=>'01/01/2014',:status=>'registered') # returns ""
   def get_date_solr_query(p = {})
-    times = get_times(p)
+    times = ModificationTime.get_times(p)
     registered_only?(p) ? '' : "AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]" # unless the user has asked for only registered items, apply the date range for published date
   end
 
@@ -139,7 +113,7 @@ module Fetcher
   # @return [Hash] formatted json
   def format_json(params, response)
     all_json = {}
-    times = get_times(params)
+    times = ModificationTime.get_times(params)
 
     # Create A Hash that contains an empty list for each Fedora Type
     Fedora_Types.each do |_key, value|

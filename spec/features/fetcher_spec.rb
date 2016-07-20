@@ -3,7 +3,7 @@ require 'rails_helper'
 describe('Fetcher lib') do
   let(:fetcher) { FetcherTester.new }
   let(:earliest) { '1970-01-01T00:00:00Z' }
-  let(:latest) { Fetcher::Y_TEN_K }
+  let(:latest) { ModificationTime::Y_TEN_K }
 
   it 'lets us know if the user only wants registered items' do
     expect(fetcher.registered_only?(nil)).to be false
@@ -20,40 +20,6 @@ describe('Fetcher lib') do
     expect(fetcher.get_date_solr_query(status: 'registered', first_modified: '01/01/2014', last_modified: nil)).to eq('')
     expect(fetcher.get_date_solr_query(status: 'wazzup', first_modified: '01/01/2014', last_modified: nil)).to eq("AND published_dttsim:[\"2014-01-01T00:00:00Z\" TO \"#{latest}\"]")
     expect(fetcher.get_date_solr_query(status: 'registered')).to eq('')
-  end
-
-  it 'returns the current date and time when time not passed in' do
-    expect(fetcher.get_times(nil)).to eq(first: earliest, last: latest)
-    expect(fetcher.get_times({})).to eq(first: earliest, last: latest)
-    expect(fetcher.get_times(first_modified: nil, last_modified: '01/01/2014')).to eq(first: earliest, last: '2014-01-01T00:00:00Z')
-    expect(fetcher.get_times(first_modified: '01/01/2014', last_modified: nil)).to eq(first: '2014-01-01T00:00:00Z', last: latest)
-  end
-
-  it 'raises an exception if the start date is not before the end date' do
-    expect{ fetcher.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2009 10:00:00am') }.to raise_error('start time is before end time')
-    expect{ fetcher.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2010 10:00:00am') }.to raise_error('start time is before end time')
-    expect{ fetcher.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2010 10:00:01am') }.not_to raise_error
-  end
-
-  it 'raises an exception for either starting of ending date in an invalid format' do
-    expect{ fetcher.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: 'ness') }.to raise_error('invalid time paramaters')
-    expect{ fetcher.get_times(first_modified: 'bogus', last_modified: '01/01/2010 10:00:00am') }.to raise_error('invalid time paramaters')
-    expect{ fetcher.get_times(first_modified: 'bogus', last_modified: 'ness') }.to raise_error('invalid time paramaters')
-  end
-
-  it 'returns the properly formatted hash for various valid types of input date or time' do
-    expected = { first: '2010-01-01T10:00:00Z', last: '2011-01-01T10:00:00Z' }
-    inputs = [
-      { first_modified: '01/01/2010 10:00:00am',   last_modified: '01/01/2011 10:00:00am UTC' },
-      { first_modified: '2010-01-01T02:00:00 PST', last_modified: '01/01/2011 2:00:00am PST' },
-      { first_modified: '01/01/2010 10:00:00am',   last_modified: '2011-01-01T10:00:00Z' }
-    ]
-    inputs.each do |input|
-      expect(fetcher.get_times(input)).to eq(expected)
-    end
-    expect(fetcher.get_times(first_modified: '01/01/2010', last_modified: '2011-01-01T18:00:00Z')).to eq(first: '2010-01-01T00:00:00Z', last: '2011-01-01T18:00:00Z')
-    expect(fetcher.get_times(first_modified: '2011-01-01T18:00:00Z', last_modified: '2014-12-01')).to eq(first: '2011-01-01T18:00:00Z', last: '2014-12-01T00:00:00Z')
-    expect(fetcher.get_times(first_modified: 'January 1, 2009', last_modified: '2012-01-01T18:00:00Z')).to eq(first: '2009-01-01T00:00:00Z', last: '2012-01-01T18:00:00Z')
   end
 
   it 'parses druids correctly' do
@@ -87,7 +53,7 @@ describe('Fetcher lib') do
   end
 
   it 'raises an error when selected for an invalid date range' do
-    times = { first: Fetcher::Y_TEN_K, last: Fetcher::Y_TEN_K }
+    times = { first: ModificationTime::Y_TEN_K, last: ModificationTime::Y_TEN_K }
     last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
     expect{ fetcher.determine_latest_date(times, last_changed) }.to raise_error(RuntimeError)
   end
