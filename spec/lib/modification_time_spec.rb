@@ -12,15 +12,15 @@ describe ModificationTime do
     end
 
     it 'raises an exception if the start date is not before the end date' do
-      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2009 10:00:00am') }.to raise_error('start time is before end time')
-      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2010 10:00:00am') }.to raise_error('start time is before end time')
+      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2009 10:00:00am') }.to raise_error(ArgumentError, 'start time is before end time')
+      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2010 10:00:00am') }.to raise_error(ArgumentError, 'start time is before end time')
       expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: '01/01/2010 10:00:01am') }.not_to raise_error
     end
 
     it 'raises an exception for either starting of ending date in an invalid format' do
-      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: 'ness') }.to raise_error('invalid time paramaters')
-      expect{ described_class.get_times(first_modified: 'bogus', last_modified: '01/01/2010 10:00:00am') }.to raise_error('invalid time paramaters')
-      expect{ described_class.get_times(first_modified: 'bogus', last_modified: 'ness') }.to raise_error('invalid time paramaters')
+      expect{ described_class.get_times(first_modified: '01/01/2010 10:00:00am', last_modified: 'ness') }.to raise_error(ArgumentError, 'invalid time parameters')
+      expect{ described_class.get_times(first_modified: 'bogus', last_modified: '01/01/2010 10:00:00am') }.to raise_error(ArgumentError, 'invalid time parameters')
+      expect{ described_class.get_times(first_modified: 'bogus', last_modified: 'ness') }.to raise_error(ArgumentError, 'invalid time parameters')
     end
 
     it 'returns the properly formatted hash for various valid types of input date or time' do
@@ -46,16 +46,16 @@ describe ModificationTime do
     it 'validates inputs' do
       expect do
         described_class.new(first_modified: 'not a time')
-      end.to raise_error 'invalid time paramaters'
+      end.to raise_error ArgumentError, 'invalid time parameters'
       expect do
         described_class.new(last_modified: 'not a time')
-      end.to raise_error 'invalid time paramaters'
+      end.to raise_error ArgumentError, 'invalid time parameters'
       expect do
         described_class.new(
           last_modified: Time.zone.at(0).iso8601,
           first_modified: described_class::Y_TEN_K
         )
-      end.to raise_error 'start time is before end time'
+      end.to raise_error ArgumentError, 'start time is before end time'
     end
   end
   describe '#convert_to_iso8601' do

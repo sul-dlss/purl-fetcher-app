@@ -10,8 +10,8 @@ class ModificationTime
   def initialize(first_modified: Time.zone.at(0).iso8601, last_modified: Y_TEN_K)
     @first_modified = Time.zone.parse(first_modified)
     @last_modified = Time.zone.parse(last_modified)
-    raise 'invalid time paramaters' if @first_modified.nil? || @last_modified.nil?
-    raise 'start time is before end time' if @first_modified >= @last_modified
+    raise ArgumentError, 'invalid time parameters' if @first_modified.nil? || @last_modified.nil?
+    raise ArgumentError, 'start time is before end time' if @first_modified >= @last_modified
   end
 
   ##
