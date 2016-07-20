@@ -12,7 +12,7 @@ set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/solr.yml config/secrets.yml}
+set :linked_files, %w{config/solr.yml config/secrets.yml config/honeybadger.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
