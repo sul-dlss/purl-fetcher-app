@@ -1,16 +1,24 @@
 require 'jettywrapper' unless Rails.env.production? || Rails.env.development?
 require 'rest_client'
 
-desc 'Run continuous integration suite (assuming jetty is not yet started)'
+desc 'Run continuous integration suite (tests, coverage, rubocop, docs)'
 task :ci do
-  Rake::Task['rubocop'].invoke
+   Rake::Task['rspec'].invoke
+   Rake::Task['rubocop'].invoke
+end
+
+desc 'Rebuild vcr cassettes and run tests (assuming jetty is not yet started)'
+task :rebuild_cassettes do
   unless Rails.env.test?
-    system('bundle exec rake ci RAILS_ENV=test')
+    system('bundle exec rake rebuild_cassettes RAILS_ENV=test')
   else
+    system('rm -fr spec/vcr_cassettes')
     Jettywrapper.wrap(Jettywrapper.load_config) do
       Rake::Task['purlfetcher:refresh_fixtures'].invoke
-      system('bundle exec rspec spec --color')
+      Rake::Task['rspec'].invoke
     end
+    system('rm spec/vcr_cassettes/doc_submit_fails.yml') # these two cassettes get created when you run the tests, but you don't want them (see spec/features/indexer_spec.rb:197)
+    system('rm spec/vcr_cassettes/failed_solr_commit.yml')
   end
 end
 
@@ -23,16 +31,6 @@ task :rubocop do
     rescue LoadError
       puts 'Unable to load RuboCop.'
     end
-  end
-end
-
-desc 'Assuming jetty is already running - then migrate, reload all fixtures and run rspec'
-task :local_ci do
-  unless Rails.env.test?
-    system('bundle exec rake local_ci RAILS_ENV=test')
-  else
-    Rake::Task['purlfetcher:refresh_fixtures'].invoke
-    system('bundle exec rspec spec --color')
   end
 end
 
@@ -73,11 +71,6 @@ namespace :purlfetcher do
     add_docs = Dir.glob("#{Rails.root}/spec/fixtures/*.xml").map { |file| File.read(file) }
     puts "Adding #{add_docs.count} documents to #{PurlFetcher::Application.config.solr_url}"
     RestClient.post "#{PurlFetcher::Application.config.solr_url}/update?commit=true", "<update><add>#{add_docs.join(" ")}</add></update>", :content_type => 'text/xml'
-  end
-
-  desc 'Clean up saved items - remove any saved items which reference items/solr documents that do not exist'
-  task :cleanup_saved_items => :environment do |t, args|
-    SavedItem.all.each { |saved_item| saved_item.destroy if saved_item.solr_document.nil? }
   end
 
   desc 'Delete all records in solr'

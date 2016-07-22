@@ -40,28 +40,27 @@ rails server
 ### To run the tests against the current VCR Cassettes:
 
 ```bash
-bundle install
-rspec
+rake
 ```
 
-If you have a dependency related error, try the tests via:
+This command will run all of the tests, run rubocop and generate new documentation.
+
+If you have a dependency related error or only want to run tests (no rubocop or docs):
+
 ```bash
 bundle exec rspec
 ```
 
 ### To run the tests and generate new VCR Cassettes:
 
-This can be used to refresh outdated cassettes or record cassettes for new tests.
-
-* If you are going to use jetty, start it and refresh the fixtures:
+This can be used to refresh outdated cassettes or record cassettes for new tests.  With jetty stopped, you can start it, refresh the fixtures, rebuild the cassettes and run the tests using the following task:
 
 ```bash
-rake jetty:start
-rake purlfetcher:refresh_fixtures RAILS_ENV=test
+rake rebuild_cassettes
 ```
 
-* If you are not using jetty, confirm you can connect to whatever you are recording from.
-* To replace cassettes, delete any current cassettes by renaming or removing the directory `spec/vcr_cassettes`.  If you are just adding cassettes this is not needed.
+Note, the above task will perform the following steps, which you can also try manually.  Note that if you are not using jetty, confirm you can connect to whatever you are recording from.
+* Delete any current cassettes by renaming or removing the directory `spec/vcr_cassettes`.  If you are just adding cassettes this is not needed.
 * Edit the VCR config in `spec/spec_helper.rb` to enable recording new episodes.
 * Run the tests via:
 ```bash
