@@ -35,6 +35,14 @@ rake jetty:start
 rails server
 ```
 
+## Logging
+
+There are three log files:
+
+* `indexing.log` - items that are being indexed (added or deleted)
+* `[environment].log` - debug information for Solr queries
+* `access.log` and `error.log` from Apache - traffic to the HTTP APIs
+
 ## Running tests
 
 ### To run the tests against the current VCR Cassettes:
