@@ -5,11 +5,11 @@ http_interactions:
     uri: http://localhost:8983/solr/test/update?wt=ruby
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="title_tsi">This
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="title_tesim">This
         is Pete's New Test title for this object.</field><field name="id">druid:bb050dj7711</field><field
         name="true_releases_ssim">CARRICKR-TEST</field><field name="true_releases_ssim">Robot_Testing_Feb_5_2015</field><field
         name="false_releases_ssim">Atago</field><field name="objectType_ssim">item</field><field
-        name="is_member_of_ssim">druid:nt028fd5773</field><field name="is_member_of_ssim">druid:wn860zc7322</field><field
+        name="is_member_of_collection_ssim">druid:nt028fd5773</field><field name="is_member_of_collection_ssim">druid:wn860zc7322</field><field
         name="indexed_dtsi">2016-07-07T17:58:20Z</field></doc></add>
     headers:
       Content-Type:

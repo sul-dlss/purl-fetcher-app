@@ -4,6 +4,6 @@
    <field name ="objectType_ssim">item</field>
    <field name ="published_dttsim">2013-11-11T23:34:29Z</field>
    <field name ="is_governed_by_ssim">info:fedora/druid:vb546ms7107</field>
-   <field name ="is_member_of_ssim">info:fedora/druid:yg867hg1375</field>
+   <field name ="is_member_of_collection_ssim">info:fedora/druid:yg867hg1375</field>
    <field name ="catkey_id_ssim">3051739</field>
 </doc>

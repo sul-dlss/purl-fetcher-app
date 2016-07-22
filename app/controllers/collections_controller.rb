@@ -15,7 +15,7 @@ class CollectionsController < ApplicationController
   #   http://localhost:3000/collections?first_modified=2014-01-01T00:00:00Z # returns only the collections published SINCE January of 2014 up until today in json format
   #   http://localhost:3000/collections?first_modified=2014-01-01T00:00:00Z&rows=0 # returns only the count of collections published SINCE January of 2014 up until today in json format
   def index
-    result = find_all_fedora_type(params, :collection)
+    result = find_all_object_type(params, :collection)
     render_result(result)
   end
 

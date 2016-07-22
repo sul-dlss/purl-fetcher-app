@@ -164,7 +164,7 @@ module Indexer
 
     # Get the ObjectType for an object
     begin
-      doc_hash[Type_Field.to_sym] = get_object_type_from_identity_metadata(path)
+      doc_hash[:objectType_ssim] = get_object_type_from_identity_metadata(path)
     rescue StandardError => e
       @@log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
     end
@@ -172,7 +172,7 @@ module Indexer
     # Get membership of sets and collections for an object
     begin
       membership = get_membership_from_publicxml(path)
-      doc_hash[Solr_terms['collection_field'].to_sym] = membership unless membership.empty? # only add this if we have a membership
+      doc_hash[:is_member_of_collection_ssim] = membership unless membership.empty? # only add this if we have a membership
     rescue StandardError => e
       @@log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
     end
@@ -180,7 +180,7 @@ module Indexer
     # Get the catkey of an object
     begin
       catkey = get_catkey_from_identity_metadata(path)
-      doc_hash[@@indexer_config['catkey_field'].to_sym] = catkey unless catkey.empty? # only add this if we have a catkey
+      doc_hash[:catkey_id_ssim] = catkey unless catkey.empty? # only add this if we have a catkey
     rescue StandardError => e
       @@log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
     end
@@ -247,12 +247,12 @@ module Indexer
     mods = Stanford::Mods::Record.new
     mods.from_str(IO.read(Pathname(path + File::SEPARATOR + 'mods')))
     title = mods.sw_full_title
-    { @@indexer_config['title_field'].to_sym => title }
+    { :title_tesim => title }
   end
 
   # Add an array of documents to solr and commit
   #
-  # @param documents [Array] An array of hashes that RSolr can add to solr in the form of [{id=>druid:1, title_tsi: "Foo"}]
+  # @param documents [Array] An array of hashes that RSolr can add to solr in the form of [{id=>druid:1, title_tesim: "Foo"}]
   # @return [Boolean] True if the documents were added and commited succesfully, false if they were not
   def add_and_commit_to_solr(documents)
     solr = establish_solr_connection

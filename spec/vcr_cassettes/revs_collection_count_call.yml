@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:8983/solr/test/select?q=(is_member_of_ssim:%22info:fedora/druid:nt028fd5773%22%20OR%20id:%22druid:nt028fd5773%22)%20AND%20published_dttsim:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=0&wt=json
+    uri: http://localhost:8983/solr/test/select?q=(is_member_of_collection_ssim:%22info:fedora/druid:nt028fd5773%22%20OR%20id:%22druid:nt028fd5773%22)%20AND%20published_dttsim:%5B%221970-01-01T00:00:00Z%22%20TO%20%229999-12-31T23:59:59Z%22%5D&rows=0&wt=json
     body:
       encoding: US-ASCII
       string: ''

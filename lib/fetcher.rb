@@ -3,6 +3,8 @@ require 'active_support/inflector'
 # A mixin module that is part of application controller, this provides base functionality to all classes
 module Fetcher
 
+  OBJECT_TYPES = { collection: 'collection', item: 'item', set: 'set'}
+
   # Run a solr query, and do some logging
   # @param params [Hash] params to send to solr
   # @param method [String] type of query to send to solr (defaults to "select")
@@ -18,32 +20,32 @@ module Fetcher
     response
   end
 
-  # Given the user's querystring parameters, and a fedora type, return a solr response containing all of the objects associated with that type
+  # Given the user's querystring parameters, and a object type, return a solr response containing all of the objects associated with that type
   # (potentially limited by rows or date if specified by the user)
   # @param params [Hash] querystring parameters from user, which could be an empty hash
-  # @param ftype [String] fedora object type, could be :collection
+  # @param ftype [String] object type, could be :collection
   # @return [Hash] solr response
-  # @example find_all_fedora_type(params,:collection)
-  def find_all_fedora_type(params, ftype)
+  # @example find_all_object_type(params,:collection)
+  def find_all_object_type(params, ftype)
     # ftype should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
-    solrparams = { q: "#{Type_Field}:\"#{Fedora_Types[ftype]}\" #{date_range_q}", wt: :json }
+    solrparams = { q: "objectType_ssim:\"#{OBJECT_TYPES[ftype]}\" #{date_range_q}", wt: :json }
     get_rows(solrparams, params)
     response = run_solr_query(solrparams)
     determine_proper_response(params, response)
   end
 
-  # Given the user's querystring parameters (including the ID paramater, which represents the druid), and a fedora object type,
+  # Given the user's querystring parameters (including the ID paramater, which represents the druid), and a object type,
   # return a solr response containing all of the objects controlled by that druid of that type (potentially limited by rows or date if specified by the user)
   # @param params [Hash] querystring parameters from user, which must include :id of the druid
-  # @param controlled_by [String] fedora object type, could be :collection
+  # @param controlled_by [String] object type, could be :collection
   # @return [Hash] solr response
-  # @example find_all_fedora_type(params,:collection)
+  # @example find_all_object_type(params,:collection)
   def find_all_under(params, controlled_by)
     # controlled_by should be :collection (or other symbol if we added more since this was updated)
     date_range_q = get_date_solr_query(params)
     solrparams = {
-      q: "(#{Controller_Types[controlled_by]}:\"#{druid_of_controller(params[:id])}\" OR #{ID_Field}:\"#{druid_for_solr(params[:id])}\") #{date_range_q}",
+      q: "(is_member_of_collection_ssim:\"#{druid_of_controller(params[:id])}\" OR id:\"#{druid_for_solr(params[:id])}\") #{date_range_q}",
       wt: :json,
     }
     get_rows(solrparams, params)
@@ -56,7 +58,7 @@ module Fetcher
   # @return [String] druid
   # @example druid_for_controller('oo000oo0001') # returns info:fedora/druid:oo000oo0001
   def druid_of_controller(druid)
-    Fedora_Prefix + Druid_Prefix + parse_druid(druid)
+    'info:fedora/druid:' + parse_druid(druid)
   end
 
   # Given a druid without the druid prefix (e.g. oo000oo0001), add the prefix needed for querying solr
@@ -64,7 +66,7 @@ module Fetcher
   # @return [string] druid
   # @example druid_for_solr('oo000oo0001') # returns druid:oo000oo0001
   def druid_for_solr(druid)
-    Druid_Prefix + parse_druid(druid)
+    'druid:' + parse_druid(druid)
   end
 
   # Given a druid in any format (e.g. oo000oo0001 or druid:oo00oo0001), returns only the numberical part, stripping the "druid:" prefix
@@ -89,7 +91,7 @@ module Fetcher
   #   get_date_solr_query(:first_modified=>'01/01/2014',:status=>'registered') # returns ""
   def get_date_solr_query(p = {})
     times = ModificationTime.get_times(p)
-    registered_only?(p) ? '' : "AND #{Last_Changed_Field}:[\"#{times[:first]}\" TO \"#{times[:last]}\"]" # unless the user has asked for only registered items, apply the date range for published date
+    registered_only?(p) ? '' : "AND published_dttsim:[\"#{times[:first]}\" TO \"#{times[:last]}\"]" # unless the user has asked for only registered items, apply the date range for published date
   end
 
   # Given a params hash that will be passed to solr, adds in the proper :rows value depending on if we are requesting a certain number of rows or not
@@ -115,8 +117,8 @@ module Fetcher
     all_json = {}
     times = ModificationTime.get_times(params)
 
-    # Create A Hash that contains an empty list for each Fedora Type
-    Fedora_Types.each do |_key, value|
+    # Create A Hash that contains an empty list for each Object Type
+    OBJECT_TYPES.each do |_key, value|
       all_json.store(value.pluralize.to_sym, [])
     end
 
