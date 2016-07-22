@@ -57,4 +57,10 @@ describe('Fetcher lib') do
     last_changed = ['2014-05-05T05:04:13Z', '2014-04-05T05:04:13Z']
     expect{ fetcher.determine_latest_date(times, last_changed) }.to raise_error(RuntimeError)
   end
+
+  it 'raises an error when object type is not in the OBJECT_TYPES hash' do
+    obj_type = 'whatever'
+    expect{ fetcher.find_all_object_type({}, obj_type) }.to raise_error(ArgumentError)
+  end
+
 end

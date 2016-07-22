@@ -23,7 +23,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {'responseHeader'=>{'status'=>0,'QTime'=>1},'response'=>{'numFound'=>1,'start'=>0,'docs'=>[{'title_tsi'=>'This is Pete\'s New Test title for this object.','id'=>'druid:bb050dj7711','true_releases_ssim'=>['CARRICKR-TEST','Robot_Testing_Feb_5_2015'],'false_releases_ssim'=>['Atago'],'objectType_ssim'=>['item'],'is_member_of_ssim'=>['druid:nt028fd5773','druid:wn860zc7322'],'indexed_dtsi'=>'2016-07-07T16:44:16Z','_version_'=>1539215045265719296,'timestamp'=>'2016-07-07T16:44:16.095Z'}]}}
+        {'responseHeader'=>{'status'=>0,'QTime'=>1},'response'=>{'numFound'=>1,'start'=>0,'docs'=>[{'title_tesim'=>'This is Pete\'s New Test title for this object.','id'=>'druid:bb050dj7711','true_releases_ssim'=>['CARRICKR-TEST','Robot_Testing_Feb_5_2015'],'false_releases_ssim'=>['Atago'],'objectType_ssim'=>['item'],'is_member_of_collection_ssim'=>['druid:nt028fd5773','druid:wn860zc7322'],'indexed_dtsi'=>'2016-07-07T16:44:16Z','_version_'=>1539215045265719296,'timestamp'=>'2016-07-07T16:44:16.095Z'}]}}
     http_version: 
   recorded_at: Thu, 07 Jul 2016 17:58:20 GMT
 recorded_with: VCR 2.9.3

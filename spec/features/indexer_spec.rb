@@ -58,7 +58,7 @@ describe('Indexer lib') do
   end
 
   it 'gets the title from the mods file' do
-    expect(indexer.read_mods_for_object(sample_doc_path)).to match(title_tsi: "This is Pete's New Test title for this object.")
+    expect(indexer.read_mods_for_object(sample_doc_path)).to match(title_tesim: "This is Pete's New Test title for this object.")
   end
 
   it 'raises an error when there is no mods' do
@@ -107,18 +107,18 @@ describe('Indexer lib') do
     expect(indexer.solrize_object(sample_doc_path)).to match(objectType_ssim: ['item'],
                                                              false_releases_ssim: ['Atago'],
                                                              id: 'druid:bb050dj7711',
-                                                             title_tsi: "This is Pete's New Test title for this object.",
+                                                             title_tesim: "This is Pete's New Test title for this object.",
                                                              true_releases_ssim: ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'],
-                                                             is_member_of_ssim: ['druid:nt028fd5773', 'druid:wn860zc7322'])
+                                                             is_member_of_collection_ssim: ['druid:nt028fd5773', 'druid:wn860zc7322'])
   end
 
   it 'returns the doc hash with no membership but a catkey for a top level collection that has a catkey' do
-    expect(indexer.solrize_object(ct961sj2730_path)).to match(title_tsi: 'Caroline Batchelor Map Collection.',
+    expect(indexer.solrize_object(ct961sj2730_path)).to match(title_tesim: 'Caroline Batchelor Map Collection.',
                                                               id: 'druid:ct961sj2730',
                                                               true_releases_ssim: [],
                                                               false_releases_ssim: [],
                                                               objectType_ssim: ['collection', 'set'],
-                                                              catkey_tsi: '10357851')
+                                                              catkey_id_ssim: '10357851')
   end
 
   it 'returns the empty doc hash when it cannot open a file' do

@@ -45,13 +45,6 @@ module PurlFetcher
     end
 
     begin
-      config.solr_terms = load_yaml_config.call('solr_terms.yml')
-      # puts load_yaml_config.call('solr_terms.yml')
-    rescue
-      puts 'WARNING: config/solr_terms.yml config not found'
-    end
-
-    begin
       config.solr_indexing = load_yaml_config.call('solr_indexing.yml')
     rescue
       puts 'WARNING: config/solr_indexing.yml config not found'
@@ -71,24 +64,3 @@ begin
 rescue
   puts 'WARNING: Could not configure solr url'
 end
-
-begin
-  Solr_terms = PurlFetcher::Application.config.solr_terms
-
-  # Convience constants for Solr Fields
-  # solr_field_yaml = PurlFetcher::Application.config.solr_terms
-  ID_Field           = Solr_terms['id_field']
-  Type_Field         = Solr_terms['fedora_type_field']
-  CatKey_Field       = Solr_terms['catkey_field']
-  Title_Field        = Solr_terms['title_field']
-  Title_Field_Alt    = Solr_terms['title_field_alt']
-  Last_Changed_Field = Solr_terms['last_changed']
-  Fedora_Prefix      = Solr_terms['fedora_prefix']
-  Druid_Prefix       = Solr_terms['druid_prefix']
-  Fedora_Types     = {:collection => Solr_terms['collection_type'], :item => Solr_terms['item_type'], :set => Solr_terms['set_type']}
-  Controller_Types = {:collection => Solr_terms['collection_field'], :tag => Solr_terms['tag_field']}
-rescue
-  puts 'WARNING: Could not configure solr terms'
-end
-
-# solr_fields = {:collection_field => collection_field}
