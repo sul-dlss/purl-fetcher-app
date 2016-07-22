@@ -258,8 +258,13 @@ module Indexer
     solr = establish_solr_connection
     response = {}
     begin
+      docs = add_timestamp_to_documents(documents)
+      docs.map do |d|
+        @@log.info("Processing item #{d[:id]} (#{d[@@indexer_config['deleted_field'].to_sym] == 'true' ? 'deleting' : 'adding'})")
+      end
       with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
-        response = solr.add add_timestamp_to_documents(documents)
+        @@log.info("Sending #{docs.size} records to Solr")
+        response = solr.add docs
       end
       success = parse_solr_response(response)
     rescue StandardError => e

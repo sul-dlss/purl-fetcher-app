@@ -166,6 +166,8 @@ describe('Indexer lib') do
   it 'determines when the addition and commit of solr documents was successful' do
     VCR.use_cassette('submit_one_doc') do
       docs = [indexer.solrize_object(sample_doc_path)]
+      expect(indexer.log_object).to receive(:info).with(/Processing item.*adding/).once
+      expect(indexer.log_object).to receive(:info).with(/Sending 1 record/).once
       expect(indexer.add_and_commit_to_solr(docs)).to be_truthy
     end
   end
@@ -270,6 +272,8 @@ describe('Indexer lib') do
         FileUtils.rm_r dest_dir # remove its files
         druid_object.creates_delete_record # create its delete record
 
+        expect(indexer.log_object).to receive(:info).with(/Processing item.*deleting/).once
+        expect(indexer.log_object).to receive(:info).with(/Sending/).once
         result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
         sleep(1) # make sure at least one second passes for the timestamp checks
         end_time = Time.zone.now
