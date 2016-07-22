@@ -28,6 +28,7 @@ module Fetcher
   # @example find_all_object_type(params,:collection)
   def find_all_object_type(params, ftype)
     # ftype should be :collection (or other symbol if we added more since this was updated)
+    raise ArgumentError, 'Invalid Object Type' if !OBJECT_TYPES[ftype].present?
     date_range_q = get_date_solr_query(params)
     solrparams = { q: "objectType_ssim:\"#{OBJECT_TYPES[ftype]}\" #{date_range_q}", wt: :json }
     get_rows(solrparams, params)
