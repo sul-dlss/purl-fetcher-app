@@ -35,18 +35,9 @@ task :rubocop do
 end
 
 namespace :purlfetcher do
-  desc 'Copy just shared yml files'
-  task :config_yml do
-    %w(solr secrets).each do |f|
-      next if File.exist? "#{Rails.root}/config/#{f}.yml"
-      cp("#{Rails.root}/config/#{f}.yml.example", "#{Rails.root}/config/#{f}.yml", :verbose => true)
-    end
-  end
-
   desc 'Copy all configuration files'
   task :config do
     Rake::Task['jetty:stop'].invoke
-    Rake::Task['purlfetcher:config_yml'].invoke
     system('rm -fr jetty/solr/dev/data/index jetty/solr/test/data/index')
     %w(schema solrconfig).each do |f|
       cp("#{Rails.root}/config/#{f}.xml", "#{Rails.root}/jetty/solr/dev/conf/#{f}.xml", :verbose => true)
