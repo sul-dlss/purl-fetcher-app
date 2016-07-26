@@ -1,59 +1,87 @@
 require 'active_support/inflector'
-require 'parallel'
 require 'logger'
 require 'stanford-mods'
 require 'retries'
 require 'druid-tools'
 require 'action_controller'
-require 'indexer_helper'
+require 'solr_methods'
+require 'parser_methods'
+require 'indexer_setup'
 
 class Indexer
 
-  include IndexerHelper
+  include SolrMethods
+  include ParserMethods
+  include IndexerSetup
+
+  # Finds all objects modified since the beginning of time.
+  # Note: This is not the function to use for processing deletes
+  def full_reindex
+    find_and_index
+  end
 
   # Finds all objects modified since the last time indexing was run
   # Note: This is not the function to use for processing deletes
-  #
-  # @return [Hash] A hash listing all documents sent to solr and the total run time {:docs => [{Doc1}, {Doc2},...], :run_time => Seconds_It_Took_To_Run}
-  #
-  # Example:
-  #   results = index_since_last_run
   def index_since_last_run
-
+    modified_at_or_later = RunLog.minutes_since_last_run_started
+    find_and_index(mins_ago: modified_at_or_later)
   end
 
-  # Finds all objects modified in the specified number of minutes and indexes them into to solr
+  # find and then index all public files changed since the specified number of minutes ago
+  #  defaults to all if no time specified
   # Note: This is not the function to use for processing deletes
   #
-  # @param mins_ago [Fixnum] minutes ago modified, defaults to the interval set in solr_indexing.yml
   # @return [Hash] A hash listing all documents sent to solr and the total run time {:docs => [{Doc1}, {Doc2},...], :run_time => Seconds_It_Took_To_Run}
   #
   # Example:
-  #   results = index_all_modified_objects(mins_ago: 5)
-  def index_all_modified_objects(mins_ago: indexer_config.default_run_interval_in_minutes.to_i)
+  #   results = find_and_index(100)
+  def find_and_index(mins_ago: nil)
     start_time = Time.zone.now
-    modified_at_or_later = mins_ago.minutes.ago # Set this to a Timestamp that is X minutes this function was called
-
-    # get all the top level branches of the druid tree (currently 400) but remove the .deletes dir
-    top_branches_of_tree = Dir.glob(purl_mount_location + File::SEPARATOR + '*') - [path_to_deletes_dir.to_s]
-
-    # Using parallels go down each branch and look for modified items, then index them
-    branch_results = Parallel.map(top_branches_of_tree) do |branch|
-      index_druid_tree_branch(branch) # This will sweep down the branch and index all files
+    results = {}
+    if RunLog.currently_running?
+      log.info("Job currently running. No action taken.")
+    else
+      output_file=File.join(base_path_finder_log,"#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S')}.txt")
+      run_log=RunLog.create(finder_filename: output_file, started: start_time)
+      find_files(mins_ago: mins_ago, output_file: output_file)
+      index_purls(mins_ago: mins_ago)
     end
     end_time = Time.zone.now
-
-    # Prep the results for return
-    results = {}
-    results[:docs] = []
-    count = 0
-    top_branches_of_tree.each do |_branch|
-      results[:docs] += branch_results[count]
-      count += 1
-    end
     results[:run_time] = end_time - start_time
-    log.info("Successfully completed an indexing run of the document_cache.  Runtime was #{end_time - start_time}. The documents changed were: #{results}")
+    run_log.ended = end_time
+    run_log.save
     results
+  end
+
+  # find all public files change since the specified number of minutes and store in the database
+  #  if no time specified, finds all files
+  # returns an integer with the number of files found
+  # @param [Integer] Set as a hash key of mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
+  # @param [Integer] Set as a hash key of output_file: The filename location to store the results of the find operation
+  def find_files(params={})
+    mins_ago = params[:mins_ago] || nil
+    output_file = params[:output_file] || File.join(base_path_finder_log,"output.txt")
+    if mins_ago
+      search_string = "find #{purl_mount_location} -name public -type f -mmin -#{mins_ago}"
+    else
+      search_string = "locate \"#{purl_mount_location}/*public*\""
+    end
+    search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
+    log.info(search_string)
+    search_result=`#{search_string}`  # this is the big blocker line - send the find to unix and wait around until its done, at which point we have a file to read in
+    return true
+  end
+
+  # indexes purls based on druids found in the database, going back to the specified minutes ago
+  #  defaults to indexing all purls if no time specified
+  # returns an integer with the number of files found
+  # @param [Integer] Set as a hash key of mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
+  # @return [Integer] Number of purls indexed
+  def index_purls(mins_ago: nil)
+    # TODO: Iterate over purls in database and index each one
+    count=0
+
+    count
   end
 
   # Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion
@@ -81,333 +109,4 @@ class Indexer
     { success: result, docs: docs }
   end
 
-  # Determine if a druid has been deleted and pruned from the document cache or not
-  #
-  # @param druid [String] The druid you are interested in
-  # @return [Boolean] True or False
-  def deleted?(druid)
-    d = DruidTools::PurlDruid.new(druid, purl_mount_location)
-    dir_name = Pathname(d.path) # This will include the full druid on the end of the path, we don't want that for purl
-    !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
-  end
-
-  # Move down one branch of the druid tree (ex: all druids starting with ab) and indexes them into solr
-  #
-  # @param branch [String] The top level branch of the druid tree to scan
-  # @return [Array] A list of all objects added to solr
-  # Example:
-  #   index_druid_tree_branch('/purl/document_cache/bb')
-  def index_druid_tree_branch(branch)
-    object_paths = get_all_changed_objects_for_branch(branch)
-    all_objects = []
-    objects = []
-    object_paths.each do |o_path|
-      object = solrize_object(o_path)
-      objects << object if object != {} # Only add it if we have a valid object, the function ret
-      next unless objects.size == indexer_config['items_commit_every']
-      add_and_commit_to_solr(objects)
-      all_objects += objects
-      objects = []
-    end
-
-    add_and_commit_to_solr(objects) unless objects.empty?
-    all_objects += objects
-  end
-
-  # Using the find command with mmin argument, find all files changed since modified_at_or_later
-  #
-  # @param branch [String] The top level branch of the druid tree to scan
-  # @return [Array] An array of strings that are the path to the directory the object resides in
-  #
-  # Example:
-  #   index_druid_tree_branch('/purl/document_cache/bb')
-  def get_all_changed_objects_for_branch(branch)
-    minutes_ago = ((Time.zone.now - modified_at_or_later) / 60.0).ceil # use ceil to round up (2.3 becomes 3)
-    changed_files = `find #{branch} -mmin -#{minutes_ago}`.split
-
-    # We only reindex if something in our changed file list has updated, scan the return list for those and
-    directories_to_reindex = []
-    changed_files.each do |file|
-      indexer_config['files_to_reindex_on'].each do |reindex_trigger|
-        directories_to_reindex << file.split(reindex_trigger)[0] if file.include? reindex_trigger
-      end
-    end
-    directories_to_reindex.uniq # use uniq since mods and version_medata could have changed for the same one and caused it to appear twice on this list
-  end
-
-  # Creates a hash that RSolr can use to to create a new solr document for an item
-  #
-  # @param path [String] The path where the files (mods, contentMetadata, identityMetada) for an object reside
-  # @return [Hash] A hash that RSolr can commit to form a new solr document in the form of {:id => 'foo', :title => 'bar', '}, returns {} if a file is not present and a full hash cannot be generated
-  #
-  def solrize_object(path)
-    # TODO: Refactor me just to pop open the files in one block and then pull the stuff out.  So many begin/rescues...
-
-    # Get Information from the mods
-    doc_hash = {}
-    begin
-      doc_hash = read_mods_for_object(path)
-    rescue StandardError => e
-      log.error("For #{path} could not load mods.  #{e.message} #{e.backtrace.inspect}")
-      return {}
-    end
-
-    # Get the Druid of the object
-    begin
-      doc_hash[:id] = get_druid_from_public_metadata(path)
-    rescue StandardError => e
-      log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
-      return {}
-    end
-
-    # Get the Release Tags for an object
-    begin
-      releases = get_release_status(path)
-      doc_hash[indexer_config['released_true_field'].to_sym] = releases[:true]
-      doc_hash[indexer_config['released_false_field'].to_sym] = releases[:false]
-    rescue StandardError => e
-      log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
-      return {}
-    end
-
-    # Below these we log an error, but don't fail as we can still update the item and flag the indexer, we just don't have all the data we want
-
-    # Get the ObjectType for an object
-    begin
-      doc_hash[:objectType_ssim] = get_object_type_from_identity_metadata(path)
-    rescue StandardError => e
-      log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
-    # Get membership of sets and collections for an object
-    begin
-      membership = get_membership_from_publicxml(path)
-      doc_hash[:is_member_of_collection_ssim] = membership unless membership.empty? # only add this if we have a membership
-    rescue StandardError => e
-      log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
-    # Get the catkey of an object
-    begin
-      catkey = get_catkey_from_identity_metadata(path)
-      doc_hash[:catkey_id_ssim] = catkey unless catkey.empty? # only add this if we have a catkey
-    rescue StandardError => e
-      log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
-    doc_hash
-  end
-
-  # Given a path to a directory that contains a public xml file, extract the release information
-  #
-  # @param path [String] The path to the directory that will contain the mods file
-  # @return [Hash] A hash of all trues and falses in the form of {:true => ['Target1', 'Target2'], :false => ['Target3', 'Target4']}
-  # @raise Errno::ENOENT If there is no public file
-  #
-  # Example:
-  #   release_status = get_druid_from_contentMetada('/purl/document_cache/bb')
-  def get_release_status(path)
-    releases = { true: [], false: [] }
-    x = Nokogiri::XML(File.open(Pathname(path) + 'public'))
-    nodes = x.xpath('//publicObject/releaseData/release')
-    nodes.each do |node|
-      target = node.attribute('to').text
-      status = node.text
-      releases[status.downcase.to_sym] << target
-    end
-    releases
-  end
-
-  # Given a path to a directory that contains an identityMetada file, extract the druid for the item from identityMetadata.
-  # This is currently not used because as it turns out, not all identityMetadatas have this node in them.  Rather use get_druid_from_content_metadata
-  #
-  # @param path [String] The path to the directory that will contain the identityMetadata file
-  # @return [String] The druid in the form of druid:pid
-  # @raise Errno::ENOENT If there is no identityMetadata file
-  #
-  # Example:
-  #   druid = get_druid_from_identity_metadata('/purl/document_cache/bb')
-  def get_druid_from_identity_metadata(path)
-    x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
-    x.xpath('//identityMetadata/objectId')[0].text
-  end
-
-  # Given a path to a directory that contains a public metadata file, extract the druid for the item from identityMetadata.
-  #
-  # @param path [String] The path to the directory that will contain the public metadata file
-  # @return [String] The druid in the form of druid:pid
-  # @raise Errno::ENOENT If there is no public metadata file
-  #
-  # Example:
-  #   druid = get_druid_from_public_metadata('/purl/document_cache/bb')
-  def get_druid_from_public_metadata(path)
-    x = Nokogiri::XML(File.open(Pathname(path) + 'public'))
-    x.xpath('//publicObject')[0].attr('id')
-  end
-
-  # Given a path to a directory that contains a mods file, extract info on the object for indexing into solr
-  #
-  # @param path [String] The path to the directory that will contain the mods file
-  # @return [Hash{Symbol => String}] An hash of mods information in the form of {:solr_field_name => value}
-  # @raise Errno::ENOENT If there is no mods file
-  #
-  # Example:
-  #   hash = index_druid_tree_branch('/purl/document_cache/bb')
-  def read_mods_for_object(path)
-    mods = Stanford::Mods::Record.new
-    mods.from_str(IO.read(Pathname(path + File::SEPARATOR + 'mods')))
-    title = mods.sw_full_title
-    { :title_tesim => title }
-  end
-
-  # Add an array of documents to solr and commit
-  #
-  # @param documents [Array] An array of hashes that RSolr can add to solr in the form of [{id=>druid:1, title_tesim: "Foo"}]
-  # @return [Boolean] True if the documents were added and commited succesfully, false if they were not
-  def add_and_commit_to_solr(documents)
-    solr = establish_solr_connection
-    response = {}
-    begin
-      docs = add_timestamp_to_documents(documents)
-      docs.map do |d|
-        log.info("Processing item #{d[:id]} (#{d[indexer_config['deleted_field'].to_sym] == 'true' ? 'deleting' : 'adding'})")
-      end
-      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
-        log.info("Sending #{docs.size} records to Solr")
-        response = solr.add docs
-      end
-      success = parse_solr_response(response)
-    rescue StandardError => e
-      log.error("Unable to add the documents #{documents}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
-      return false
-    end
-    log.error("Unable to add the documents #{documents}, solr returned a response of #{response}") unless success
-
-    commit_success = commit_to_solr(solr)
-    log.error("Attempting to commit #{documents} failed.  The specifc error returned should be logged above this.") unless commit_success
-    commit_success
-  end
-
-  # Adds in the timestamp attribute, using  Time.zone.now, to each document about to be committed to Solr
-  #
-  # @param documents [Array] An array of hashes, with each hash being one solr document
-  # @return [Array] An array of hashes
-  def add_timestamp_to_documents(documents)
-    documents.each do |d|
-      d[indexer_config['change_field'].to_sym] = Time.zone.now.utc.iso8601
-    end
-    documents
-  end
-
-  def delete_document(id)
-    solr = establish_solr_connection
-    response = {}
-    begin
-      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
-        solr.delete_by_id id
-      end
-      parse_solr_response(response)
-    rescue StandardError => e
-      log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
-      return false
-    end
-
-    commit_success = commit_to_solr(solr)
-    log.error("Attempting to commit after deleted the document with an id of #{id} failed.  The specific error returned should be logged above this.") unless commit_success
-    commit_success
-  end
-
-  # This function determines if the solr action succeeded or not and based on solr's response.  It also determines if solr is showing high response times and
-  # sleeps the thread to give solr a chance to recover
-  #
-  # @param resp [Hash] a hash provided by RSolr, ex: {"responseHeader"=>{"status"=>0, "QTime"=>77}}
-  # @return [Boolean] True or false
-  def parse_solr_response(resp)
-    success = resp['responseHeader']['status'].to_i == 0
-    # put this thread to sleep for five seconds if solr looks to be suffered
-    sleep(indexer_config['sleep_seconds_if_overloaded'].to_i) if resp['responseHeader']['QTime'].to_i >= indexer_config['sleep_when_response_time_exceeds'].to_i
-    success
-  end
-
-  # Issue the commit command to solr
-  #
-  # @param solr [Rsolr::Client] an RSolr client
-  # @return [Boolean] True if the commit was successful, false if it was not
-  def commit_to_solr(solr_client)
-    response = {}
-    begin
-      with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
-        response = solr_client.commit
-      end
-    rescue StandardError => e
-      log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
-      return false
-    end
-    parse_solr_response(response)
-  end
-
-  # Return the absolute path to the .deletes dir
-  #
-  # @return [Pathname] The absolute path
-  def path_to_deletes_dir
-    Pathname(purl_mount_location + File::SEPARATOR + indexer_config['deletes_dir'])
-  end
-
-  # Accessor to get the purl document cache path
-  #
-  # @return [String] The path
-  def purl_mount_location
-    indexer_config['purl_document_path']
-  end
-
-  # Given a path to a directory that contains a public xml file, extract the collections and sets for the item from identityMetadata
-  #
-  # @param path [String] The path to the directory that will contain the identityMetadata file
-  # @return [Array] The object types
-  # @raise Errno::ENOENT If there is no identity Metadata File
-  #
-  # Example:
-  #   get_object_type_from_identity_metadata('/purl/document_cache/bb')
-  def get_object_type_from_identity_metadata(path)
-    x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
-    x.xpath('//identityMetadata/objectType').map(&:text)
-  end
-
-  # Given a path to a directory that contains a public xml file, extract collections and sets the item is a member of
-  #
-  # @param path [String] The path to the directory that will contain the public xml
-  # @return [Array] The collections and sets the item is a member of
-  # @raise Errno::ENOENT If there is no public xml file
-  #
-  # Example:
-  #   get_membership_from_publicxml('/purl/document_cache/bb')
-  def get_membership_from_publicxml(path)
-    x = Nokogiri::XML(File.open(Pathname(path) + 'public'))
-    x.remove_namespaces!
-    x.xpath('//RDF/Description/isMemberOfCollection').map do |n|
-      n.attribute('resource').text.split('/')[1]
-    end
-  end
-
-  # Given a path to a directory that contains an indentityMetadata xml file, extract collections and sets the item is a member of
-  #
-  # @param path [String] The path to the directory that will contain the identity Metadata File
-  # @return [String] The cat key, an empty string is returned if there is no catkey
-  # @raise Errno::ENOENT If there is no identity Metadata File
-  #
-  # Example:
-  #   get_catkey_from_identity_metadata('/purl/document_cache/bb')
-  def get_catkey_from_identity_metadata(path)
-    x = Nokogiri::XML(File.open(Pathname(path) + 'identityMetadata'))
-    x.xpath("//otherId[@name='catkey']").text
-  end
-
-  # Test The Connect To the Solr Core.  This establishes a connection to the solr cloud and then attempts a basic select against the core the app is configured to use
-  #
-  # @return [Boolean] true if the select returned a status of 0, false if any other status is returned
-  def check_solr_core
-    solr_client = establish_solr_connection
-    r = solr_client.get 'select', params: { q: '*:*', rows: 1 } # Just grab one row for the test
-    parse_solr_response(r)
-  end
 end

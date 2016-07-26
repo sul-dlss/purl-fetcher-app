@@ -3,9 +3,18 @@ require 'rest_client'
 
 desc 'Run continuous integration suite (tests, coverage, rubocop)'
 task :ci do
+   system('RAILS_ENV=test rake db:migrate')
    system('RAILS_ENV=test rake db:test:prepare')
    Rake::Task['rspec'].invoke
    Rake::Task['rubocop'].invoke
+end
+
+desc 'Run continuous integration suite without rubocop for travis'
+task :travis_ci do
+  Rake::Task['purlfetcher:config'].invoke
+  system('RAILS_ENV=test rake db:migrate')
+  system('RAILS_ENV=test rake db:test:prepare')
+  Rake::Task['rspec'].invoke
 end
 
 desc 'Rebuild vcr cassettes and run tests (assuming jetty is not yet started)'

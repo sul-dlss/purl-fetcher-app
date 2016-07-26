@@ -4,7 +4,6 @@ gem 'rails', '>=4.1.6'
 gem 'rsolr', '>=1.0.10'
 
 gem 'rest-client'
-gem 'parallel'
 gem 'stanford-mods'
 gem 'retries'
 gem 'druid-tools'

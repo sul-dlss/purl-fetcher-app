@@ -16,11 +16,12 @@ ActiveRecord::Schema.define(version: 20160726200122) do
   create_table "run_logs", force: :cascade do |t|
     t.integer  "total_druids"
     t.integer  "num_errors"
+    t.string   "finder_filename"
     t.string   "note"
     t.datetime "started"
     t.datetime "ended"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

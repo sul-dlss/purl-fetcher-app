@@ -3,6 +3,7 @@ class CreateRunLogs < ActiveRecord::Migration
     create_table :run_logs do |t|
       t.integer :total_druids
       t.integer :num_errors
+      t.string :finder_filename
       t.string :note
       t.datetime :started
       t.datetime :ended

@@ -16,16 +16,17 @@ class RunLog < ActiveRecord::Base
   def self.minutes_since_last_run_ended
     prune_crashed_rows
     last_row = last_completed_run
-    ((Time.zone.now - last_row.ended) / 60.0).ceil if last_completed_run
+    end_time = last_row ? last_row.ended : Time.at(0)
+    ((Time.zone.now - end_time) / 60.0).ceil
   end
 
   # how many minutes ago the last run started, useful for determining how far back to start for next run, rounded up
   def self.minutes_since_last_run_started
     prune_crashed_rows
     last_row = last_completed_run
-    ((Time.zone.now - last_row.started) / 60.0).ceil if last_completed_run
+    start_time = last_row ? last_row.started : Time.at(0)
+    ((Time.zone.now - start_time) / 60.0).ceil
   end
-
 
   # the last completed run, returned as a model object
   def self.last_completed_run

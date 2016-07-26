@@ -161,7 +161,6 @@ GEM
       activesupport (>= 3.2.18)
       i18n
       nokogiri
-    parallel (1.6.0)
     parser (2.3.1.2)
       ast (~> 2.2)
     pkg-config (1.1.7)
@@ -306,7 +305,6 @@ DEPENDENCIES
   launchy
   meta_request
   mysql2
-  parallel
   rails (>= 4.1.6)
   rest-client
   retries

@@ -2,7 +2,8 @@ defaults: &defaults
   purl_document_path: "/purl/document_cache"
   deletes_dir: ".deletes"
   default_run_interval_in_minutes: 5
-  files_to_reindex_on: ['identityMetadata', 'mods', 'public']
+  base_filename_finder_log: "purl_finder"
+  base_path_finder_log: "<%=File.join(Rails.root,'tmp')%>"
   items_commit_every: 50
   sleep_seconds_if_overloaded: 5
   sleep_when_response_time_exceeds: 4500
@@ -11,9 +12,9 @@ defaults: &defaults
   released_false_field: false_releases_ssim
   deleted_field: deleted_tsi
 
-
 development:
   <<: *defaults
+  purl_document_path: "<%=Rails.root%>/spec/purl/document_cache"
 test:
   <<: *defaults
   purl_document_path: "/purl/document_cache"

@@ -29,27 +29,12 @@ describe('Indexer lib') do
     end
   end
 
-  describe('incremental commits to solr') do
-    let(:commit_every_n) { PurlFetcher::Application.config.solr_indexing['items_commit_every'].to_i }
-    let(:branch) { '/test/branch' }
-
-    it 'commits once to solr when the total number of solr documents is below the incremental commit threshold' do
-      allow(indexer).to receive(:get_all_changed_objects_for_branch).and_return(generate_fake_paths(commit_every_n - 1))
-      allow(indexer).to receive(:solrize_object).and_return(id: 'foo', title: 'bar')
-      expect(indexer).to receive(:add_and_commit_to_solr).once
-      expect(indexer.index_druid_tree_branch(branch).class).to eq(Array)
-    end
-
-    it 'commits once to solr when the total number of solr documents is below the incremental commit threshold' do
-      allow(indexer).to receive(:get_all_changed_objects_for_branch).and_return(generate_fake_paths(commit_every_n + 1))
-      allow(indexer).to receive(:solrize_object).and_return(id: 'foo', title: 'bar')
-      expect(indexer).to receive(:add_and_commit_to_solr).twice
-      expect(indexer.index_druid_tree_branch(branch).class).to eq(Array)
-    end
-  end
-
   it 'returns the path the deletes directory as a pathname' do
     expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
+  end
+
+  it 'returns the path to a purl file location given a druid' do
+    expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
   end
 
   it 'places the specified .deletes dir should be in the root of the purl directory' do
@@ -82,16 +67,8 @@ describe('Indexer lib') do
     expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
   end
 
-  it 'gets the druid from identityMetadata' do
-    expect(indexer.get_druid_from_identity_metadata(sample_doc_path)).to match('druid:bb050dj7711')
-  end
-
   it 'gets the druid from publicMetadata' do
     expect(indexer.get_druid_from_public_metadata(sample_doc_path)).to match('druid:bb050dj7711')
-  end
-
-  it 'raises an error when there is no identityMetadata' do
-    expect{ indexer.get_druid_from_identity_metadata(sample_doc_path_files_missing) }.to raise_error(Errno::ENOENT)
   end
 
   it 'gets true and false data from the public xml regarding release status' do

@@ -25,4 +25,4 @@ every 120.minutes do
 
 every 5.minutes do
    rake 'process_all_deletes_in_last_five_minutes'
- end
+end
