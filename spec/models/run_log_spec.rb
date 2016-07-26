@@ -27,10 +27,16 @@ module Editstore
       expect(RunLog.last_run_time_in_minutes).to eq(61)
     end
 
-    it "returns the time in minutes since it last ran" do
+    it "returns the time in minutes since the last run completed" do
       RunLog.create(started: Time.zone.now - 2.months, ended: Time.zone.now - 2.months + 30.minutes, total_druids: 2)
       RunLog.create(started: Time.zone.now - 4.hours, ended: Time.zone.now - 3.hours, total_druids: 2)
-      expect(RunLog.minutes_since_last_run).to eq(181)
+      expect(RunLog.minutes_since_last_run_ended).to eq(181)
+    end
+
+    it "returns the time in minutes since the last run started" do
+      RunLog.create(started: Time.zone.now - 2.months, ended: Time.zone.now - 2.months + 30.minutes, total_druids: 2)
+      RunLog.create(started: Time.zone.now - 4.hours, ended: Time.zone.now - 3.hours, total_druids: 2)
+      expect(RunLog.minutes_since_last_run_started).to eq(241)
     end
 
     it "prunes older run logs" do

@@ -1,5 +1,5 @@
 class DocsController < ApplicationController
-  include Indexer
+  include IndexerHelper
 
   # API call to get a full list of all solr documents modified between two times
   # @param [querystring] Parameters can be specified in the querystring

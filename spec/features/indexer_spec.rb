@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe('Indexer lib') do
-  let(:indexer) { IndexerTester.new }
+  let(:indexer) { Indexer.new }
   let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj7711', testing_doc_cache).path }
   let(:testing_doc_cache) { purl_fixture_path }
   let(:sample_doc_path_files_missing) { DruidTools::PurlDruid.new('bb050dj0000', testing_doc_cache).path }
@@ -66,19 +66,19 @@ describe('Indexer lib') do
 
   it 'logs an error when there is no public xml, but does not fail' do
     allow(indexer).to receive(:get_release_status).and_raise(Errno::ENOENT)
-    expect(indexer.log_object).to receive(:error).once
+    expect(indexer.log).to receive(:error).once
     expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
   end
 
   it 'logs an error when it cannot get membership from the public xml, but does not fail' do
     allow(indexer).to receive(:get_membership_from_publicxml).and_raise(Errno::ENOENT)
-    expect(indexer.log_object).to receive(:error).once
+    expect(indexer.log).to receive(:error).once
     expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
   end
 
   it 'logs an error when there is no catkey in the identityMetadata, but does not fail' do
     allow(indexer).to receive(:get_catkey_from_identity_metadata).and_raise(Errno::ENOENT)
-    expect(indexer.log_object).to receive(:error).once
+    expect(indexer.log).to receive(:error).once
     expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
   end
 
@@ -139,21 +139,21 @@ describe('Indexer lib') do
     it 'logs an error, but swallows the exception when mods is not present' do
       allow_message_expectations_on_nil
       remove_purl_file(dest_dir, 'mods')
-      expect(indexer.log_object).to receive(:error).once
+      expect(indexer.log).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
     end
 
     # This has been moved to pending due the fact we no longer have any core functions that raise an error when identityMetadata is not present
     xit 'logs an error, but swallows the exception when identityMetadata is not present' do
       remove_purl_file(dest_dir, 'identityMetadata')
-      expect(indexer.log_object).to receive(:error).once
+      expect(indexer.log).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
     end
 
     it 'logs an error, but swallows the exception when the public xml is not present' do
       allow_message_expectations_on_nil
       remove_purl_file(dest_dir, 'public')
-      expect(indexer.log_object).to receive(:error).once
+      expect(indexer.log).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
     end
   end
@@ -165,8 +165,8 @@ describe('Indexer lib') do
   it 'determines when the addition and commit of solr documents was successful' do
     VCR.use_cassette('submit_one_doc') do
       docs = [indexer.solrize_object(sample_doc_path)]
-      expect(indexer.log_object).to receive(:info).with(/Processing item.*adding/).once
-      expect(indexer.log_object).to receive(:info).with(/Sending 1 record/).once
+      expect(indexer.log).to receive(:info).with(/Processing item.*adding/).once
+      expect(indexer.log).to receive(:info).with(/Sending 1 record/).once
       expect(indexer.add_and_commit_to_solr(docs)).to be_truthy
     end
   end
@@ -271,8 +271,8 @@ describe('Indexer lib') do
         FileUtils.rm_r dest_dir # remove its files
         druid_object.creates_delete_record # create its delete record
 
-        expect(indexer.log_object).to receive(:info).with(/Processing item.*deleting/).once
-        expect(indexer.log_object).to receive(:info).with(/Sending/).once
+        expect(indexer.log).to receive(:info).with(/Processing item.*deleting/).once
+        expect(indexer.log).to receive(:info).with(/Sending/).once
         result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
         sleep(1) # make sure at least one second passes for the timestamp checks
         end_time = Time.zone.now
@@ -400,7 +400,7 @@ describe('Indexer lib') do
     it 'logs an error when rsolr cannot delete something' do
       allow_message_expectations_on_nil
       expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
-      expect(indexer.log_object).to receive(:error).once
+      expect(indexer.log).to receive(:error).once
       allow(testing_solr_connection).to receive(:delete_by_id).and_raise(RSolr::Error)
       expect(indexer.delete_document('foo')).to be_falsey
     end
@@ -410,7 +410,7 @@ describe('Indexer lib') do
       expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(indexer).to receive(:commit_to_solr).once.and_return(false)
-      expect(indexer.log_object).to receive(:error).once
+      expect(indexer.log).to receive(:error).once
       expect(indexer).to receive(:parse_solr_response).once.and_return(true) # fake a successful call
       expect(indexer.delete_document('foo')).to be_falsey
     end
@@ -420,7 +420,7 @@ describe('Indexer lib') do
     solr_client = indexer.establish_solr_connection
     allow(indexer).to receive(:establish_solr_connection).and_return(solr_client)
     allow(solr_client).to receive(:get).and_raise(RSolr::Error)
-    expect(indexer.log_object).to receive(:error).once
+    expect(indexer.log).to receive(:error).once
     expect(indexer.run_solr_query('whatever')).to match({})
   end
 end

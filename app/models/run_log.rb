@@ -12,12 +12,20 @@ class RunLog < ActiveRecord::Base
     ((last_row.ended - last_row.started) / 60.0).ceil if last_row
   end
 
-  # how many minutes ago the last run completed rounded up, useful to determine how far back to look for the next indexing run
-  def self.minutes_since_last_run
+  # how many minutes ago the last run completed rounded up
+  def self.minutes_since_last_run_ended
     prune_crashed_rows
     last_row = last_completed_run
     ((Time.zone.now - last_row.ended) / 60.0).ceil if last_completed_run
   end
+
+  # how many minutes ago the last run started, useful for determining how far back to start for next run, rounded up
+  def self.minutes_since_last_run_started
+    prune_crashed_rows
+    last_row = last_completed_run
+    ((Time.zone.now - last_row.started) / 60.0).ceil if last_completed_run
+  end
+
 
   # the last completed run, returned as a model object
   def self.last_completed_run
@@ -26,18 +34,18 @@ class RunLog < ActiveRecord::Base
 
   # remove all rows with no end time that were started more than 2 days ago (i.e. the job was started and must have died without completing the entry)
   def self.prune_crashed_rows
-    self.where('updated_at < ?', 2.days.ago).where('ended IS NULL').each { |obj| obj.destroy }
+    self.where('updated_at < ?', 2.days.ago).where('ended IS NULL').each(&:destroy)
   end
 
   # prune the logs by removing older completed jobs
   def self.prune
     prune_crashed_rows
-    self.where('updated_at < ?', 6.months.ago).each { |obj| obj.destroy } # anything older than 6 months
-    self.where(total_druids: 0).where('updated_at < ?', 1.day.ago).each { |obj| obj.destroy } # anything older than 1 day with no activity
+    self.where('updated_at < ?', 6.months.ago).each(&:destroy) # anything older than 6 months
+    self.where(total_druids: 0).where('updated_at < ?', 1.day.ago).each(&:destroy) # anything older than 1 day with no activity
   end
 
   # remove all completed logs
   def self.prune_all
-    self.where('ended IS NOT NULL').each { |obj| obj.destroy } # anything that is done
+    self.where('ended IS NOT NULL').each(&:destroy) # anything that is done
   end
 end
