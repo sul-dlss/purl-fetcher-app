@@ -62,5 +62,4 @@ describe('Fetcher lib') do
     obj_type = 'whatever'
     expect{ fetcher.find_all_object_type({}, obj_type) }.to raise_error(ArgumentError)
   end
-
 end

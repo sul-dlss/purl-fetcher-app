@@ -28,6 +28,10 @@ group :test do
   gem 'coveralls', require: false
 end
 
+group :production do
+  gem 'mysql2'
+end
+
 group :deployment do
   gem 'dlss-capistrano'
   gem 'capistrano', '~> 3.0'
@@ -43,4 +47,5 @@ group :development, :test do
   gem 'launchy'
   gem 'thin'
   gem 'dlss_cops'
+  gem 'sqlite3'
 end

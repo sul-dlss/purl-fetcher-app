@@ -13,6 +13,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+db/development.sqlite3
+db/test.sqlite3
 
 # Ignore jetty changes
 /jetty/solr/dev/data/*
@@ -27,6 +29,7 @@
 
 /public/*.gz
 /public/sitemap.xml
+config/database.yml
 
 nohup.out
 REVISION

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe('Indexer lib') do
-
   let(:indexer) { IndexerTester.new }
   let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj7711', testing_doc_cache).path }
   let(:testing_doc_cache) { purl_fixture_path }
