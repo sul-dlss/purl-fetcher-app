@@ -1,16 +1,11 @@
 # class used to represent a purl, used to parse information
 class PurlParser
 
-  include IndexerSetup
+  attr_reader :public_xml # the public XML as a nokogiri doc (will be nil if the public file was not found)
 
-  attr_reader :public_xml
-
-  # Given a path to a directory that contains a public xml file, read in the full XML and return a nokogiri document
+  # Given a path to a directory that contains a public xml file, read in the full XML and set the public_xml accessor as a nokogiri document
   # @param path [String] The path to the directory that contains the public file
-  # @return [Nokogiri] A nokogiri document
-  # @raise Errno::ENOENT If there is no public file
   #
-  # Example:
   def initialize(path)
     begin
       @public_xml ||= Nokogiri::XML(File.open(Pathname(path) + 'public'))

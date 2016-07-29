@@ -29,6 +29,26 @@ describe Indexer do
     end
   end
 
+  it 'gets the druid from the file path' do
+    expect(indexer.get_druid_from_file_path(sample_doc_path)).to eq('bb050dj7711')
+  end
+
+  it 'returns the base path finder log location' do
+    expect(indexer.base_path_finder_log).to eq(File.join(Rails.root,'tmp'))
+  end
+
+  it 'returns the base path filename finder log' do
+    expect(indexer.base_filename_finder_log).to eq('purl_finder')
+  end
+
+  it 'returns the commit every parameter' do
+    expect(indexer.commit_every).to eq(50)
+  end
+
+  it 'returns the default modified_at_or_later parameter' do
+    expect(indexer.modified_at_or_later).to be <= indexer.indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago
+  end
+
   it 'returns the path to a purl file location given a druid' do
     expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
   end
