@@ -19,7 +19,7 @@ module SolrMethods
         response = solr_connection.get 'select', params: { q: query.to_s, rows: 100_000_000 }
       end
     rescue StandardError => e
-      log.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
+      IndexingLogger.error("Unable to select from documents using the query #{query}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return {} # Could return the Exception as well if ever desired, just logs for now
     end
     response
@@ -31,61 +31,21 @@ module SolrMethods
   # @return [Hash] A hash that RSolr can commit to form a new solr document in the form of {:id => 'foo', :title => 'bar', '}, returns {} if a file is not present and a full hash cannot be generated
   #
   def solrize_object(path)
-    # TODO: Refactor me just to pop open the files in one block and then pull the stuff out.  So many begin/rescues...
 
-    # Get Information from the mods
     doc_hash = {}
-    begin
-      doc_hash = read_mods_for_object(path)
-    rescue StandardError => e
-      log.error("For #{path} could not load mods.  #{e.message} #{e.backtrace.inspect}")
-      return {}
+    purl=PurlParser.new(path)
+
+    if purl.public_xml
+      doc_hash[:id] = purl.druid
+      doc_hash[indexer_config['title_field'].to_sym] = purl.title
+      doc_hash[indexer_config['released_true_field'].to_sym] = purl.releases[:true]
+      doc_hash[indexer_config['released_false_field'].to_sym] = purl.releases[:false]
+      doc_hash[indexer_config['object_type_field'].to_sym] = purl.object_type
+      doc_hash[indexer_config['collection_membership_field'].to_sym] = purl.membership unless purl.membership.empty?
+      doc_hash[indexer_config['catkey_field'].to_sym] = purl.catkey unless purl.catkey.empty?
     end
-
-    # Get the Druid of the object
-    begin
-      doc_hash[:id] = get_druid_from_public_metadata(path)
-    rescue StandardError => e
-      log.error("For #{path} could not load contentMetadata #{e.message} #{e.backtrace.inspect}")
-      return {}
-    end
-
-    # Get the Release Tags for an object
-    begin
-      releases = get_release_status(path)
-      doc_hash[indexer_config['released_true_field'].to_sym] = releases[:true]
-      doc_hash[indexer_config['released_false_field'].to_sym] = releases[:false]
-    rescue StandardError => e
-      log.error("For #{path} no public xml, Error: #{e.message} #{e.backtrace.inspect}")
-      return {}
-    end
-
-    # Below these we log an error, but don't fail as we can still update the item and flag the indexer, we just don't have all the data we want
-
-    # Get the ObjectType for an object
-    begin
-      doc_hash[:objectType_ssim] = get_object_type_from_identity_metadata(path)
-    rescue StandardError => e
-      log.error("For #{path} no identityMetada containing an object type.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
-    # Get membership of sets and collections for an object
-    begin
-      membership = get_membership_from_publicxml(path)
-      doc_hash[:is_member_of_collection_ssim] = membership unless membership.empty? # only add this if we have a membership
-    rescue StandardError => e
-      log.error("For #{path} no public xml or an error occurred while getting membership from the public xml.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
-    # Get the catkey of an object
-    begin
-      catkey = get_catkey_from_identity_metadata(path)
-      doc_hash[:catkey_id_ssim] = catkey unless catkey.empty? # only add this if we have a catkey
-    rescue StandardError => e
-      log.error("For #{path} no identityMetadata or an error occurred while getting the catkey.  Error: #{e.message} #{e.backtrace.inspect}")
-    end
-
     doc_hash
+
   end
 
   # Add a single document to solr
@@ -96,15 +56,15 @@ module SolrMethods
     response = {}
     document[indexer_config['change_field'].to_sym] = Time.zone.now.utc.iso8601 # add timestamp to document
     begin
-      log.info("Processing item #{document[:id]} (#{document[indexer_config['deleted_field'].to_sym] == 'true' ? 'deleting' : 'adding'})")
+      IndexingLogger.info("Processing item #{document[:id]} (#{document[indexer_config['deleted_field'].to_sym] == 'true' ? 'deleting' : 'adding'})")
       with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr_connection.add [document]
       end
       result = parse_solr_response(response)
-      log.error("Unable to add the document #{document}, solr returned a response of #{response}") unless result
+      IndexingLoggererror("Unable to add the document #{document}, solr returned a response of #{response}") unless result
       result
     rescue StandardError => e
-      log.error("Unable to add the document #{document}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
+      IndexingLogger.error("Unable to add the document #{document}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       false
     end
   end
@@ -165,12 +125,12 @@ module SolrMethods
       end
       parse_solr_response(response)
     rescue StandardError => e
-      log.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
+      IndexingLogger.error("Unable to delete the document with an id of #{id}, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
     end
 
     commit_success = commit_to_solr
-    log.error("Attempting to commit after deleted the document with an id of #{id} failed.  The specific error returned should be logged above this.") unless commit_success
+    IndexingLogger.error("Attempting to commit after deleted the document with an id of #{id} failed.  The specific error returned should be logged above this.") unless commit_success
     commit_success
   end
 
@@ -196,7 +156,7 @@ module SolrMethods
         response = solr_connection.commit
       end
     rescue StandardError => e
-      log.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
+      IndexingLogger.error("Unable to commit to solr, solr returned a response of #{response} and an exception of #{e.message} occurred, #{e.backtrace.inspect} ")
       return false
     end
     parse_solr_response(response)

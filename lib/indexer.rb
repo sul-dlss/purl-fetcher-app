@@ -1,17 +1,14 @@
 require 'active_support/inflector'
-require 'logger'
 require 'stanford-mods'
 require 'retries'
 require 'druid-tools'
 require 'action_controller'
 require 'solr_methods'
-require 'parser_methods'
 require 'indexer_setup'
 
 class Indexer
 
   include SolrMethods
-  include ParserMethods
   include IndexerSetup
 
   # Class method: given a previous run_log entry, just reindex without finding
@@ -45,7 +42,7 @@ class Indexer
     results = {}
     if RunLog.currently_running?
       results[:note]="Job currently running. No action taken."
-      log.info(results[:note])
+      IndexingLogger.info(results[:note])
     else
       start_time = Time.zone.now
       output_file=File.join(base_path_finder_log,"#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S')}.txt")
@@ -77,8 +74,8 @@ class Indexer
       search_string = "locate \"#{purl_mount_location}/*public*\""
     end
     search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
-    log.info("Finding public files")
-    log.info(search_string)
+    IndexingLogger.info("Finding public files")
+    IndexingLogger.info(search_string)
     search_result=`#{search_string}`  # this is the big blocker line - send the find to unix and wait around until its done, at which point we have a file to read in
     return output_file
   end
@@ -93,9 +90,9 @@ class Indexer
     count=0
     error=0
     success=0
-    log.info("Indexing #{output_file}")
+    IndexingLogger.info("Indexing #{output_file}")
     File.foreach(output_file) do |line| # line will be the full file path, including the druid tree, try and get the druid from this
-      druid=get_druid_from_file_path(line)
+      druid = get_druid_from_file_path(line)
       unless druid.blank?
         puts "Indexing #{druid}"
         result=add_to_solr(solrize_object(File.dirname(line)))
@@ -105,7 +102,7 @@ class Indexer
       commit_to_solr if count % commit_every == 0 # every certain number of documents, issue a commit
     end
     commit_to_solr # do a final commit
-    log.info("Attempted index of #{count} purls; #{success} succeeded, #{error} failed")
+    IndexingLogger.info("Attempted index of #{count} purls; #{success} succeeded, #{error} failed")
     {count: count, success: success, error: error}
   end
 
@@ -134,6 +131,31 @@ class Indexer
       result = commit_to_solr unless docs.empty? # load in the new documents with the market to show they are deleted
     end
     { success: result, docs: docs }
+  end
+
+  # Returns a path to the file location in the purl mount given a druid
+  #
+  # @param druid [String] The druid you are interested in
+  # @return [String] Full path to location in purl mount
+  def purl_path(druid)
+    DruidTools::PurlDruid.new(druid, purl_mount_location).path
+  end
+
+  # Given a full path to a public file, try and pull just the druid part out
+  # @param path [String] The path to the public file (e.g. /purl/document_catch/aa/000/bb/0000/public)
+  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
+  def get_druid_from_file_path(path)
+    find_druid=path.match(/[a-zA-Z]{2}\/[0-9]{3}\/[a-zA-Z]{2}\/[0-9]{4}/)
+    find_druid && find_druid.size == 1 ? find_druid.to_s.gsub('/','') : ""
+  end
+
+  # Determine if a druid has been deleted and pruned from the document cache or not
+  #
+  # @param druid [String] The druid you are interested in
+  # @return [Boolean] True or False
+  def deleted?(druid)
+    dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
+    !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
   end
 
 end

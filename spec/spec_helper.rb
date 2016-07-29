@@ -107,7 +107,7 @@ def first_mod_test_date_collections
 end
 
 def purl_fixture_path
-  Rails.root.to_s + (File::SEPARATOR + 'spec' + File::SEPARATOR + 'purl-test-fixtures' + File::SEPARATOR + 'document_cache')
+  File.join(Rails.root,'spec','purl-test-fixtures','document_cache')
 end
 
 # Remove records from the deletes dir to avoid having them picked up by other tests
@@ -117,13 +117,11 @@ end
 #
 # @return [void]
 def remove_delete_records(dir_path, records)
-  records.each do |r|
-    delete_file(Pathname(dir_path + File::SEPARATOR + r))
-  end
+  records.each { |r| delete_file(Pathname(File.join(dir_path,r))) }
 end
 
 def remove_purl_file(dir_path, purl_path)
-  delete_file(Pathname(dir_path + File::SEPARATOR + purl_path))
+  delete_file(Pathname(File.join(dir_path,purl_path)))
 end
 
 def delete_file(file_path)

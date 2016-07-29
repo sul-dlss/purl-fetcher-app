@@ -4,6 +4,7 @@ require 'rails/all'
 require 'action_controller/railtie'
 require 'action_view/railtie'
 require 'active_job/railtie'
+require 'logger'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -57,6 +58,8 @@ module PurlFetcher
     end
   end
 end
+
+IndexingLogger = Logger.new(PurlFetcher::Application.config.solr_indexing['filename_indexing_log'])
 
 # Convenience constant for SOLR, can be removed if we remove fetcher and collections controllers
 begin

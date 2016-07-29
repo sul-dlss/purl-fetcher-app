@@ -5,10 +5,6 @@ module IndexerSetup
     PurlFetcher::Application.config.solr_indexing
   end
 
-  def log
-    @log ||= Logger.new(indexer_config['filename_indexing_log'])
-  end
-
   # file location in the rails app to store the results of file system find operation
   def base_path_finder_log
     indexer_config['base_path_finder_log']
@@ -31,7 +27,7 @@ module IndexerSetup
   #
   # @return [Pathname] The absolute path
   def path_to_deletes_dir
-    Pathname(purl_mount_location + File::SEPARATOR + indexer_config['deletes_dir'])
+    Pathname(File.join(purl_mount_location,indexer_config['deletes_dir']))
   end
 
   # Accessor to get the purl document cache path

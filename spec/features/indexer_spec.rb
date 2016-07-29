@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe('Indexer lib') do
+describe Indexer do
   let(:indexer) { Indexer.new }
   let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj7711', testing_doc_cache).path }
   let(:testing_doc_cache) { purl_fixture_path }
@@ -29,54 +29,16 @@ describe('Indexer lib') do
     end
   end
 
-  it 'returns the path the deletes directory as a pathname' do
-    expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
-  end
-
   it 'returns the path to a purl file location given a druid' do
     expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
   end
 
+  it 'returns the path the deletes directory as a pathname' do
+    expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
+  end
+
   it 'places the specified .deletes dir should be in the root of the purl directory' do
     expect(indexer.path_to_deletes_dir.to_s.downcase).to eq('/purl/document_cache/.deletes')
-  end
-
-  it 'gets the title from the mods file' do
-    expect(indexer.read_mods_for_object(sample_doc_path)).to match(title_tesim: "This is Pete's New Test title for this object.")
-  end
-
-  it 'raises an error when there is no mods' do
-    expect{ indexer.read_mods_for_object(sample_doc_path_files_missing) }.to raise_error(Errno::ENOENT)
-  end
-
-  it 'logs an error when there is no public xml, but does not fail' do
-    allow(indexer).to receive(:get_release_status).and_raise(Errno::ENOENT)
-    expect(indexer.log).to receive(:error).once
-    expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
-  end
-
-  it 'logs an error when it cannot get membership from the public xml, but does not fail' do
-    allow(indexer).to receive(:get_membership_from_publicxml).and_raise(Errno::ENOENT)
-    expect(indexer.log).to receive(:error).once
-    expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
-  end
-
-  it 'logs an error when there is no catkey in the identityMetadata, but does not fail' do
-    allow(indexer).to receive(:get_catkey_from_identity_metadata).and_raise(Errno::ENOENT)
-    expect(indexer.log).to receive(:error).once
-    expect(indexer.solrize_object(sample_doc_path).class).to eq(Hash)
-  end
-
-  it 'gets the druid from publicMetadata' do
-    expect(indexer.get_druid_from_public_metadata(sample_doc_path)).to match('druid:bb050dj7711')
-  end
-
-  it 'gets true and false data from the public xml regarding release status' do
-    expect(indexer.get_release_status(sample_doc_path)).to match(false: ['Atago'], true: ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'])
-  end
-
-  it 'raises an error when there is no public xml' do
-    expect{ indexer.get_release_status(sample_doc_path_files_missing) }.to raise_error(Errno::ENOENT)
   end
 
   it 'returns the doc hash when all needed files are present' do
@@ -110,27 +72,13 @@ describe('Indexer lib') do
 
     after :each do
       FileUtils.rm_r dest_dir if File.directory?(dest_dir) # remove the 6667 files
-      remove_delete_records(testing_doc_cache + File::SEPARATOR + '.deletes', ['bb050dj6667'])
-    end
-
-    it 'logs an error, but swallows the exception when mods is not present' do
-      allow_message_expectations_on_nil
-      remove_purl_file(dest_dir, 'mods')
-      expect(indexer.log).to receive(:error).once
-      expect(indexer.solrize_object(dest_dir)).to match({})
-    end
-
-    # This has been moved to pending due the fact we no longer have any core functions that raise an error when identityMetadata is not present
-    xit 'logs an error, but swallows the exception when identityMetadata is not present' do
-      remove_purl_file(dest_dir, 'identityMetadata')
-      expect(indexer.log).to receive(:error).once
-      expect(indexer.solrize_object(dest_dir)).to match({})
+      remove_delete_records(File.join(testing_doc_cache,'.deletes'), ['bb050dj6667'])
     end
 
     it 'logs an error, but swallows the exception when the public xml is not present' do
       allow_message_expectations_on_nil
       remove_purl_file(dest_dir, 'public')
-      expect(indexer.log).to receive(:error).once
+      expect(IndexingLogger).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
     end
   end
@@ -142,7 +90,7 @@ describe('Indexer lib') do
   it 'determines when the addition and commit of solr documents was successful' do
     VCR.use_cassette('submit_one_doc') do
       doc = indexer.solrize_object(sample_doc_path)
-      expect(indexer.log).to receive(:info).with(/Processing item.*adding/).once
+      expect(IndexingLogger).to receive(:info).with(/Processing item.*adding/).once
       expect(indexer.add_to_solr(doc)).to be_truthy
     end
   end
@@ -209,7 +157,7 @@ describe('Indexer lib') do
 
     after :each do
       FileUtils.rm_r dest_dir if File.directory?(dest_dir) # remove the 6667 files
-      remove_delete_records(testing_doc_cache + File::SEPARATOR + '.deletes', ['bb050dj6667'])
+      remove_delete_records(File.join(testing_doc_cache,'.deletes'), ['bb050dj6667'])
     end
 
     it 'detects that the druid is not deleted when its files are still present in the document cache' do
@@ -242,7 +190,7 @@ describe('Indexer lib') do
         FileUtils.rm_r dest_dir # remove its files
         druid_object.creates_delete_record # create its delete record
 
-        expect(indexer.log).to receive(:info).with(/Processing item.*deleting/).once
+        expect(IndexingLogger).to receive(:info).with(/Processing item.*deleting/).once
         result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
         sleep(1) # make sure at least one second passes for the timestamp checks
         end_time = Time.zone.now
@@ -276,29 +224,8 @@ describe('Indexer lib') do
       end
 
       # Remove these delete records
-      remove_delete_records(testing_doc_cache + File::SEPARATOR + '.deletes', fake_druids)
+      remove_delete_records(File.join(testing_doc_cache,'.deletes'), fake_druids)
     end
-  end
-
-  it 'gets the object type' do
-    expect(indexer.get_object_type_from_identity_metadata(sample_doc_path)).to match(['item'])
-  end
-
-  it 'gets multiple object types when an object has multiple types' do
-    druid_object = DruidTools::PurlDruid.new('druid:ct961sj2730', testing_doc_cache)
-    expect(indexer.get_object_type_from_identity_metadata(druid_object.path)).to match(['collection', 'set'])
-  end
-
-  it 'gets the collections and sets the object is a member of' do
-    expect(indexer.get_membership_from_publicxml(sample_doc_path)).to match(['druid:nt028fd5773', 'druid:wn860zc7322'])
-  end
-
-  it 'gets the cat key when one is present' do
-    expect(indexer.get_catkey_from_identity_metadata(ct961sj2730_path)).to match('10357851')
-  end
-
-  it 'returns empty string when no cat key is present' do
-    expect(indexer.get_catkey_from_identity_metadata(sample_doc_path)).to match('')
   end
 
   # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
@@ -317,7 +244,7 @@ describe('Indexer lib') do
     it 'detects when a purl has been changed' do
       skip 'there is a race condition or something that causes this test to fail sporadically'
       FileUtils.rm_r dest_dir if File.directory?(dest_dir) # If this test failed and isreun, clear the directory
-      branch = purl_fixture_path + File::SEPARATOR + 'bb'
+      branch = File.join(purl_fixture_path,'bb')
       indexer.instance_variable_set(:@modified_at_or_later, 1) # Set the default mod time to one minute
       sleep(61)
 
@@ -327,8 +254,8 @@ describe('Indexer lib') do
       expect(indexer.get_all_changed_objects_for_branch(branch)).to match([])
 
       # Make sure we filter only on files we want
-      empty_file = sample_doc_path + File::SEPARATOR + 'my_updates_do_not_count'
-      FileUtils.touch(sample_doc_path + File::SEPARATOR + 'my_updates_do_not_count') # add in a fake files who change should not trigger
+      empty_file = File.join(sample_doc_path,'my_updates_do_not_count')
+      FileUtils.touch(empty_file) # add in a fake files who change should not trigger
 
       # Since this file does not matter, no function should pick up on it as a reason to update something
       expect(indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([])
@@ -346,7 +273,7 @@ describe('Indexer lib') do
       expect(indexer.get_all_changed_objects_for_branch(branch).size).to eq(1)
 
       # The index_all_modified_objects should sweep across all branches, so touch something in another branch
-      FileUtils.touch(ct961sj2730_path + File::SEPARATOR + 'mods')
+      FileUtils.touch(File.join(ct961sj2730_path,'mods'))
       r = indexer.index_all_modified_objects(mins_ago: 1)
       expect(r[:docs].size).to eq(2) # The bb and ct branches should now have a total of two modified
 
@@ -370,7 +297,7 @@ describe('Indexer lib') do
     it 'logs an error when rsolr cannot delete something' do
       allow_message_expectations_on_nil
       expect(indexer).to receive(:solr_connection).once.and_return(testing_solr_connection)
-      expect(indexer.log).to receive(:error).once
+      expect(IndexingLogger).to receive(:error).once
       allow(testing_solr_connection).to receive(:delete_by_id).and_raise(RSolr::Error)
       expect(indexer.delete_document('foo')).to be_falsey
     end
@@ -380,7 +307,7 @@ describe('Indexer lib') do
       expect(indexer).to receive(:solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(indexer).to receive(:commit_to_solr).once.and_return(false)
-      expect(indexer.log).to receive(:error).once
+      expect(IndexingLogger).to receive(:error).once
       expect(indexer).to receive(:parse_solr_response).once.and_return(true) # fake a successful call
       expect(indexer.delete_document('foo')).to be_falsey
     end
@@ -392,7 +319,7 @@ describe('Indexer lib') do
     it 'logs an error when it cannot query solr and returns an empty hash' do
       allow(indexer).to receive(:solr_connection).and_return(testing_solr_connection)
       allow(testing_solr_connection).to receive(:get).and_raise(RSolr::Error)
-      expect(indexer.log).to receive(:error).once
+      expect(IndexingLogger).to receive(:error).once
       expect(indexer.run_solr_query('whatever')).to match({})
     end
   end
