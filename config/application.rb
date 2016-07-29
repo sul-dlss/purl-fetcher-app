@@ -40,7 +40,6 @@ module PurlFetcher
 
     begin
       config.solr_url = load_yaml_config.call('solr.yml')['url']
-      # puts load_yaml_config.call('solr.yml')['url']
     rescue
       puts 'WARNING: config/solr.yml config not found'
     end

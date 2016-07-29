@@ -196,11 +196,6 @@ describe('Indexer lib') do
     expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
   end
 
-  it 'adds the timestamp to documents' do
-    document = indexer.add_timestamp_to_document({})
-    expect(document[:indexed_dtsi].class).to eq(String)
-  end
-
   it 'returns a string for the purl mount location' do
     expect(indexer.purl_mount_location.class).to eq(String)
   end
@@ -256,7 +251,6 @@ describe('Indexer lib') do
         expect(result[:docs].size).to eq(1)
         expect(result[:docs][0][:id]).to match('druid:bb050dj6667')
         expect(result[:docs][0][:deleted_tsi]).to match('true')
-        puts result[:docs][0]
         expect(result[:docs][0][:indexed_dtsi].class).to eq(String) # make sure it isn't a nill
 
         # Make sure the index time stamp was set properly, it should be between the start time and end time

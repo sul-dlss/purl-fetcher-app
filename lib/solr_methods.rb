@@ -94,8 +94,8 @@ module SolrMethods
   # @return [Boolean] True if the documents were added succesfully, false if they were not
   def add_to_solr(document)
     response = {}
+    document[indexer_config['change_field'].to_sym] = Time.zone.now.utc.iso8601 # add timestamp to document
     begin
-      document = add_timestamp_to_document(document)
       log.info("Processing item #{document[:id]} (#{document[indexer_config['deleted_field'].to_sym] == 'true' ? 'deleting' : 'adding'})")
       with_retries(max_retries: 5, base_sleep_seconds: 3, max_sleep_seconds: 15, rescue: RSolr::Error) do
         response = solr_connection.add [document]
@@ -155,15 +155,6 @@ module SolrMethods
       response['changes'] << hash
     end
     response
-  end
-
-  # Adds in the timestamp attribute, using  Time.zone.now, to each document about to be committed to Solr
-  #
-  # @param documents [Hash] A solr document
-  # @return [Hash] A solr document with timestamp added
-  def add_timestamp_to_document(document)
-    document[indexer_config['change_field'].to_sym] = Time.zone.now.utc.iso8601
-    document
   end
 
   def delete_document(id)

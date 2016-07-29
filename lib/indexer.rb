@@ -127,7 +127,8 @@ class Indexer
       druid = d_o.split(query_path.to_s + File::SEPARATOR)[1]
       if !druid.nil? && deleted?(druid)
         # delete_document(d_o) #delete the current document out of solr
-        document={ :id => ('druid:' + druid), indexer_config['deleted_field'].to_sym => 'true' }
+        document={:id => ('druid:' + druid), indexer_config['deleted_field'].to_sym => 'true' }
+        add_to_solr(document)
         docs << document
       end
       result = commit_to_solr unless docs.empty? # load in the new documents with the market to show they are deleted
