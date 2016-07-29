@@ -15,15 +15,15 @@ describe('Indexer lib') do
   let(:druid_object) { DruidTools::PurlDruid.new('bb050dj6667', testing_doc_cache) }
 
   describe('testing connectivity to the solr core') do
-    let(:s_c) { indexer.establish_solr_connection }
+    let(:s_c) { indexer.solr_connection }
     it 'returns true when the solr core responds to a select' do
-      allow(indexer).to receive(:establish_solr_connection).and_return(s_c)
+      allow(indexer).to receive(:solr_connection).and_return(s_c)
       allow(s_c).to receive(:get).and_return('responseHeader' => { 'status' => 0 })
       expect(indexer.check_solr_core).to be_truthy
     end
 
     it 'returns false when the solr core does not respond to a select' do
-      allow(indexer).to receive(:establish_solr_connection).and_return(s_c)
+      allow(indexer).to receive(:solr_connection).and_return(s_c)
       allow(s_c).to receive(:get).and_return('responseHeader' => { 'status' => 1 })
       expect(indexer.check_solr_core).to be_falsey
     end
@@ -136,21 +136,20 @@ describe('Indexer lib') do
   end
 
   it 'returns an RSolr Client when connecting to solr' do
-    expect(indexer.establish_solr_connection.class).to eq(RSolr::Client)
+    expect(indexer.solr_connection.class).to eq(RSolr::Client)
   end
 
   it 'determines when the addition and commit of solr documents was successful' do
     VCR.use_cassette('submit_one_doc') do
-      docs = [indexer.solrize_object(sample_doc_path)]
+      doc = indexer.solrize_object(sample_doc_path)
       expect(indexer.log).to receive(:info).with(/Processing item.*adding/).once
-      expect(indexer.log).to receive(:info).with(/Sending 1 record/).once
-      expect(indexer.add_and_commit_to_solr(docs)).to be_truthy
+      expect(indexer.add_to_solr(doc)).to be_truthy
     end
   end
 
   it 'determines when the solr commit was successful' do
     VCR.use_cassette('successful_solr_commit') do
-      expect(indexer.commit_to_solr(indexer.establish_solr_connection)).to be_truthy
+      expect(indexer.commit_to_solr).to be_truthy
     end
   end
 
@@ -178,8 +177,8 @@ describe('Indexer lib') do
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
     allow_message_expectations_on_nil
     VCR.use_cassette('doc_submit_fails') do
-      docs = [indexer.solrize_object(sample_doc_path)]
-      expect(indexer.add_and_commit_to_solr(docs)).to be_falsey
+      doc = indexer.solrize_object(sample_doc_path)
+      expect(indexer.add_to_solr(doc)).to be_falsey
     end
   end
 
@@ -189,7 +188,7 @@ describe('Indexer lib') do
     # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
     allow_message_expectations_on_nil
     VCR.use_cassette('failed_solr_commit') do
-      expect(indexer.commit_to_solr(indexer.establish_solr_connection)).to be_falsey
+      expect(indexer.commit_to_solr).to be_falsey
     end
   end
 
@@ -198,9 +197,8 @@ describe('Indexer lib') do
   end
 
   it 'adds the timestamp to documents' do
-    documents = indexer.add_timestamp_to_documents([{}, {}])
-    expect(documents[0][:indexed_dtsi].class).to eq(String)
-    expect(documents[1][:indexed_dtsi].class).to eq(String)
+    document = indexer.add_timestamp_to_document({})
+    expect(document[:indexed_dtsi].class).to eq(String)
   end
 
   it 'returns a string for the purl mount location' do
@@ -244,12 +242,12 @@ describe('Indexer lib') do
       VCR.use_cassette('successful_solr_delete') do
         start_time = Time.zone.now
         sleep(1) # make sure at least one second passes for the timestamp checks
-        indexer.add_and_commit_to_solr(indexer.solrize_object(dest_dir)) # commit 6667 to solr
+        indexer.add_to_solr(indexer.solrize_object(dest_dir)) # commit 6667 to solr
+        indexer.commit_to_solr
         FileUtils.rm_r dest_dir # remove its files
         druid_object.creates_delete_record # create its delete record
 
         expect(indexer.log).to receive(:info).with(/Processing item.*deleting/).once
-        expect(indexer.log).to receive(:info).with(/Sending/).once
         result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
         sleep(1) # make sure at least one second passes for the timestamp checks
         end_time = Time.zone.now
@@ -258,6 +256,7 @@ describe('Indexer lib') do
         expect(result[:docs].size).to eq(1)
         expect(result[:docs][0][:id]).to match('druid:bb050dj6667')
         expect(result[:docs][0][:deleted_tsi]).to match('true')
+        puts result[:docs][0]
         expect(result[:docs][0][:indexed_dtsi].class).to eq(String) # make sure it isn't a nill
 
         # Make sure the index time stamp was set properly, it should be between the start time and end time
@@ -312,7 +311,7 @@ describe('Indexer lib') do
   describe('Detecting changes to the file system') do
     before :each do
       allow(indexer).to receive(:purl_mount_location).and_return(testing_doc_cache)
-      allow(indexer).to receive(:add_and_commit_to_solr).and_return('responseHeader' => { 'status' => 0, 'QTime' => 36 }) # fake the solr commit part, we test that elsewhere
+      allow(indexer).to receive(:commit_to_solr).and_return('responseHeader' => { 'status' => 0, 'QTime' => 36 }) # fake the solr commit part, we test that elsewhere
     end
 
     # Multiple functions are tested here to avoid having to repeat the sleep
@@ -367,7 +366,7 @@ describe('Indexer lib') do
     let(:testing_solr_connection) { RSolr.connect }
 
     it 'calls rsolr delete by id' do
-      expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
+      expect(indexer).to receive(:solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(indexer).to receive(:commit_to_solr).once.and_return(true)
       expect(indexer).to receive(:parse_solr_response).once.and_return(true) # fake a successful call
@@ -376,7 +375,7 @@ describe('Indexer lib') do
 
     it 'logs an error when rsolr cannot delete something' do
       allow_message_expectations_on_nil
-      expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
+      expect(indexer).to receive(:solr_connection).once.and_return(testing_solr_connection)
       expect(indexer.log).to receive(:error).once
       allow(testing_solr_connection).to receive(:delete_by_id).and_raise(RSolr::Error)
       expect(indexer.delete_document('foo')).to be_falsey
@@ -384,7 +383,7 @@ describe('Indexer lib') do
 
     it 'logs an error when rslor cannot commit after a delete operation' do
       allow_message_expectations_on_nil
-      expect(indexer).to receive(:establish_solr_connection).once.and_return(testing_solr_connection)
+      expect(indexer).to receive(:solr_connection).once.and_return(testing_solr_connection)
       expect(testing_solr_connection).to receive(:delete_by_id).once.and_return({})
       expect(indexer).to receive(:commit_to_solr).once.and_return(false)
       expect(indexer.log).to receive(:error).once
@@ -393,11 +392,15 @@ describe('Indexer lib') do
     end
   end
 
-  it 'logs an error when it cannot query solr and returns an empty hash' do
-    solr_client = indexer.establish_solr_connection
-    allow(indexer).to receive(:establish_solr_connection).and_return(solr_client)
-    allow(solr_client).to receive(:get).and_raise(RSolr::Error)
-    expect(indexer.log).to receive(:error).once
-    expect(indexer.run_solr_query('whatever')).to match({})
+  describe('solr_connection') do
+    let(:testing_solr_connection) { RSolr.connect }
+
+    it 'logs an error when it cannot query solr and returns an empty hash' do
+      allow(indexer).to receive(:solr_connection).and_return(testing_solr_connection)
+      allow(testing_solr_connection).to receive(:get).and_raise(RSolr::Error)
+      expect(indexer.log).to receive(:error).once
+      expect(indexer.run_solr_query('whatever')).to match({})
+    end
   end
+
 end

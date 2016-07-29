@@ -59,7 +59,7 @@ module PurlFetcher
   end
 end
 
-# Convenience constant for SOLR
+# Convenience constant for SOLR, can be removed if we remove fetcher and collections controllers
 begin
   Solr = RSolr.connect :url => PurlFetcher::Application.config.solr_url
 rescue

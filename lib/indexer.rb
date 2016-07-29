@@ -14,6 +14,12 @@ class Indexer
   include ParserMethods
   include IndexerSetup
 
+  # Class method: given a previous run_log entry, just reindex without finding
+  # @param [Integer] run_log_id: The ID of a previous run log entry
+  def self.reindex(run_log_id)
+    Indexer.new.index_purls(output_file: RunLog.find(run_log_id).finder_filename)
+  end
+
   # Finds all objects modified since the beginning of time.
   # Note: This is not the function to use for processing deletes
   def full_reindex
@@ -31,33 +37,37 @@ class Indexer
   #  defaults to all if no time specified
   # Note: This is not the function to use for processing deletes
   #
-  # @return [Hash] A hash listing all documents sent to solr and the total run time {:docs => [{Doc1}, {Doc2},...], :run_time => Seconds_It_Took_To_Run}
+  # @return [Hash] A hash listing number of docs indexed and the total run time {:count => n, :run_time => Seconds_It_Took_To_Run}
   #
   # Example:
-  #   results = find_and_index(100)
+  #   results = find_and_index(mins_ago: 100)
   def find_and_index(mins_ago: nil)
-    start_time = Time.zone.now
     results = {}
     if RunLog.currently_running?
-      log.info("Job currently running. No action taken.")
+      results[:note]="Job currently running. No action taken."
+      log.info(results[:note])
     else
+      start_time = Time.zone.now
       output_file=File.join(base_path_finder_log,"#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S')}.txt")
       run_log=RunLog.create(finder_filename: output_file, started: start_time)
       find_files(mins_ago: mins_ago, output_file: output_file)
-      index_purls(mins_ago: mins_ago)
+      index_result = index_purls(output_file: output_file)
+      end_time = Time.zone.now
+      results[:run_time] = end_time - start_time
+      run_log.total_druids=index_result[:count]
+      run_log.num_errors=index_result[:error]
+      run_log.ended = end_time
+      run_log.save
     end
-    end_time = Time.zone.now
-    results[:run_time] = end_time - start_time
-    run_log.ended = end_time
-    run_log.save
-    results
+    results.merge(index_result)
   end
 
   # find all public files change since the specified number of minutes and store in the database
   #  if no time specified, finds all files
   # returns an integer with the number of files found
-  # @param [Integer] Set as a hash key of mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
-  # @param [Integer] Set as a hash key of output_file: The filename location to store the results of the find operation
+  # @param [Hash] mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
+  # @param [Hash] output_file: The filename location to store the results of the find operation
+  # @param [String] The output file where the files were stored
   def find_files(params={})
     mins_ago = params[:mins_ago] || nil
     output_file = params[:output_file] || File.join(base_path_finder_log,"output.txt")
@@ -67,21 +77,36 @@ class Indexer
       search_string = "locate \"#{purl_mount_location}/*public*\""
     end
     search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
+    log.info("Finding public files")
     log.info(search_string)
     search_result=`#{search_string}`  # this is the big blocker line - send the find to unix and wait around until its done, at which point we have a file to read in
-    return true
+    return output_file
   end
 
-  # indexes purls based on druids found in the database, going back to the specified minutes ago
+  # indexes purls based on druids found in the output_file, going back to the specified minutes ago
   #  defaults to indexing all purls if no time specified
   # returns an integer with the number of files found
-  # @param [Integer] Set as a hash key of mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
-  # @return [Integer] Number of purls indexed
-  def index_purls(mins_ago: nil)
-    # TODO: Iterate over purls in database and index each one
+  # @param [Hash] output_file: The filename location of found purls to index from
+  # @return [Hash] A hash with stats on the number of purls indexed, success and failure counts
+  def index_purls(params={})
+    output_file = params[:output_file] || File.join(base_path_finder_log,"output.txt")
     count=0
-
-    count
+    error=0
+    success=0
+    log.info("Indexing #{output_file}")
+    File.foreach(output_file) do |line| # line will be the full file path, including the druid tree, try and get the druid from this
+      druid=get_druid_from_file_path(line)
+      unless druid.blank?
+        puts "Indexing #{druid}"
+        result=add_to_solr(solrize_object(File.dirname(line)))
+        result ? success+=1 : errors+=1
+        count+=1
+      end
+      commit_to_solr if count % commit_every == 0 # every certain number of documents, issue a commit
+    end
+    commit_to_solr # do a final commit
+    log.info("Attempted index of #{count} purls; #{success} succeeded, #{error} failed")
+    {count: count, success: success, error: error}
   end
 
   # Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion
@@ -102,9 +127,10 @@ class Indexer
       druid = d_o.split(query_path.to_s + File::SEPARATOR)[1]
       if !druid.nil? && deleted?(druid)
         # delete_document(d_o) #delete the current document out of solr
-        docs << { :id => ('druid:' + druid), indexer_config['deleted_field'].to_sym => 'true' }
+        document={ :id => ('druid:' + druid), indexer_config['deleted_field'].to_sym => 'true' }
+        docs << document
       end
-      result = add_and_commit_to_solr(docs) unless docs.empty? # load in the new documents with the market to show they are deleted
+      result = commit_to_solr unless docs.empty? # load in the new documents with the market to show they are deleted
     end
     { success: result, docs: docs }
   end

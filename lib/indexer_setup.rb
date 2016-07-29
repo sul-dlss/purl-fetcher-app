@@ -6,7 +6,7 @@ module IndexerSetup
   end
 
   def log
-    @log ||= Logger.new('log/indexing.log')
+    @log ||= Logger.new(indexer_config['filename_indexing_log'])
   end
 
   # file location in the rails app to store the results of file system find operation
@@ -21,6 +21,10 @@ module IndexerSetup
 
   def modified_at_or_later
     indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago # default setting
+  end
+
+  def commit_every
+    indexer_config['items_commit_every'].to_i
   end
 
   # Return the absolute path to the .deletes dir

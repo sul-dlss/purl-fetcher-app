@@ -1,4 +1,5 @@
 defaults: &defaults
+  filename_indexing_log: "log/indexing.log"
   purl_document_path: "/purl/document_cache"
   deletes_dir: ".deletes"
   default_run_interval_in_minutes: 5
