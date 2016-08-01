@@ -11,13 +11,13 @@ class Indexer
   include SolrMethods
   include IndexerSetup
 
-  # Class method: given a previous run_log entry, just reindex without finding
+  # Given a previous run_log entry, just reindex without finding
   # @param [Integer] run_log_id: The ID of a previous run log entry
-  def self.reindex(run_log_id)
-    Indexer.new.index_purls(output_file: RunLog.find(run_log_id).finder_filename)
+  def reindex(run_log_id)
+    index_purls(output_file: RunLog.find(run_log_id).finder_filename)
   end
 
-  # Finds all objects modified since the beginning of time.
+  # Finds all objects modified since the beginning of time and reindex
   # Note: This is not the function to use for processing deletes
   def full_reindex
     find_and_index
@@ -30,8 +30,7 @@ class Indexer
     find_and_index(mins_ago: modified_at_or_later)
   end
 
-  # find and then index all public files changed since the specified number of minutes ago
-  #  defaults to all if no time specified
+  # Find and then index all public files changed since the specified number of minutes ago (defaults to everything if no time specified
   # Note: This is not the function to use for processing deletes
   #
   # @return [Hash] A hash listing number of docs indexed and the total run time {:count => n, :run_time => Seconds_It_Took_To_Run}
@@ -59,8 +58,7 @@ class Indexer
     results.merge(index_result)
   end
 
-  # find all public files change since the specified number of minutes and store in the database
-  #  if no time specified, finds all files
+  # Find all public files change since the specified number of minutes and store in the database, if no time specified, finds all files
   # returns an integer with the number of files found
   # @param [Hash] mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
   # @param [Hash] output_file: The filename location to store the results of the find operation
@@ -80,7 +78,7 @@ class Indexer
     return output_file
   end
 
-  # indexes purls based on druids found in the output_file, going back to the specified minutes ago
+  # Indexes purls based on druids found in the output_file, going back to the specified minutes ago
   #  defaults to indexing all purls if no time specified
   # returns an integer with the number of files found
   # @param [Hash] output_file: The filename location of found purls to index from
@@ -109,21 +107,23 @@ class Indexer
   # Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion
   #
   # @return [Hash] A hash stating if the deletion was successful or not and an array of the docs {:success=> true/false, :docs => [{doc1},{doc2},...]}
-  def remove_deleted_objects_from_solr(mins_ago: indexer_config.default_run_interval_in_minutes.to_i)
-    # minutes_ago = ((Time.zone.now-mins_ago.minutes.ago)/60.0).ceil #use ceil to round up (2.3 becomes 3)
-    query_path = Pathname(path_to_deletes_dir.to_s)
+  def remove_deleted(params={})
+    mins_ago = params[:mins_ago] || nil
+
     # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
     # a deleted object and thus don't have a .deletes dir
-    deleted_objects = `find #{query_path} -mmin -#{mins_ago}`.split
-    deleted_objects -= [query_path.to_s] # remove the deleted objects dir itself
+    search_string = "find #{path_to_deletes_dir}"
+    search_string += " -mmin -#{mins_ago}" if mins_ago
+
+    deleted_objects = `#{search_string}`.split
+    deleted_objects -= [path_to_deletes_dir] # remove the deleted objects dir itself
 
     docs = []
     result = true # set this to true by default because if we get an empty list of documents, then it worked
-    deleted_objects.each do |d_o|
+    deleted_objects.each do |obj|
       # Check to make sure that the object is really deleted
-      druid = d_o.split(query_path.to_s + File::SEPARATOR)[1]
+      druid = obj.split(path_to_deletes_dir + File::SEPARATOR)[1]
       if !druid.nil? && deleted?(druid)
-        # delete_document(d_o) #delete the current document out of solr
         document={:id => ('druid:' + druid), indexer_config['deleted_field'].to_sym => 'true' }
         add_to_solr(document)
         docs << document
@@ -131,31 +131,6 @@ class Indexer
       result = commit_to_solr unless docs.empty? # load in the new documents with the market to show they are deleted
     end
     { success: result, docs: docs }
-  end
-
-  # Returns a path to the file location in the purl mount given a druid
-  #
-  # @param druid [String] The druid you are interested in
-  # @return [String] Full path to location in purl mount
-  def purl_path(druid)
-    DruidTools::PurlDruid.new(druid, purl_mount_location).path
-  end
-
-  # Given a full path to a public file, try and pull just the druid part out
-  # @param path [String] The path to the public file (e.g. /purl/document_catch/aa/000/bb/0000/public)
-  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
-  def get_druid_from_file_path(path)
-    find_druid=path.match(/[a-zA-Z]{2}\/[0-9]{3}\/[a-zA-Z]{2}\/[0-9]{4}/)
-    find_druid && find_druid.size == 1 ? find_druid.to_s.gsub('/','') : ""
-  end
-
-  # Determine if a druid has been deleted and pruned from the document cache or not
-  #
-  # @param druid [String] The druid you are interested in
-  # @return [Boolean] True or False
-  def deleted?(druid)
-    dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
-    !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
   end
 
 end

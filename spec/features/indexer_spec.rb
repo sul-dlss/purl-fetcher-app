@@ -53,12 +53,9 @@ describe Indexer do
     expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
   end
 
-  it 'returns the path the deletes directory as a pathname' do
-    expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
-  end
-
-  it 'places the specified .deletes dir should be in the root of the purl directory' do
+  it 'returns the path the deletes directory as a string and has the correct location' do
     expect(indexer.path_to_deletes_dir.to_s.downcase).to eq('/purl/document_cache/.deletes')
+    expect(indexer.path_to_deletes_dir.class).to eq(String)
   end
 
   it 'returns the doc hash when all needed files are present' do
@@ -159,11 +156,7 @@ describe Indexer do
       expect(indexer.commit_to_solr).to be_falsey
     end
   end
-
-  it 'returns the path to the delete directory as Pathname' do
-    expect(indexer.path_to_deletes_dir.class).to eq(Pathname)
-  end
-
+  
   it 'returns a string for the purl mount location' do
     expect(indexer.purl_mount_location.class).to eq(String)
   end
@@ -196,7 +189,7 @@ describe Indexer do
       # Copy the files back in
       FileUtils.cp_r source_dir, dest_dir
 
-      expect(indexer.remove_deleted_objects_from_solr(mins_ago: 5)).to match(success: true, docs: [])
+      expect(indexer.remove_deleted(mins_ago: 5)).to match(success: true, docs: [])
     end
 
     it 'deletes the druid from solr the files do not remain in the document cache' do
@@ -211,7 +204,7 @@ describe Indexer do
         druid_object.creates_delete_record # create its delete record
 
         expect(IndexingLogger).to receive(:info).with(/Processing item.*deleting/).once
-        result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
+        result = indexer.remove_deleted(mins_ago: 5)
         sleep(1) # make sure at least one second passes for the timestamp checks
         end_time = Time.zone.now
         # Check the result
@@ -238,7 +231,7 @@ describe Indexer do
       FileUtils.rm_r dest_dir # remove 6667 files
 
       VCR.use_cassette('multiple_druid_delete') do
-        result = indexer.remove_deleted_objects_from_solr(mins_ago: 5)
+        result = indexer.remove_deleted(mins_ago: 5)
         expect(result[:success]).to be_truthy
         expect(result[:docs].size == fake_druids.size).to be_truthy
       end

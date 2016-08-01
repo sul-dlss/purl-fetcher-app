@@ -20,7 +20,7 @@ desc 'Index objects deleted in last n minutes. Defaults to 1 hour'
 task :index_deletes, [:mins_ago] => :environment do |_t, args|
   args.with_defaults(mins_ago: 60)
   start_time = Time.zone.now
-  result = Indexer.new.remove_deleted_objects_from_solr(mins_ago: args[:mins_ago] + 1) # adding one minute for slop
+  result = Indexer.new.remove_deleted(mins_ago: args[:mins_ago] + 1) # adding one minute for slop
   Logger.new('log/indexing.log').info("Running of the rake task 'index_deletes' #{args[:mins_ago]} mins at #{start_time} returned a result of #{result.inspect}")
 end
 
