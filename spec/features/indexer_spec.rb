@@ -29,56 +29,126 @@ describe Indexer do
     end
   end
 
-  it 'gets the druid from the file path' do
-    expect(indexer.get_druid_from_file_path(sample_doc_path)).to eq('bb050dj7711')
+  describe('indexer setup') do
+    it 'gets the druid from the file path' do
+      expect(indexer.get_druid_from_file_path(sample_doc_path)).to eq('bb050dj7711')
+    end
+
+    it 'returns the base path finder log location' do
+      expect(indexer.base_path_finder_log).to eq(File.join(Rails.root,'tmp'))
+    end
+
+    it 'returns the base path filename finder log' do
+      expect(indexer.base_filename_finder_log).to eq('purl_finder')
+    end
+
+    it 'returns the commit every parameter' do
+      expect(indexer.commit_every).to eq(50)
+    end
+
+    it 'returns a string for the purl mount location' do
+      expect(indexer.purl_mount_location.class).to eq(String)
+    end
+
+    it 'returns the default modified_at_or_later parameter' do
+      expect(indexer.modified_at_or_later).to be <= indexer.indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago
+    end
+
+    it 'returns the path to a purl file location given a druid' do
+      expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
+    end
+
+    it 'returns the path the deletes directory as a string and has the correct location' do
+      expect(indexer.path_to_deletes_dir.to_s.downcase).to eq('/purl/document_cache/.deletes')
+      expect(indexer.path_to_deletes_dir.class).to eq(String)
+    end
+
+    it 'returns the default output finder file location' do
+      expect(indexer.default_output_file).to eq(File.join(Rails.root,'tmp/purl_finder'))
+    end
   end
 
-  it 'returns the base path finder log location' do
-    expect(indexer.base_path_finder_log).to eq(File.join(Rails.root,'tmp'))
-  end
+  describe('solr methods') do
+    it 'returns the doc hash when all needed files are present' do
+      expect(indexer.solrize_object(sample_doc_path)).to match(objectType_ssim: ['item'],
+                                                               false_releases_ssim: ['Atago'],
+                                                               id: 'druid:bb050dj7711',
+                                                               title_tesim: "This is Pete's New Test title for this object.",
+                                                               true_releases_ssim: ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'],
+                                                               is_member_of_collection_ssim: ['druid:nt028fd5773', 'druid:wn860zc7322'])
+    end
 
-  it 'returns the base path filename finder log' do
-    expect(indexer.base_filename_finder_log).to eq('purl_finder')
-  end
+    it 'returns the doc hash with no membership but a catkey for a top level collection that has a catkey' do
+      expect(indexer.solrize_object(ct961sj2730_path)).to match(title_tesim: 'Caroline Batchelor Map Collection.',
+                                                                id: 'druid:ct961sj2730',
+                                                                true_releases_ssim: [],
+                                                                false_releases_ssim: [],
+                                                                objectType_ssim: ['collection', 'set'],
+                                                                catkey_id_ssim: '10357851')
+    end
 
-  it 'returns the commit every parameter' do
-    expect(indexer.commit_every).to eq(50)
-  end
+    it 'returns the empty doc hash when it cannot open a file' do
+      allow_message_expectations_on_nil
+      expect(indexer.solrize_object(sample_doc_path_files_missing)).to match({})
+    end
 
-  it 'returns the default modified_at_or_later parameter' do
-    expect(indexer.modified_at_or_later).to be <= indexer.indexer_config['default_run_interval_in_minutes'].to_i.minutes.ago
-  end
+    it 'returns an RSolr Client when connecting to solr' do
+      expect(indexer.solr_connection.class).to eq(RSolr::Client)
+    end
 
-  it 'returns the path to a purl file location given a druid' do
-    expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
-  end
+    it 'determines when the addition and commit of solr documents was successful' do
+      VCR.use_cassette('submit_one_doc') do
+        doc = indexer.solrize_object(sample_doc_path)
+        expect(IndexingLogger).to receive(:info).with(/Processing item.*adding/).once
+        expect(indexer.add_to_solr(doc)).to be_truthy
+      end
+    end
 
-  it 'returns the path the deletes directory as a string and has the correct location' do
-    expect(indexer.path_to_deletes_dir.to_s.downcase).to eq('/purl/document_cache/.deletes')
-    expect(indexer.path_to_deletes_dir.class).to eq(String)
-  end
+    it 'determines when the solr commit was successful' do
+      VCR.use_cassette('successful_solr_commit') do
+        expect(indexer.commit_to_solr).to be_truthy
+      end
+    end
 
-  it 'returns the doc hash when all needed files are present' do
-    expect(indexer.solrize_object(sample_doc_path)).to match(objectType_ssim: ['item'],
-                                                             false_releases_ssim: ['Atago'],
-                                                             id: 'druid:bb050dj7711',
-                                                             title_tesim: "This is Pete's New Test title for this object.",
-                                                             true_releases_ssim: ['CARRICKR-TEST', 'Robot_Testing_Feb_5_2015'],
-                                                             is_member_of_collection_ssim: ['druid:nt028fd5773', 'druid:wn860zc7322'])
-  end
+    it 'determines from the RSolr response if the solr operation was successful' do
+      resp = { 'responseHeader' => { 'status' => 0, 'QTime' => 77 } }
+      expect(indexer.parse_solr_response(resp)).to be_truthy
+    end
 
-  it 'returns the doc hash with no membership but a catkey for a top level collection that has a catkey' do
-    expect(indexer.solrize_object(ct961sj2730_path)).to match(title_tesim: 'Caroline Batchelor Map Collection.',
-                                                              id: 'druid:ct961sj2730',
-                                                              true_releases_ssim: [],
-                                                              false_releases_ssim: [],
-                                                              objectType_ssim: ['collection', 'set'],
-                                                              catkey_id_ssim: '10357851')
-  end
+    it 'determines from the RSolr response if the solr operation failed' do
+      resp = { 'responseHeader' => { 'status' => -1, 'QTime' => 77 } }
+      expect(indexer.parse_solr_response(resp)).to be_falsey
+    end
 
-  it 'returns the empty doc hash when it cannot open a file' do
-    allow_message_expectations_on_nil
-    expect(indexer.solrize_object(sample_doc_path_files_missing)).to match({})
+    it 'determines from the RSolr response if the solr cloud is overloaded and sleeps the thread' do
+      resp = { 'responseHeader' => { 'status' => 0, 'QTime' => PurlFetcher::Application.config.solr_indexing['sleep_when_response_time_exceeds'].to_i } }
+      begin_time = Time.zone.now
+      expect(indexer.parse_solr_response(resp)).to be_truthy
+      end_time = Time.zone.now
+      expect(end_time - begin_time).to be >= PurlFetcher::Application.config.solr_indexing['sleep_seconds_if_overloaded'].to_i
+    end
+
+    it 'determines if the addition of solr documents was successful' do
+      # FYI this will fail if you have your local solr running, because obviously you can connect to it
+      # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
+      # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
+      allow_message_expectations_on_nil
+      VCR.use_cassette('doc_submit_fails') do
+        doc = indexer.solrize_object(sample_doc_path)
+        expect(indexer.add_to_solr(doc)).to be_falsey
+      end
+    end
+
+    it 'determines if the solr commit was successful' do
+      # FYI this will fail if you have your local solr running, because obviously you can connect to it
+      # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
+      # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
+      allow_message_expectations_on_nil
+      VCR.use_cassette('failed_solr_commit') do
+        expect(indexer.commit_to_solr).to be_falsey
+      end
+    end
+
   end
 
   describe('Failure to find a needed file for building the solr document') do
@@ -98,67 +168,6 @@ describe Indexer do
       expect(IndexingLogger).to receive(:error).once
       expect(indexer.solrize_object(dest_dir)).to match({})
     end
-  end
-
-  it 'returns an RSolr Client when connecting to solr' do
-    expect(indexer.solr_connection.class).to eq(RSolr::Client)
-  end
-
-  it 'determines when the addition and commit of solr documents was successful' do
-    VCR.use_cassette('submit_one_doc') do
-      doc = indexer.solrize_object(sample_doc_path)
-      expect(IndexingLogger).to receive(:info).with(/Processing item.*adding/).once
-      expect(indexer.add_to_solr(doc)).to be_truthy
-    end
-  end
-
-  it 'determines when the solr commit was successful' do
-    VCR.use_cassette('successful_solr_commit') do
-      expect(indexer.commit_to_solr).to be_truthy
-    end
-  end
-
-  it 'determines from the RSolr response if the solr operation was successful' do
-    resp = { 'responseHeader' => { 'status' => 0, 'QTime' => 77 } }
-    expect(indexer.parse_solr_response(resp)).to be_truthy
-  end
-
-  it 'determines from the RSolr response if the solr operation failed' do
-    resp = { 'responseHeader' => { 'status' => -1, 'QTime' => 77 } }
-    expect(indexer.parse_solr_response(resp)).to be_falsey
-  end
-
-  it 'determines from the RSolr response if the solr cloud is overloaded and sleeps the thread' do
-    resp = { 'responseHeader' => { 'status' => 0, 'QTime' => PurlFetcher::Application.config.solr_indexing['sleep_when_response_time_exceeds'].to_i } }
-    begin_time = Time.zone.now
-    expect(indexer.parse_solr_response(resp)).to be_truthy
-    end_time = Time.zone.now
-    expect(end_time - begin_time).to be >= PurlFetcher::Application.config.solr_indexing['sleep_seconds_if_overloaded'].to_i
-  end
-
-  it 'determines if the addition of solr documents was successful' do
-    # FYI this will fail if you have your local solr running, because obviously you can connect to it
-    # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
-    # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
-    allow_message_expectations_on_nil
-    VCR.use_cassette('doc_submit_fails') do
-      doc = indexer.solrize_object(sample_doc_path)
-      expect(indexer.add_to_solr(doc)).to be_falsey
-    end
-  end
-
-  it 'determines if the solr commit was successful' do
-    # FYI this will fail if you have your local solr running, because obviously you can connect to it
-    # It will also record a cassette and keep failing due to that cassette, but you need to keep this wrapped else VCR yells at you for connecting out
-    # So if it fails, shut down local solr and delete the cassette, all tests should then pass since the other tests have cassettes
-    allow_message_expectations_on_nil
-    VCR.use_cassette('failed_solr_commit') do
-      expect(indexer.commit_to_solr).to be_falsey
-    end
-  end
-  
-  it 'returns a string for the purl mount location' do
-    expect(indexer.purl_mount_location.class).to eq(String)
   end
 
   describe('deleting solr documents') do
@@ -242,58 +251,68 @@ describe Indexer do
   end
 
   # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
-  describe('Detecting changes to the file system') do
+  describe('Finding changed files on the purl mount') do
     before :each do
       allow(indexer).to receive(:purl_mount_location).and_return(testing_doc_cache)
       allow(indexer).to receive(:commit_to_solr).and_return('responseHeader' => { 'status' => 0, 'QTime' => 36 }) # fake the solr commit part, we test that elsewhere
     end
 
-    # Multiple functions are tested here to avoid having to repeat the sleep
-    # This tests:
-    # index_all_modified_objects
-    # index_druid_tree_branch
-    # get_all_changed_objects_for_branch
-    #
-    it 'detects when a purl has been changed' do
-      skip 'there is a race condition or something that causes this test to fail sporadically'
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir) # If this test failed and isreun, clear the directory
-      branch = File.join(purl_fixture_path,'bb')
-      indexer.instance_variable_set(:@modified_at_or_later, 1) # Set the default mod time to one minute
+    # this method includes a sleep command since we need to be sure the time based finding works correctly
+    it 'finds public files correctly using time constraints' do
+      FileUtils.rm_r dest_dir if File.directory?(dest_dir) # If this test failed and is reun, clear the directory
       sleep(61)
 
-      # Now nothing has changed in the last minute so when we search for things modified a minute ago, nothing should pop up
-      expect(indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([]) # nothing has changed in the last minute
-      expect(indexer.index_druid_tree_branch(branch)).to match([])
-      expect(indexer.get_all_changed_objects_for_branch(branch)).to match([])
+      # Nothing has changed in the last minute so when we search for things modified a minute ago, nothing should pop up
+      finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
-      # Make sure we filter only on files we want
+      # # Make sure we filter only on files we want
       empty_file = File.join(sample_doc_path,'my_updates_do_not_count')
       FileUtils.touch(empty_file) # add in a fake files who change should not trigger
-
-      # Since this file does not matter, no function should pick up on it as a reason to update something
-      expect(indexer.index_all_modified_objects(mins_ago: 1)[:docs]).to match([])
-      expect(indexer.index_druid_tree_branch(branch)).to match([])
-      expect(indexer.get_all_changed_objects_for_branch(branch)).to match([])
+      # # Since this file does not matter, it should not be found, even though it was updated less than 1 minute ago
+      finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
       # Simulate republishing the purl
       FileUtils.rm_r dest_dir if File.directory?(dest_dir)
       FileUtils.cp_r source_dir, dest_dir
 
-      # We should see this one file as a change
-      r = indexer.index_all_modified_objects(mins_ago: 1)
-      expect(r[:docs].size).to eq(1)
-      expect(indexer.index_druid_tree_branch(branch).size).to eq(1) # sweeping the branch returns the object that changed
-      expect(indexer.get_all_changed_objects_for_branch(branch).size).to eq(1)
+      # # We should see this one file as a change
+      indexer.find_files(mins_ago: 1)
+      finder_file_test(mins_ago: 1, expected_num_files_found: 1)
 
-      # The index_all_modified_objects should sweep across all branches, so touch something in another branch
-      FileUtils.touch(File.join(ct961sj2730_path,'mods'))
-      r = indexer.index_all_modified_objects(mins_ago: 1)
-      expect(r[:docs].size).to eq(2) # The bb and ct branches should now have a total of two modified
+      # # The index_all_modified_objects should sweep across all branches, so touch something in another branch
+      FileUtils.touch(File.join(ct961sj2730_path,'public'))
+      indexer.find_files(mins_ago: 1)
+      finder_file_test(mins_ago: 1, expected_num_files_found: 2)
 
       # Clear the temp file back out
       FileUtils.rm empty_file
       FileUtils.rm_r dest_dir if File.directory?(dest_dir)
     end
+
+    it 'finds public files correctly using no time constraints' do
+
+      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      # When you don't send a specific mins_ago param, it should find everything
+      finder_file_test(mins_ago: nil, expected_num_files_found: 3)
+
+      # # Make sure we filter only on files we want
+      empty_file = File.join(sample_doc_path,'my_updates_do_not_count')
+      FileUtils.touch(empty_file) # add in a fake files who change should not trigger
+      # # Since this file does not matter, it should not be found
+      finder_file_test(mins_ago: nil, expected_num_files_found: 3)
+
+      # Simulate republishing the purl
+      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      FileUtils.cp_r source_dir, dest_dir
+
+      # # Still the same number of files
+      finder_file_test(mins_ago: nil, expected_num_files_found: 3)
+
+      # Clear the temp file back out
+      FileUtils.rm empty_file
+      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+    end
+
   end
 
   describe('deleting documents from solr') do
