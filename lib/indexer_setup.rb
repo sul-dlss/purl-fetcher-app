@@ -5,12 +5,16 @@ module IndexerSetup
     PurlFetcher::Application.config.solr_indexing
   end
 
+  def default_output_file
+    File.join(base_path_finder_log,base_filename_finder_log)
+  end
+  
   # file location in the rails app to store the results of file system find operation
   def base_path_finder_log
     indexer_config['base_path_finder_log']
   end
 
-  # the base filename of the file state stores the results of the find operation
+  # the base filename of the file to stores the results of the find operation
   def base_filename_finder_log
     indexer_config['base_filename_finder_log']
   end

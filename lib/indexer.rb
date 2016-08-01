@@ -67,7 +67,7 @@ class Indexer
   # @param [String] The output file where the files were stored
   def find_files(params={})
     mins_ago = params[:mins_ago] || nil
-    output_file = params[:output_file] || File.join(base_path_finder_log,"output.txt")
+    output_file = params[:output_file] || default_output_file
     if mins_ago
       search_string = "find #{purl_mount_location} -name public -type f -mmin -#{mins_ago}"
     else
@@ -86,7 +86,7 @@ class Indexer
   # @param [Hash] output_file: The filename location of found purls to index from
   # @return [Hash] A hash with stats on the number of purls indexed, success and failure counts
   def index_purls(params={})
-    output_file = params[:output_file] || File.join(base_path_finder_log,"output.txt")
+    output_file = params[:output_file] || default_output_file
     count=0
     error=0
     success=0

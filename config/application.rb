@@ -26,7 +26,7 @@ module PurlFetcher
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Add in files in lib/ such as the fetcher module
+    # Add in files in lib/ 
     config.autoload_paths << Rails.root.join('lib')
 
     config.version = VERSION # read from VERSION file at base of website
@@ -60,10 +60,3 @@ module PurlFetcher
 end
 
 IndexingLogger = Logger.new(PurlFetcher::Application.config.solr_indexing['filename_indexing_log'])
-
-# Convenience constant for SOLR, can be removed if we remove fetcher and collections controllers
-begin
-  Solr = RSolr.connect :url => PurlFetcher::Application.config.solr_url
-rescue
-  puts 'WARNING: Could not configure solr url'
-end

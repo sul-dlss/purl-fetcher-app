@@ -5,7 +5,7 @@ require 'indexer'
 desc 'Full reindex of all purls'
 task :full_reindex => :environment do |_t, args|
   start_time = Time.zone.now
-  result = Indexer.new.index_since_last_run
+  result = Indexer.new.full_reindex
   Logger.new('log/indexing.log').info("Running of rake task 'full_reindex' at #{start_time} returned a result of #{result.inspect}")
 end
 
