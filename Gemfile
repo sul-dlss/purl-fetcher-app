@@ -27,7 +27,7 @@ group :test do
   gem 'coveralls', require: false
 end
 
-group :production do
+group :staging, :production do
   gem 'mysql2'
 end
 

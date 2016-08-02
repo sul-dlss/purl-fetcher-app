@@ -19,6 +19,7 @@ AllCops:
     - 'Gemfile'
     - 'bin/**/*'
     - 'config/**/*'
+    - 'db/**/*'
     - 'spec/fixtures/**/*'
     - 'spec/spec_helper.rb'
     - 'spec/rails_helper.rb'

@@ -1,9 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'action_controller/railtie'
-require 'action_view/railtie'
-require 'active_job/railtie'
 require 'logger'
 
 # Require the gems listed in Gemfile, including any gems
@@ -26,7 +23,7 @@ module PurlFetcher
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Add in files in lib/ 
+    # Add in files in lib/
     config.autoload_paths << Rails.root.join('lib')
 
     config.version = VERSION # read from VERSION file at base of website
