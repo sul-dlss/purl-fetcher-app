@@ -52,6 +52,27 @@ def purl_fixture_path
   File.join(Rails.root,'spec','purl-test-fixtures','document_cache')
 end
 
+# This is a path that hold a copy of a sample purl path that is moved into the testing folder to facilitate testing, it is then removed
+def temp_purl_fixture_path
+  File.join(purl_fixture_path,'..','temp')
+end
+
+def test_purl_source_dir
+  DruidTools::PurlDruid.new('bb050dj6667', temp_purl_fixture_path).path
+end
+
+def test_purl_dest_dir
+ DruidTools::PurlDruid.new('bb050dj6667', purl_fixture_path).path
+end
+
+def empty_file
+ File.join(sample_doc_path, 'my_updates_do_not_count')
+end
+
+def sample_doc_path
+  DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
+end
+
 # Remove records from the deletes dir to avoid having them picked up by other tests
 #
 # @dir_path [String] The path to the directory

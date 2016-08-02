@@ -67,11 +67,8 @@ class Indexer
   def find_files(params={})
     mins_ago = params[:mins_ago] || nil
     output_file = params[:output_file] || default_output_file
-    if mins_ago
-      search_string = "find #{purl_mount_location} -name public -type f -mmin -#{mins_ago}"
-    else
-      search_string = "locate \"#{purl_mount_location}/*public*\""
-    end
+    search_string = "find #{purl_mount_location} -name public -type f"
+    search_string += " -mmin -#{mins_ago}" if mins_ago
     search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
     IndexingLogger.info("Finding public files")
     IndexingLogger.info(search_string)
