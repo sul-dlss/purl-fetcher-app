@@ -16,7 +16,7 @@ class RunLog < ActiveRecord::Base
   def self.minutes_since_last_run_ended
     prune_crashed_rows
     last_row = last_completed_run
-    end_time = last_row ? last_row.ended : Time.at(0)
+    end_time = last_row ? last_row.ended : Time.zone.at(0)
     ((Time.zone.now - end_time) / 60.0).ceil
   end
 
@@ -24,7 +24,7 @@ class RunLog < ActiveRecord::Base
   def self.minutes_since_last_run_started
     prune_crashed_rows
     last_row = last_completed_run
-    start_time = last_row ? last_row.started : Time.at(0)
+    start_time = last_row ? last_row.started : Time.zone.at(0)
     ((Time.zone.now - start_time) / 60.0).ceil
   end
 

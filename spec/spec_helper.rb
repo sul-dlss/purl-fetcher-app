@@ -41,7 +41,7 @@ def line_count(output_file)
 end
 
 def finder_file_test(params={})
-  FileUtils.rm(indexer.default_output_file) if File.exist?(indexer.default_output_file) # remove the default finder output location to be sure it gets created again
+  delete_file(indexer.default_output_file) # remove the default finder output location to be sure it gets created again
   expect(File.exist?(indexer.default_output_file)).to be_falsey
   indexer.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
   expect(File.exist?(indexer.default_output_file)).to be_truthy
@@ -67,10 +67,13 @@ def remove_purl_file(dir_path, purl_path)
 end
 
 def delete_file(file_path)
-  FileUtils.rm(file_path) if File.exist? file_path
+  FileUtils.rm(file_path) if File.exist?(file_path)
 end
 
-# Generate a number of stub solr paths
-def generate_fake_paths(number_of_objects)
-  (0..number_of_objects).to_a.map { |i| "/purl/foo/bar/#{i}" }
+def delete_dir(path)
+  FileUtils.rm_r(path) if File.directory?(path)
+end
+
+def all_time
+  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).utc.iso8601}
 end

@@ -31,9 +31,8 @@ module SolrMethods
   # @return [Hash] A hash that RSolr can commit to form a new solr document in the form of {:id => 'foo', :title => 'bar', '}, returns {} if a file is not present and a full hash cannot be generated
   #
   def solrize_object(path)
-
     doc_hash = {}
-    purl=PurlParser.new(path)
+    purl = PurlParser.new(path)
 
     if purl.public_xml
       doc_hash[:id] = purl.druid
@@ -45,7 +44,6 @@ module SolrMethods
       doc_hash[indexer_config['catkey_field'].to_sym] = purl.catkey unless purl.catkey.empty?
     end
     doc_hash
-
   end
 
   # Add a single document to solr
@@ -71,8 +69,8 @@ module SolrMethods
 
   # Get a list of all documents modified between two times from solr
   #
-  # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time
-  # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time
+  # @param first_modified [String] The time the object was first modifed, a string that can be parsed into a valid ISO 8601 formatted time, defaults to the start of Unix time
+  # @param last_modified [String] The latest time the object wasmodifed, a string that can be parsed into a valid ISO 8601 formatted time, defaults to now+5 minutes
   # @return [Hash] JSon formatted solr response
   def get_modified_from_solr(first_modified: Time.zone.at(0).iso8601, last_modified: (Time.zone.now + 5.minutes).utc.iso8601)
     times = ModificationTime.get_times(first_modified: first_modified, last_modified: last_modified)

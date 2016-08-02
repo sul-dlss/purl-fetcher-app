@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Indexer do
-  let(:indexer) { Indexer.new }
+  let(:indexer) { described_class.new }
   let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj7711', testing_doc_cache).path }
   let(:testing_doc_cache) { purl_fixture_path }
   let(:sample_doc_path_files_missing) { DruidTools::PurlDruid.new('bb050dj0000', testing_doc_cache).path }
@@ -35,7 +35,7 @@ describe Indexer do
     end
 
     it 'returns the base path finder log location' do
-      expect(indexer.base_path_finder_log).to eq(File.join(Rails.root,'tmp'))
+      expect(indexer.base_path_finder_log).to eq(File.join(Rails.root, 'tmp'))
     end
 
     it 'returns the base path filename finder log' do
@@ -55,7 +55,7 @@ describe Indexer do
     end
 
     it 'returns the path to a purl file location given a druid' do
-      expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location,'bb/050/dj/7711'))
+      expect(indexer.purl_path("druid:bb050dj7711")).to eq(File.join(indexer.purl_mount_location, 'bb/050/dj/7711'))
     end
 
     it 'returns the path the deletes directory as a string and has the correct location' do
@@ -64,7 +64,7 @@ describe Indexer do
     end
 
     it 'returns the default output finder file location' do
-      expect(indexer.default_output_file).to eq(File.join(Rails.root,'tmp/purl_finder'))
+      expect(indexer.default_output_file).to eq(File.join(Rails.root, 'tmp/purl_finder'))
     end
   end
 
@@ -148,7 +148,6 @@ describe Indexer do
         expect(indexer.commit_to_solr).to be_falsey
       end
     end
-
   end
 
   describe('Failure to find a needed file for building the solr document') do
@@ -158,8 +157,8 @@ describe Indexer do
     end
 
     after :each do
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir) # remove the 6667 files
-      remove_delete_records(File.join(testing_doc_cache,'.deletes'), ['bb050dj6667'])
+      delete_dir(dest_dir) # remove the 6667 files
+      remove_delete_records(File.join(testing_doc_cache, '.deletes'), ['bb050dj6667'])
     end
 
     it 'logs an error, but swallows the exception when the public xml is not present' do
@@ -178,8 +177,8 @@ describe Indexer do
     end
 
     after :each do
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir) # remove the 6667 files
-      remove_delete_records(File.join(testing_doc_cache,'.deletes'), ['bb050dj6667'])
+      delete_dir(dest_dir) # remove the 6667 files
+      remove_delete_records(File.join(testing_doc_cache, '.deletes'), ['bb050dj6667'])
     end
 
     it 'detects that the druid is not deleted when its files are still present in the document cache' do
@@ -187,13 +186,13 @@ describe Indexer do
     end
 
     it 'detects that the druid is deleted when its files are not present in the document cache' do
-      FileUtils.rm_r dest_dir # remove our testing druid
+      delete_dir(dest_dir) # remove our testing druid
       expect(indexer.deleted?(druid)).to be_truthy
     end
 
     it 'does not delete the test druid when the files still remain in the document cache' do
       # Delete the druid to create the .deletes dir record
-      FileUtils.rm_r dest_dir
+      delete_dir(dest_dir)
       druid_object.creates_delete_record
       # Copy the files back in
       FileUtils.cp_r source_dir, dest_dir
@@ -209,7 +208,7 @@ describe Indexer do
         sleep(1) # make sure at least one second passes for the timestamp checks
         indexer.add_to_solr(indexer.solrize_object(dest_dir)) # commit 6667 to solr
         indexer.commit_to_solr
-        FileUtils.rm_r dest_dir # remove its files
+        delete_dir(dest_dir) # remove its files
         druid_object.creates_delete_record # create its delete record
 
         expect(IndexingLogger).to receive(:info).with(/Processing item.*deleting/).once
@@ -237,7 +236,7 @@ describe Indexer do
         d_o = DruidTools::PurlDruid.new(f_d, testing_doc_cache)
         d_o.creates_delete_record # Create the delete record, no files in the document_cache to delete except for 6667
       end
-      FileUtils.rm_r dest_dir # remove 6667 files
+      delete_dir(dest_dir) # remove 6667 files
 
       VCR.use_cassette('multiple_druid_delete') do
         result = indexer.remove_deleted(mins_ago: 5)
@@ -246,7 +245,7 @@ describe Indexer do
       end
 
       # Remove these delete records
-      remove_delete_records(File.join(testing_doc_cache,'.deletes'), fake_druids)
+      remove_delete_records(File.join(testing_doc_cache, '.deletes'), fake_druids)
     end
   end
 
@@ -259,20 +258,20 @@ describe Indexer do
 
     # this method includes a sleep command since we need to be sure the time based finding works correctly
     it 'finds public files correctly using time constraints' do
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir) # If this test failed and is reun, clear the directory
+      delete_dir(dest_dir)
       sleep(61)
 
       # Nothing has changed in the last minute so when we search for things modified a minute ago, nothing should pop up
       finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
       # # Make sure we filter only on files we want
-      empty_file = File.join(sample_doc_path,'my_updates_do_not_count')
+      empty_file = File.join(sample_doc_path, 'my_updates_do_not_count')
       FileUtils.touch(empty_file) # add in a fake files who change should not trigger
       # # Since this file does not matter, it should not be found, even though it was updated less than 1 minute ago
       finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
       # Simulate republishing the purl
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      delete_dir(dest_dir)
       FileUtils.cp_r source_dir, dest_dir
 
       # # We should see this one file as a change
@@ -280,39 +279,74 @@ describe Indexer do
       finder_file_test(mins_ago: 1, expected_num_files_found: 1)
 
       # # The index_all_modified_objects should sweep across all branches, so touch something in another branch
-      FileUtils.touch(File.join(ct961sj2730_path,'public'))
+      FileUtils.touch(File.join(ct961sj2730_path, 'public'))
       indexer.find_files(mins_ago: 1)
       finder_file_test(mins_ago: 1, expected_num_files_found: 2)
 
       # Clear the temp file back out
-      FileUtils.rm empty_file
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      delete_file(empty_file)
+      delete_dir(dest_dir)
     end
 
     it 'finds public files correctly using no time constraints' do
-
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      delete_dir(dest_dir)
       # When you don't send a specific mins_ago param, it should find everything
       finder_file_test(mins_ago: nil, expected_num_files_found: 3)
 
       # # Make sure we filter only on files we want
-      empty_file = File.join(sample_doc_path,'my_updates_do_not_count')
+      empty_file = File.join(sample_doc_path, 'my_updates_do_not_count')
       FileUtils.touch(empty_file) # add in a fake files who change should not trigger
       # # Since this file does not matter, it should not be found
       finder_file_test(mins_ago: nil, expected_num_files_found: 3)
 
       # Simulate republishing the purl
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      delete_dir(dest_dir)
       FileUtils.cp_r source_dir, dest_dir
 
       # # Still the same number of files
       finder_file_test(mins_ago: nil, expected_num_files_found: 3)
 
       # Clear the temp file back out
-      FileUtils.rm empty_file
-      FileUtils.rm_r dest_dir if File.directory?(dest_dir)
+      delete_file(empty_file)
+      delete_dir(dest_dir)
+    end
+  end
+
+  describe('indexing purls') do
+    before :each do
+      allow(indexer).to receive(:purl_mount_location).and_return(testing_doc_cache)
     end
 
+    it 'does not start a new indexing run if one is already running according to the run logs' do
+      expect(RunLog.count).to eq(0)
+      expect(RunLog.currently_running?).to be_falsey
+      r = RunLog.create(started: Time.zone.now)
+      expect(RunLog.currently_running?).to be_truthy
+      expect(indexer).not_to receive(:index_purls)
+      expect(indexer.find_and_index).to be_falsey # it doesn't run
+      r.ended = Time.zone.now
+      r.save
+      expect(RunLog.currently_running?).to be_falsey
+    end
+
+    it 'indexes purls correctly' do
+      VCR.use_cassette('all_files_indexed') do
+        initial_results = indexer.get_modified_from_solr(all_time) # all time, but fixed start and end to keep VCR consistent
+        expect(initial_results['changes'].count).to eq(0)
+        expect(RunLog.currently_running?).to be_falsey
+        expect(RunLog.count).to eq(0)
+        results = indexer.full_reindex # this will run both a find and an index operation, although we really just need to test index at this point
+        expect(results[:count]).to eq(3)
+        expect(results[:success]).to eq(3)
+        expect(results[:error]).to eq(0)
+        final_results = indexer.get_modified_from_solr(all_time) # all time, but fixed start and end to keep VCR consistent
+        expect(final_results['changes'].count).to eq(3)
+        druids = final_results['changes'].map { |change| change['druid'] }
+        expect(druids.sort).to eq(["druid:bb050dj7711", "druid:bb050dj6667", "druid:ct961sj2730"].sort) # sort we do not have to worry about ordering, just if they match the expected druids
+        expect(RunLog.count).to eq(1)
+        expect(RunLog.currently_running?).to be_falsey
+      end
+    end
   end
 
   describe('deleting documents from solr') do
@@ -355,5 +389,4 @@ describe Indexer do
       expect(indexer.run_solr_query('whatever')).to match({})
     end
   end
-
 end

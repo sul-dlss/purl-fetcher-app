@@ -28,14 +28,14 @@ describe RunLog, type: :model do
   end
 
   it "returns the time in minutes since the last run completed" do
-    expect(described_class.minutes_since_last_run_ended).to be > 24492900 # no runs yet, so go back to beginning of unix time
+    expect(described_class.minutes_since_last_run_ended).to be > 24_492_900 # no runs yet, so go back to beginning of unix time
     described_class.create(started: Time.zone.now - 2.months, ended: Time.zone.now - 2.months + 30.minutes, total_druids: 2)
     described_class.create(started: Time.zone.now - 4.hours, ended: Time.zone.now - 3.hours, total_druids: 2)
     expect(described_class.minutes_since_last_run_ended).to eq(181)
   end
 
   it "returns the time in minutes since the last run started" do
-    expect(described_class.minutes_since_last_run_started).to be > 24492900 # no runs yet, so go back to beginning of unix time
+    expect(described_class.minutes_since_last_run_started).to be > 24_492_900 # no runs yet, so go back to beginning of unix time
     described_class.create(started: Time.zone.now - 2.months, ended: Time.zone.now - 2.months + 30.minutes, total_druids: 2)
     described_class.create(started: Time.zone.now - 4.hours, ended: Time.zone.now - 3.hours, total_druids: 2)
     expect(described_class.minutes_since_last_run_started).to eq(241)

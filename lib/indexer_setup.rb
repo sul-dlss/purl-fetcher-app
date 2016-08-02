@@ -6,7 +6,7 @@ module IndexerSetup
   end
 
   def default_output_file
-    File.join(base_path_finder_log,base_filename_finder_log)
+    File.join(base_path_finder_log, base_filename_finder_log)
   end
 
   # file location in the rails app to store the results of file system find operation
@@ -31,7 +31,7 @@ module IndexerSetup
   #
   # @return [String] The absolute path
   def path_to_deletes_dir
-    Pathname(File.join(purl_mount_location,indexer_config['deletes_dir'])).to_s
+    Pathname(File.join(purl_mount_location, indexer_config['deletes_dir'])).to_s
   end
 
   # Accessor to get the purl document cache path
@@ -53,8 +53,8 @@ module IndexerSetup
   # @param path [String] The path to the public file (e.g. /purl/document_catch/aa/000/bb/0000/public)
   # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
   def get_druid_from_file_path(path)
-    find_druid=path.match(/[a-zA-Z]{2}\/[0-9]{3}\/[a-zA-Z]{2}\/[0-9]{4}/)
-    find_druid && find_druid.size == 1 ? find_druid.to_s.gsub('/','') : ""
+    find_druid = path.match(/[a-zA-Z]{2}\/[0-9]{3}\/[a-zA-Z]{2}\/[0-9]{4}/)
+    find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
   end
 
   # Determine if a druid has been deleted and pruned from the document cache or not
@@ -65,5 +65,5 @@ module IndexerSetup
     dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
     !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
   end
-  
+
 end

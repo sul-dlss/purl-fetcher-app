@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 describe PurlParser do
-
   let(:testing_doc_cache) { purl_fixture_path }
 
   describe('bb050dj7711') do
     let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj7711', testing_doc_cache).path }
-    let(:purl) {PurlParser.new(sample_doc_path)}
+    let(:purl) { described_class.new(sample_doc_path) }
 
     it 'gets the title from the mods file' do
       expect(purl.title).to eq("This is Pete's New Test title for this object.")
@@ -35,7 +34,7 @@ describe PurlParser do
 
   describe('ct961sj2730') do
     let(:sample_doc_path) { DruidTools::PurlDruid.new('ct961sj2730', testing_doc_cache).path }
-    let(:purl) {PurlParser.new(sample_doc_path)}
+    let(:purl) { described_class.new(sample_doc_path) }
 
     it 'gets the cat key when one is present' do
       expect(purl.catkey).to match('10357851')

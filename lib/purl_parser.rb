@@ -45,7 +45,7 @@ class PurlParser
   #
   def title
     unless @title
-      title_node=public_xml.xpath('//*[name()="dc:title"]')
+      title_node = public_xml.xpath('//*[name()="dc:title"]')
       @title = (title_node.size == 1 ? title_node[0].content : "")
     end
     @title
