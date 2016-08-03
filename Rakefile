@@ -9,6 +9,7 @@ begin
   RSpec::Core::RakeTask.new(:rspec)
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
+  puts 'rspec unavailable'
   # ignore in non-test environments
 end
 

@@ -4,7 +4,6 @@ gem 'rails', '>=4.1.6'
 gem 'rsolr', '>=1.0.10'
 
 gem 'rest-client'
-gem 'parallel'
 gem 'stanford-mods'
 gem 'retries'
 gem 'druid-tools'
@@ -28,6 +27,10 @@ group :test do
   gem 'coveralls', require: false
 end
 
+group :staging, :production do
+  gem 'mysql2'
+end
+
 group :deployment do
   gem 'dlss-capistrano'
   gem 'capistrano', '~> 3.0'
@@ -43,4 +46,5 @@ group :development, :test do
   gem 'launchy'
   gem 'thin'
   gem 'dlss_cops'
+  gem 'sqlite3'
 end

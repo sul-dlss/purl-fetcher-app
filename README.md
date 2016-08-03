@@ -24,6 +24,9 @@ rake purlfetcher:config
 
 rake jetty:start
 
+rake db:migrate
+rake db:migrate RAILS_ENV=test
+
 rake purlfetcher:refresh_fixtures
 rake purlfetcher:refresh_fixtures RAILS_ENV=test
 ```

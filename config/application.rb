@@ -1,8 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'action_controller/railtie'
-require 'action_view/railtie'
-require 'active_job/railtie'
+require 'rails/all'
+require 'logger'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,7 +23,7 @@ module PurlFetcher
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Add in files in lib/ such as the fetcher module
+    # Add in files in lib/
     config.autoload_paths << Rails.root.join('lib')
 
     config.version = VERSION # read from VERSION file at base of website
@@ -39,7 +38,6 @@ module PurlFetcher
 
     begin
       config.solr_url = load_yaml_config.call('solr.yml')['url']
-      # puts load_yaml_config.call('solr.yml')['url']
     rescue
       puts 'WARNING: config/solr.yml config not found'
     end
@@ -58,9 +56,4 @@ module PurlFetcher
   end
 end
 
-# Convenience constant for SOLR
-begin
-  Solr = RSolr.connect :url => PurlFetcher::Application.config.solr_url
-rescue
-  puts 'WARNING: Could not configure solr url'
-end
+IndexingLogger = Logger.new(PurlFetcher::Application.config.solr_indexing['filename_indexing_log'])

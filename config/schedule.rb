@@ -20,9 +20,9 @@
 # Learn more: http://github.com/javan/whenever
 
 every 120.minutes do
-   rake 'index_changes_in_last_two_hours'
+   rake 'index_since_last_run'
  end
 
 every 5.minutes do
    rake 'process_all_deletes_in_last_five_minutes'
- end
+end

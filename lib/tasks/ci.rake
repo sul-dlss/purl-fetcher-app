@@ -1,10 +1,20 @@
 require 'jettywrapper' unless Rails.env.production? || Rails.env.development?
 require 'rest_client'
 
-desc 'Run continuous integration suite (tests, coverage, rubocop, docs)'
+desc 'Run continuous integration suite (tests, coverage, rubocop)'
 task :ci do
+   system('RAILS_ENV=test rake db:migrate')
+   system('RAILS_ENV=test rake db:test:prepare')
    Rake::Task['rspec'].invoke
    Rake::Task['rubocop'].invoke
+end
+
+desc 'Run continuous integration suite without rubocop for travis'
+task :travis_ci do
+  Rake::Task['purlfetcher:config'].invoke
+  system('RAILS_ENV=test rake db:migrate')
+  system('RAILS_ENV=test rake db:test:prepare')
+  Rake::Task['rspec'].invoke
 end
 
 desc 'Rebuild vcr cassettes and run tests (assuming jetty is not yet started)'
@@ -39,6 +49,7 @@ namespace :purlfetcher do
   task :config do
     Rake::Task['jetty:stop'].invoke
     system('rm -fr jetty/solr/dev/data/index jetty/solr/test/data/index')
+    cp("#{Rails.root}/config/database.yml.example", "#{Rails.root}/config/database.yml", :verbose => true)
     %w(schema solrconfig).each do |f|
       cp("#{Rails.root}/config/#{f}.xml", "#{Rails.root}/jetty/solr/dev/conf/#{f}.xml", :verbose => true)
       cp("#{Rails.root}/config/#{f}.xml", "#{Rails.root}/jetty/solr/test/conf/#{f}.xml", :verbose => true)

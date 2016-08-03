@@ -1,0 +1,215 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8983/solr/test/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%222286-11-20T17:46:39Z%22%5D&rows=100000000&wt=ruby
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Last-Modified:
+      - Tue, 02 Aug 2016 23:07:29 GMT
+      Etag:
+      - '"M2EwMDAwMDAwMDAwMDAwMFNvbHI="'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>2},'response'=>{'numFound'=>0,'start'=>0,'docs'=>[]}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:36 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj7711</field><field
+        name="title_tesim">This is Pete's New Test title for this object.</field><field
+        name="true_releases_ssim">CARRICKR-TEST</field><field name="true_releases_ssim">Robot_Testing_Feb_5_2015</field><field
+        name="false_releases_ssim">Atago</field><field name="objectType_ssim">item</field><field
+        name="is_member_of_collection_ssim">druid:nt028fd5773</field><field name="is_member_of_collection_ssim">druid:wn860zc7322</field><field
+        name="indexed_dtsi">2016-08-02T23:07:37Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>2}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:ct961sj2730</field><field
+        name="title_tesim">Caroline Batchelor Map Collection.</field><field name="objectType_ssim">collection</field><field
+        name="objectType_ssim">set</field><field name="catkey_id_ssim">10357851</field><field
+        name="indexed_dtsi">2016-08-02T23:07:37Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>2}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>17}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: get
+    uri: http://localhost:8983/solr/test/select?q=*%20AND%20-deleted_tsi:'true'%20AND%20indexed_dtsi:%5B%221970-01-01T00:00:00Z%22%20TO%20%222286-11-20T17:46:39Z%22%5D&rows=100000000&wt=ruby
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Last-Modified:
+      - Tue, 02 Aug 2016 23:07:37 GMT
+      Etag:
+      - '"N2EwMDAwMDAwMDAwMDAwMFNvbHI="'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1},'response'=>{'numFound'=>2,'start'=>0,'docs'=>[{'id'=>'druid:bb050dj7711','title_tesim'=>['This is Pete\'s New Test title for this object.'],'true_releases_ssim'=>['CARRICKR-TEST','Robot_Testing_Feb_5_2015'],'false_releases_ssim'=>['Atago'],'objectType_ssim'=>['item'],'is_member_of_collection_ssim'=>['druid:nt028fd5773','druid:wn860zc7322'],'indexed_dtsi'=>'2016-08-02T23:07:37Z','_version_'=>1541594684623683584,'timestamp'=>'2016-08-02T23:07:37.034Z'},{'id'=>'druid:ct961sj2730','title_tesim'=>['Caroline Batchelor Map Collection.'],'objectType_ssim'=>['collection','set'],'catkey_id_ssim'=>['10357851'],'indexed_dtsi'=>'2016-08-02T23:07:37Z','_version_'=>1541594684633120768,'timestamp'=>'2016-08-02T23:07:37.042Z'}]}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:bb050dj7711</field><field
+        name="title_tesim">This is Pete's New Test title for this object.</field><field
+        name="true_releases_ssim">CARRICKR-TEST</field><field name="true_releases_ssim">Robot_Testing_Feb_5_2015</field><field
+        name="false_releases_ssim">Atago</field><field name="objectType_ssim">item</field><field
+        name="is_member_of_collection_ssim">druid:nt028fd5773</field><field name="is_member_of_collection_ssim">druid:wn860zc7322</field><field
+        name="indexed_dtsi">2016-08-02T23:07:37Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>2}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><add><doc><field name="id">druid:ct961sj2730</field><field
+        name="title_tesim">Caroline Batchelor Map Collection.</field><field name="objectType_ssim">collection</field><field
+        name="objectType_ssim">set</field><field name="catkey_id_ssim">10357851</field><field
+        name="indexed_dtsi">2016-08-02T23:07:37Z</field></doc></add>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>1}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+- request:
+    method: post
+    uri: http://localhost:8983/solr/test/update?wt=ruby
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8"?><commit/>
+    headers:
+      Content-Type:
+      - text/xml
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {'responseHeader'=>{'status'=>0,'QTime'=>20}}
+    http_version: 
+  recorded_at: Tue, 02 Aug 2016 23:07:37 GMT
+recorded_with: VCR 2.9.3

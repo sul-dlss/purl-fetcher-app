@@ -2,6 +2,11 @@ require 'vcr'
 require 'coveralls'
 Coveralls.wear!('rails')
 
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
@@ -31,78 +36,41 @@ VCR.configure do |c|
   c.hook_into :webmock
 end
 
-# Matches if druids and ONLY those druids are in the response
-# @param [Array<String>] druids list of druids expected
-# @param [Object] response query response body
-# @return [void]
-def result_should_contain_druids(druids, response)
-  expect(response).to be_an Array
-  expect(response.size).to eq(druids.size)
-  expect(response.map { |d| d['druid'] }).to contain_exactly(*druids)
+def line_count(output_file)
+  File.open(output_file,"r").readlines.size
 end
 
-# @see #result_should_contain_druids for params and return
-def result_should_not_contain_druids(druids, response)
-  expect(response).to be_an Array
-  druids.each { |d| expect(response).not_to include(a_hash_including 'druid' => d) }
-end
-
-def all_counts_keys
-  # do not include counts_key, it is the parent
-  [collections_key, items_key, total_count_key]
-end
-
-def collections_key
-  'collections'
-end
-
-def items_key
-  'items'
-end
-
-def counts_key
-  'counts'
-end
-
-def total_count_key
-  'total_count'
-end
-
-# Automatically gets total counts, don't need to add it
-def verify_counts_section(response, counts)
-  total_count = 0
-  nil_keys = all_counts_keys - [total_count_key]
-  counts.each do |key, value|
-    # Make the count is what we expect it to be
-    expect(response[counts_key][key]).to eq(value)
-    # Go back to the JSON section that lists all the druids and make sure its size equals the value listed in count
-    expect(response[key].size).to eq(value)
-    total_count += value
-    nil_keys -= [key] # key was present, so we don't expect it to be nil
-  end
-  # If the tester didn't specify total count above, check it
-  expect(total_count).to eq(response[counts_key][total_count_key]) if counts[total_count_key]
-
-  # Make sure the keys we expect to be nil aren't in the counts section
-  nil_keys.each do |key|
-    expect(response[counts_key]).not_to include(key)
-  end
-end
-
-def just_count_param
-  {'rows' => 0}
-end
-
-def last_mod_test_date_collections
-  '2013-12-31T23:59:59Z'
-end
-
-def first_mod_test_date_collections
-  '2014-1-1T00:00:00Z'
+def finder_file_test(params={})
+  delete_file(indexer.default_output_file) # remove the default finder output location to be sure it gets created again
+  expect(File.exist?(indexer.default_output_file)).to be_falsey
+  indexer.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
+  expect(File.exist?(indexer.default_output_file)).to be_truthy
+  expect(line_count(indexer.default_output_file)).to eq(params[:expected_num_files_found])
 end
 
 def purl_fixture_path
-  Rails.root.to_s + (File::SEPARATOR + 'spec' + File::SEPARATOR + 'purl-test-fixtures' + File::SEPARATOR + 'document_cache')
+  File.join(Rails.root,'spec','purl-test-fixtures','document_cache')
+end
+
+# This is a path that hold a copy of a sample purl path that is moved into the testing folder to facilitate testing, it is then removed
+def temp_purl_fixture_path
+  File.join(purl_fixture_path,'..','temp')
+end
+
+def test_purl_source_dir
+  DruidTools::PurlDruid.new('bb050dj6667', temp_purl_fixture_path).path
+end
+
+def test_purl_dest_dir
+ DruidTools::PurlDruid.new('bb050dj6667', purl_fixture_path).path
+end
+
+def empty_file
+ File.join(sample_doc_path, 'my_updates_do_not_count')
+end
+
+def sample_doc_path
+  DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
 end
 
 # Remove records from the deletes dir to avoid having them picked up by other tests
@@ -112,20 +80,21 @@ end
 #
 # @return [void]
 def remove_delete_records(dir_path, records)
-  records.each do |r|
-    delete_file(Pathname(dir_path + File::SEPARATOR + r))
-  end
+  records.each { |r| delete_file(Pathname(File.join(dir_path,r))) }
 end
 
 def remove_purl_file(dir_path, purl_path)
-  delete_file(Pathname(dir_path + File::SEPARATOR + purl_path))
+  delete_file(Pathname(File.join(dir_path,purl_path)))
 end
 
 def delete_file(file_path)
-  FileUtils.rm(file_path) if File.exist? file_path
+  FileUtils.rm(file_path) if File.exist?(file_path)
 end
 
-# Generate a number of stub solr paths
-def generate_fake_paths(number_of_objects)
-  (0..number_of_objects).to_a.map { |i| "/purl/foo/bar/#{i}" }
+def delete_dir(path)
+  FileUtils.rm_r(path) if File.directory?(path)
+end
+
+def all_time
+  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).utc.iso8601}
 end
