@@ -352,31 +352,16 @@ describe Indexer do
       end
 
       it 'finds and indexes public files correctly since the last run' do
-        VCR.use_cassette('files_indexed_since_last_run') do
-          last_run_min_ago = 10
+        allow(indexer).to receive(:find_and_index).and_return({}) # stub the call out so it is not actually made just for this test
+        last_run_min_ago = 10
 
-          # simulate a recent run that started 60 minutes ago
-          RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: 2, finder_filename: indexer.default_output_file)
-          expect(RunLog.minutes_since_last_run_started).to eq(last_run_min_ago + 1)
+        # simulate a recent run that started a specified minutes ago
+        RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: 2, finder_filename: indexer.default_output_file)
+        expect(RunLog.minutes_since_last_run_started).to eq(last_run_min_ago + 1)
 
-          # touch a purl to simulate a recent change
-          FileUtils.touch(File.join(ct961sj2730_path, 'public'))
-
-          # reindex new stuff, which is the single purl we just touched
-          reindex_results = indexer.index_since_last_run
-          expect(reindex_results[:count]).to eq(1)
-          expect(reindex_results[:success]).to eq(1)
-          expect(reindex_results[:error]).to eq(0)
-
-          # add a new purl
-          FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
-
-          # reindex new stuff, which is now two things (the recently touch purl and the one we just added)
-          reindex_results = indexer.index_since_last_run
-          expect(reindex_results[:count]).to eq(2)
-          expect(reindex_results[:success]).to eq(2)
-          expect(reindex_results[:error]).to eq(0)
-        end
+        # reindex new stuff, and check the correct call was made (there is a separate test for the actual find_and_index call)
+        expect(indexer).to receive(:find_and_index).once.with(mins_ago: last_run_min_ago + 1)
+        reindex_results = indexer.index_since_last_run
       end
     end
 

@@ -45,7 +45,7 @@ class Indexer
       return false
     else
       start_time = Time.zone.now
-      output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S')}.txt")
+      output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
       run_log = RunLog.create(finder_filename: output_file, started: start_time)
       find_files(mins_ago: mins_ago, output_file: output_file)
       index_result = index_purls(output_file: output_file)
