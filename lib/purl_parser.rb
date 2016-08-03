@@ -9,7 +9,7 @@ class PurlParser
   def initialize(path)
     begin
       @public_xml ||= Nokogiri::XML(File.open(Pathname(path) + 'public'))
-    rescue Exception => e
+    rescue => e
       IndexingLogger.error("For #{path} could not read public XML.  #{e.message} #{e.backtrace.inspect}")
     end
   end

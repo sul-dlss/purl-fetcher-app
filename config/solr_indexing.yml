@@ -19,7 +19,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  purl_document_path: "<%=Rails.root%>/spec/purl/document_cache"
+  purl_document_path: "<%=Rails.root%>/spec/purl-test-fixtures/document_cache"
 test:
   <<: *defaults
   purl_document_path: "/purl/document_cache"
