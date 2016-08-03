@@ -1,5 +1,7 @@
 class RunLog < ActiveRecord::Base
 
+ CRASHED_PRUNE_TIME_IN_DAYS=2 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
+
   # check to see if there is a job currently running according to the logs...this is a job with no end time yet
   def self.currently_running?
     prune_crashed_rows
@@ -33,9 +35,9 @@ class RunLog < ActiveRecord::Base
     self.order('ended DESC').find_by('ended IS NOT NULL')
   end
 
-  # remove all rows with no end time that were started more than 2 days ago (i.e. the job was started and must have died without completing the entry)
+  # remove all rows with no end time that were started more than CRASHED_PRUNE_TIME_IN_DAYS days ago (i.e. the job was started and must have died without completing the entry)
   def self.prune_crashed_rows
-    self.where('updated_at < ?', 2.days.ago).where('ended IS NULL').each(&:destroy)
+    self.where('updated_at < ?', CRASHED_PRUNE_TIME_IN_DAYS.days.ago).where('ended IS NULL').each(&:destroy)
   end
 
   # prune the logs by removing older completed jobs

@@ -36,7 +36,7 @@ class PurlParser
   # @return [String] The druid in the form of druid:pid
   #
   def druid
-    @druid ||= public_xml.xpath('//publicObject')[0].attr('id')
+    @druid ||= public_xml.at_xpath('//publicObject').attr('id')
   end
 
   # Extract the title from publicXML DC
