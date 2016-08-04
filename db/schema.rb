@@ -35,13 +35,14 @@ ActiveRecord::Schema.define(version: 20160803230946) do
     t.string   "object_type"
     t.string   "catkey"
     t.datetime "deleted_at"
+    t.datetime "indexed_at"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   add_index "purls", ["deleted_at"], name: "index_purls_on_deleted_at"
   add_index "purls", ["druid"], name: "index_purls_on_druid"
-  add_index "purls", ["updated_at"], name: "index_purls_on_updated_at"
+  add_index "purls", ["indexed_at"], name: "index_purls_on_indexed_at"
 
   create_table "release_tags", force: :cascade do |t|
     t.string   "name",         null: false

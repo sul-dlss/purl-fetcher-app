@@ -23,6 +23,9 @@ class Purl < ActiveRecord::Base
       public_xml.releases[:true].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: true) }
       public_xml.releases[:false].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: false) }
 
+      purl.indexed_at = Time.zone.now
+      purl.deleted_at = nil # ensure the deleted at field is nil (important for a republish of a previously deleted purl)
+
       purl.save
     else
       false # can't find the public xml

@@ -12,7 +12,7 @@ describe PurlFinder do
     end
 
     it 'gets the druid from the delete file path' do
-      expect(purl_finder.get_druid_from_delete_path(File.join(purl_finder.path_to_deletes_dir,'ct961sj2730'))).to eq('ct961sj2730')
+      expect(purl_finder.get_druid_from_delete_path(File.join(purl_finder.path_to_deletes_dir, 'ct961sj2730'))).to eq('ct961sj2730')
     end
 
     it 'returns the base path finder log location' do
@@ -40,7 +40,6 @@ describe PurlFinder do
       expect(purl_finder.default_output_file).to eq(File.join(Rails.root, 'tmp/purl_finder'))
     end
   end
-
 
   describe('Indexing/finding') do
     before :each do
@@ -85,28 +84,38 @@ describe PurlFinder do
         druid_object.creates_delete_record
         # Copy the files back in, this puts the public XML file in place, even though the deletes record is there
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
-        expect(purl_finder.remove_deleted(mins_ago: 5)).to match( {count: 0, success: 0, error: 0} ) # nothing should happen
+        expect(purl_finder.remove_deleted(mins_ago: 5)).to match(count: 0, success: 0, error: 0) # nothing should happen
       end
 
-      it 'marks the druid as deleted in the database when the files do not remain in the document cache' do
-        start_time = Time.zone.now
+      it 'indexes a druid, then marks the druid as deleted, then reindexes it correctly' do
+        index_start_time = Time.zone.now
         Purl.index(test_purl_dest_dir) # add the purl to the database
-        end_time = Time.zone.now
+        index_end_time = Time.zone.now
         expect(Purl.all.count).to eq(1) # now we have one record in the database
-        purl=Purl.last
+        purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted?).to be_falsey # it is not deleted
-        expect(end_time > purl.created_at).to be_truthy # the index time should be between the start and end time
-        expect(start_time < purl.created_at).to be_truthy # the index time should be between the start and end time
+        expect(index_end_time > purl.indexed_at).to be_truthy # the index time should be between the start and end time
+        expect(index_start_time < purl.indexed_at).to be_truthy # the index time should be between the start and end time
         delete_dir(test_purl_dest_dir) # remove its files
         druid_object.creates_delete_record # create its delete record
+        delete_start_time = Time.zone.now
         expect(IndexingLogger).to receive(:info).with(/deleting/).once
         result = purl_finder.remove_deleted # delete it
+        delete_end_time = Time.zone.now
         expect(result).to be_truthy
         expect(Purl.all.count).to eq(1) # still just one record in the database
-        purl=Purl.last
+        purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted?).to be_truthy # it is deleted
+        expect(delete_end_time > purl.deleted_at).to be_truthy # the delete time should be between the start and end time
+        expect(delete_start_time < purl.deleted_at).to be_truthy # the delete time should be between the start and end time
+        FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
+        Purl.index(test_purl_dest_dir) # re-add the purl to the database
+        expect(Purl.all.count).to eq(1) # confirm we still have one record in the database
+        purl = Purl.last
+        expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
+        expect(purl.deleted?).to be_falsey # it is not deleted now
       end
 
       it 'detects multiple deletes in one pass' do
@@ -119,7 +128,7 @@ describe PurlFinder do
         delete_dir(test_purl_dest_dir) # remove 6667 files
 
         result = purl_finder.remove_deleted(mins_ago: 5)
-        expect(result).to eq( {count: fake_druids.size, success: fake_druids.size, error: 0} )
+        expect(result).to eq(count: fake_druids.size, success: fake_druids.size, error: 0)
 
         # Remove these delete records
         remove_delete_records(File.join(purl_fixture_path, '.deletes'), fake_druids)
@@ -128,7 +137,6 @@ describe PurlFinder do
 
     # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
     describe('Finding changed files on the purl mount') do
-
       after :each do
         # Clear the temp file and purl back out
         delete_file(empty_file)
@@ -207,7 +215,7 @@ describe PurlFinder do
         expect(index_counts[:error]).to eq(0)
         # Confirm results against the database
         expect(Purl.all.count).to eq(2)
-        expect(Purl.all.map { |purl| purl.druid }.sort).to eq(["druid:bb050dj7711", "druid:ct961sj2730"].sort) # sort so we do not have to worry about ordering, just if they match the expected druids
+        expect(Purl.all.map(&:druid).sort).to eq(["druid:bb050dj7711", "druid:ct961sj2730"].sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)
         expect(RunLog.currently_running?).to be_falsey
 

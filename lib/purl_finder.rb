@@ -85,7 +85,7 @@ class PurlFinder
       druid = get_druid_from_file_path(line)
       if !druid.blank?
         IndexingLogger.info("indexing #{druid}")
-        result=Purl.index(File.dirname(line)) # pass the directory of the file containing public
+        result = Purl.index(File.dirname(line)) # pass the directory of the file containing public
         result ? success += 1 : error += 1
         count += 1
       end
@@ -96,7 +96,7 @@ class PurlFinder
 
   # Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion
   #
-  # @return [Hash] A hash stating if the deletion was successful or not and an array of the docs {:success=> true/false, :docs => [{doc1},{doc2},...]}
+  # @return [Hash] A hash providing some stats on the number of items deleted, successful and errored out
   def remove_deleted(params={})
     mins_ago = params[:mins_ago] || nil
 
@@ -113,9 +113,9 @@ class PurlFinder
     success = 0
     deleted_objects.each do |obj|
       druid = get_druid_from_delete_path(obj)
-      if (!druid.blank? && !public_xml_exists?(druid)) # double check that the public xml files are actually gone
+      if !druid.blank? && !public_xml_exists?(druid) # double check that the public xml files are actually gone
         IndexingLogger.info("deleting #{druid}")
-        result=Purl.delete(druid)
+        result = Purl.delete(druid)
         result ? success += 1 : error += 1
         count += 1
       end
