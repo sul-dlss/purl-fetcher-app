@@ -4,8 +4,25 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+indexed_1:
+  id: 1
+  druid: druid:bb1111cc2222
+  title: Some test object
+  object_type: item
+  catkey: ''
+  indexed_at: <%=Time.parse('1/1/2015').utc.iso8601%>
+indexed_2:
+  id: 2
+  druid: druid:cc1111dd2222
+  title: Some test object number 2 that was later deleted
+  object_type: item
+  catkey: '567'
+  indexed_at: <%=Time.parse('1/1/2016').utc.iso8601%>
+  deleted_at: <%=Time.parse('2/1/2016').utc.iso8601%>
+indexed_3:
+  id: 3
+  druid: druid:dd1111ee2222
+  title: Some test object number 3
+  object_type: item
+  catkey: ''
+  indexed_at: <%=Time.parse('1/1/2014').utc.iso8601%>

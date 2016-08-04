@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe(AboutController, type: :request, integration: true) do
+  fixtures :collections_purls, :collections, :purls, :release_tags
   it "tests the docs changes API call for all time" do
     visit changes_docs_path
     expect(page.status_code).to eq(200)
