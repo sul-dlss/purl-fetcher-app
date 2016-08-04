@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :output, "/dev/null"
+
 every 120.minutes do
    rake 'index_since_last_run'
  end
