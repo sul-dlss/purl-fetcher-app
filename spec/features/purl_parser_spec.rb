@@ -42,4 +42,13 @@ describe PurlParser do
       expect(purl.object_type).to match('collection|set')
     end
   end
+
+  describe('bb050dj0000') do
+    let(:sample_doc_path) { DruidTools::PurlDruid.new('bb050dj0000', purl_fixture_path).path }
+    let(:purl) { described_class.new(sample_doc_path) }
+
+    it 'does not find the public xml' do
+      expect(purl.exists?).to be_falsey
+    end
+  end
 end

@@ -83,9 +83,9 @@ class PurlFinder
     IndexingLogger.info("Indexing from #{output_file}")
     File.foreach(output_file) do |line| # line will be the full file path, including the druid tree, try and get the druid from this
       druid = get_druid_from_file_path(line)
-      unless druid.blank?
+      if !druid.blank?
         IndexingLogger.info("indexing #{druid}")
-        result=Purl.index(File.dirname(line))
+        result=Purl.index(File.dirname(line)) # pass the directory of the file containing public
         result ? success += 1 : error += 1
         count += 1
       end
@@ -108,19 +108,19 @@ class PurlFinder
     deleted_objects = `#{search_string}`.split
     deleted_objects -= [path_to_deletes_dir] # remove the deleted objects dir itself
 
-    docs = []
-    result = true # set this to true by default because if we get an empty list of documents, then it worked
+    count = 0
+    error = 0
+    success = 0
     deleted_objects.each do |obj|
-      # Check to make sure that the object is really deleted
-      druid = obj.split(path_to_deletes_dir + File::SEPARATOR)[1]
-      if !druid.nil? && deleted?(druid)
-        document={}
-        #TODO call a new activerecord method to delete
-        # document = { :id => ('druid:' + druid), app_config['deleted_field'].to_sym => 'true' }
-        docs << document
+      druid = get_druid_from_delete_path(obj)
+      if (!druid.blank? && !public_xml_exists?(druid)) # double check that the public xml files are actually gone
+        IndexingLogger.info("deleting #{druid}")
+        result=Purl.delete(druid)
+        result ? success += 1 : error += 1
+        count += 1
       end
     end
-    { success: result, docs: docs }
+    { count: count, success: success, error: error }
   end
 
 end

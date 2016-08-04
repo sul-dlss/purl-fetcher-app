@@ -1,4 +1,4 @@
-# setup methods used by the finder 
+# setup methods used by the finder
 module PurlFinderSetup
 
   def app_config
@@ -42,20 +42,28 @@ module PurlFinderSetup
   end
 
   # Given a full path to a public file, try and pull just the druid part out
-  # @param path [String] The path to the public file (e.g. /purl/document_catch/aa/000/bb/0000/public)
+  # @param path [String] The path to the public file (e.g. /purl/document_cache/aa/000/bb/0000/public)
   # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
   def get_druid_from_file_path(path)
     find_druid = path.match(/[a-zA-Z]{2}\/[0-9]{3}\/[a-zA-Z]{2}\/[0-9]{4}/)
     find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
   end
 
-  # Determine if a druid has been deleted and pruned from the document cache or not
+  # Given a full path to a deleted file, try and pull just the druid part out
+  # @param path [String] The path to the deleted file (e.g. /purl/document_cache/.deletes/aa000bb0000)
+  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
+  def get_druid_from_delete_path(path)
+    find_druid = path.match(/[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}[0-9]{4}/)
+    find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
+  end
+
+  # Determine if public purl xml path exists for a given druid
   #
   # @param druid [String] The druid you are interested in
   # @return [Boolean] True or False
-  def deleted?(druid)
+  def public_xml_exists?(druid)
     dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
-    !File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
+    File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
   end
 
 end

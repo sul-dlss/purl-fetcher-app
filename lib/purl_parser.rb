@@ -14,6 +14,10 @@ class PurlParser
     end
   end
 
+  def exists?
+    @public_xml
+  end
+
   # Extract the release information from public_xml (load the public XML first)
   #
   # @return [Hash] A hash of all trues and falses in the form of {:true => ['Target1', 'Target2'], :false => ['Target3', 'Target4']}

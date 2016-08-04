@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RunLog, type: :model do
   it "returns the last completed run" do
