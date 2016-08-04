@@ -16,17 +16,6 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
-# Ignore jetty changes
-/jetty/solr/dev/data/*
-/jetty/solr/test/data/*
-/jetty/solr/dev/data
-/jetty/solr/test/data
-/jetty/solr/dev/conf/schema.xml
-/jetty/solr/dev/conf/solrconfig.xml
-/jetty/solr/test/conf/schema.xml
-/jetty/solr/test/conf/solrconfig.xml
-/jetty/*.log
-
 /public/*.gz
 /public/sitemap.xml
 config/database.yml

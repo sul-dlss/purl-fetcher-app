@@ -18,11 +18,11 @@ describe PurlParser do
     end
 
     it 'gets the object type' do
-      expect(purl.object_type).to match(['item'])
+      expect(purl.object_type).to match('item')
     end
 
-    it 'gets the collections and sets the object is a member of' do
-      expect(purl.membership).to match(['druid:nt028fd5773', 'druid:wn860zc7322'])
+    it 'gets the collections the object is a member of' do
+      expect(purl.collections).to match(['druid:nt028fd5773', 'druid:wn860zc7322'])
     end
 
     it 'returns empty string when no cat key is present' do
@@ -39,7 +39,7 @@ describe PurlParser do
     end
 
     it 'gets multiple object types when an object has multiple types' do
-      expect(purl.object_type).to match(['collection', 'set'])
+      expect(purl.object_type).to match('collection|set')
     end
   end
 end

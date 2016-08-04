@@ -53,18 +53,18 @@ class PurlParser
 
   # Extract the object type
   #
-  # @return [Array] The object types
+  # @return [String] The object types, if multiple, separated by pipes
   #
   def object_type
-    @object_type = public_xml.xpath('//identityMetadata/objectType').map(&:text)
+    @object_type ||= public_xml.xpath('//identityMetadata/objectType').map(&:text).join('|')
   end
 
-  # Extract collections and sets the item is a member of
+  # Extract collections the item is a member of
   #
-  # @return [Array] The collections and sets the item is a member of
+  # @return [Array] The collections the item is a member of
   #
-  def membership
-    @membership ||= public_xml.xpath('//*[name()="fedora:isMemberOfCollection"]').map { |n| n.attribute('resource').text.split('/')[1] }
+  def collections
+    @collections ||= public_xml.xpath('//*[name()="fedora:isMemberOfCollection"]').map { |n| n.attribute('resource').text.split('/')[1] }
   end
 
   # Extract collections and sets the item is a member of

@@ -1,6 +1,6 @@
 class RunLog < ActiveRecord::Base
 
- CRASHED_PRUNE_TIME_IN_DAYS=2 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
+  CRASHED_PRUNE_TIME_IN_DAYS = 2 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
 
   # check to see if there is a job currently running according to the logs...this is a job with no end time yet
   def self.currently_running?

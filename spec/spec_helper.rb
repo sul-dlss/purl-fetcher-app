@@ -1,4 +1,3 @@
-require 'vcr'
 require 'coveralls'
 Coveralls.wear!('rails')
 
@@ -28,24 +27,16 @@ RSpec.configure do |config|
   end
 end
 
-# To record new cassettes:
-#   remove old ones; update index or configure new source; uncomment default_cassette_options; and run tests
-VCR.configure do |c|
-  # c.default_cassette_options = { :record => :new_episodes }
-  c.cassette_library_dir = 'spec/vcr_cassettes'
-  c.hook_into :webmock
-end
-
 def line_count(output_file)
   File.open(output_file,"r").readlines.size
 end
 
 def finder_file_test(params={})
-  delete_file(indexer.default_output_file) # remove the default finder output location to be sure it gets created again
-  expect(File.exist?(indexer.default_output_file)).to be_falsey
-  indexer.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
-  expect(File.exist?(indexer.default_output_file)).to be_truthy
-  expect(line_count(indexer.default_output_file)).to eq(params[:expected_num_files_found])
+  delete_file(purl_finder.default_output_file) # remove the default finder output location to be sure it gets created again
+  expect(File.exist?(purl_finder.default_output_file)).to be_falsey
+  purl_finder.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
+  expect(File.exist?(purl_finder.default_output_file)).to be_truthy
+  expect(line_count(purl_finder.default_output_file)).to eq(params[:expected_num_files_found])
 end
 
 def purl_fixture_path
