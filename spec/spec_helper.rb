@@ -90,5 +90,5 @@ def delete_dir(path)
 end
 
 def all_time
-  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).utc.iso8601}
+  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).iso8601}
 end

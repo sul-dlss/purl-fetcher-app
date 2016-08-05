@@ -44,7 +44,7 @@ class DocsController < ApplicationController
 
   def date_params
     @first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    @last_modified = params[:last_modified] || Time.zone.now.utc.iso8601
+    @last_modified = params[:last_modified] || Time.zone.now.iso8601
   end
 
 end
