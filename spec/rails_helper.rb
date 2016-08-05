@@ -48,14 +48,6 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
-end
+  config.global_fixtures = :all
 
-class FixtureData
-  def get_response(url)
-    Net::HTTP.get_response(URI.parse(url))
-  end
-
-  def get_response_body(url)
-    JSON.parse(get_response(url).body)
-  end
 end

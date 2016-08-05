@@ -91,7 +91,7 @@ describe PurlFinder do
         index_start_time = Time.zone.now
         Purl.index(test_purl_dest_dir) # add the purl to the database
         index_end_time = Time.zone.now
-        expect(Purl.all.count).to eq(1) # now we have one record in the database
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # now we have one more record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted?).to be_falsey # it is not deleted
@@ -104,7 +104,7 @@ describe PurlFinder do
         result = purl_finder.remove_deleted # delete it
         delete_end_time = Time.zone.now
         expect(result).to be_truthy
-        expect(Purl.all.count).to eq(1) # still just one record in the database
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # still just have one more record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted?).to be_truthy # it is deleted
@@ -112,10 +112,10 @@ describe PurlFinder do
         expect(delete_start_time < purl.deleted_at).to be_truthy # the delete time should be between the start and end time
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
         Purl.index(test_purl_dest_dir) # re-add the purl to the database
-        expect(Purl.all.count).to eq(1) # confirm we still have one record in the database
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # confirm we still have one record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
-        expect(purl.deleted?).to be_falsey # it is not deleted now
+        expect(purl.deleted?).to be_falsey # it is not marked as deleted now
       end
 
       it 'detects multiple deletes in one pass' do
@@ -206,7 +206,7 @@ describe PurlFinder do
       end
 
       it 'indexes and re-indexes purls correctly' do
-        expect(Purl.all.count).to eq(0) # no purls in the database yet
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database) # no extra purls in the database yet
         expect(RunLog.currently_running?).to be_falsey
         expect(RunLog.count).to eq(0)
         index_counts = purl_finder.full_reindex # this will run both a find and an index operation, although we really just need to test index at this point
@@ -214,8 +214,10 @@ describe PurlFinder do
         expect(index_counts[:success]).to eq(2)
         expect(index_counts[:error]).to eq(0)
         # Confirm results against the database
-        expect(Purl.all.count).to eq(2)
-        expect(Purl.all.map(&:druid).sort).to eq(["druid:bb050dj7711", "druid:ct961sj2730"].sort) # sort so we do not have to worry about ordering, just if they match the expected druids
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 2) # two extra items indexed
+        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730"]
+        all_druids = indexed_druids + fixture_druids_in_database
+        expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)
         expect(RunLog.currently_running?).to be_falsey
 
@@ -225,7 +227,7 @@ describe PurlFinder do
         expect(reindex_counts[:success]).to eq(2)
         expect(reindex_counts[:error]).to eq(0)
         # Still only two purls in the database, no new ones were created
-        expect(Purl.all.count).to eq(2)
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 2) # still two extra items
         expect(RunLog.count).to eq(1) # no new run logs, since we didn't run a find
         expect(RunLog.currently_running?).to be_falsey
       end

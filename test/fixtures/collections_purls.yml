@@ -15,3 +15,6 @@ three:
 four:
   purl_id: 3
   collection_id: 1
+five:
+  purl_id: 4
+  collection_id: 2
