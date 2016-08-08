@@ -18,7 +18,6 @@
 
 /public/*.gz
 /public/sitemap.xml
-config/database.yml
 
 nohup.out
 REVISION
