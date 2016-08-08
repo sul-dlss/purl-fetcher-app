@@ -7,4 +7,6 @@ Rails.application.routes.draw do
     get 'deletes'
     get 'changes'
   end
+
+  resources :collections, defaults: {format: :json}, only: [:index, :show]
 end
