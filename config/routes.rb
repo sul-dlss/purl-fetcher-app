@@ -7,4 +7,8 @@ Rails.application.routes.draw do
     get 'deletes'
     get 'changes'
   end
+
+  get 'collections' => 'collections#index', defaults: { :format => 'json' }
+  get 'collections/:id' => 'collections#show', defaults: { :format => 'json' },
+    constraints: { id: /druid:[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}/ }
 end
