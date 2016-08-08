@@ -35,6 +35,7 @@ group :deployment do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
+  gem 'capistrano-rails'
 end
 
 group :development, :test do

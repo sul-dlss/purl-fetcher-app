@@ -63,6 +63,9 @@ GEM
       capistrano (~> 3.0)
     capistrano-passenger (0.2.0)
       capistrano (~> 3.0)
+    capistrano-rails (1.1.7)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
     capistrano-releaseboard (0.0.1)
       faraday
     capistrano-rvm (0.1.2)
@@ -278,6 +281,7 @@ DEPENDENCIES
   capistrano (~> 3.0)
   capistrano-bundler
   capistrano-passenger
+  capistrano-rails
   capistrano-rvm
   capybara
   coveralls
