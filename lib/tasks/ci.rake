@@ -1,10 +1,24 @@
 require 'rest_client'
 
+namespace :purl_fetcher do
+  desc 'Run the apps specs'
+  task :spec do
+    begin
+      require 'rspec/core/rake_task'
+      RSpec::Core::RakeTask.new(:rspec)
+      Rake::Task['rspec'].invoke
+    rescue LoadError
+      desc 'rspec unavailable'
+      abort 'rspec not installed'
+    end
+  end
+end
+
 desc 'Run continuous integration suite (tests, coverage, rubocop)'
 task :ci do
    system('RAILS_ENV=test rake db:migrate')
    system('RAILS_ENV=test rake db:test:prepare')
-   Rake::Task['rspec'].invoke
+   Rake::Task['purl_fetcher:spec'].invoke
    Rake::Task['rubocop'].invoke
 end
 
@@ -12,7 +26,7 @@ desc 'Run continuous integration suite without rubocop for travis'
 task :travis_ci do
   system('RAILS_ENV=test rake db:migrate')
   system('RAILS_ENV=test rake db:test:prepare')
-  Rake::Task['rspec'].invoke
+  Rake::Task['purl_fetcher:spec'].invoke
 end
 
 desc 'Run rubocop on ruby files'
