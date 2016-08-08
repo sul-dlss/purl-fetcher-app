@@ -10,7 +10,6 @@ class AboutController < ApplicationController
       version: PurlFetcher::Application.config.version,
       last_restart: (File.exist?('tmp/restart.txt') ? File.new('tmp/restart.txt').mtime : 'n/a'),
       last_deploy: (File.exist?('REVISION') ? File.new('REVISION').mtime : 'n/a'),
-      solr_url: PurlFetcher::Application.config.solr_url
     }
 
     respond_to do |format|

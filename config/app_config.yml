@@ -1,0 +1,16 @@
+defaults: &defaults
+  filename_indexing_log: "log/indexing.log"
+  purl_document_path: "/purl/document_cache"
+  deletes_dir: ".deletes"
+  base_filename_finder_log: "purl_finder"
+  base_path_finder_log: "<%=File.join(Rails.root,'tmp')%>"
+
+development:
+  <<: *defaults
+  purl_document_path: "<%=Rails.root%>/spec/purl-test-fixtures/document_cache"
+test:
+  <<: *defaults
+staging:
+  <<: *defaults
+production:
+  <<: *defaults

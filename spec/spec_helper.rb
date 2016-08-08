@@ -1,4 +1,3 @@
-require 'vcr'
 require 'coveralls'
 Coveralls.wear!('rails')
 
@@ -26,14 +25,7 @@ RSpec.configure do |config|
     # This is generally recommended, and will default to `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-end
 
-# To record new cassettes:
-#   remove old ones; update index or configure new source; uncomment default_cassette_options; and run tests
-VCR.configure do |c|
-  # c.default_cassette_options = { :record => :new_episodes }
-  c.cassette_library_dir = 'spec/vcr_cassettes'
-  c.hook_into :webmock
 end
 
 def line_count(output_file)
@@ -41,11 +33,19 @@ def line_count(output_file)
 end
 
 def finder_file_test(params={})
-  delete_file(indexer.default_output_file) # remove the default finder output location to be sure it gets created again
-  expect(File.exist?(indexer.default_output_file)).to be_falsey
-  indexer.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
-  expect(File.exist?(indexer.default_output_file)).to be_truthy
-  expect(line_count(indexer.default_output_file)).to eq(params[:expected_num_files_found])
+  delete_file(purl_finder.default_output_file) # remove the default finder output location to be sure it gets created again
+  expect(File.exist?(purl_finder.default_output_file)).to be_falsey
+  purl_finder.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
+  expect(File.exist?(purl_finder.default_output_file)).to be_truthy
+  expect(line_count(purl_finder.default_output_file)).to eq(params[:expected_num_files_found])
+end
+
+def num_purl_fixtures_in_database
+  4 # Purl.all.count # this is useful to know for testing expectations that will increase this number during the test
+end
+
+def fixture_druids_in_database
+  ["druid:bb1111cc2222", "druid:cc1111dd2222", "druid:dd1111ee2222", "druid:ee1111ff2222"] # Purl.all.map(&:druid)
 end
 
 def purl_fixture_path
@@ -73,12 +73,6 @@ def sample_doc_path
   DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
 end
 
-# Remove records from the deletes dir to avoid having them picked up by other tests
-#
-# @dir_path [String] The path to the directory
-# @params records [Array] An array of strings of the records you want to be deleted
-#
-# @return [void]
 def remove_delete_records(dir_path, records)
   records.each { |r| delete_file(Pathname(File.join(dir_path,r))) }
 end
@@ -96,5 +90,5 @@ def delete_dir(path)
 end
 
 def all_time
-  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).utc.iso8601}
+  {first_modified: Time.zone.at(0).iso8601, last_modified: Time.zone.at(9_999_999_999).iso8601}
 end

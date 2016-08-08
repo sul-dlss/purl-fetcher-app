@@ -1,6 +1,8 @@
 class RunLog < ActiveRecord::Base
 
- CRASHED_PRUNE_TIME_IN_DAYS=2 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
+  CRASHED_PRUNE_TIME_IN_DAYS = 2 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
+
+  before_destroy :remove_output_file
 
   # check to see if there is a job currently running according to the logs...this is a job with no end time yet
   def self.currently_running?
@@ -50,5 +52,11 @@ class RunLog < ActiveRecord::Base
   # remove all completed logs
   def self.prune_all
     self.where('ended IS NOT NULL').each(&:destroy) # anything that is done
+  end
+
+  private
+
+  def remove_output_file
+    FileUtils.rm(finder_filename) if finder_filename && File.exist?(finder_filename)
   end
 end

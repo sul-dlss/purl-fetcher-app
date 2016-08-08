@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '>=4.1.6'
-gem 'rsolr', '>=1.0.10'
 
 gem 'rest-client'
 gem 'stanford-mods'
@@ -20,7 +19,6 @@ gem 'honeybadger', '~> 2.0'
 
 group :test do
   gem 'yard'
-  gem 'vcr'
   gem 'webmock'
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
@@ -40,7 +38,6 @@ group :deployment do
 end
 
 group :development, :test do
-  gem 'jettywrapper'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'launchy'

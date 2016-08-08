@@ -36,24 +36,9 @@ module PurlFetcher
       return yaml[Rails.env]
     }
 
-    begin
-      config.solr_url = load_yaml_config.call('solr.yml')['url']
-    rescue
-      puts 'WARNING: config/solr.yml config not found'
-    end
-
-    begin
-      config.solr_indexing = load_yaml_config.call('solr_indexing.yml')
-    rescue
-      puts 'WARNING: config/solr_indexing.yml config not found'
-    end
-
-    begin
-      config.time_zone = 'UTC'
-    rescue
-      puts 'WARNING: could not configure time zone to utc'
-    end
+    config.app_config = load_yaml_config.call('app_config.yml')
+    config.time_zone = 'UTC'
   end
 end
 
-IndexingLogger = Logger.new(PurlFetcher::Application.config.solr_indexing['filename_indexing_log'])
+IndexingLogger = Logger.new(PurlFetcher::Application.config.app_config['filename_indexing_log'])

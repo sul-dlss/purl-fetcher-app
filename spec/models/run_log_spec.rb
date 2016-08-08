@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe RunLog, type: :model do
   it "returns the last completed run" do
@@ -66,5 +66,15 @@ describe RunLog, type: :model do
     described_class.prune_all
     expect(described_class.count).to eq(1)
     expect(described_class.all).to eq([current_run1])
+  end
+
+  it "destroy's the finder file when the runlog row is destroyed" do
+    purl_finder = PurlFinder.new
+    finder_filename = File.join(purl_finder.base_path_finder_log, "#{purl_finder.base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
+    run1 = described_class.create(started: Time.zone.now - 1.month, ended: Time.zone.now - 1.month + 1.day, total_druids: 2, finder_filename: finder_filename)
+    FileUtils.touch finder_filename # simulate creation of the finder file
+    expect(File.exist?(finder_filename)).to be_truthy
+    run1.destroy
+    expect(File.exist?(finder_filename)).to be_falsey # the file should be removed by destroying the run log row
   end
 end
