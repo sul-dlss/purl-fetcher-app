@@ -16,6 +16,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'is_it_working-cbeer'
 gem 'about_page'
 gem 'honeybadger', '~> 2.0'
+gem 'listen'
 
 group :test do
   gem 'yard'
