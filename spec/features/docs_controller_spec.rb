@@ -7,8 +7,8 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:bb1111cc2222", latest_change: "2015-01-01T00:00:00.000Z", true_targets: ["SearchWorks", "Revs"], false_targets: [], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] },
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00.000Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
+        { druid: "druid:bb1111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs"], false_targets: [], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] },
+        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -19,7 +19,7 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00.000Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
+        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -30,8 +30,8 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:ee1111ff2222", latest_change: "2014-01-01T00:00:00.000Z" },
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00.000Z" }
+        { druid: "druid:ee1111ff2222", latest_change: "2014-01-01T00:00:00Z" },
+        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -42,7 +42,7 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00.000Z" }
+        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
