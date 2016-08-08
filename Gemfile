@@ -7,6 +7,7 @@ gem 'stanford-mods'
 gem 'retries'
 gem 'druid-tools'
 gem 'whenever', :require => false
+gem 'kaminari' # for pagination
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
