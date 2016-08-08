@@ -14,9 +14,6 @@ git clone https://github.com/sul-dlss/purl-fetcher.git
 cd purl-fetcher
 
 bundle install
-rake purlfetcher:config
-
-# Edit config/database.yml file
 
 rake db:migrate
 rake db:migrate RAILS_ENV=test
