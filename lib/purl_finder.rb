@@ -85,7 +85,7 @@ class PurlFinder
       druid = get_druid_from_file_path(line)
       if !druid.blank?
         IndexingLogger.info("indexing #{druid}")
-        result = Purl.index(File.dirname(line)) # pass the directory of the file containing public
+        result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
         result ? success += 1 : error += 1
         count += 1
       end
@@ -115,7 +115,7 @@ class PurlFinder
       druid = get_druid_from_delete_path(obj)
       if !druid.blank? && !public_xml_exists?(druid) # double check that the public xml files are actually gone
         IndexingLogger.info("deleting #{druid}")
-        result = Purl.delete(druid)
+        result = Purl.trigger_deleted_at(druid)
         result ? success += 1 : error += 1
         count += 1
       end

@@ -6,8 +6,8 @@ class Purl < ActiveRecord::Base
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
   # @return [Boolean] success or failure
-  def self.index(path)
-    public_xml = PurlParser.new(path) # NOTE: PurlParser appends 'public' to pathname
+  def self.save_from_public_xml(path)
+    public_xml = PurlParser.new(path)
 
     if public_xml.exists?
       purl = self.find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
@@ -34,16 +34,15 @@ class Purl < ActiveRecord::Base
     end
   end
 
-  def self.delete(druid)
+  ##
+  # Specify an instance's `deleted_at` attribute which denotes when an object's
+  # public xml is gone
+  # @param [String] druid
+  def self.trigger_deleted_at(druid)
     druid = "druid:#{druid}" unless druid.include?('druid:') # add the druid prefix if it happens to be missing
-    purl = self.find_or_create_by(druid: druid) # either create a new druid record or get the existing one
+    purl = find_or_create_by(druid: druid) # either create a new druid record or get the existing one
     #  (in theory we should *always* have a previous druid here)
     purl.deleted_at = Time.zone.now
     purl.save
   end
-
-  def deleted?
-    !deleted_at.blank?
-  end
-
 end
