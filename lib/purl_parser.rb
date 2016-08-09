@@ -1,12 +1,13 @@
 # class used to represent a purl, used to parse information
 class PurlParser
 
-  attr_reader :public_xml # the public XML as a nokogiri doc (will be nil if the public file was not found)
+  attr_reader :path, :public_xml # the public XML as a nokogiri doc (will be nil if the public file was not found)
 
   # Given a path to a directory that contains a public xml file, read in the full XML and set the public_xml accessor as a nokogiri document
   # @param path [String] The path to the directory that contains the public file
   #
   def initialize(path)
+    @path = path
     begin
       @public_xml ||= Nokogiri::XML(File.open(Pathname(path) + 'public'))
     rescue => e
@@ -78,4 +79,10 @@ class PurlParser
     @catkey ||= public_xml.xpath("//identityMetadata/otherId[@name='catkey']").text
   end
 
+  ##
+  # Returns the file modified time, in local zone.
+  # @return [Time]
+  def modified_time
+    File.mtime(Pathname(path))
+  end
 end
