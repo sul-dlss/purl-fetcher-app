@@ -2,6 +2,9 @@ class Purl < ActiveRecord::Base
 
   has_and_belongs_to_many :collections
   has_many :release_tags, dependent: :destroy
+  paginates_per 100
+  max_paginates_per 10_000
+  default_scope -> { order('indexed_at') }
 
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory

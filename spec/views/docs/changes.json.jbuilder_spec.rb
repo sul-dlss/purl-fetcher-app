@@ -1,0 +1,11 @@
+require 'rails_helper'
+
+describe 'docs/changes.json.jbuilder' do
+  before do
+    assign(:changes, Kaminari.paginate_array(Purl.all).page(1))
+  end
+  it 'has pagination' do
+    render
+    expect(rendered).to match(/pages/)
+  end
+end
