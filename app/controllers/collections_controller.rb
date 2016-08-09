@@ -13,7 +13,7 @@ class CollectionsController < ApplicationController
   #
   #
   def index
-    collections = Purl.where(object_type: %w(set collection))
+    collections = Purl.where(object_type: 'collection')
     if params[:rows] == '0'
       respond_to do |format|
         format.json { render json: { size: collections.size}.to_json }

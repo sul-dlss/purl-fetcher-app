@@ -31,6 +31,7 @@ describe(AboutController, type: :request, integration: true) do
     expected_results = { deletes:
       [
         { druid: "druid:ee1111ff2222", latest_change: "2014-01-01T00:00:00Z" },
+        { druid: "druid:ff1111gg2222", latest_change: "2014-01-01T00:00:00Z" },
         { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" }
       ]
     }
