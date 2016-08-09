@@ -28,4 +28,5 @@ xml.results do
       end
     end
   end
+  xml << render(partial: 'paginate', locals: { object: @changes })
 end

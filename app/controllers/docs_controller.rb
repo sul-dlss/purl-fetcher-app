@@ -12,7 +12,11 @@ class DocsController < ApplicationController
   #   http://localhost:3000/docs/changes?first_modified=2014-01-01T00:00:00Z # returns only the modified documents SINCE January of 2014 up until today in json format
   # response is in the structure of {changes: [{druid: 'oo000oo0001', latest_change: '2015-01-01T00:00:00Z'}]}
   def changes
-    @changes = Purl.where(deleted_at: nil).where(indexed_at: @first_modified..@last_modified).includes(:collections, :release_tags)
+    @changes = Purl.where(deleted_at: nil)
+                   .where(indexed_at: @first_modified..@last_modified)
+                   .includes(:collections, :release_tags)
+                   .page(params[:page])
+                   .per(per_page_params[:per_page])
   end
 
   # API call to get a full list of all purl deletes between two times
@@ -25,6 +29,8 @@ class DocsController < ApplicationController
   #   http://localhost:3000/docs/deletes?first_modified=2014-01-01T00:00:00Z # returns only the modified deleted SINCE January of 2014 up until today in json format
   def deletes
     @deletes = Purl.where(deleted_at: @first_modified..@last_modified)
+                   .page(params[:page])
+                   .per(per_page_params[:per_page])
   end
 
   private
@@ -34,4 +40,7 @@ class DocsController < ApplicationController
     @last_modified = params[:last_modified] || Time.zone.now.iso8601
   end
 
+  def per_page_params
+    params.permit(:per_page)
+  end
 end

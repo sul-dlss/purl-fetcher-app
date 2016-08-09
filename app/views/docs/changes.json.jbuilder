@@ -5,3 +5,4 @@ json.changes @changes do |change|
   json.false_targets change.release_tags.where(release_type: false).map(&:name) if change.release_tags.where(release_type: false).present?
   json.collections change.collections.map(&:druid)
 end
+json.partial! 'paginate', locals: { object: @changes }

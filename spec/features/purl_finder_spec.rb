@@ -92,7 +92,7 @@ describe PurlFinder do
         Purl.save_from_public_xml(test_purl_dest_dir) # add the purl to the database
         index_end_time = Time.zone.now
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # now we have one more record in the database
-        purl = Purl.last
+        purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_falsey # it is not deleted
         expect(index_end_time > purl.indexed_at).to be_truthy # the index time should be between the start and end time
@@ -105,7 +105,7 @@ describe PurlFinder do
         delete_end_time = Time.zone.now
         expect(result).to be_truthy
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # still just have one more record in the database
-        purl = Purl.last
+        purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_truthy # it is deleted
         expect(delete_end_time > purl.deleted_at).to be_truthy # the delete time should be between the start and end time
@@ -113,7 +113,7 @@ describe PurlFinder do
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
         Purl.save_from_public_xml(test_purl_dest_dir) # re-add the purl to the database
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # confirm we still have one record in the database
-        purl = Purl.last
+        purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_falsey # it is not marked as deleted now
       end
