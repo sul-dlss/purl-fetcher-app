@@ -66,7 +66,7 @@ describe PurlFinder do
       it 'logs an error, but swallows the exception when the public xml is not present' do
         remove_purl_file(test_purl_dest_dir, 'public')
         expect(IndexingLogger).to receive(:error).once
-        expect(Purl.index(test_purl_dest_dir)).to be_falsey
+        expect(Purl.save_from_public_xml(test_purl_dest_dir)).to be_falsey
       end
 
       it 'detects that the druid public xml exists when its files are still present in the document cache' do
@@ -87,9 +87,9 @@ describe PurlFinder do
         expect(purl_finder.remove_deleted(mins_ago: 5)).to match(count: 0, success: 0, error: 0) # nothing should happen
       end
 
-      it 'indexes a druid, then marks the druid as deleted, then reindexes it correctly' do
+      it 'saves a druid, then marks the druid as deleted, then resaves it correctly' do
         index_start_time = Time.zone.now
-        Purl.index(test_purl_dest_dir) # add the purl to the database
+        Purl.save_from_public_xml(test_purl_dest_dir) # add the purl to the database
         index_end_time = Time.zone.now
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # now we have one more record in the database
         purl = Purl.last
@@ -111,7 +111,7 @@ describe PurlFinder do
         expect(delete_end_time > purl.deleted_at).to be_truthy # the delete time should be between the start and end time
         expect(delete_start_time < purl.deleted_at).to be_truthy # the delete time should be between the start and end time
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
-        Purl.index(test_purl_dest_dir) # re-add the purl to the database
+        Purl.save_from_public_xml(test_purl_dest_dir) # re-add the purl to the database
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # confirm we still have one record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid

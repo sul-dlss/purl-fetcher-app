@@ -6,8 +6,8 @@ class Purl < ActiveRecord::Base
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
   # @return [Boolean] success or failure
-  def self.index(path)
-    public_xml = PurlParser.new(path) # NOTE: PurlParser appends 'public' to pathname
+  def self.save_from_public_xml(path)
+    public_xml = PurlParser.new(path)
 
     if public_xml.exists?
       purl = self.find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
