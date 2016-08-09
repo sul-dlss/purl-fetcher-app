@@ -3,7 +3,7 @@ xml.results do
     @changes.each do |change|
       xml.change do
         xml.druid change.druid
-        xml.latest_change change.indexed_at.iso8601
+        xml.latest_change change.published_at.iso8601
         if change.release_tags.where(release_type: true).present?
           xml.true_targets do
             change.release_tags.where(release_type: true).each do |true_target|
