@@ -7,8 +7,8 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:bb1111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs"], false_targets: [], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] },
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
+        { druid: "druid:bb1111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs"], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] },
+        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", collections: ["druid:oo000oo0001"] }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -19,7 +19,7 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: [], false_targets: [], collections: ["druid:oo000oo0001"] }
+        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", collections: ["druid:oo000oo0001"] }
       ]
     }
     expect(results).to eq(expected_results.with_indifferent_access)
