@@ -6,7 +6,7 @@ describe(CollectionsController, type: :request, integration: true) do
     expect(response).to be_success
     results = JSON.parse(response.body)
     expect(results).to be_an(Array)
-    expect(results).to eq ['druid:ee1111ff2222']
+    expect(results).to eq ['druid:ff1111gg2222']
   end
 
   it "counts the number of collections" do
