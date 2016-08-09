@@ -34,7 +34,7 @@ RSpec.describe DocsController do
       end
       it 'page' do
         get :deletes, format: :json, per_page: 1, page: 2
-        expect(assigns(:deletes).first.druid).to eq 'druid:cc1111dd2222'
+        expect(assigns(:deletes).first.druid).to eq 'druid:ff1111gg2222'
         expect(assigns(:deletes).count).to eq 1
       end
     end

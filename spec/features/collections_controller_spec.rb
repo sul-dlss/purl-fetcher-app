@@ -22,7 +22,8 @@ describe(CollectionsController, type: :request, integration: true) do
     expect(response).to be_success
     results = JSON.parse(response.body)
     expect(results).to be_an(Array)
-    expect(results).to eq ['druid:bb1111cc2222', 'druid:dd1111ee2222']
+    # These are order sensitive now, as the default scope of Purl is ordered
+    expect(results).to eq ['druid:dd1111ee2222', 'druid:bb1111cc2222']
   end
 
   it "counts the items that are members of a collection" do
