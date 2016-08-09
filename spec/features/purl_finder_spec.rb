@@ -94,7 +94,7 @@ describe PurlFinder do
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # now we have one more record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
-        expect(purl.deleted?).to be_falsey # it is not deleted
+        expect(purl.deleted_at?).to be_falsey # it is not deleted
         expect(index_end_time > purl.indexed_at).to be_truthy # the index time should be between the start and end time
         expect(index_start_time < purl.indexed_at).to be_truthy # the index time should be between the start and end time
         delete_dir(test_purl_dest_dir) # remove its files
@@ -107,7 +107,7 @@ describe PurlFinder do
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # still just have one more record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
-        expect(purl.deleted?).to be_truthy # it is deleted
+        expect(purl.deleted_at?).to be_truthy # it is deleted
         expect(delete_end_time > purl.deleted_at).to be_truthy # the delete time should be between the start and end time
         expect(delete_start_time < purl.deleted_at).to be_truthy # the delete time should be between the start and end time
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
@@ -115,7 +115,7 @@ describe PurlFinder do
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # confirm we still have one record in the database
         purl = Purl.last
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
-        expect(purl.deleted?).to be_falsey # it is not marked as deleted now
+        expect(purl.deleted_at?).to be_falsey # it is not marked as deleted now
       end
 
       it 'detects multiple deletes in one pass' do

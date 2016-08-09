@@ -115,7 +115,7 @@ class PurlFinder
       druid = get_druid_from_delete_path(obj)
       if !druid.blank? && !public_xml_exists?(druid) # double check that the public xml files are actually gone
         IndexingLogger.info("deleting #{druid}")
-        result = Purl.delete(druid)
+        result = Purl.trigger_deleted_at(druid)
         result ? success += 1 : error += 1
         count += 1
       end
