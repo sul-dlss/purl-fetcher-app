@@ -4,7 +4,7 @@ class Purl < ActiveRecord::Base
   has_many :release_tags, dependent: :destroy
   paginates_per 100
   max_paginates_per 10_000
-  default_scope -> { order('indexed_at') }
+  default_scope -> { order('published_at') }
 
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
@@ -28,7 +28,7 @@ class Purl < ActiveRecord::Base
       public_xml.releases[:true].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: true) }
       public_xml.releases[:false].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: false) }
 
-      purl.indexed_at = Time.zone.now
+      purl.published_at = public_xml.modified_time.utc
       purl.deleted_at = nil # ensure the deleted at field is nil (important for a republish of a previously deleted purl)
 
       purl.save

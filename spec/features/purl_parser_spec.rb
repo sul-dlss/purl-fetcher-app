@@ -51,4 +51,16 @@ describe PurlParser do
       expect(purl.exists?).to be_falsey
     end
   end
+  describe '#modified_time' do
+    let(:sample_doc_path) do
+      DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
+    end
+    subject { described_class.new(sample_doc_path) }
+    it 'gets the file modified_time from file system' do
+      before_modified = Time.zone.now - 1.second
+      FileUtils.touch(sample_doc_path)
+      expect(subject.modified_time).to be > before_modified
+      expect(subject.modified_time).to be_an Time
+    end
+  end
 end

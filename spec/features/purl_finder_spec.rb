@@ -95,8 +95,6 @@ describe PurlFinder do
         purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_falsey # it is not deleted
-        expect(index_end_time > purl.indexed_at).to be_truthy # the index time should be between the start and end time
-        expect(index_start_time < purl.indexed_at).to be_truthy # the index time should be between the start and end time
         delete_dir(test_purl_dest_dir) # remove its files
         druid_object.creates_delete_record # create its delete record
         delete_start_time = Time.zone.now
