@@ -20,7 +20,9 @@ class Purl < ActiveRecord::Base
       purl.object_type = public_xml.object_type
 
       # add the collections they exist
-      public_xml.collections.each { |collection| purl.collections << Collection.where(druid: collection).first_or_create }
+      public_xml.collections.each do |collection|
+        purl.collections << Collection.find_or_create_by(druid: collection)
+      end
 
       # add the release tags
       public_xml.releases[:true].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: true) }
