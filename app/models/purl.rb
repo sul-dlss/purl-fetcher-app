@@ -20,9 +20,10 @@ class Purl < ActiveRecord::Base
       purl.druid = public_xml.druid
       purl.object_type = public_xml.object_type
 
-      # add the collections they exist
+      # add the collections they exist and if they are not already present
       public_xml.collections.each do |collection|
-        purl.collections << Collection.find_or_create_by(druid: collection)
+        collection_to_add = Collection.find_or_create_by(druid: collection)
+        purl.collections << collection_to_add unless purl.collections.include?(collection_to_add)
       end
 
       # add the release tags
