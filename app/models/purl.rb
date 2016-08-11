@@ -5,6 +5,7 @@ class Purl < ActiveRecord::Base
   paginates_per 100
   max_paginates_per 10_000
   default_scope -> { order('published_at') }
+  validates :druid, uniqueness: true
 
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
@@ -19,8 +20,11 @@ class Purl < ActiveRecord::Base
       purl.druid = public_xml.druid
       purl.object_type = public_xml.object_type
 
-      # add the collections they exist
-      public_xml.collections.each { |collection| purl.collections << Collection.where(druid: collection).first_or_create }
+      # add the collections they exist and if they are not already present
+      public_xml.collections.each do |collection|
+        collection_to_add = Collection.find_or_create_by(druid: collection)
+        purl.collections << collection_to_add unless purl.collections.include?(collection_to_add)
+      end
 
       # add the release tags
       public_xml.releases[:true].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: true) }
