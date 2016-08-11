@@ -85,7 +85,11 @@ class PurlFinder
       druid = get_druid_from_file_path(line)
       if !druid.blank?
         IndexingLogger.info("indexing #{druid}")
-        result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
+        begin
+          result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
+        rescue => e
+          IndexingLogger.error("An error occurred while trying to save #{druid}.  \n#{e.message} \n#{e.backtrace.inspect}")
+        end
         result ? success += 1 : error += 1
         count += 1
       end

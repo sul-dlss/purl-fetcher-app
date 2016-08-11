@@ -244,4 +244,11 @@ describe PurlFinder do
       end
     end
   end
+  describe '#index_purls' do
+    it 'catches and records an error from Purl#save_from_public_xml' do
+      expect(Purl).to receive(:save_from_public_xml).twice.and_raise(StandardError)
+      expect(IndexingLogger).to receive(:error).twice.with(/An error occurred/)
+      expect(described_class.new.index_purls(output_path: 'dev/null/bad/path')).to include(count: 2, success: 0, error: 2)
+    end
+  end
 end
