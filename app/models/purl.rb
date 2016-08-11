@@ -5,6 +5,7 @@ class Purl < ActiveRecord::Base
   paginates_per 100
   max_paginates_per 10_000
   default_scope -> { order('published_at') }
+  validates :druid, uniqueness: true
 
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
