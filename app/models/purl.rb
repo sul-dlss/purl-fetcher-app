@@ -17,9 +17,7 @@ class Purl < ActiveRecord::Base
 
       # set the purl model attributes
       purl.druid = public_xml.druid
-      purl.title = public_xml.title
       purl.object_type = public_xml.object_type
-      purl.catkey = public_xml.catkey
 
       # add the collections they exist
       public_xml.collections.each { |collection| purl.collections << Collection.where(druid: collection).first_or_create }
