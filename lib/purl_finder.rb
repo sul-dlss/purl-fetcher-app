@@ -62,7 +62,7 @@ class PurlFinder
     mins_ago = params[:mins_ago] || nil
     output_file = params[:output_file] || default_output_file
     search_string = "find #{purl_mount_location} -name public -type f"
-    search_string += " -mmin -#{mins_ago}" if mins_ago
+    search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
     search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
     IndexingLogger.info("Finding public files")
     IndexingLogger.info(search_string)
@@ -107,7 +107,7 @@ class PurlFinder
     # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
     # a deleted object and thus don't have a .deletes dir
     search_string = "find #{path_to_deletes_dir}"
-    search_string += " -mmin -#{mins_ago}" if mins_ago
+    search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
 
     deleted_objects = `#{search_string}`.split
     deleted_objects -= [path_to_deletes_dir] # remove the deleted objects dir itself
