@@ -3,8 +3,7 @@ language: ruby
 cache: bundler
 script: bundle exec rake travis_ci 
 rvm:
-  - 2.1.2 # deployed
-  - 2.3.1 
+  - 2.3.1 # deployed
 notifications:
   email:
     - pmangiafico@stanford.edu
