@@ -24,6 +24,7 @@ group :test do
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
   gem 'coveralls', require: false
+  gem 'rails-controller-testing'
 end
 
 group :staging, :production do
