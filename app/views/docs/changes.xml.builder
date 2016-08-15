@@ -4,12 +4,11 @@ xml.results do
       xml.change do
         xml.druid change.druid
         xml.latest_change change.published_at.iso8601
-        if change.release_tags.where(release_type: true).present?
-          xml.true_targets do
-            change.release_tags.where(release_type: true).each do |true_target|
-              xml.true_target true_target.name
-            end
+        xml.true_targets do
+          change.release_tags.where(release_type: true).each do |true_target|
+            xml.true_target true_target.name
           end
+          xml.true_target 'SearchWorksPreview'
         end
         if change.release_tags.where(release_type: false).present?
           xml.false_targets do
