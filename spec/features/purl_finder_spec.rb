@@ -16,7 +16,7 @@ describe PurlFinder do
     end
 
     it 'returns the base path finder log location' do
-      expect(purl_finder.base_path_finder_log).to eq(File.join(Rails.root, 'tmp'))
+      expect(purl_finder.base_path_finder_log).to eq(File.join(Rails.root, 'log'))
     end
 
     it 'returns the base path filename finder log' do
@@ -37,7 +37,7 @@ describe PurlFinder do
     end
 
     it 'returns the default output finder file location' do
-      expect(purl_finder.default_output_file).to eq(File.join(Rails.root, 'tmp/purl_finder'))
+      expect(purl_finder.default_output_file).to eq(File.join(Rails.root, 'log/purl_finder'))
     end
   end
 
