@@ -8,7 +8,9 @@ xml.results do
           change.release_tags.where(release_type: true).each do |true_target|
             xml.true_target true_target.name
           end
-          xml.true_target 'SearchWorksPreview'
+          Settings.ALWAYS_SEND_TRUE_TARGET.each do |true_target|
+            xml.true_target true_target
+          end
         end
         if change.release_tags.where(release_type: false).present?
           xml.false_targets do
