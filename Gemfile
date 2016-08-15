@@ -18,6 +18,7 @@ gem 'is_it_working-cbeer'
 gem 'about_page'
 gem 'honeybadger', '~> 2.0'
 gem 'listen'
+gem 'config'
 
 group :test do
   gem 'yard'

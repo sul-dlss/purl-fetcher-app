@@ -85,6 +85,9 @@ GEM
       xpath (~> 2.0)
     chronic (0.10.2)
     concurrent-ruby (1.0.2)
+    config (1.1.0)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.0.1)
     coveralls (0.8.15)
       json (>= 1.8, < 3)
       simplecov (~> 0.12.0)
@@ -95,6 +98,7 @@ GEM
       safe_yaml (~> 1.0.0)
     daemons (1.2.4)
     debug_inspector (0.0.2)
+    deep_merge (1.0.1)
     diff-lcs (1.2.5)
     dlss-capistrano (3.3.0)
       capistrano (~> 3.0)
@@ -302,6 +306,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capybara
+  config
   coveralls
   dlss-capistrano
   dlss_cops
