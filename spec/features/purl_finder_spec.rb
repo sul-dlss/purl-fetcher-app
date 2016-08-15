@@ -32,7 +32,7 @@ describe PurlFinder do
     end
 
     it 'returns the path the deletes directory as a string and has the correct location' do
-      expect(purl_finder.path_to_deletes_dir).to eq('/purl/document_cache/.deletes')
+      expect(purl_finder.path_to_deletes_dir).to match /\.deletes/
       expect(purl_finder.path_to_deletes_dir.class).to eq(String)
     end
 
