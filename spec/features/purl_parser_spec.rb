@@ -58,7 +58,7 @@ describe PurlParser do
     subject { described_class.new(sample_doc_path) }
     it 'gets the file modified_time from file system' do
       before_modified = Time.zone.now - 1.second
-      FileUtils.touch(sample_doc_path)
+      FileUtils.touch(Pathname(sample_doc_path) + 'public')
       expect(subject.modified_time).to be > before_modified
       expect(subject.modified_time).to be_an Time
     end
