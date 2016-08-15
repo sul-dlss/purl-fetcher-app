@@ -8,8 +8,9 @@ class PurlParser
   #
   def initialize(path)
     @path = path
+    @public_path = Pathname(path) + 'public'
     begin
-      @public_xml ||= Nokogiri::XML(File.open(Pathname(path) + 'public'))
+      @public_xml ||= Nokogiri::XML(@public_path.open)
     rescue => e
       IndexingLogger.error("For #{path} could not read public XML.  #{e.message} #{e.backtrace.inspect}")
     end
@@ -83,6 +84,6 @@ class PurlParser
   # Returns the file modified time, in local zone.
   # @return [Time]
   def modified_time
-    File.mtime(Pathname(path))
+    @public_path.mtime
   end
 end
