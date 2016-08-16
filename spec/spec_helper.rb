@@ -1,10 +1,10 @@
 require 'coveralls'
 Coveralls.wear!('rails')
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter
-]
+])
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

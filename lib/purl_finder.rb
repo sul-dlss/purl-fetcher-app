@@ -98,7 +98,7 @@ class PurlFinder
     { count: count, success: success, error: error }
   end
 
-  # Finds all objects deleted from purl in the specified number of minutes and updates solr to reflect their deletion
+  # Finds all objects deleted from purl in the specified number of minutes and updates model to reflect their deletion
   #
   # @return [Hash] A hash providing some stats on the number of items deleted, successful and errored out
   def remove_deleted(params={})
@@ -115,13 +115,15 @@ class PurlFinder
     count = 0
     error = 0
     success = 0
-    deleted_objects.each do |obj|
-      druid = get_druid_from_delete_path(obj)
+    deleted_objects.each do |fn|
+      druid = get_druid_from_delete_path(fn)
       if !druid.blank? && !public_xml_exists?(druid) # double check that the public xml files are actually gone
         IndexingLogger.info("deleting #{druid}")
-        result = Purl.trigger_deleted_at(druid)
+        result = Purl.mark_deleted(druid, File.mtime(fn))
         result ? success += 1 : error += 1
         count += 1
+      else
+        IndexingLogger.debug { "ignoring #{fn}" }
       end
     end
     { count: count, success: success, error: error }
