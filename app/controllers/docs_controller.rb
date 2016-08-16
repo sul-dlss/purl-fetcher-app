@@ -19,9 +19,17 @@ class DocsController < ApplicationController
 
   private
 
+  # Supports `first_modified` and `last_modified` in ISO8601 date formats (in any timezone)
+  #
+  # We convert the parameters into Time objects here rather than wait for ActiveRecord
+  # so that we can handle timezone differences and raise exceptions on bad input data
+  # before the action
   def date_params
-    @first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-    @last_modified = params[:last_modified] || Time.zone.now.iso8601
+    @first_modified = Time.zone.at(0).iso8601 # default
+    @first_modified = params[:first_modified].to_datetime if params[:first_modified].present?
+
+    @last_modified = Time.zone.now.iso8601    # default
+    @last_modified = params[:last_modified].to_datetime if params[:last_modified].present?
   end
 
   def per_page_params
