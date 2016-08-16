@@ -84,6 +84,7 @@ describe PurlFinder do
         druid_object.creates_delete_record
         # Copy the files back in, this puts the public XML file in place, even though the deletes record is there
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
+        expect(Purl).not_to receive(:mark_deleted)
         expect(purl_finder.remove_deleted(mins_ago: 5)).to match(count: 0, success: 0, error: 0) # nothing should happen
       end
 
@@ -95,19 +96,18 @@ describe PurlFinder do
         purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_falsey # it is not deleted
+
         delete_dir(test_purl_dest_dir) # remove its files
-        druid_object.creates_delete_record # create its delete record
-        delete_start_time = Time.zone.now
+        delete_file = druid_object.creates_delete_record.first # create its delete record
         expect(IndexingLogger).to receive(:info).with(/deleting/).once
+        expect(Purl).to receive(:mark_deleted).with(/bb050dj6667/, Pathname(delete_file).mtime).and_call_original
         result = purl_finder.remove_deleted # delete it
-        delete_end_time = Time.zone.now
         expect(result).to be_truthy
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # still just have one more record in the database
         purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid
         expect(purl.deleted_at?).to be_truthy # it is deleted
-        expect(delete_end_time > purl.deleted_at).to be_truthy # the delete time should be between the start and end time
-        expect(delete_start_time < purl.deleted_at).to be_truthy # the delete time should be between the start and end time
+
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir # put the purl back
         Purl.save_from_public_xml(test_purl_dest_dir) # re-add the purl to the database
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # confirm we still have one record in the database
