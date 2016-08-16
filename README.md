@@ -36,24 +36,6 @@ There are three log files:
 
 ## Running tests
 
-### To run the tests
-
 ```bash
-bundle exec rake
-```
-
-This command will run all of the tests, run rubocop and generate new documentation.
-
-## Generate documentation
-
-To generate documentation into the "doc" folder:
-
-```bash
-yard
-```
-
-To keep a local server running with up to date code documentation that you can view in your browser:
-
-```bash
-yard server --reload
+bundle exec rspec
 ```
