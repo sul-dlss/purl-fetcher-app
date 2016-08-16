@@ -43,11 +43,12 @@ class Purl < ActiveRecord::Base
   # Specify an instance's `deleted_at` attribute which denotes when an object's
   # public xml is gone
   # @param [String] druid
-  def self.trigger_deleted_at(druid)
+  # @param [Time] `deleted_at` the time at which the PURL was deleted. If `nil`, it uses the current time.
+  def self.mark_deleted(druid, deleted_at = nil)
     druid = "druid:#{druid}" unless druid.include?('druid:') # add the druid prefix if it happens to be missing
     purl = find_or_create_by(druid: druid) # either create a new druid record or get the existing one
     #  (in theory we should *always* have a previous druid here)
-    purl.deleted_at = Time.zone.now
+    purl.deleted_at = deleted_at.nil? ? Time.current : deleted_at
     purl.save
   end
 end
