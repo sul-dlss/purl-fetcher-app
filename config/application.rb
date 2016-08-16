@@ -37,7 +37,6 @@ module PurlFetcher
     }
 
     config.app_config = load_yaml_config.call('app_config.yml')
-    config.time_zone = 'UTC'
   end
 end
 
