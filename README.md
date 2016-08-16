@@ -55,8 +55,8 @@ The `/docs/changes` endpoint provides information about public PURL documents th
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`first_modified` | query | Limit response by a beginning datetime | No | datetime in UTC iso8601 | earliest possible date
-`last_modified` | query | Limit response by an ending datetime| No | datetime in UTC iso8601 | current time
+`first_modified` | query | Limit response by a beginning datetime | No | datetime in iso8601 | earliest possible date
+`last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
 
@@ -113,8 +113,8 @@ The `/docs/deletes` endpoint provides information about public PURL documents th
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`first_modified` | query | Limit response by a beginning datetime | No | datetime in UTC iso8601 | earliest possible date
-`last_modified` | query | Limit response by an ending datetime| No | datetime in UTC iso8601 | current time
+`first_modified` | query | Limit response by a beginning datetime | No | datetime in iso8601 | earliest possible date
+`last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
 
