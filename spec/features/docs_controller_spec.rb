@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe(AboutController, type: :request, integration: true) do
+describe(DocsController, type: :request, integration: true) do
   let(:pagination_response) do
     {
       current_page: 1,
@@ -43,9 +43,9 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:ee1111ff2222", latest_change: "2014-01-01T00:00:00Z" },
         { druid: "druid:ff1111gg2222", latest_change: "2014-01-01T00:00:00Z" },
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" }
+        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" },
+        { druid: "druid:ee1111ff2222", latest_change: "2016-01-03T00:00:00Z" }
       ], pages: pagination_response
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -56,7 +56,8 @@ describe(AboutController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" }
+        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" },
+        { druid: "druid:ee1111ff2222", latest_change: "2016-01-03T00:00:00Z" }
       ], pages: pagination_response
     }
     expect(results).to eq(expected_results.with_indifferent_access)

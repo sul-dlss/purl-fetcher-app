@@ -25,7 +25,7 @@ indexed_4:
   druid: druid:ee1111ff2222
   object_type: set
   published_at: <%=Time.zone.parse('1/1/2013').iso8601%>
-  deleted_at: <%=Time.zone.parse('1/1/2014').iso8601%>
+  deleted_at: <%=Time.zone.parse('3/1/2016').iso8601%>
 indexed_5:
   id: 5
   druid: druid:ff1111gg2222
