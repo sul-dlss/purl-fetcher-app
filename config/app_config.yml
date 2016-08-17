@@ -15,7 +15,5 @@ test:
   <<: *defaults
   purl_document_path: "<%=Rails.root%>/spec/purl-test-fixtures/document_cache"
   listener_path: "<%=Rails.root%>/spec/purl-test-fixtures/recent_changes"
-staging:
-  <<: *defaults
 production:
   <<: *defaults
