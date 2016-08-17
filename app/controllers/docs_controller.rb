@@ -13,6 +13,7 @@ class DocsController < ApplicationController
   # API call to get a full list of all purl deletes between two times
   def deletes
     @deletes = Purl.where(deleted_at: @first_modified..@last_modified)
+                   .reorder(:deleted_at) # used to override the default_scope
                    .page(params[:page])
                    .per(per_page_params[:per_page])
   end
