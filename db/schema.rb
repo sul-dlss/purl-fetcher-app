@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811232523) do
+ActiveRecord::Schema.define(version: 20160819185732) do
 
   create_table "collections", force: :cascade do |t|
     t.string   "druid",      null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20160811232523) do
 
   add_index "purls", ["deleted_at"], name: "index_purls_on_deleted_at"
   add_index "purls", ["druid"], name: "index_purls_on_druid", unique: true
+  add_index "purls", ["object_type"], name: "index_purls_on_object_type"
   add_index "purls", ["published_at"], name: "index_purls_on_published_at"
 
   create_table "release_tags", force: :cascade do |t|

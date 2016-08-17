@@ -1,4 +1,5 @@
 class Purl < ActiveRecord::Base
+  include Filterable
 
   has_and_belongs_to_many :collections
   has_many :release_tags, dependent: :destroy
@@ -6,6 +7,8 @@ class Purl < ActiveRecord::Base
   max_paginates_per 10_000
   default_scope -> { order('published_at') }
   validates :druid, uniqueness: true
+
+  scope :object_type, -> (object_type) { where object_type: object_type }
 
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
