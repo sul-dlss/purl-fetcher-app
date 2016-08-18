@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 4.2', '>= 4.2.7.1'
+gem 'rake' # for various admin tasks
 
 gem 'druid-tools'
 gem 'whenever', :require => false
@@ -14,7 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'is_it_working-cbeer'
 gem 'about_page'
 gem 'honeybadger', '~> 2.0'
-gem 'listen'
+gem 'listen' # for PurlListener
 gem 'config'
 
 group :test do
