@@ -110,11 +110,9 @@ describe PurlListener do
   end
 
   context '.listen_for_changes' do
-    # rubocop:disable RSpec/AnyInstance
     before do
       allow_any_instance_of(Object).to receive(:sleep).with(no_args).and_raise(SignalException.new('TERM'))
     end
-    # rubocop:enable RSpec/AnyInstance
 
     it 'calls Listen.to and daemonize into sleep-based infinite loop' do
       expect(subject.logger).to receive(:info).with(/Listening to/)
@@ -131,30 +129,30 @@ describe PurlListener do
     let(:druid) { 'aa111bb2222' }
     let(:fn) { Pathname("/no/where/#{druid}") }
     before do
-      ListenerLog.create(process_id: $PID, started_at: Time.now - 1)
+      ListenerLog.create(process_id: $PID, started_at: Time.current - 1)
     end
 
     context '.process_event' do
-      it 'should parse a valid druid from the filename and mark active' do
+      it 'parses a valid druid from the filename and mark active' do
         expect(subject).to receive(:process_druid_file).with(fn, druid)
         expect(subject.logger).to receive(:info).with(/Processed/)
         subject.send(:process_event, fn)
         expect(ListenerLog.current.active_at).to be_an Time
       end
-      it 'should log exceptions correctly' do
+      it 'logs exceptions correctly' do
         expect(subject).to receive(:process_druid_file).and_raise(StandardError.new)
         expect(subject.logger).to receive(:error).with(/Cannot process/)
         expect(Honeybadger).to receive(:notify)
         subject.send(:process_event, fn)
       end
-      it 'should skip filenames that are not druids' do
+      it 'skips filenames that are not druids' do
         expect(subject).not_to receive(:process_druid_file)
         expect(subject.logger).to receive(:warn).with(/Ignoring miscellaneous/)
         subject.send(:process_event, Pathname('/no/where/not_a_druid'))
       end
     end
     context '.process_druid_file' do
-      it 'should parse the druid from the filename' do
+      it 'parses the druid from the filename' do
         expect(fn).to receive(:rename).with("#{fn}.lock")
         expect(PurlFinder).to receive(:new).and_return(double(purl_path: '/some/place'))
         expect(Purl).to receive(:save_from_public_xml)
@@ -165,12 +163,10 @@ describe PurlListener do
   end
 
   context '.run_find_all' do
-    # rubocop:disable RSpec/AnyInstance
     it 'runs a rake task' do
       allow_any_instance_of(Object).to receive(:system).with(/rake find:all\[1\].*&$/)
       subject.send(:run_find_all, 1)
     end
-    # rubocop:enable RSpec/AnyInstance
   end
 
   context '.event_handler' do

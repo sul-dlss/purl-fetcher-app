@@ -10,7 +10,7 @@ class ListenerLog < ActiveRecord::Base
   # @return <Integer|Nil> `nil` if the listener has never run,
   # otherwise time since now that it was last started
   def self.minutes_since_last_started
-    ((Time.now - current.started_at) / 60.0).ceil
+    ((Time.current - current.started_at) / 60.0).ceil
   rescue
     nil
   end
@@ -20,7 +20,7 @@ class ListenerLog < ActiveRecord::Base
   # otherwise time since now that it was last active
   def self.minutes_since_last_active
     last_log = order('active_at DESC, started_at DESC').limit(1).first
-    ((Time.now - last_log.active_at) / 60.0).ceil
+    ((Time.current - last_log.active_at) / 60.0).ceil
   rescue
     nil
   end
