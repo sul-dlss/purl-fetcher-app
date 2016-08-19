@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819185732) do
+ActiveRecord::Schema.define(version: 20160819203202) do
 
   create_table "collections", force: :cascade do |t|
     t.string   "druid",      null: false
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20160819185732) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.datetime "published_at"
+    t.text     "title"
+    t.string   "catkey"
   end
 
   add_index "purls", ["deleted_at"], name: "index_purls_on_deleted_at"

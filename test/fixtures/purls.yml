@@ -7,28 +7,38 @@
 indexed_1:
   id: 1
   druid: druid:bb1111cc2222
+  title: Some test object
   object_type: item
+  catkey: ''
   published_at: <%=Time.zone.parse('1/1/2015').iso8601%>
 indexed_2:
   id: 2
   druid: druid:cc1111dd2222
+  title: Some test object number 2
   object_type: item
+  catkey: '567'
   published_at: <%=Time.zone.parse('1/1/2016').iso8601%>
   deleted_at: <%=Time.zone.parse('2/1/2016').iso8601%>
 indexed_3:
   id: 3
   druid: druid:dd1111ee2222
+  title: Some test object number 3
   object_type: item
+  catkey: ''
   published_at: <%=Time.zone.parse('1/1/2014').iso8601%>
 indexed_4:
   id: 4
   druid: druid:ee1111ff2222
+  title: Some test object number 4
   object_type: set
+  catkey: ''
   published_at: <%=Time.zone.parse('1/1/2013').iso8601%>
   deleted_at: <%=Time.zone.parse('3/1/2016').iso8601%>
 indexed_5:
   id: 5
   druid: druid:ff1111gg2222
+  title: Some test object number 5
   object_type: collection
+  catkey: ''
   published_at: <%=Time.zone.parse('1/1/2013').iso8601%>
   deleted_at: <%=Time.zone.parse('1/1/2014').iso8601%>
