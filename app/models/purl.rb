@@ -14,7 +14,7 @@ class Purl < ActiveRecord::Base
     public_xml = PurlParser.new(path)
 
     if public_xml.exists?
-      purl = self.find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
+      purl = find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
 
       # set the purl model attributes
       purl.druid = public_xml.druid
