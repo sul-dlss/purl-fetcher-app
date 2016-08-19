@@ -65,7 +65,7 @@ Name | Located In | Description | Required | Schema | Default
 {
   "changes": [
     {
-      "druid": "druid:dd1111ee2222",
+      "druid": "druid:dd111ee2222",
       "latest_change": "2014-01-01T00:00:00Z",
       "true_targets": [
         "SearchWorksPreview"
@@ -75,7 +75,7 @@ Name | Located In | Description | Required | Schema | Default
       ]
     },
     {
-      "druid": "druid:bb1111cc2222",
+      "druid": "druid:bb111cc2222",
       "latest_change": "2015-01-01T00:00:00Z",
       "true_targets": [
         "SearchWorks",
@@ -86,7 +86,14 @@ Name | Located In | Description | Required | Schema | Default
         "druid:oo000oo0001",
         "druid:oo000oo0002"
       ]
-    }
+    },
+    {
+      "druid": "druid:aa111bb2222",
+      "latest_change": "2016-06-06T00:00:00Z",
+      "true_targets": [
+        "SearchWorksPreview"
+      ]
+    },
   ],
   "pages": {
     "current_page": 1,
@@ -123,15 +130,15 @@ Name | Located In | Description | Required | Schema | Default
 {
   "deletes": [
     {
-      "druid": "druid:ee1111ff2222",
+      "druid": "druid:ee111ff2222",
       "latest_change": "2014-01-01T00:00:00Z"
     },
     {
-      "druid": "druid:ff1111gg2222",
+      "druid": "druid:ff111gg2222",
       "latest_change": "2014-01-01T00:00:00Z"
     },
     {
-      "druid": "druid:cc1111dd2222",
+      "druid": "druid:cc111dd2222",
       "latest_change": "2016-01-02T00:00:00Z"
     }
   ],
@@ -166,7 +173,7 @@ Name | Located In | Description | Required | Schema | Default
 ##### Example Response
 ```json
 [
-  "druid:ff1111gg2222"
+  "druid:ff111gg2222"
 ]
 ```
 

@@ -41,11 +41,11 @@ def finder_file_test(params={})
 end
 
 def num_purl_fixtures_in_database
-  5 # Purl.all.count # this is useful to know for testing expectations that will increase this number during the test
+  6 # Purl.all.count # this is useful to know for testing expectations that will increase this number during the test
 end
 
 def fixture_druids_in_database
-  ["druid:bb1111cc2222", "druid:cc1111dd2222", "druid:dd1111ee2222", "druid:ee1111ff2222", "druid:ff1111gg2222"] # Purl.all.map(&:druid)
+  ["druid:bb111cc2222", "druid:cc111dd2222", "druid:dd111ee2222", "druid:ee111ff2222", "druid:ff111gg2222", 'druid:aa111bb2222'].sort # Purl.all.map(&:druid)
 end
 
 def purl_fixture_path
