@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 4.2', '>= 4.2.7.1'
+gem 'rake' # for various admin tasks
 
-gem 'rest-client'
-gem 'stanford-mods'
-gem 'retries'
 gem 'druid-tools'
 gem 'whenever', :require => false
 gem 'kaminari' # for pagination
@@ -17,12 +15,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'is_it_working-cbeer'
 gem 'about_page'
 gem 'honeybadger', '~> 2.0'
-gem 'listen'
+gem 'listen' # for PurlListener
 gem 'config'
 
 group :test do
-  gem 'yard'
-  gem 'webmock'
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
   gem 'coveralls', require: false
@@ -34,18 +30,14 @@ end
 
 group :deployment do
   gem 'dlss-capistrano'
-  gem 'capistrano', '~> 3.0'
-  gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
+  gem 'capistrano-rvm'
 end
 
 group :development, :test do
-  gem 'binding_of_caller'
-  gem 'meta_request'
-  gem 'launchy'
-  gem 'thin'
   gem 'dlss_cops'
   gem 'sqlite3'
+  gem 'yard'
 end
