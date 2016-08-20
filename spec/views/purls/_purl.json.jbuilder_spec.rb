@@ -5,7 +5,7 @@ describe 'purls/_purl.json.jbuilder' do
     render partial: 'purls/purl', locals: { purl: Purl.first }
     expect(JSON.parse(rendered)).to include(
       'collections' => ['druid:oo000oo0002'],
-      'druid' => 'druid:ee1111ff2222',
+      'druid' => 'druid:ee111ff2222',
       'object_type' => 'set',
       'true_targets' => ['SearchWorksPreview'],
       'catkey' => '',
