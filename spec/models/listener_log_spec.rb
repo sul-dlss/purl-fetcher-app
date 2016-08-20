@@ -14,10 +14,10 @@ describe ListenerLog do
   end
   context 'with a prior inactive listeners' do
     before do
-      described_class.create(process_id: 123, started_at: Time.now - 1)
+      described_class.create(process_id: 123, started_at: Time.current - 1)
     end
     it 'has current process' do
-      expect(described_class.current).to be_an ListenerLog
+      expect(described_class.current).to be_an described_class
     end
     it 'has minutes_since_last_started' do
       expect(described_class.minutes_since_last_started).to be_an Integer
@@ -29,10 +29,10 @@ describe ListenerLog do
   end
   context 'with a prior active listeners' do
     before do
-      described_class.create(process_id: 123, started_at: Time.now - 1, active_at: Time.now)
+      described_class.create(process_id: 123, started_at: Time.current - 1, active_at: Time.current)
     end
     it 'has current process' do
-      expect(described_class.current).to be_an ListenerLog
+      expect(described_class.current).to be_an described_class
     end
     it 'has minutes_since_last_started' do
       expect(described_class.minutes_since_last_started).to be_an Integer

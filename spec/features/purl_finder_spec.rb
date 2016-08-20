@@ -32,7 +32,7 @@ describe PurlFinder do
     end
 
     it 'returns the path the deletes directory as a string and has the correct location' do
-      expect(purl_finder.path_to_deletes_dir).to match /\.deletes/
+      expect(purl_finder.path_to_deletes_dir).to match(/\.deletes/)
       expect(purl_finder.path_to_deletes_dir.class).to eq(String)
     end
 
@@ -89,9 +89,7 @@ describe PurlFinder do
       end
 
       it 'saves a druid, then marks the druid as deleted, then resaves it correctly' do
-        index_start_time = Time.zone.now
         Purl.save_from_public_xml(test_purl_dest_dir) # add the purl to the database
-        index_end_time = Time.zone.now
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 1) # now we have one more record in the database
         purl = Purl.find_by_druid('druid:bb050dj6667')
         expect(purl.druid).to eq('druid:bb050dj6667') # confirm the druid

@@ -1,0 +1,1 @@
+json.partial! 'purls/purl', purl: @purl

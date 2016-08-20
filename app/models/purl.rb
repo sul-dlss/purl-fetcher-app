@@ -1,4 +1,5 @@
 class Purl < ActiveRecord::Base
+  include Filterable
 
   has_and_belongs_to_many :collections
   has_many :release_tags, dependent: :destroy
@@ -7,6 +8,8 @@ class Purl < ActiveRecord::Base
   default_scope -> { order('published_at') }
   validates :druid, uniqueness: true
 
+  scope :object_type, -> (object_type) { where object_type: object_type }
+
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
   # @return [Boolean] success or failure
@@ -14,11 +17,13 @@ class Purl < ActiveRecord::Base
     public_xml = PurlParser.new(path)
 
     if public_xml.exists?
-      purl = self.find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
+      purl = find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
 
       # set the purl model attributes
       purl.druid = public_xml.druid
+      purl.title = public_xml.title
       purl.object_type = public_xml.object_type
+      purl.catkey = public_xml.catkey
 
       # add the collections they exist and if they are not already present
       public_xml.collections.each do |collection|

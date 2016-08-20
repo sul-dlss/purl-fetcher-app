@@ -16,7 +16,7 @@ class CollectionsController < ApplicationController
     collections = Purl.where(object_type: 'collection')
     if params[:rows] == '0'
       respond_to do |format|
-        format.json { render json: { size: collections.size}.to_json }
+        format.json { render json: { size: collections.size }.to_json }
       end
     else
       respond_to do |format|
@@ -38,12 +38,12 @@ class CollectionsController < ApplicationController
   #
   def show
     druid = params.require(:id)
-    fail ArgumentError, "Invalid collection: #{druid}" unless Collection.find_by_druid(druid).present?
+    raise ArgumentError, "Invalid collection: #{druid}" unless Collection.find_by_druid(druid).present?
 
     purls = Purl.joins(:collections).where('collections.druid = ?', druid)
     if params[:rows] == '0'
       respond_to do |format|
-        format.json { render json: { size: purls.size}.to_json }
+        format.json { render json: { size: purls.size }.to_json }
       end
     else
       respond_to do |format|

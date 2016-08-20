@@ -1,4 +1,3 @@
-require 'rest_client'
 
 namespace :purl_fetcher do
   desc 'Run the apps specs'
@@ -15,10 +14,7 @@ namespace :purl_fetcher do
 end
 
 desc 'Run continuous integration suite (tests, coverage, rubocop)'
-task :ci do
-   system('RAILS_ENV=test rake db:migrate')
-   system('RAILS_ENV=test rake db:test:prepare')
-   Rake::Task['purl_fetcher:spec'].invoke
+task :ci => :travis_ci do
    Rake::Task['rubocop'].invoke
 end
 

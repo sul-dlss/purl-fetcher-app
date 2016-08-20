@@ -17,6 +17,7 @@
 /run/*.pid
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/log/purl_finder*
 
 /public/*.gz
 /public/sitemap.xml

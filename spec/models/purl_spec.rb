@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Purl, type: :model do
-  let (:druid) { 'druid:bb050dj7711' }
+  let(:druid) { 'druid:bb050dj7711' }
   describe '.mark_deleted' do
     it 'always starts without deleted_at time' do
       purl = described_class.create(druid: druid)

@@ -14,7 +14,7 @@ describe(CollectionsController, type: :request, integration: true) do
     expect(response).to be_success
     results = JSON.parse(response.body)
     expect(results).to be_an(Hash)
-    expect(results).to eq({ 'size' => 1 })
+    expect(results).to eq('size' => 1)
   end
 
   it 'fetches all items that are members of a collection' do
@@ -31,7 +31,6 @@ describe(CollectionsController, type: :request, integration: true) do
     expect(response).to be_success
     results = JSON.parse(response.body)
     expect(results).to be_an(Hash)
-    expect(results).to eq({ 'size' => 2 })
+    expect(results).to eq('size' => 2)
   end
-
 end
