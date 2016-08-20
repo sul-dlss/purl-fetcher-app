@@ -18,3 +18,5 @@ four:
 five:
   purl_id: 4
   collection_id: 2
+
+# purl_id: 6 should have no collection

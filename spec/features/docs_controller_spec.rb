@@ -19,8 +19,9 @@ describe(DocsController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:oo000oo0001"] },
-        { druid: "druid:bb1111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs", "SearchWorksPreview"], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] }
+        { druid: "druid:dd111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:oo000oo0001"] },
+        { druid: "druid:bb111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs", "SearchWorksPreview"], collections: ["druid:oo000oo0001", "druid:oo000oo0002"] },
+        { druid: "druid:aa111bb2222",  latest_change: "2016-06-06T00:00:00Z", true_targets: ["SearchWorksPreview"] } # note no collections
       ],
       pages: pagination_response
     }
@@ -32,7 +33,7 @@ describe(DocsController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
-        { druid: "druid:dd1111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:oo000oo0001"] }
+        { druid: "druid:dd111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:oo000oo0001"] }
       ], pages: pagination_response
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -43,9 +44,9 @@ describe(DocsController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:ff1111gg2222", latest_change: "2014-01-01T00:00:00Z" },
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" },
-        { druid: "druid:ee1111ff2222", latest_change: "2016-01-03T00:00:00Z" }
+        { druid: "druid:ff111gg2222", latest_change: "2014-01-01T00:00:00Z" },
+        { druid: "druid:cc111dd2222", latest_change: "2016-01-02T00:00:00Z" },
+        { druid: "druid:ee111ff2222", latest_change: "2016-01-03T00:00:00Z" }
       ], pages: pagination_response
     }
     expect(results).to eq(expected_results.with_indifferent_access)
@@ -56,8 +57,8 @@ describe(DocsController, type: :request, integration: true) do
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
-        { druid: "druid:cc1111dd2222", latest_change: "2016-01-02T00:00:00Z" },
-        { druid: "druid:ee1111ff2222", latest_change: "2016-01-03T00:00:00Z" }
+        { druid: "druid:cc111dd2222", latest_change: "2016-01-02T00:00:00Z" },
+        { druid: "druid:ee111ff2222", latest_change: "2016-01-03T00:00:00Z" }
       ], pages: pagination_response
     }
     expect(results).to eq(expected_results.with_indifferent_access)
