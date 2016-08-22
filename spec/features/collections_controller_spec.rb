@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe(CollectionsController, type: :request, integration: true) do
+describe(V1::CollectionsController, type: :request, integration: true) do
   it "fetches all collections" do
     get '/collections'
     expect(response).to be_success

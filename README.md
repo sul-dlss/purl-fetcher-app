@@ -42,6 +42,101 @@ bundle exec rspec
 
 ## API Provided (as implemented)
 
+### Purl
+
+#### `/purls`
+`GET /purls`
+
+#### Summary
+Purl Index route
+#### Description
+The `/purls` endpoint provides information about public PURL documents.
+##### Parameters
+Name | Located In | Description | Required | Schema | Default
+---- | ---------- | ----------- | -------- | ------ | -------
+`object_type` | query | limit requests to a specific `object_type` | No | string | null
+`page` | query | request a specific page of results | No | integer | 1
+`per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
+
+##### Example Response
+```json
+{
+  "purls": [
+    {
+      "druid": "druid:ee1111ff2222",
+      "published_at": "2013-01-01T00:00:00.000Z",
+      "deleted_at": "2016-01-03T00:00:00.000Z",
+      "object_type": "set",
+      "catkey": "",
+      "title": "Some test object number 4",
+      "collections": [
+        "druid:oo000oo0002"
+      ],
+      "true_targets": [
+        "SearchWorksPreview"
+      ]
+    },
+    {
+      "druid": "druid:ff1111gg2222",
+      "published_at": "2013-01-01T00:00:00.000Z",
+      "deleted_at": "2014-01-01T00:00:00.000Z",
+      "object_type": "collection",
+      "catkey": "",
+      "title": "Some test object number 5",
+      "collections": [],
+      "true_targets": [
+        "SearchWorksPreview"
+      ]
+    }
+  ],
+  "pages": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "per_page": 100,
+    "offset_value": 0,
+    "first_page?": true,
+    "last_page?": true
+  }
+}
+```
+
+#### `/purls/:druid`
+`GET /purls/:druid`
+
+##### Summary
+Purl Document Show
+##### Description
+The `/purls/:druid` endpoint provides information about a specifc PURL document.
+##### Parameters
+Name | Located In | Description | Required | Schema | Default
+---- | ---------- | ----------- | -------- | ------ | -------
+`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null 
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
+
+##### Example Response
+```json
+{
+  "druid": "druid:cc1111dd2222",
+  "published_at": "2016-01-01T00:00:00.000Z",
+  "deleted_at": "2016-01-02T00:00:00.000Z",
+  "object_type": "item",
+  "catkey": "567",
+  "title": "Some test object number 2",
+  "collections": [
+    "druid:oo000oo0002"
+  ],
+  "true_targets": [
+    "SearchWorksPreview"
+  ],
+  "false_targets": [
+    "SearchWorks"
+  ]
+}
+```
+
 ### Docs
 
 #### `/docs/changes`
@@ -59,6 +154,7 @@ Name | Located In | Description | Required | Schema | Default
 `last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
 ```json
@@ -124,6 +220,7 @@ Name | Located In | Description | Required | Schema | Default
 `last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
 ```json
@@ -169,6 +266,7 @@ The `/collections` endpoint provides a druid list for collections in the public 
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
 `rows` | query | If `0` then only returns the count of collections | No | integer | |
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
 ```json

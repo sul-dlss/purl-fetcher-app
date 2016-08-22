@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DocsController do
+RSpec.describe V1::DocsController do
   describe '#changes' do
     it 'assigns and renders template' do
       get :changes, format: :json
