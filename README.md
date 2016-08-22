@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sul-dlss/purl-fetcher.png?branch=master)](https://travis-ci.org/sul-dlss/purl-fetcher) [![Coverage Status](https://coveralls.io/repos/github/sul-dlss/purl-fetcher/badge.svg?branch=master)](https://coveralls.io/github/sul-dlss/purl-fetcher?branch=master) [![Dependency Status](https://gemnasium.com/github.com/sul-dlss/purl-fetcher.svg)](https://gemnasium.com/github.com/sul-dlss/purl-fetcher)
+[![Build Status](https://travis-ci.org/sul-dlss/purl-fetcher.png?branch=master)](https://travis-ci.org/sul-dlss/purl-fetcher) [![Coverage Status](https://coveralls.io/repos/github/sul-dlss/purl-fetcher/badge.svg?branch=master)](https://coveralls.io/github/sul-dlss/purl-fetcher?branch=master) [![Dependency Status](https://gemnasium.com/sul-dlss/purl-fetcher.svg)](https://gemnasium.com/sul-dlss/purl-fetcher)
 
 
 # purl-fetcher
@@ -113,7 +113,7 @@ The `/purls/:druid` endpoint provides information about a specifc PURL document.
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null 
+`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
