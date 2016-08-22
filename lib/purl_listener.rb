@@ -156,7 +156,9 @@ class PurlListener
     end
 
     def remove_pid_file
-      pid_file.delete if pid_file.exist?
+      pid_file.delete
+    rescue Errno::ENOENT
+      # no pid file
     end
 
     def write_pid_file
