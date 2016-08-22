@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'purls/_purl.json.jbuilder' do
+describe 'v1/purls/_purl.json.jbuilder' do
   it 'renders appropriate fields' do
-    render partial: 'purls/purl', locals: { purl: Purl.first }
+    render partial: 'v1/purls/purl', locals: { purl: Purl.first }
     expect(JSON.parse(rendered)).to include(
       'collections' => ['druid:oo000oo0002'],
       'druid' => 'druid:ee111ff2222',
@@ -13,7 +13,7 @@ describe 'purls/_purl.json.jbuilder' do
     )
   end
   it 'always returns "SearchWorksPreview"' do
-    render partial: 'purls/purl', locals: { purl: Purl.first }
+    render partial: 'v1/purls/purl', locals: { purl: Purl.first }
     expect(rendered).to match(/SearchWorksPreview/)
   end
 end

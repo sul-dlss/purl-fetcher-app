@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'docs/changes.json.jbuilder' do
+describe 'v1/docs/changes.json.jbuilder' do
   before do
     assign(:changes, Kaminari.paginate_array(Purl.all).page(1))
   end

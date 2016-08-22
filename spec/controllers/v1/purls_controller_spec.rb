@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PurlsController do
+RSpec.describe V1::PurlsController do
   describe 'GET index' do
     it 'looks up Purl objects using filter' do
       get :index, format: :json

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'purls/show.json.jbuilder' do
+describe 'v1/purls/show.json.jbuilder' do
   before do
     assign(:purl, Purl.first)
   end
