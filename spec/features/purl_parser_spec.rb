@@ -63,4 +63,14 @@ describe PurlParser do
       expect(subject.modified_time).to be_an Time
     end
   end
+
+  describe('nc687px4289') do
+    let(:sample_doc_path) { DruidTools::PurlDruid.new('nc687px4289', purl_fixture_path).path }
+    let(:purl) { described_class.new(sample_doc_path) }
+
+    it 'uses the first title' do
+      expect(purl.public_xml.xpath('//*[name()="dc:title"]').size).to eq 2 # multiple titles
+      expect(purl.title).to eq('Kitaĭ')
+    end
+  end
 end

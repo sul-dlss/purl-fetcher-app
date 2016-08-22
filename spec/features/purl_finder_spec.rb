@@ -5,6 +5,7 @@ describe PurlFinder do
   let(:sample_doc_path_files_missing) { DruidTools::PurlDruid.new('bb050dj0000', purl_fixture_path).path }
   let(:ct961sj2730_path) { DruidTools::PurlDruid.new('ct961sj2730', purl_fixture_path).path } # this one has a catkey and is a top level collection
   let(:druid_object) { DruidTools::PurlDruid.new('bb050dj6667', purl_fixture_path) }
+  let(:n) { 3 } # number of druids on the fixture document_cache
 
   describe('finder setup') do
     it 'gets the druid from the file path' do
@@ -166,25 +167,25 @@ describe PurlFinder do
 
       it 'finds public files correctly using no time constraints' do
         # When you don't send a specific mins_ago param, it should find everything
-        finder_file_test(mins_ago: nil, expected_num_files_found: 2)
+        finder_file_test(mins_ago: nil, expected_num_files_found: n)
 
         # # Make sure we filter only on files we want
         FileUtils.touch(empty_file) # add in a fake files who change should not trigger
         # # Since this file does not matter, it should not be found
-        finder_file_test(mins_ago: nil, expected_num_files_found: 2)
+        finder_file_test(mins_ago: nil, expected_num_files_found: n)
 
         # add another purl
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
 
         # # We now have a new file
-        finder_file_test(mins_ago: nil, expected_num_files_found: 3)
+        finder_file_test(mins_ago: nil, expected_num_files_found: n+1)
 
         # Clear the temp file and purl back out
         delete_file(empty_file)
         delete_dir(test_purl_dest_dir)
 
-        # back to 2 files
-        finder_file_test(mins_ago: nil, expected_num_files_found: 2)
+        # back to n files
+        finder_file_test(mins_ago: nil, expected_num_files_found: n)
       end
     end
 
@@ -206,12 +207,12 @@ describe PurlFinder do
         expect(RunLog.currently_running?).to be_falsey
         expect(RunLog.count).to eq(0)
         index_counts = purl_finder.full_reindex # this will run both a find and an index operation, although we really just need to test index at this point
-        expect(index_counts[:count]).to eq(2)
-        expect(index_counts[:success]).to eq(2)
+        expect(index_counts[:count]).to eq(n)
+        expect(index_counts[:success]).to eq(n)
         expect(index_counts[:error]).to eq(0)
         # Confirm results against the database
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 2) # two extra items indexed
-        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730"]
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # two extra items indexed
+        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289"]
         all_druids = indexed_druids + fixture_druids_in_database
         expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)
@@ -219,11 +220,11 @@ describe PurlFinder do
 
         # now try to reindex the previous run
         reindex_counts = purl_finder.reindex(RunLog.last.id)
-        expect(reindex_counts[:count]).to eq(2)
-        expect(reindex_counts[:success]).to eq(2)
+        expect(reindex_counts[:count]).to eq(n)
+        expect(reindex_counts[:success]).to eq(n)
         expect(reindex_counts[:error]).to eq(0)
         # Still only two purls in the database, no new ones were created
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + 2) # still two extra items
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # still two extra items
         expect(RunLog.count).to eq(1) # no new run logs, since we didn't run a find
         expect(RunLog.currently_running?).to be_falsey
       end
@@ -233,7 +234,7 @@ describe PurlFinder do
         last_run_min_ago = 10
 
         # simulate a recent run that started a specified minutes ago
-        RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: 2, finder_filename: purl_finder.default_output_file)
+        RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: n, finder_filename: purl_finder.default_output_file)
         expect(RunLog.minutes_since_last_run_started).to eq(last_run_min_ago + 1)
 
         # reindex new stuff, and check the correct call was made (there is a separate test for the actual find_and_index call)
@@ -244,9 +245,9 @@ describe PurlFinder do
   end
   describe '#index_purls' do
     it 'catches and records an error from Purl#save_from_public_xml' do
-      expect(Purl).to receive(:save_from_public_xml).twice.and_raise(StandardError)
-      expect(IndexingLogger).to receive(:error).twice.with(/An error occurred/)
-      expect(described_class.new.index_purls(output_path: 'dev/null/bad/path')).to include(count: 2, success: 0, error: 2)
+      expect(Purl).to receive(:save_from_public_xml).exactly(n).and_raise(StandardError)
+      expect(IndexingLogger).to receive(:error).exactly(n).with(/An error occurred/)
+      expect(described_class.new.index_purls(output_path: 'dev/null/bad/path')).to include(count: n, success: 0, error: n)
     end
   end
 end

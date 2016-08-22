@@ -1,0 +1,12 @@
+<rightsMetadata>
+  <access type="discover">
+    <machine>
+      <world/>
+    </machine>
+  </access>
+  <access type="read">
+    <machine>
+      <group>stanford</group>
+    </machine>
+  </access>
+</rightsMetadata>
