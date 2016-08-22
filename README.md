@@ -113,7 +113,7 @@ The `/purls/:druid` endpoint provides information about a specifc PURL document.
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null 
+`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
@@ -262,6 +262,7 @@ Name | Located In | Description | Required | Schema | Default
 Collections in PURL
 ##### Description
 The `/collections` endpoint provides a druid list for collections in the public PURL space.
+Note that this endpoint does NOT support pagination.
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
@@ -271,7 +272,11 @@ Name | Located In | Description | Required | Schema | Default
 ##### Example Response
 ```json
 [
-  "druid:ff111gg2222"
+  "druid:vj875jy1708",
+  "druid:by138sy0351",
+  "druid:zm034nd3311",
+  "druid:mp394kd7603",
+  "druid:ch172sb6466"
 ]
 ```
 
@@ -280,6 +285,24 @@ Name | Located In | Description | Required | Schema | Default
 `GET /collections/:id`
 
 ##### Summary
-Collection information in PURL
+PURLs belonging to a given collection
 ##### Description
-Not implemented
+The `/collections/:id` endpoint provides a druid list for all PURLs that are members of the given collection.
+Note that this endpoint does NOT support pagination.
+
+##### Parameters
+Name | Located In | Description | Required | Schema | Default
+---- | ---------- | ----------- | -------- | ------ | -------
+`id` | url | Druid of a specific collection | Yes | string eg(`druid:cc1111dd2222`) | null
+`rows` | query | If `0` then only returns the count of PURLs in a collection | No | integer | |
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
+
+##### Example Response
+```json
+[
+  "druid:vh816yh7318",
+  "druid:gd067wd7402",
+  "druid:ys174nw6600",
+  "druid:vf633bm1918"
+]
+```
