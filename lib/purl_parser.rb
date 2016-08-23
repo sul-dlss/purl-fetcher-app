@@ -45,16 +45,12 @@ class PurlParser
     @druid ||= public_xml.at_xpath('//publicObject').attr('id')
   end
 
-  # Extract the title from publicXML DC
+  # Extract the title from publicXML DC. If there are more than 1 elements, it takes the first.
   #
-  # @return [String] Tht title of the object
+  # @return [String] The title of the object
   #
   def title
-    unless @title
-      title_node = public_xml.xpath('//*[name()="dc:title"]')
-      @title = (title_node.size == 1 ? title_node[0].content : "")
-    end
-    @title
+    @title ||= public_xml.xpath('//*[name()="dc:title"][1]').text
   end
 
   # Extract the object type
