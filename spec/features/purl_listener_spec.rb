@@ -71,14 +71,12 @@ describe PurlListener do
       expect(subject).to receive(:'running?').and_return(true)
       expect(subject).to receive(:pid).and_return(123)
       expect(Process).to receive(:kill).with(/TERM/, 123).and_raise(Errno::ESRCH)
-      expect(subject.pid_file).to receive(:exist?).and_return(true)
       expect(subject.pid_file).to receive(:delete)
       subject.stop
     end
     it 'cleans up orphaned pid_file' do
       expect(subject).to receive(:'running?').and_return(false)
-      expect(subject.pid_file).to receive(:exist?).and_return(true)
-      expect(subject.pid_file).to receive(:delete)
+      expect(subject.pid_file).to receive(:delete).and_raise(Errno::ENOENT)
       subject.stop
     end
   end
