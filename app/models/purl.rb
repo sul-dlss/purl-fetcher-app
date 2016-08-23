@@ -31,9 +31,12 @@ class Purl < ActiveRecord::Base
         purl.collections << collection_to_add unless purl.collections.include?(collection_to_add)
       end
 
-      # add the release tags
-      public_xml.releases[:true].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: true) }
-      public_xml.releases[:false].each { |release| purl.release_tags << ReleaseTag.new(name: release, release_type: false) }
+      # add the release tags, and reuse tags if already associated with this PURL
+      [true, false].each do |type|
+        public_xml.releases[type.to_s.to_sym].sort.uniq.each do |release|
+          purl.release_tags << ReleaseTag.for(purl, release, type)
+        end
+      end
 
       purl.published_at = public_xml.modified_time
       purl.deleted_at = nil # ensure the deleted at field is nil (important for a republish of a previously deleted purl)
