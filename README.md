@@ -306,3 +306,50 @@ Name | Located In | Description | Required | Schema | Default
   "druid:vf633bm1918"
 ]
 ```
+
+## Administration
+
+### Reporting
+
+The API's internals use an [ActiveRecord data model](http://guides.rubyonrails.org/active_record_querying.html) to manage various information
+about published PURLs. This model consists of `Purl`, `Collection`, and
+`ReleaseTag` active records. See `app/models/` and `db/schema.rb` for details.
+
+This approach provides administrators a couple ways to explore the data outside of the API.
+
+#### Using Rails runner
+
+With Rails' `runner`, you can query the database using ActiveRecord. For example, running the Ruby in `script/reports/summary.rb` using:
+
+```bash
+RAILS_ENV=environment bundle exec rails runner script/reports/summary.rb
+```
+
+produces output like this:
+
+```
+Summary report as of 2016-08-24 09:52:49 -0700 on purl-fetcher-dev.stanford.edu
+PURLs: 193960
+Deleted PURLs: 1
+Published PURLs: 193959
+Published PURLs in last week: 0
+Released to SearchWorks: 5
+```
+
+#### Using SQL
+
+With Rails' `dbconsole`, you can query the database using SQL. For example, running the SQL in `script/reports/summary.sql` using:
+
+```bash
+RAILS_ENV=environment bundle exec rails dbconsole -p < script/reports/summary.sql
+```
+
+produces output like this:
+
+```
+PURLs	193960
+Deleted PURLs	1
+Published PURLs	193959
+Published this year	9
+Released to SearchWorks	5
+```
