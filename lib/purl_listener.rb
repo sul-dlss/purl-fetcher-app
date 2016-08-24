@@ -110,6 +110,8 @@ class PurlListener
       listener = Listen.to(path,
                            force_polling: true, # because on NFS mount
                            ignore: [/\.lock$/],
+                           latency: 60,         # wait between polling
+                           wait_for_delay: 5,   # see #157: slow down delta between change notice and action due to NFS
                            &event_handler)
       Process.daemon(true)
       @pid = $PROCESS_ID
@@ -150,7 +152,7 @@ class PurlListener
     # @param [String] `druid`
     def process_druid_file(fn, druid)
       lockfile = fn.sub_ext('.lock')
-      fn.rename(lockfile.to_s)
+      fn.rename(lockfile.to_s) # renaming the file allows a republish during our work
       Purl.save_from_public_xml(purl_path(druid))
       lockfile.delete
     end
