@@ -178,7 +178,7 @@ describe PurlFinder do
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
 
         # # We now have a new file
-        finder_file_test(mins_ago: nil, expected_num_files_found: n+1)
+        finder_file_test(mins_ago: nil, expected_num_files_found: n + 1)
 
         # Clear the temp file and purl back out
         delete_file(empty_file)
