@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  root :controller => 'about', :action => 'index'
-  get 'about/version' => 'about#version'
-  mount AboutPage::Engine => '/about(.:format)' # Or whever you want to access the about page
-
   scope module: :v1, constraints: ApiConstraint.new(version: 1) do
     resource :docs, :defaults => { :format => 'json' }, :only => [:get] do
       get 'deletes'
