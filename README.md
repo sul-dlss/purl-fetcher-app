@@ -37,7 +37,7 @@ There are three log files:
 ## Running tests
 
 ```bash
-bundle exec rspec
+bundle exec rake
 ```
 
 ## API Provided (as implemented)

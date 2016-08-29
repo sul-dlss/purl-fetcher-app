@@ -14,15 +14,11 @@ namespace :purl_fetcher do
 end
 
 desc 'Run continuous integration suite (tests, coverage, rubocop)'
-task :ci => :travis_ci do
-   Rake::Task['rubocop'].invoke
-end
-
-desc 'Run continuous integration suite without rubocop for travis'
-task :travis_ci do
+task :ci do
   system('RAILS_ENV=test rake db:migrate')
   system('RAILS_ENV=test rake db:test:prepare')
   Rake::Task['purl_fetcher:spec'].invoke
+  Rake::Task['rubocop'].invoke
 end
 
 desc 'Run rubocop on ruby files'
