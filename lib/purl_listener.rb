@@ -160,7 +160,7 @@ class PurlListener
     def remove_pid_file
       pid_file.delete
     rescue Errno::ENOENT
-      # no pid file
+      logger.info("no PID file")
     end
 
     def write_pid_file

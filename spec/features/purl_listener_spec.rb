@@ -32,6 +32,7 @@ describe PurlListener do
     end
 
     it 'runs delta rake if listener was previously active' do
+      expect(subject.logger).to receive(:info).with(/no PID file/)
       expect(subject.logger).to receive(:info).with(/Starting/)
 
       # check that we are running for the nth time
@@ -58,10 +59,12 @@ describe PurlListener do
     end
 
     it 'does nothing if the listener is not running' do
+      expect(subject.logger).to receive(:info).with(/no PID file/)
       expect(subject).to receive(:'running?').and_return(false)
       subject.stop
     end
     it 'sends signal if the listener is running' do
+      expect(subject.logger).to receive(:info).with(/no PID file/)
       expect(subject).to receive(:'running?').and_return(true)
       expect(subject).to receive(:pid).and_return(123)
       expect(Process).to receive(:kill).with(/TERM/, 123)
@@ -75,6 +78,7 @@ describe PurlListener do
       subject.stop
     end
     it 'cleans up orphaned pid_file' do
+      expect(subject.logger).to receive(:info).with(/no PID file/)
       expect(subject).to receive(:'running?').and_return(false)
       expect(subject.pid_file).to receive(:delete).and_raise(Errno::ENOENT)
       subject.stop

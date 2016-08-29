@@ -18,16 +18,16 @@ module V1
 
     private
 
-    def filter_params
-      object_type_param
-    end
+      def filter_params
+        object_type_param
+      end
 
-    def object_type_param
-      params.permit(:object_type)
-    end
+      def object_type_param
+        params.permit(:object_type)
+      end
 
-    def druid_param
-      params.require(:druid)
-    end
+      def druid_param
+        params.require(:druid)
+      end
   end
 end

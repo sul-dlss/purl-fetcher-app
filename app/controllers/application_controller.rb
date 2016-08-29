@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def page_params
-    params.permit(:page)
-  end
+    def page_params
+      params.permit(:page)
+    end
 
-  def per_page_params
-    params.permit(:per_page)
-  end
+    def per_page_params
+      params.permit(:per_page)
+    end
 end

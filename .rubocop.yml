@@ -13,6 +13,8 @@ Style/EmptyLineBetweenDefs:
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 200
+Metrics/AbcSize:
+  Max: 30
 
 AllCops:
   TargetRubyVersion: 2.2
