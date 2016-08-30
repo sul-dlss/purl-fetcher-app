@@ -196,6 +196,7 @@ describe PurlFinder do
         r = RunLog.create(started: Time.zone.now)
         expect(RunLog.currently_running?).to be_truthy
         expect(purl_finder).not_to receive(:index_purls)
+        expect(IndexingLogger).to receive(:error).once
         expect(purl_finder.find_and_index).to be_falsey # it doesn't run
         r.ended = Time.zone.now
         r.save

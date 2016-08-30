@@ -41,6 +41,15 @@ describe RunLog, type: :model do
     expect(described_class.minutes_since_last_run_started).to eq(241)
   end
 
+  it "prunes crashed run logs" do
+    expect(described_class.count).to eq(0)
+    started_at = Time.zone.now - (described_class.new.crashed_prune_time_in_days + 0.1).days
+    described_class.create(started: started_at, updated_at: started_at, total_druids: 2) # this started more than the configured maximum runtime ago
+    expect(described_class.count).to eq(1)
+    described_class.prune_crashed_rows
+    expect(described_class.count).to eq(0)
+  end
+
   it "prunes older run logs" do
     run1 = described_class.create(started: Time.zone.now - 1.month, ended: Time.zone.now - 1.month + 1.day, total_druids: 2)
     run1.updated_at = Time.zone.now - 2.months

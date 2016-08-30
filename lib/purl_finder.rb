@@ -35,7 +35,7 @@ class PurlFinder
     results = {}
     if RunLog.currently_running?
       results[:note] = "Job currently running. No action taken."
-      IndexingLogger.info(results[:note])
+      IndexingLogger.error(results[:note])
       return false
     else
       start_time = Time.zone.now
