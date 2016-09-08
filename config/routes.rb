@@ -7,8 +7,10 @@ Rails.application.routes.draw do
 
     resources :purls, defaults: { format: :json}, only: [:index, :show], param: :druid
 
-    get 'collections' => 'collections#index', defaults: { :format => 'json' }
-    get 'collections/:id' => 'collections#show', defaults: { :format => 'json' },
-      constraints: { id: /druid:[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}/ }
+    resources :collections, defaults: { format: :json}, only: [:index, :show], param: :druid  do
+      member do
+        get 'purls'
+      end
+    end
   end
 end

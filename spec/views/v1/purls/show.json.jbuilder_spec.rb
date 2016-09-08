@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe 'v1/purls/show.json.jbuilder' do
   before do
-    assign(:purl, Purl.first)
+    assign(:purl, Purl.find(1))
   end
   it 'renders purl partial' do
     render
-    expect(JSON.parse(rendered)).to include('collections' => ['druid:oo000oo0002'], 'druid' => 'druid:ee111ff2222')
+    expect(JSON.parse(rendered)).to include('collections' => ['druid:ff111gg2222'], 'druid' => 'druid:bb111cc2222')
   end
   it 'always returns "SearchWorksPreview"' do
     render

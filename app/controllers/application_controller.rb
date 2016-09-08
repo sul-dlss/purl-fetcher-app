@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
     def per_page_params
       params.permit(:per_page)
     end
+
+    def druid_param
+      params.require(:druid)
+    end
 end

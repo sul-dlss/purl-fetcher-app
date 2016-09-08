@@ -25,9 +25,5 @@ module V1
       def object_type_param
         params.permit(:object_type)
       end
-
-      def druid_param
-        params.require(:druid)
-      end
   end
 end

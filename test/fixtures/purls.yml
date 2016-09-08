@@ -37,7 +37,7 @@ indexed_4:
 indexed_5:
   id: 5
   druid: druid:ff111gg2222
-  title: Some test object number 5
+  title: Some test object number 5 (a collection)
   object_type: collection
   catkey: ''
   published_at: <%=Time.zone.parse('1/1/2013').iso8601%>
@@ -48,3 +48,8 @@ indexed_6:
   druid: druid:aa111bb2222
   object_type: item
   published_at: <%=Time.zone.parse('6/6/2016').iso8601%>
+indexed_7:
+  id: 7
+  druid: druid:gg111hh2222
+  object_type: 'collection|set'
+  published_at: <%=Time.zone.parse('8/6/2016').iso8601%>

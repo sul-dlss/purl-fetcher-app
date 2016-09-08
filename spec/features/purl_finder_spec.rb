@@ -213,7 +213,7 @@ describe PurlFinder do
         expect(index_counts[:error]).to eq(0)
         # Confirm results against the database
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # two extra items indexed
-        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289"]
+        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289", 'druid:gg111hh2222']
         all_druids = indexed_druids + fixture_druids_in_database
         expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)

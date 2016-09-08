@@ -41,7 +41,7 @@ def finder_file_test(params={})
 end
 
 def num_purl_fixtures_in_database
-  6 # Purl.all.count # this is useful to know for testing expectations that will increase this number during the test
+  7 # Purl.all.count # this is useful to know for testing expectations that will increase this number during the test
 end
 
 def fixture_druids_in_database

@@ -261,51 +261,139 @@ Name | Located In | Description | Required | Schema | Default
 ##### Summary
 Collections in PURL
 ##### Description
-The `/collections` endpoint provides a druid list for collections in the public PURL space.
-Note that this endpoint does NOT support pagination.
+The `/collections` endpoint provides a list of collections (with druids, catkeys, and release targets)
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`rows` | query | If `0` then only returns the count of collections | No | integer | |
+`page` | query | request a specific page of results | No | integer | 1
+`per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
 ```json
-[
-  "druid:vj875jy1708",
-  "druid:by138sy0351",
-  "druid:zm034nd3311",
-  "druid:mp394kd7603",
-  "druid:ch172sb6466"
-]
+{
+  "collections": [
+    {
+      "druid": "druid:ff111gg2222",
+      "catkey": "",
+      "true_targets": [
+        "SearchWorksPreview"
+      ]
+    }
+  ],
+  "pages": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "per_page": 100,
+    "offset_value": 0,
+    "first_page?": true,
+    "last_page?": true
+  }
+}
 ```
 
-#### `/collections/:id`
+#### `/collections/:druid`
 
-`GET /collections/:id`
+`GET /collections/:druid`
 
 ##### Summary
-PURLs belonging to a given collection
+Provides information about a single collection
 ##### Description
-The `/collections/:id` endpoint provides a druid list for all PURLs that are members of the given collection.
-Note that this endpoint does NOT support pagination.
+The `/collections/:id` endpoint provides information about a single collection.
 
 ##### Parameters
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
-`id` | url | Druid of a specific collection | Yes | string eg(`druid:cc1111dd2222`) | null
-`rows` | query | If `0` then only returns the count of PURLs in a collection | No | integer | |
+`druid` | url | Druid of a specific collection | Yes | string eg(`druid:cc1111dd2222`) | null
+`page` | query | request a specific page of results | No | integer | 1
+`per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
 ```json
-[
-  "druid:vh816yh7318",
-  "druid:gd067wd7402",
-  "druid:ys174nw6600",
-  "druid:vf633bm1918"
-]
+{
+  "druid": "druid:ff111gg2222",
+  "published_at": "2013-01-01T00:00:00.000Z",
+  "deleted_at": "2014-01-01T00:00:00.000Z",
+  "object_type": "collection",
+  "catkey": "",
+  "title": "Some test object number 5 (a collection)",
+  "collections": [],
+  "true_targets": [
+    "SearchWorksPreview"
+  ]
+}
 ```
+
+#### `/collections/:druid/purls`
+
+`GET /collections/:druid/purls`
+
+##### Summary
+Collection Purls route
+##### Description
+The `/collections/:druid/purls` endpoint a listing of Purls for a specific collection.
+
+##### Parameters
+Name | Located In | Description | Required | Schema | Default
+---- | ---------- | ----------- | -------- | ------ | -------
+`druid` | url | Druid of a specific collection | Yes | string eg(`druid:cc1111dd2222`) | null
+`page` | query | request a specific page of results | No | integer | 1
+`per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
+
+##### Example Response
+```json
+{
+  "purls": [
+    {
+      "druid": "druid:ee111ff2222",
+      "published_at": "2013-01-01T00:00:00.000Z",
+      "deleted_at": "2016-01-03T00:00:00.000Z",
+      "object_type": "set",
+      "catkey": "",
+      "title": "Some test object number 4",
+      "collections": [
+        "druid:ff111gg2222"
+      ],
+      "true_targets": [
+        "SearchWorksPreview"
+      ]
+    },
+...
+    {
+      "druid": "druid:cc111dd2222",
+      "published_at": "2016-01-01T00:00:00.000Z",
+      "deleted_at": "2016-01-02T00:00:00.000Z",
+      "object_type": "item",
+      "catkey": "567",
+      "title": "Some test object number 2",
+      "collections": [
+        "druid:ff111gg2222"
+      ],
+      "true_targets": [
+        "SearchWorksPreview"
+      ],
+      "false_targets": [
+        "SearchWorks"
+      ]
+    }
+  ],
+  "pages": {
+    "current_page": 1,
+    "next_page": null,
+    "prev_page": null,
+    "total_pages": 1,
+    "per_page": 100,
+    "offset_value": 0,
+    "first_page?": true,
+    "last_page?": true
+  }
+}
+```
+
 
 ## Administration
 
