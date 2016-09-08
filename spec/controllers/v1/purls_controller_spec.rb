@@ -19,6 +19,10 @@ RSpec.describe V1::PurlsController do
         get :index, format: :json, membership: 'none'
         expect(assigns(:purls).count).to eq 4
       end
+      it 'to limit only objects that are part of a collection' do
+        get :index, format: :json, membership: 'collection'
+        expect(assigns(:purls).count).to eq 4
+      end
     end
     describe 'pagination parameters' do
       it 'per_page' do

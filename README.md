@@ -55,7 +55,7 @@ The `/purls` endpoint provides information about public PURL documents.
 Name | Located In | Description | Required | Schema | Default
 ---- | ---------- | ----------- | -------- | ------ | -------
 `object_type` | query | limit requests to a specific `object_type` | No | string | null
-`membership` | query | limit requests by membership type, for instance items with no membership (collection) | No | string accepted values: `none` | null
+`membership` | query | limit requests by membership type, for instance items with no membership (collection) | No | string accepted values: `none`, `collection` | null
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1

@@ -12,6 +12,8 @@ class Purl < ActiveRecord::Base
 
   scope :membership, lambda { |membership|
     case membership['membership']
+    when 'collection'
+      joins(:collections)
     when 'none'
       includes(:collections).where(collections: { id: nil })
     end

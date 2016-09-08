@@ -7,14 +7,23 @@ describe Purl, type: :model do
       it 'returns objects that do not belong to a collection' do
         objects = described_class.membership('membership' => 'none')
         expect(objects.count).to eq 4
-        described_class.membership('membership' => 'none').each do |purl|
+        objects.each do |purl|
           expect(purl.collections).to be_empty
+        end
+      end
+    end
+    context 'when passed "collection"' do
+      it 'returns objects that only belong to a collection' do
+        objects = described_class.membership('membership' => 'collection')
+        expect(objects.count).to eq 4
+        objects.each do |purl|
+          expect(purl.collections.count).to eq 1
         end
       end
     end
     context 'anything else' do
       it 'returns everything' do
-        expect(described_class.membership('').count).to eq Purl.all.count
+        expect(described_class.membership('yolo').count).to eq described_class.all.count
       end
     end
   end
