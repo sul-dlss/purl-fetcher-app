@@ -2,6 +2,22 @@ require 'rails_helper'
 
 describe Purl, type: :model do
   let(:druid) { 'druid:bb050dj7711' }
+  describe '.membership' do
+    context 'when passed "none"' do
+      it 'returns objects that do not belong to a collection' do
+        objects = described_class.membership('membership' => 'none')
+        expect(objects.count).to eq 4
+        described_class.membership('membership' => 'none').each do |purl|
+          expect(purl.collections).to be_empty
+        end
+      end
+    end
+    context 'anything else' do
+      it 'returns everything' do
+        expect(described_class.membership('').count).to eq Purl.all.count
+      end
+    end
+  end
   describe '.mark_deleted' do
     it 'always starts without deleted_at time' do
       purl = described_class.create(druid: druid)

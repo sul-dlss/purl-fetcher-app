@@ -53,3 +53,9 @@ indexed_7:
   druid: druid:gg111hh2222
   object_type: 'collection|set'
   published_at: <%=Time.zone.parse('8/6/2016').iso8601%>
+indexed_8:
+  id: 8
+  druid: druid:hh111ii2222
+  object_type: item
+  published_at: <%=Time.zone.parse('9/6/2016').iso8601%>
+  title: An object not in a collection

@@ -10,6 +10,13 @@ class Purl < ActiveRecord::Base
 
   scope :object_type, -> (object_type) { where object_type: object_type }
 
+  scope :membership, lambda { |membership|
+    case membership['membership']
+    when 'none'
+      includes(:collections).where(collections: { id: nil })
+    end
+  }
+
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
   # @return [Boolean] success or failure
