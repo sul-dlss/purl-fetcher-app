@@ -22,7 +22,8 @@ describe(V1::DocsController, type: :request, integration: true) do
         { druid: "druid:dd111ee2222", latest_change: "2014-01-01T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:ff111gg2222"] },
         { druid: "druid:bb111cc2222", latest_change: "2015-01-01T00:00:00Z", true_targets: ["SearchWorks", "Revs", "SearchWorksPreview"], collections: ["druid:ff111gg2222"] },
         { druid: "druid:aa111bb2222", latest_change: "2016-06-06T00:00:00Z", true_targets: ["SearchWorksPreview"], collections: ["druid:gg111hh2222"] },
-        { druid: "druid:gg111hh2222", latest_change: "2016-06-08T00:00:00Z", true_targets: ["SearchWorksPreview"] }
+        { druid: "druid:gg111hh2222", latest_change: "2016-06-08T00:00:00Z", true_targets: ["SearchWorksPreview"] },
+        { druid: "druid:hh111ii2222", latest_change: "2016-06-09T00:00:00Z", true_targets: ["SearchWorksPreview"] }
       ],
       pages: pagination_response
     }
