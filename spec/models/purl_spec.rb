@@ -2,6 +2,14 @@ require 'rails_helper'
 
 describe Purl, type: :model do
   let(:druid) { 'druid:bb050dj7711' }
+  describe '#refresh_collections' do
+    subject { create(:purl) }
+    it 'removes previous collections and adds new ones' do
+      subject.collections << create_list(:collection, 3)
+      expect { subject.refresh_collections(['druid:1', 'druid:2']) }
+        .to change { subject.collections.count }.from(3).to(2)
+    end
+  end
   describe '.membership' do
     context 'when passed "none"' do
       it 'returns objects that do not belong to a collection' do

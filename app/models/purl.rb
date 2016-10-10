@@ -19,6 +19,18 @@ class Purl < ActiveRecord::Base
     end
   }
 
+  ##
+  # Delete all of the collection assocations, and then add back ones from a
+  # known valid list
+  # @param [Array<String>] collections
+  def refresh_collections(valid_collections)
+    collections.delete_all
+    valid_collections.each do |collection|
+      collection_to_add = Collection.find_or_create_by(druid: collection)
+      collections << collection_to_add unless collections.include?(collection_to_add)
+    end
+  end
+
   # class level method to create or update a purl model object given a path to a purl directory
   # @param [String] `path` path to a PURL directory
   # @return [Boolean] success or failure
@@ -34,11 +46,10 @@ class Purl < ActiveRecord::Base
       purl.object_type = public_xml.object_type
       purl.catkey = public_xml.catkey
 
-      # add the collections they exist and if they are not already present
-      public_xml.collections.each do |collection|
-        collection_to_add = Collection.find_or_create_by(druid: collection)
-        purl.collections << collection_to_add unless purl.collections.include?(collection_to_add)
-      end
+      ##
+      # Delete all of the collection assocations, and then add back ones in the
+      # public xml
+      purl.refresh_collections(public_xml.collections)
 
       # add the release tags, and reuse tags if already associated with this PURL
       [true, false].each do |type|
