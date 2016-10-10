@@ -101,6 +101,11 @@ GEM
     docile (1.1.5)
     druid-tools (0.4.1)
     erubis (2.7.0)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.7.0)
+      factory_girl (~> 4.7.0)
+      railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
@@ -247,6 +252,7 @@ DEPENDENCIES
   dlss-capistrano
   dlss_cops
   druid-tools
+  factory_girl_rails
   honeybadger (~> 2.0)
   jbuilder (~> 2.0)
   kaminari
@@ -262,4 +268,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.12.5
+   1.13.2

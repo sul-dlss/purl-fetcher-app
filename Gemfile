@@ -36,6 +36,7 @@ group :deployment do
 end
 
 group :development, :test do
+  gem 'factory_girl_rails'
   gem 'dlss_cops'
   gem 'sqlite3'
   gem 'yard'
