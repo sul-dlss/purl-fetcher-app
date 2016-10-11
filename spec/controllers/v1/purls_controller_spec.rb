@@ -45,4 +45,12 @@ RSpec.describe V1::PurlsController do
       expect(response).to render_template('purls/show')
     end
   end
+  describe 'PATCH update' do
+    let(:purl_object) { create(:purl) }
+    it 'updates the purl with new data' do
+      purl_object.update(druid: 'druid:bb050dj7711')
+      patch :update, druid: 'druid:bb050dj7711', format: :json
+      expect(assigns(:purl).title).to eq "This is Pete's New Test title for this object."
+    end
+  end
 end
