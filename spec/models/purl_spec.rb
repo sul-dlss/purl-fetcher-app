@@ -82,6 +82,16 @@ describe Purl, type: :model do
       purl = described_class.find_by(druid: druid)
       expect(purl.deleted_at.iso8601).to eq deleted_at_time.iso8601 # favorable compare which removes milliseconds
     end
+    it 'cleans up release_tags' do
+      purl = described_class.find(1)
+      expect{ described_class.mark_deleted(purl.druid) }
+        .to change { purl.release_tags.count }.from(2).to(0)
+    end
+    it 'cleans up collections' do
+      purl = described_class.find(1)
+      expect{ described_class.mark_deleted(purl.druid) }
+        .to change { purl.collections.count }.from(1).to(0)
+    end
   end
   describe '.save_from_public_xml' do
     let(:purl_path) { DruidTools::PurlDruid.new(druid, purl_fixture_path).path }

@@ -99,6 +99,8 @@ class Purl < ActiveRecord::Base
     purl = find_or_create_by(druid: druid) # either create a new druid record or get the existing one
     #  (in theory we should *always* have a previous druid here)
     purl.deleted_at = deleted_at.nil? ? Time.current : deleted_at
+    purl.release_tags.delete_all
+    purl.collections.delete_all
     purl.save
   end
 
