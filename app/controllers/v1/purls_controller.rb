@@ -17,6 +17,15 @@ module V1
       @purl = Purl.find_by_druid(druid_param)
     end
 
+    ##
+    # Update a Purl from its public xml
+    def update
+      @purl = Purl.find_by_druid!(druid_param)
+      respond_to do |format|
+        format.json { render json: @purl.update_from_public_xml }
+      end
+    end
+
     private
 
       def filter_params

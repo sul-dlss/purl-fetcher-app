@@ -138,6 +138,23 @@ Name | Located In | Description | Required | Schema | Default
 }
 ```
 
+`PATCH /purls/:druid`
+
+##### Summary
+Purl Document Update
+##### Description
+The PATCH `/purls/:druid` endpoint provides the ability to update PURL document from public xml.
+##### Parameters
+Name | Located In | Description | Required | Schema | Default
+---- | ---------- | ----------- | -------- | ------ | -------
+`druid` | url | Druid of a specific PURL | Yes | string eg(`druid:cc1111dd2222`) | null
+`version` | header | Version of the API request eg(`version=1`) | No | integer | 1
+
+##### Example Response
+```json
+true
+```
+
 ### Docs
 
 #### `/docs/changes`
