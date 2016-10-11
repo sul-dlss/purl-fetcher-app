@@ -14,7 +14,7 @@ module V1
     ##
     # Returns a specific Purl by a Purl
     def show
-      @purl = Purl.find_by_druid(druid_param)
+      @purl = Purl.find_by_druid!(druid_param)
     end
 
     ##
