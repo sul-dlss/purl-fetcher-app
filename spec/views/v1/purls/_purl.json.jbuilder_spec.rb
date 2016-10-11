@@ -7,13 +7,12 @@ describe 'v1/purls/_purl.json.jbuilder' do
       'collections' => ['druid:ff111gg2222'],
       'druid' => 'druid:bb111cc2222',
       'object_type' => 'item',
-      'true_targets' => ['SearchWorks', 'Revs', 'SearchWorksPreview'],
       'catkey' => '',
       'title' => 'Some test object'
     )
   end
-  it 'always returns "SearchWorksPreview"' do
-    render partial: 'v1/purls/purl', locals: { purl: Purl.first }
+  it 'always returns "SearchWorksPreview" for non deleted Purls' do
+    render partial: 'v1/purls/purl', locals: { purl: Purl.where(deleted_at: nil).first }
     expect(rendered).to match(/SearchWorksPreview/)
   end
 end

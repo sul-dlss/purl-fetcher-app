@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 describe Purl, type: :model do
+  describe '#true_targets' do
+    context 'when not deleted' do
+      subject { create(:purl) }
+      it 'has SearchWorksPreview' do
+        expect(subject.true_targets).to include 'SearchWorksPreview'
+      end
+    end
+    context 'when deleted' do
+      subject { create(:purl) }
+      it 'returns an empty array' do
+        subject.update(deleted_at: Time.current)
+        expect(subject.true_targets).to eq []
+      end
+    end
+  end
   let(:druid) { 'druid:bb050dj7711' }
   describe '#refresh_collections' do
     subject { create(:purl) }
