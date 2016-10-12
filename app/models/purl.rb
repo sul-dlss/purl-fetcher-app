@@ -19,6 +19,15 @@ class Purl < ActiveRecord::Base
     end
   }
 
+  scope :status, lambda { |status|
+    case status['status']
+    when 'deleted'
+      where.not deleted_at: nil
+    when 'public'
+      where deleted_at: nil
+    end
+  }
+
   ##
   # Return true targets with always values only if the object is not deleted in
   # purl mount

@@ -6,6 +6,7 @@ module V1
       @purls = Purl.all
                    .includes(:collections, :release_tags)
                    .filter(filter_params)
+                   .status(status_param)
                    .membership(membership_param)
                    .page(page_params[:page])
                    .per(per_page_params[:per_page])
@@ -38,6 +39,10 @@ module V1
 
       def membership_param
         params.permit(:membership)
+      end
+
+      def status_param
+        params.permit(:status)
       end
   end
 end
