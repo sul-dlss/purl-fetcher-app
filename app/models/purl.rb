@@ -28,6 +28,11 @@ class Purl < ActiveRecord::Base
     end
   }
 
+  scope :target, lambda { |target|
+    return unless target['target'].present?
+    includes(:release_tags).where(release_tags: { name: target['target'] })
+  }
+
   ##
   # Return true targets with always values only if the object is not deleted in
   # purl mount

@@ -85,6 +85,25 @@ describe Purl, type: :model do
       end
     end
   end
+  describe '.target' do
+    context 'when passed a valid target' do
+      it 'returns objects that have that target' do
+        objects = described_class.target('target' => 'SearchWorks')
+        expect(objects.count).to eq 2
+      end
+    end
+    context 'when passed an invalid target' do
+      it 'returns nothing' do
+        objects = described_class.target('target' => 'SuperCoolStuff')
+        expect(objects.count).to eq 0
+      end
+    end
+    context 'anything else' do
+      it 'returns everything' do
+        expect(described_class.target('yolo').count).to eq described_class.all.count
+      end
+    end
+  end
   describe '.mark_deleted' do
     it 'always starts without deleted_at time' do
       purl = described_class.create(druid: druid)

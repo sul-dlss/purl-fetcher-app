@@ -7,6 +7,7 @@ module V1
                    .includes(:collections, :release_tags)
                    .filter(filter_params)
                    .status(status_param)
+                   .target(target_param)
                    .membership(membership_param)
                    .page(page_params[:page])
                    .per(per_page_params[:per_page])
@@ -43,6 +44,10 @@ module V1
 
       def status_param
         params.permit(:status)
+      end
+
+      def target_param
+        params.permit(:target)
       end
   end
 end
