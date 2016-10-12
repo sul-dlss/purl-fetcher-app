@@ -6,6 +6,6 @@ describe 'v1/collections/show.json.jbuilder' do
   end
   it 'renders purl partial' do
     render
-    expect(JSON.parse(rendered)).to include('druid' => 'druid:ff111gg2222', 'catkey' => '', 'true_targets' => ['SearchWorksPreview'])
+    expect(JSON.parse(rendered)).to include('druid' => 'druid:ff111gg2222', 'catkey' => '')
   end
 end

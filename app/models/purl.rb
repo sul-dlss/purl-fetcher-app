@@ -20,6 +20,22 @@ class Purl < ActiveRecord::Base
   }
 
   ##
+  # Return true targets with always values only if the object is not deleted in
+  # purl mount
+  # @return [Array]
+  def true_targets
+    return [] unless deleted_at.nil?
+    release_tags.where(release_type: true).map(&:name) | Settings.ALWAYS_SEND_TRUE_TARGET.to_a
+  end
+
+  ##
+  # Convenience method for accessing false targets
+  # @return [Array]
+  def false_targets
+    release_tags.where(release_type: false).map(&:name)
+  end
+
+  ##
   # Delete all of the collection assocations, and then add back ones from a
   # known valid list
   # @param [Array<String>] collections
@@ -83,6 +99,8 @@ class Purl < ActiveRecord::Base
     purl = find_or_create_by(druid: druid) # either create a new druid record or get the existing one
     #  (in theory we should *always* have a previous druid here)
     purl.deleted_at = deleted_at.nil? ? Time.current : deleted_at
+    purl.release_tags.delete_all
+    purl.collections.delete_all
     purl.save
   end
 
