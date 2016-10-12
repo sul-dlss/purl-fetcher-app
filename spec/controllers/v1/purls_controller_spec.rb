@@ -24,6 +24,22 @@ RSpec.describe V1::PurlsController do
         expect(assigns(:purls).count).to eq 4
       end
     end
+    describe 'uses status scope' do
+      it 'to limit deleted objects' do
+        get :index, format: :json, status: 'deleted'
+        expect(assigns(:purls).count).to eq 3
+      end
+      it 'to limit only objects that are public' do
+        get :index, format: :json, status: 'public'
+        expect(assigns(:purls).count).to eq 5
+      end
+    end
+    describe 'uses target scope' do
+      it 'to limit targets objects' do
+        get :index, format: :json, target: 'SearchWorks'
+        expect(assigns(:purls).count).to eq 2
+      end
+    end
     describe 'pagination parameters' do
       it 'per_page' do
         get :index, format: :json, per_page: 1
