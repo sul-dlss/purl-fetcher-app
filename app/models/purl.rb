@@ -85,7 +85,7 @@ class Purl < ActiveRecord::Base
       end
     end
 
-    self.published_at = public_xml.modified_time
+    self.published_at = public_xml.published_at
     self.deleted_at = nil # ensure the deleted at field is nil (important for a republish of a previously deleted purl)
 
     save
