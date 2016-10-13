@@ -77,9 +77,9 @@ class PurlParser
   end
 
   ##
-  # Returns the file modified time, in local zone.
+  # Returns the publication time, in local time zone.
   # @return [Time]
-  def modified_time
-    @public_path.mtime
+  def published_at
+    @published_at ||= Time.parse(public_xml.at_xpath('//publicObject').attr('published').to_s).in_time_zone
   end
 end

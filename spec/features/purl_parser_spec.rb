@@ -51,16 +51,16 @@ describe PurlParser do
       expect(purl.exists?).to be_falsey
     end
   end
-  describe '#modified_time' do
+  describe '#published_at' do
     let(:sample_doc_path) do
       DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
     end
     subject { described_class.new(sample_doc_path) }
-    it 'gets the file modified_time from file system' do
-      before_modified = Time.zone.now - 1.second
-      FileUtils.touch(Pathname(sample_doc_path) + 'public')
-      expect(subject.modified_time).to be > before_modified
-      expect(subject.modified_time).to be_an Time
+    it 'gets the published_at metadata directly from the public XML' do
+      expect(subject.published_at).to be_an Time
+      expect(subject.published_at.zone).to eq('UTC') # this is the local timezone for our Rails instances
+      # the metadata is actually in a non-UTC zone so we ensure it gets converted to the local timezone (UTC)
+      expect(subject.published_at.iso8601).to eq('2015-04-09T20:20:16Z')
     end
   end
 

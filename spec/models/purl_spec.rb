@@ -34,7 +34,7 @@ describe Purl, type: :model do
       expect(purl_object.title).to eq 'This is Pete\'s New Test title for this object.'
       expect(purl_object.release_tags.count).to eq 3
       expect(purl_object.collections.count).to eq 2
-      expect(purl_object.published_at).not_to be_nil
+      expect(purl_object.published_at.iso8601).to eq '2015-04-09T20:20:16Z' # should be in UTC
       expect(purl_object.deleted_at).to be_nil
     end
     context 'public xml unavailable' do
