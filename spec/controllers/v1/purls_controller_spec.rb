@@ -60,6 +60,9 @@ RSpec.describe V1::PurlsController do
       expect(assigns(:purl)).to be_an Purl
       expect(response).to render_template('purls/show')
     end
+    it 'raise a record not found error (returning a 404) when the purl druid is not found' do
+      expect { get :show, druid: 'druid:bogus', format: :json }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
   describe 'PATCH update' do
     let(:purl_object) { create(:purl) }
