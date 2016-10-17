@@ -14,7 +14,7 @@ module V1
     # API call to get information about a specific collection
     #
     def show
-      @collection = Purl.find_by_druid(druid_param)
+      @collection = Purl.find_by_druid!(druid_param)
     end
 
     ##

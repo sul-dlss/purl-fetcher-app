@@ -28,6 +28,9 @@ RSpec.describe V1::CollectionsController do
       expect(assigns(:collection)).to be_an Purl
       expect(response).to render_template('collections/show')
     end
+    it 'raise a record not found error (returning a 404) when the collection druid is not found' do
+      expect { get :show, druid: 'druid:bogus', format: :json }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
   describe 'GET purls' do
     it 'purls for a selected collection' do
