@@ -36,4 +36,16 @@ namespace :listener do
 
   desc 'Restart the listener'
   task :restart => [:stop, :start]
+
+  namespace :recent_changes do
+    desc 'Process all recent_changes touch files. Requires Listener to be running.'
+    task :process => :environment do
+      listener = PurlListener.new
+      if listener.running?
+        system("find #{listener.path} -type f | xargs touch")
+      else
+        puts "Listener is not running"
+      end
+    end
+  end
 end
