@@ -3,7 +3,7 @@
 
 # purl-fetcher
 
-A web service app that queries PURL to return info needed for indexing or other purposes.
+A web service app that queries PURL to return info needed for updating a database that can be queried via REST APIs.
 
 ## Setting up your environment
 
@@ -30,7 +30,7 @@ rails server
 
 There are three log files:
 
-* `indexing.log` - items that are being indexed (added or deleted)
+* `indexing.log` - items that are being saved (added or deleted)
 * `[environment].log` - Rails logger
 * `access.log` and `error.log` from Apache - traffic to the HTTP APIs
 

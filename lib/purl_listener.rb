@@ -31,7 +31,7 @@ class PurlListener
   # @raise [ArgumentError] -- requires path to be a directory
   def initialize(path = Pathname(PurlFetcher::Application.config.app_config['listener_path']),
                  pid_file = Pathname(PurlFetcher::Application.config.app_config['listener_pid_file']),
-                 logger = IndexingLogger)
+                 logger = UpdatingLogger)
     raise ArgumentError, "Missing #{path}" unless path.directory?
     @pid_file = pid_file
     @pid = nil

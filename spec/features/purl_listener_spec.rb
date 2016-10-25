@@ -9,7 +9,7 @@ describe PurlListener do
       expect(subject.pid_file).to eq Pathname(PurlFetcher::Application.config.app_config['listener_pid_file'])
     end
     it 'using the correct logger' do
-      expect(subject.logger).to eq IndexingLogger
+      expect(subject.logger).to eq UpdatingLogger
     end
     it 'has an event handler' do
       expect(subject.event_handler).to be_an Proc

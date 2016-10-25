@@ -13,9 +13,9 @@ namespace :find do
   task :changes, [:mins_ago] => :environment do |_t, args|
     args.with_defaults(mins_ago: nil)
     elapsed_time = Benchmark.realtime do
-      PurlFinder.new.find_and_index(mins_ago: args[:mins_ago])
+      PurlFinder.new.find_and_save(mins_ago: args[:mins_ago])
     end
-    IndexingLogger.info("Ran 'find:changes[#{args[:mins_ago]}]' in #{elapsed_time.ceil} seconds")
+    UpdatingLogger.info("Ran 'find:changes[#{args[:mins_ago]}]' in #{elapsed_time.ceil} seconds")
   end
 
   desc 'Scan filesystem PURL objects deletes - optionally, only last n minutes.'
@@ -24,6 +24,6 @@ namespace :find do
     elapsed_time = Benchmark.realtime do
       PurlFinder.new.remove_deleted(mins_ago: args[:mins_ago])
     end
-    IndexingLogger.info("Ran 'find:deletes[#{args[:mins_ago]}]' in #{elapsed_time.ceil} seconds")
+    UpdatingLogger.info("Ran 'find:deletes[#{args[:mins_ago]}]' in #{elapsed_time.ceil} seconds")
   end
 end

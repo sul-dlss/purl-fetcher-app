@@ -40,6 +40,6 @@ module PurlFetcher
   end
 end
 
-IndexingLogger = Logger.new(PurlFetcher::Application.config.app_config['filename_indexing_log'])
-IndexingLogger.level = Logger::INFO
+UpdatingLogger = Logger.new(PurlFetcher::Application.config.app_config['filename_updating_log'])
+UpdatingLogger.level = Logger::INFO
 
