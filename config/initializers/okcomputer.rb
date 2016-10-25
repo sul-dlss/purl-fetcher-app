@@ -17,6 +17,12 @@ class VersionCheck < OkComputer::AppVersionCheck
 end
 OkComputer::Registry.register 'version', VersionCheck.new
 
+OkComputer::Registry.register 'purl-document-path',
+  OkComputer::DirectoryCheck.new(PurlFetcher::Application.config.app_config['purl_document_path'], false)
+
+OkComputer::Registry.register 'listener-path',
+  OkComputer::DirectoryCheck.new(PurlFetcher::Application.config.app_config['listener_path'], true)
+
 # Check to see if process is running
 class PidCheck < OkComputer::Check
   def initialize(pid)
@@ -40,25 +46,4 @@ end
 
 # We don't know the pid for the listener until the check method is called
 getpid = proc { ListenerLog.current.present? ? ListenerLog.current.process_id : nil }
-OkComputer::Registry.register 'listener-process', PidCheck.new(getpid)
-
-# Check to see if process is running
-class DirectoryCheck < OkComputer::Check
-  attr_reader :path, :options
-  def initialize(path, options = {})
-    @path = Pathname(path.to_s)
-    @options = options
-  end
-
-  def check
-    mark_message "Check for path #{path}: #{options}"
-    mark_failure if options[:read] && !path.readable?
-    mark_failure if options[:write] && !path.writable?
-  end
-end
-
-OkComputer::Registry.register 'purl-document-path',
-  DirectoryCheck.new(PurlFetcher::Application.config.app_config['purl_document_path'], read: true)
-
-OkComputer::Registry.register 'listener-path',
-  DirectoryCheck.new(PurlFetcher::Application.config.app_config['listener_path'], read: true, write: true)
+OkComputer::Registry.register 'feature-listener-process', PidCheck.new(getpid)
