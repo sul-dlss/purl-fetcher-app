@@ -14,6 +14,7 @@ namespace :listener do
     begin
       PurlListener.new.start
     rescue SignalException => e
+      Honeybadger.notify(e)
       puts "Listener stopped via signal #{e.message}"
     end
   end
