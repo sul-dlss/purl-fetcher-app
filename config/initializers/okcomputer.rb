@@ -46,4 +46,4 @@ end
 
 # We don't know the pid for the listener until the check method is called
 getpid = proc { ListenerLog.current.present? ? ListenerLog.current.process_id : nil }
-OkComputer::Registry.register 'listener-process', PidCheck.new(getpid)
+OkComputer::Registry.register 'feature-listener-process', PidCheck.new(getpid)
