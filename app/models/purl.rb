@@ -126,7 +126,7 @@ class Purl < ActiveRecord::Base
     def path
       DruidTools::PurlDruid.new(
         druid,
-        PurlFetcher::Application.config.app_config['purl_document_path']
+        Settings.PURL_DOCUMENT_PATH
       ).path
     end
 end

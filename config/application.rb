@@ -28,18 +28,8 @@ module PurlFetcher
 
     config.version = VERSION # read from VERSION file at base of website
     config.app_name = 'PurlFetcher'
-
-    load_yaml_config = lambda { |yaml_file|
-      full_path = File.expand_path(File.join(File.dirname(__FILE__), yaml_file))
-      yaml_erb  = ERB.new(IO.read(full_path)).result(binding)
-      yaml      = YAML.load(yaml_erb)
-      return yaml[Rails.env]
-    }
-
-    config.app_config = load_yaml_config.call('app_config.yml')
   end
 end
 
-UpdatingLogger = Logger.new(PurlFetcher::Application.config.app_config['filename_updating_log'])
+UpdatingLogger = Logger.new(Settings.FILENAME_UPDATING_LOG)
 UpdatingLogger.level = Logger::INFO
-
