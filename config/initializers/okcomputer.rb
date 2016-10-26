@@ -17,12 +17,6 @@ class VersionCheck < OkComputer::AppVersionCheck
 end
 OkComputer::Registry.register 'version', VersionCheck.new
 
-OkComputer::Registry.register 'purl-document-path',
-  OkComputer::DirectoryCheck.new(Settings.PURL_DOCUMENT_PATH, false)
-
-OkComputer::Registry.register 'listener-path',
-  OkComputer::DirectoryCheck.new(Settings.LISTENER_PATH, true)
-
 # Check to see if process is running
 class PidCheck < OkComputer::Check
   def initialize(pid)
