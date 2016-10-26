@@ -1,5 +1,5 @@
 defaults: &defaults
-  filename_indexing_log: "log/indexing.log"
+  filename_updating_log: "log/indexing.log"
   purl_document_path: "/purl/document_cache"
   deletes_dir: ".deletes"
   listener_path: "/purl/recent_changes"

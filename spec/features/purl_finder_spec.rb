@@ -42,7 +42,7 @@ describe PurlFinder do
     end
   end
 
-  describe('Indexing/finding') do
+  describe('Saving/finding') do
     before :each do
       allow(purl_finder).to receive(:purl_mount_location).and_return(purl_fixture_path)
     end
@@ -66,7 +66,7 @@ describe PurlFinder do
 
       it 'logs an error, but swallows the exception when the public xml is not present' do
         remove_purl_file(test_purl_dest_dir, 'public')
-        expect(IndexingLogger).to receive(:error).once
+        expect(UpdatingLogger).to receive(:error).once
         expect(Purl.save_from_public_xml(test_purl_dest_dir)).to be_falsey
       end
 
@@ -98,7 +98,7 @@ describe PurlFinder do
 
         delete_dir(test_purl_dest_dir) # remove its files
         delete_file = druid_object.creates_delete_record.first # create its delete record
-        expect(IndexingLogger).to receive(:info).with(/deleting/).once
+        expect(UpdatingLogger).to receive(:info).with(/deleting/).once
         expect(Purl).to receive(:mark_deleted).with(/bb050dj6667/, Pathname(delete_file).mtime).and_call_original
         result = purl_finder.remove_deleted # delete it
         expect(result).to be_truthy
@@ -189,66 +189,66 @@ describe PurlFinder do
       end
     end
 
-    describe('indexing purls') do
-      it 'does not start a new indexing run if one is already running according to the run logs' do
+    describe('saving purls') do
+      it 'does not start a new saving run if one is already running according to the run logs' do
         expect(RunLog.count).to eq(0)
         expect(RunLog.currently_running?).to be_falsey
         r = RunLog.create(started: Time.zone.now)
         expect(RunLog.currently_running?).to be_truthy
-        expect(purl_finder).not_to receive(:index_purls)
-        expect(IndexingLogger).to receive(:error).once
-        expect(purl_finder.find_and_index).to be_falsey # it doesn't run
+        expect(purl_finder).not_to receive(:save_purls)
+        expect(UpdatingLogger).to receive(:error).once
+        expect(purl_finder.find_and_save).to be_falsey # it doesn't run
         r.ended = Time.zone.now
         r.save
         expect(RunLog.currently_running?).to be_falsey
       end
 
-      it 'indexes and re-indexes purls correctly' do
+      it 'saves and re-saves purls correctly' do
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database) # no extra purls in the database yet
         expect(RunLog.currently_running?).to be_falsey
         expect(RunLog.count).to eq(0)
-        index_counts = purl_finder.full_reindex # this will run both a find and an index operation, although we really just need to test index at this point
-        expect(index_counts[:count]).to eq(n)
-        expect(index_counts[:success]).to eq(n)
-        expect(index_counts[:error]).to eq(0)
+        save_counts = purl_finder.full_update # this will run both a find and a update operation, although we really just need to test save at this point
+        expect(save_counts[:count]).to eq(n)
+        expect(save_counts[:success]).to eq(n)
+        expect(save_counts[:error]).to eq(0)
         # Confirm results against the database
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # two extra items indexed
-        indexed_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289", 'druid:gg111hh2222', 'druid:hh111ii2222']
-        all_druids = indexed_druids + fixture_druids_in_database
+        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # two extra items saved
+        saved_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289", 'druid:gg111hh2222', 'druid:hh111ii2222']
+        all_druids = saved_druids + fixture_druids_in_database
         expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)
         expect(RunLog.currently_running?).to be_falsey
 
-        # now try to reindex the previous run
-        reindex_counts = purl_finder.reindex(RunLog.last.id)
-        expect(reindex_counts[:count]).to eq(n)
-        expect(reindex_counts[:success]).to eq(n)
-        expect(reindex_counts[:error]).to eq(0)
+        # now try to resave the previous run
+        resave_counts = purl_finder.update_database(RunLog.last.id)
+        expect(resave_counts[:count]).to eq(n)
+        expect(resave_counts[:success]).to eq(n)
+        expect(resave_counts[:error]).to eq(0)
         # Still only two purls in the database, no new ones were created
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # still two extra items
         expect(RunLog.count).to eq(1) # no new run logs, since we didn't run a find
         expect(RunLog.currently_running?).to be_falsey
       end
 
-      it 'finds and indexes public files correctly since the last run' do
-        allow(purl_finder).to receive(:find_and_index).and_return({}) # stub the call out so it is not actually made just for this test
+      it 'finds and saves public files correctly since the last run' do
+        allow(purl_finder).to receive(:find_and_save).and_return({}) # stub the call out so it is not actually made just for this test
         last_run_min_ago = 10
 
         # simulate a recent run that started a specified minutes ago
         RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: n, finder_filename: purl_finder.default_output_file)
         expect(RunLog.minutes_since_last_run_started).to eq(last_run_min_ago + 1)
 
-        # reindex new stuff, and check the correct call was made (there is a separate test for the actual find_and_index call)
-        expect(purl_finder).to receive(:find_and_index).once.with(mins_ago: last_run_min_ago + 1)
-        purl_finder.index_since_last_run
+        # resaves new stuff, and check the correct call was made (there is a separate test for the actual find_and_save call)
+        expect(purl_finder).to receive(:find_and_save).once.with(mins_ago: last_run_min_ago + 1)
+        purl_finder.save_since_last_run
       end
     end
   end
-  describe '#index_purls' do
+  describe '#save_purls' do
     it 'catches and records an error from Purl#save_from_public_xml' do
       expect(Purl).to receive(:save_from_public_xml).exactly(n).and_raise(StandardError)
-      expect(IndexingLogger).to receive(:error).exactly(n).with(/An error occurred/)
-      expect(described_class.new.index_purls(output_path: 'dev/null/bad/path')).to include(count: n, success: 0, error: n)
+      expect(UpdatingLogger).to receive(:error).exactly(n).with(/An error occurred/)
+      expect(described_class.new.save_purls(output_path: 'dev/null/bad/path')).to include(count: n, success: 0, error: n)
     end
   end
 end
