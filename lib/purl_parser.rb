@@ -12,7 +12,8 @@ class PurlParser
     begin
       @public_xml ||= Nokogiri::XML(@public_path.open)
     rescue => e
-      IndexingLogger.error("For #{path} could not read public XML.  #{e.message} #{e.backtrace.inspect}")
+      Honeybadger.notify(e)
+      IndexingLogger.error("For #{path} could not read public XML.  #{e.message}")
     end
   end
 
