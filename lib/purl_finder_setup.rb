@@ -11,26 +11,26 @@ module PurlFinderSetup
 
   # file location in the rails app to store the results of file system find operation
   def base_path_finder_log
-    app_config['base_path_finder_log']
+    Settings.BASE_PATH_FINDER_LOG
   end
 
   # the base filename of the file to stores the results of the find operation
   def base_filename_finder_log
-    app_config['base_filename_finder_log']
+    Settings.BASE_FILENAME_FINDER_LOG
   end
 
   # Return the absolute path to the .deletes dir
   #
   # @return [String] The absolute path
   def path_to_deletes_dir
-    Pathname(File.join(purl_mount_location, app_config['deletes_dir'])).to_s
+    Pathname(File.join(purl_mount_location, Settings.DELETES_DIR)).to_s
   end
 
   # Accessor to get the purl document cache path
   #
   # @return [String] The path
   def purl_mount_location
-    app_config['purl_document_path']
+    Settings.PURL_DOCUMENT_PATH
   end
 
   # Returns a path to the file location in the purl mount given a druid

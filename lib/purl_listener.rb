@@ -29,8 +29,8 @@ class PurlListener
   # @param [Pathname] `pid_file` -- the location of the pid file
   # @param [Logger] `logger` -- place to log info/warn/errors
   # @raise [ArgumentError] -- requires path to be a directory
-  def initialize(path = Pathname(PurlFetcher::Application.config.app_config['listener_path']),
-                 pid_file = Pathname(PurlFetcher::Application.config.app_config['listener_pid_file']),
+  def initialize(path = Pathname(Settings.LISTENER_PATH),
+                 pid_file = Pathname(Settings.LISTENER_PID_FILE),
                  logger = UpdatingLogger)
     raise ArgumentError, "Missing #{path}" unless path.directory?
     @pid_file = pid_file

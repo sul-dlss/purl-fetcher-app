@@ -3,10 +3,10 @@ require 'rails_helper'
 describe PurlListener do
   context '.initialize' do
     it 'using the correct path' do
-      expect(subject.path).to eq Pathname(PurlFetcher::Application.config.app_config['listener_path'])
+      expect(subject.path).to eq Pathname(Settings.LISTENER_PATH)
     end
     it 'using the correct pid_file' do
-      expect(subject.pid_file).to eq Pathname(PurlFetcher::Application.config.app_config['listener_pid_file'])
+      expect(subject.pid_file).to eq Pathname(Settings.LISTENER_PID_FILE)
     end
     it 'using the correct logger' do
       expect(subject.logger).to eq UpdatingLogger
