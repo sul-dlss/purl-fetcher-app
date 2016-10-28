@@ -4,7 +4,7 @@ gem 'rails', '~> 4.2', '>= 4.2.7.1'
 gem 'rake' # for various admin tasks
 
 gem 'druid-tools'
-gem 'whenever', :require => false
+gem 'whenever', :require => false # for scheduling
 gem 'kaminari' # for pagination
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

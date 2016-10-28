@@ -36,4 +36,14 @@ namespace :listener do
 
   desc 'Restart the listener'
   task :restart => [:stop, :start]
+
+  desc 'Touch all the recent_changes files'
+  task :touch_all => :environment do
+    listener = PurlListener.new
+    puts "Processing #{listener.path}"
+    Dir.glob(File.join(listener.path, '*')) do |fn|
+      puts "Touching #{fn}"
+      FileUtils.touch(fn, { :nocreate => true })
+    end
+  end
 end
