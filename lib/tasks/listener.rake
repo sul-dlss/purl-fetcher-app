@@ -9,6 +9,17 @@ namespace :listener do
     end
   end
 
+  desc 'Restart the listener if it is down'
+  task :restart_if_down => :environment do |_t, args|
+    begin
+      listener = PurlListener.new
+      listener.start unless listener.running?
+    rescue SignalException => e
+      Honeybadger.notify(e)
+      puts "Listener status could not be checked or it could not be restarted: #{e.message}"
+    end
+  end
+
   desc 'Start the listener'
   task :start => :environment do |_t, args|
     begin

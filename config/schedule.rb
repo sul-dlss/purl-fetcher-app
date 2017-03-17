@@ -10,3 +10,8 @@ end
 every 1.hour do
   rake 'listener:recent_changes:process'
 end
+
+# ensures that the listener is still running (restart if not)
+every 8.hours do
+  rake 'listener:restart_if_down'
+end
