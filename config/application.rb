@@ -24,7 +24,7 @@ module PurlFetcher
     # config.i18n.default_locale = :de
 
     # Add in files in lib/
-    config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
 
     config.version = VERSION # read from VERSION file at base of website
     config.app_name = 'PurlFetcher'

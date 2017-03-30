@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,23 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823121748) do
+ActiveRecord::Schema.define(version: 20170321232801) do
 
   create_table "collections", force: :cascade do |t|
     t.string   "druid",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["druid"], name: "index_collections_on_druid", unique: true
   end
-
-  add_index "collections", ["druid"], name: "index_collections_on_druid", unique: true
 
   create_table "collections_purls", id: false, force: :cascade do |t|
     t.integer "purl_id"
     t.integer "collection_id"
+    t.index ["collection_id"], name: "index_collections_purls_on_collection_id"
+    t.index ["purl_id"], name: "index_collections_purls_on_purl_id"
   end
-
-  add_index "collections_purls", ["collection_id"], name: "index_collections_purls_on_collection_id"
-  add_index "collections_purls", ["purl_id"], name: "index_collections_purls_on_purl_id"
 
   create_table "listener_logs", force: :cascade do |t|
     t.integer  "process_id", null: false
@@ -36,10 +33,9 @@ ActiveRecord::Schema.define(version: 20160823121748) do
     t.datetime "ended_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["process_id"], name: "index_listener_logs_on_process_id"
+    t.index ["started_at"], name: "index_listener_logs_on_started_at"
   end
-
-  add_index "listener_logs", ["process_id"], name: "index_listener_logs_on_process_id"
-  add_index "listener_logs", ["started_at"], name: "index_listener_logs_on_started_at"
 
   create_table "purls", force: :cascade do |t|
     t.string   "druid",        null: false
@@ -50,13 +46,13 @@ ActiveRecord::Schema.define(version: 20160823121748) do
     t.datetime "published_at"
     t.text     "title"
     t.string   "catkey"
+    t.index ["deleted_at"], name: "index_purls_on_deleted_at"
+    t.index ["druid"], name: "index_purls_on_druid", unique: true
+    t.index ["object_type"], name: "index_purls_on_object_type"
+    t.index ["published_at", "deleted_at"], name: "index_purls_on_published_at_and_deleted_at"
+    t.index ["published_at"], name: "index_purls_on_published_at"
+    t.index ["updated_at"], name: "index_purls_on_updated_at"
   end
-
-  add_index "purls", ["deleted_at"], name: "index_purls_on_deleted_at"
-  add_index "purls", ["druid"], name: "index_purls_on_druid", unique: true
-  add_index "purls", ["object_type"], name: "index_purls_on_object_type"
-  add_index "purls", ["published_at", "deleted_at"], name: "index_purls_on_published_at_and_deleted_at"
-  add_index "purls", ["published_at"], name: "index_purls_on_published_at"
 
   create_table "release_tags", force: :cascade do |t|
     t.string   "name",         null: false
@@ -64,11 +60,10 @@ ActiveRecord::Schema.define(version: 20160823121748) do
     t.integer  "purl_id",      null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["name", "purl_id"], name: "index_release_tags_on_name_and_purl_id", unique: true
+    t.index ["purl_id"], name: "index_release_tags_on_purl_id"
+    t.index ["release_type"], name: "index_release_tags_on_release_type"
   end
-
-  add_index "release_tags", ["name", "purl_id"], name: "index_release_tags_on_name_and_purl_id", unique: true
-  add_index "release_tags", ["purl_id"], name: "index_release_tags_on_purl_id"
-  add_index "release_tags", ["release_type"], name: "index_release_tags_on_release_type"
 
   create_table "run_logs", force: :cascade do |t|
     t.integer  "total_druids"
