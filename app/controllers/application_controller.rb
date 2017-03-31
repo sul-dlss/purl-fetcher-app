@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery unless: -> { request.format.json? }, with: :exception
 
   def default
-    render text: 'ok' # just render a static 200 so we don't get the default rails app home page on root
+    render plain: 'ok' # just render a static 200 so we don't get the default rails app home page on root
   end
 
   private

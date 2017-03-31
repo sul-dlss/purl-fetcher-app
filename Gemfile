@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2', '>= 4.2.7.1'
+gem 'rails', '~> 5'
 gem 'rake' # for various admin tasks
 
 gem 'druid-tools'
@@ -21,6 +21,7 @@ group :test do
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
   gem 'coveralls', require: false
+  gem 'rails-controller-testing'
 end
 
 group :production do
