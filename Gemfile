@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5'
-gem 'rake' # for various admin tasks
+
+
+# http://stackoverflow.com/questions/35893584/nomethoderror-undefined-method-last-comment-after-upgrading-to-rake-11
+# same error in travis build with rake v12.0.0, so I chose to pin rake back
+gem 'rake', '~> 11.3.0'
 
 gem 'druid-tools'
 gem 'whenever', :require => false
