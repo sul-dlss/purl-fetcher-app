@@ -30,6 +30,7 @@ describe(V1::DocsController, type: :request, integration: true) do
     expect(results).to eq(expected_results.with_indifferent_access)
   end
   it "test the docs changes API call for a specified time period" do
+    Purl.find_by_druid('druid:dd111ee2222').update_column(:updated_at, Time.zone.parse('2014/01/01').iso8601)
     get changes_docs_path(first_modified: Time.zone.parse('2013/12/31').iso8601, last_modified: Time.zone.parse('2014/01/02').iso8601)
     expect(response).to be_success
     results = JSON.parse(response.body)
