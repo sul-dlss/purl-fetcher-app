@@ -1,12 +1,10 @@
 set :application, 'purl-fetcher'
 set :repo_url, 'https://github.com/sul-dlss/purl-fetcher.git'
-set :user, 'lyberadmin'
 
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :home_directory, "/opt/app/#{fetch(:user)}"
-set :deploy_to, "#{fetch(:home_directory)}/#{fetch(:application)}"
+set :deploy_to, "/opt/app/lyberadmin/purl-fetcher"
 
 # Whenever
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
@@ -19,9 +17,6 @@ set :linked_dirs, %w{log run tmp/pids tmp/cache tmp/sockets vendor/bundle public
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
-
-# server uses standardized suffix
-server "purl-fetcher-#{fetch(:stage)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
 
 # honeybadger_env otherwise defaults to rails_env
 set :honeybadger_env, "#{fetch(:stage)}"
