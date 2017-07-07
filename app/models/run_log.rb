@@ -1,4 +1,4 @@
-class RunLog < ActiveRecord::Base
+class RunLog < ApplicationRecord
 
   CRASHED_PRUNE_TIME_IN_DAYS = 0.5 # after this many days, any job which has not yet ended is assumed to have crashed and is removed
 

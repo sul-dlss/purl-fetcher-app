@@ -1,4 +1,4 @@
-class CreatePurls < ActiveRecord::Migration
+class CreatePurls < ActiveRecord::Migration[5.0]
   def change
     create_table :purls do |t|
       t.string :druid, null: false

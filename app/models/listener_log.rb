@@ -1,5 +1,5 @@
 # Log of purl-fetcher-listener processes that have run or are running
-class ListenerLog < ActiveRecord::Base
+class ListenerLog < ApplicationRecord
   ##
   # @return [ListenerLog] the most recent listener that was started
   def self.current
