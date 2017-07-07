@@ -1,4 +1,4 @@
-class CreateRunLogs < ActiveRecord::Migration
+class CreateRunLogs < ActiveRecord::Migration[5.0]
   def change
     create_table :run_logs do |t|
       t.integer :total_druids

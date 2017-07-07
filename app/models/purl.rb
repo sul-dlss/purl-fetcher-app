@@ -1,4 +1,4 @@
-class Purl < ActiveRecord::Base
+class Purl < ApplicationRecord
   include Filterable
 
   has_and_belongs_to_many :collections

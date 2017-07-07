@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20170321232801) do
 
   create_table "collections", force: :cascade do |t|
-    t.string   "druid",      null: false
+    t.string "druid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["druid"], name: "index_collections_on_druid", unique: true
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170321232801) do
   end
 
   create_table "listener_logs", force: :cascade do |t|
-    t.integer  "process_id", null: false
+    t.integer "process_id", null: false
     t.datetime "started_at", null: false
     t.datetime "active_at"
     t.datetime "ended_at"
@@ -38,14 +38,14 @@ ActiveRecord::Schema.define(version: 20170321232801) do
   end
 
   create_table "purls", force: :cascade do |t|
-    t.string   "druid",        null: false
-    t.string   "object_type"
+    t.string "druid", null: false
+    t.string "object_type"
     t.datetime "deleted_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "published_at"
-    t.text     "title"
-    t.string   "catkey"
+    t.text "title"
+    t.string "catkey"
     t.index ["deleted_at"], name: "index_purls_on_deleted_at"
     t.index ["druid"], name: "index_purls_on_druid", unique: true
     t.index ["object_type"], name: "index_purls_on_object_type"
@@ -55,25 +55,25 @@ ActiveRecord::Schema.define(version: 20170321232801) do
   end
 
   create_table "release_tags", force: :cascade do |t|
-    t.string   "name",         null: false
-    t.boolean  "release_type", null: false
-    t.integer  "purl_id",      null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string "name", null: false
+    t.boolean "release_type", null: false
+    t.integer "purl_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name", "purl_id"], name: "index_release_tags_on_name_and_purl_id", unique: true
     t.index ["purl_id"], name: "index_release_tags_on_purl_id"
     t.index ["release_type"], name: "index_release_tags_on_release_type"
   end
 
   create_table "run_logs", force: :cascade do |t|
-    t.integer  "total_druids"
-    t.integer  "num_errors"
-    t.string   "finder_filename"
-    t.string   "note"
+    t.integer "total_druids"
+    t.integer "num_errors"
+    t.string "finder_filename"
+    t.string "note"
     t.datetime "started"
     t.datetime "ended"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

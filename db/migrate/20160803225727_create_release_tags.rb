@@ -1,4 +1,4 @@
-class CreateReleaseTags < ActiveRecord::Migration
+class CreateReleaseTags < ActiveRecord::Migration[5.0]
   def change
     create_table :release_tags do |t|
       t.string :name, null: false
