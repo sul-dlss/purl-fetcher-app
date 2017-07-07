@@ -1,23 +1,8 @@
+require: rubocop-rspec
 inherit_from: .rubocop_todo.yml
-inherit_gem:
-  dlss_cops: "config/dlss_baseline.yml"
-
-# rspec expect{...} is conventional
-Style/SpaceBeforeBlockBraces:
-  Exclude:
-    - 'spec/**/*_spec.rb'
-
-Style/EmptyLineBetweenDefs:
-  AllowAdjacentOneLineDefs: true
-
-# Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
-  Max: 200
-Metrics/AbcSize:
-  Max: 30
 
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   Exclude:
     - 'Gemfile'
     - 'bin/**/*'
@@ -28,3 +13,26 @@ AllCops:
     - 'spec/rails_helper.rb'
     - 'vendor/**/*'
     - 'tmp/**/*'
+  
+Rails:
+  Enabled: true
+
+# rspec expect{...} is conventional
+Layout/SpaceBeforeBlockBraces:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
+
+# Configuration parameters: AllowURI, URISchemes.
+Metrics/LineLength:
+  Max: 200
+Metrics/AbcSize:
+  Max: 30
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
