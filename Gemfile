@@ -46,6 +46,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'byebug'
 end
 
 group :production do
@@ -63,8 +65,8 @@ end
 
 group :development, :test do
   gem 'factory_bot_rails'
-  gem 'rubocop'
-  gem 'rubocop-rspec'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
   gem 'sqlite3'
   gem 'yard'
 end
