@@ -10,3 +10,7 @@ end
 every 1.hour do
   rake 'listener:recent_changes:process'
 end
+
+every :reboot do
+  rake 'listener:restart'
+end
