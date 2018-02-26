@@ -3,6 +3,7 @@
 # true_targets response
 ALWAYS_SEND_TRUE_TARGET:
   - SearchWorksPreview
+  - ContentSearch
 FILENAME_UPDATING_LOG: log/indexing.log
 PURL_DOCUMENT_PATH: /purl/document_cache
 DELETES_DIR: .deletes
