@@ -6,5 +6,5 @@ json.pages do
   json.per_page object.limit_value
   json.offset_value object.offset_value
   json.first_page? object.first_page?
-  json.last_page? object.last_page?
+  json.last_page?(object.last_page? || object.out_of_range?)
 end
