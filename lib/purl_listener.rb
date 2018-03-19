@@ -125,13 +125,13 @@ class PurlListener
     ##
     # processes the listener file event -- assumes only adds and changes
     # @param [Pathname] file that was added or changed
-    def process_event(fn)
+    def process_event(path)
       mark_active
-      druid = fn.basename.to_s
+      druid = path.basename.to_s
       if DruidTools::Druid.valid?(druid)
         elapsed_time = Benchmark.realtime do
           begin
-            process_druid_file(fn, druid)
+            process_druid_file(path, druid)
           rescue => e
             logger.error("Cannot process #{druid}: #{e.message}")
             Honeybadger.notify(e) # backtrace is available there
@@ -140,7 +140,7 @@ class PurlListener
         end
         logger.info("Processed #{druid} in #{elapsed_time} seconds")
       else
-        logger.warn("Ignoring miscellaneous file #{fn}")
+        logger.warn("Ignoring miscellaneous file #{path}")
       end
     end
 
@@ -150,9 +150,9 @@ class PurlListener
     # time we run the save. On exception, we leave the .lock file as-is.
     # @param [Pathname] `fn` the event file
     # @param [String] `druid`
-    def process_druid_file(fn, druid)
-      lockfile = fn.sub_ext('.lock')
-      fn.rename(lockfile.to_s) # renaming the file allows a republish during our work
+    def process_druid_file(path, druid)
+      lockfile = path.sub_ext('.lock')
+      path.rename(lockfile.to_s) # renaming the file allows a republish during our work
       Purl.save_from_public_xml(purl_path(druid))
       lockfile.delete
     end
