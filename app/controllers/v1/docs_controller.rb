@@ -23,7 +23,7 @@ module V1
 
       def date_params
         @first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-        @last_modified = params[:last_modified] || Time.zone.now.iso8601
+        @last_modified = params[:last_modified] || (Time.zone.now + 1.second).iso8601
       end
 
       def per_page_params
