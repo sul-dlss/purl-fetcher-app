@@ -15,7 +15,7 @@ describe(V1::DocsController, type: :request, integration: true) do
   end
   it "tests the docs changes API call for all time" do
     get changes_docs_path
-    expect(response).to be_success
+    expect(response).to be_successful
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
@@ -32,7 +32,7 @@ describe(V1::DocsController, type: :request, integration: true) do
   it "test the docs changes API call for a specified time period" do
     Purl.find_by_druid('druid:dd111ee2222').update_column(:updated_at, Time.zone.parse('2014/01/01').iso8601)
     get changes_docs_path(first_modified: Time.zone.parse('2013/12/31').iso8601, last_modified: Time.zone.parse('2014/01/02').iso8601)
-    expect(response).to be_success
+    expect(response).to be_successful
     results = JSON.parse(response.body)
     expected_results = { changes:
       [
@@ -43,7 +43,7 @@ describe(V1::DocsController, type: :request, integration: true) do
   end
   it "test the docs deletes API call for all time" do
     get deletes_docs_path
-    expect(response).to be_success
+    expect(response).to be_successful
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [
@@ -56,7 +56,7 @@ describe(V1::DocsController, type: :request, integration: true) do
   end
   it "test the docs deletes API call for a specified time period" do
     get deletes_docs_path(first_modified: Time.zone.parse('2015/12/31').iso8601, last_modified: Time.zone.parse('2016/01/03').iso8601)
-    expect(response).to be_success
+    expect(response).to be_successful
     results = JSON.parse(response.body)
     expected_results = { deletes:
       [

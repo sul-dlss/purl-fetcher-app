@@ -5,11 +5,19 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.2'
+gem 'rails', '~> 5.2.0'
 gem 'rake', '~> 12'
 
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+end
+
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.11'
 
 gem 'druid-tools'
 gem 'whenever', :require => false
@@ -27,7 +35,7 @@ gem 'config'
 group :test do
   gem 'rspec-rails', '~> 3.1'
   gem 'capybara'
-  gem 'coveralls', require: false
+  gem 'simplecov', require: false
   gem 'rails-controller-testing'
 end
 
@@ -52,7 +60,7 @@ group :deployment do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'sqlite3'
