@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     end
 
     resources :purls, defaults: { format: :json}, only: [:index, :show, :update], param: :druid
+      member do
+        post '/', action: 'update'
+      end
+    end
 
     resources :collections, defaults: { format: :json}, only: [:index, :show], param: :druid  do
       member do

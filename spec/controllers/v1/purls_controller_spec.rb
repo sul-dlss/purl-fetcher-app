@@ -66,6 +66,11 @@ RSpec.describe V1::PurlsController do
   end
   describe 'PATCH update' do
     let(:purl_object) { create(:purl) }
+    it 'creates a new purl entry' do
+      expect do
+        patch :update, params: { druid: 'druid:ab012cd3456' }, format: :json
+      end.to change(Purl, :count).by(1)
+    end
     it 'updates the purl with new data' do
       purl_object.update(druid: 'druid:bb050dj7711')
       patch :update, params: { druid: 'druid:bb050dj7711' }, format: :json
