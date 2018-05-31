@@ -28,6 +28,10 @@ module V1
       end
     end
 
+    def destroy
+      Purl.mark_deleted(druid_param)
+    end
+
     private
 
       def filter_params

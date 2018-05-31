@@ -77,4 +77,12 @@ RSpec.describe V1::PurlsController do
       expect(assigns(:purl).title).to eq "This is Pete's New Test title for this object."
     end
   end
+  describe 'DELETE delete' do
+    let(:purl_object) { create(:purl) }
+    it 'marks the purl as deleted' do
+      purl_object.update(druid: 'druid:bb050dj7711')
+      delete :destroy, params: { druid: 'druid:bb050dj7711' }, format: :json
+      expect(purl_object.reload).to have_attributes(deleted_at: (a_value > Time.current - 5.seconds))
+    end
+  end
 end
