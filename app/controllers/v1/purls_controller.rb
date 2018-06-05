@@ -22,10 +22,14 @@ module V1
     ##
     # Update a Purl from its public xml
     def update
-      @purl = Purl.find_by_druid!(druid_param)
+      @purl = Purl.find_or_create_by(druid: druid_param)
       respond_to do |format|
         format.json { render json: @purl.update_from_public_xml }
       end
+    end
+
+    def destroy
+      Purl.mark_deleted(druid_param)
     end
 
     private
