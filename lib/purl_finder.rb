@@ -9,9 +9,7 @@ class PurlFinder
   # Example:
   #   results = find_and_save(mins_ago: 100)
   def find_and_save(mins_ago: nil)
-    output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
-    find_files(mins_ago: mins_ago, output_file: output_file)
-    save_purls(output_file: output_file)
+    save_purls(find_files(mins_ago: mins_ago))
   end
 
   # Find all public files change since the specified number of minutes and store in the database, if no time specified, finds all files
@@ -19,16 +17,16 @@ class PurlFinder
   # @param [Hash] mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
   # @param [Hash] output_file: The filename location to store the results of the find operation
   # @param [String] The output file where the files were stored
-  def find_files(params={})
-    mins_ago = params[:mins_ago]
-    output_file = params[:output_file] || default_output_file
+  def find_files(mins_ago: nil)
+    return to_enum(:find_files, mins_ago: mins_ago) unless block_given?
+
     search_string = "find #{purl_mount_location} -name public -type f"
     search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
-    search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
     UpdatingLogger.info("Finding public files")
     UpdatingLogger.info(search_string)
-    `#{search_string}` # this is the big blocker line - send the find to unix and wait around until its done, at which point we have a file to read in
-    output_file
+    IO.popen(search_string) do |find_io|
+      find_io.each { |line| yield line }
+    end
   end
 
   # Saves purls in the database based on druids found in the output_file, going back to the specified minutes ago
@@ -36,25 +34,22 @@ class PurlFinder
   # returns an integer with the number of files found
   # @param [Hash] output_file: The filename location of found purls to save
   # @return [Hash] A hash with stats on the number of purls saved, success and failure counts
-  def save_purls(params={})
-    output_file = params[:output_file] || default_output_file
+  def save_purls(lines)
     count = 0
     error = 0
     success = 0
-    UpdatingLogger.info("Saving from #{output_file}")
-    File.foreach(output_file) do |line| # line will be the full file path, including the druid tree, try and get the druid from this
+    lines.each do |line| # line will be the full file path, including the druid tree, try and get the druid from this
       druid = get_druid_from_file_path(line)
-      if !druid.blank?
-        UpdatingLogger.info("updating #{druid}")
-        begin
-          result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
-        rescue => e
-          Honeybadger.notify(e)
-          UpdatingLogger.error("An error occurred while trying to save #{druid}.")
-        end
-        result ? success += 1 : error += 1
-        count += 1
+      next if druid.blank?
+      UpdatingLogger.info("updating #{druid}")
+      begin
+        result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
+      rescue => e
+        Honeybadger.notify(e)
+        UpdatingLogger.error("An error occurred while trying to save #{druid}.")
       end
+      result ? success += 1 : error += 1
+      count += 1
     end
     UpdatingLogger.info("Attempted save of #{count} purls; #{success} succeeded, #{error} failed")
     { count: count, success: success, error: error }

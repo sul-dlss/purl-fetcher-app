@@ -30,11 +30,7 @@ def line_count(output_file)
 end
 
 def finder_file_test(params={})
-  delete_file(purl_finder.default_output_file) # remove the default finder output location to be sure it gets created again
-  expect(File.exist?(purl_finder.default_output_file)).to be_falsey
-  purl_finder.find_files(mins_ago: params[:mins_ago]) # find files and store in default output file
-  expect(File.exist?(purl_finder.default_output_file)).to be_truthy
-  expect(line_count(purl_finder.default_output_file)).to eq(params[:expected_num_files_found])
+  expect(purl_finder.find_files(mins_ago: params[:mins_ago]).count).to eq params[:expected_num_files_found]
 end
 
 def num_purl_fixtures_in_database

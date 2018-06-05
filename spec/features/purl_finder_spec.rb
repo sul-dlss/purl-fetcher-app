@@ -132,7 +132,6 @@ describe PurlFinder do
       end
     end
 
-    # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
     describe('Finding changed files on the purl mount') do
       before :each do
         Dir.glob(File.join(purl_fixture_path, '**', '*')).each do |f|
@@ -146,7 +145,6 @@ describe PurlFinder do
         delete_dir(test_purl_dest_dir)
       end
 
-      # this method includes a sleep command since we need to be sure the time based finding works correctly
       it 'finds public files correctly using time constraints' do
         finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
@@ -190,13 +188,6 @@ describe PurlFinder do
         # back to n files
         finder_file_test(mins_ago: nil, expected_num_files_found: n)
       end
-    end
-  end
-  describe '#save_purls' do
-    it 'catches and records an error from Purl#save_from_public_xml' do
-      expect(Purl).to receive(:save_from_public_xml).exactly(n).and_raise(StandardError)
-      expect(UpdatingLogger).to receive(:error).exactly(n).with(/An error occurred/)
-      expect(described_class.new.save_purls(output_path: 'dev/null/bad/path')).to include(count: n, success: 0, error: n)
     end
   end
 end
