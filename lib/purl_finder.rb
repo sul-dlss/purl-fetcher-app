@@ -42,7 +42,7 @@ class PurlFinder
   # @param [Hash] output_file: The filename location to store the results of the find operation
   # @param [String] The output file where the files were stored
   def find_files(params={})
-    mins_ago = params[:mins_ago] || nil
+    mins_ago = params[:mins_ago]
     output_file = params[:output_file] || default_output_file
     search_string = "find #{purl_mount_location} -name public -type f"
     search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
@@ -86,7 +86,7 @@ class PurlFinder
   #
   # @return [Hash] A hash providing some stats on the number of items deleted, successful and errored out
   def remove_deleted(params={})
-    mins_ago = params[:mins_ago] || nil
+    mins_ago = params[:mins_ago]
 
     # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
     # a deleted object and thus don't have a .deletes dir
