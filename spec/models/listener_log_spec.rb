@@ -5,9 +5,6 @@ describe ListenerLog do
     it 'has no current process' do
       expect(described_class.current).to be_nil
     end
-    it 'has no minutes_since_last_started' do
-      expect(described_class.minutes_since_last_started).to be_nil
-    end
     it 'has no minutes_since_last_active' do
       expect(described_class.minutes_since_last_active).to be_nil
     end
@@ -19,10 +16,6 @@ describe ListenerLog do
     it 'has current process' do
       expect(described_class.current).to be_an described_class
     end
-    it 'has minutes_since_last_started' do
-      expect(described_class.minutes_since_last_started).to be_an Integer
-      expect(described_class.minutes_since_last_started).to be > 0
-    end
     it 'has no minutes_since_last_active' do
       expect(described_class.minutes_since_last_active).to be_nil
     end
@@ -33,10 +26,6 @@ describe ListenerLog do
     end
     it 'has current process' do
       expect(described_class.current).to be_an described_class
-    end
-    it 'has minutes_since_last_started' do
-      expect(described_class.minutes_since_last_started).to be_an Integer
-      expect(described_class.minutes_since_last_started).to be > 0
     end
     it 'has minutes_since_last_active' do
       expect(described_class.minutes_since_last_active).to be_an Integer

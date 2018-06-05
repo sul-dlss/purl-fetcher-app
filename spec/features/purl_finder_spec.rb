@@ -203,7 +203,7 @@ describe PurlFinder do
         expect(RunLog.currently_running?).to be_falsey
       end
 
-      it 'saves and re-saves purls correctly' do
+      it 'saves purls correctly' do
         expect(Purl.all.count).to eq(num_purl_fixtures_in_database) # no extra purls in the database yet
         expect(RunLog.currently_running?).to be_falsey
         expect(RunLog.count).to eq(0)
@@ -218,29 +218,6 @@ describe PurlFinder do
         expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
         expect(RunLog.count).to eq(1)
         expect(RunLog.currently_running?).to be_falsey
-
-        # now try to resave the previous run
-        resave_counts = purl_finder.update_database(RunLog.last.id)
-        expect(resave_counts[:count]).to eq(n)
-        expect(resave_counts[:success]).to eq(n)
-        expect(resave_counts[:error]).to eq(0)
-        # Still only two purls in the database, no new ones were created
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # still two extra items
-        expect(RunLog.count).to eq(1) # no new run logs, since we didn't run a find
-        expect(RunLog.currently_running?).to be_falsey
-      end
-
-      it 'finds and saves public files correctly since the last run' do
-        allow(purl_finder).to receive(:find_and_save).and_return({}) # stub the call out so it is not actually made just for this test
-        last_run_min_ago = 10
-
-        # simulate a recent run that started a specified minutes ago
-        RunLog.create(started: Time.zone.now - last_run_min_ago.minutes, ended: Time.zone.now - (last_run_min_ago / 2).minutes, total_druids: n, finder_filename: purl_finder.default_output_file)
-        expect(RunLog.minutes_since_last_run_started).to eq(last_run_min_ago + 1)
-
-        # resaves new stuff, and check the correct call was made (there is a separate test for the actual find_and_save call)
-        expect(purl_finder).to receive(:find_and_save).once.with(mins_ago: last_run_min_ago + 1)
-        purl_finder.save_since_last_run
       end
     end
   end

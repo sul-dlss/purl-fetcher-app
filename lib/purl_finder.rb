@@ -5,23 +5,10 @@ class PurlFinder
 
   include PurlFinderSetup
 
-  # Given a previous run_log entry, just update database without finding
-  # @param [Integer] run_log_id: The ID of a previous run log entry
-  def update_database(run_log_id)
-    save_purls(output_file: RunLog.find(run_log_id).finder_filename)
-  end
-
   # Finds all objects modified since the beginning of time and update database
   # Note: This is not the function to use for processing deletes
   def full_update
     find_and_save
-  end
-
-  # Finds all objects modified since the last time updating was run
-  # Note: This is not the function to use for processing deletes
-  def save_since_last_run
-    modified_at_or_later = RunLog.minutes_since_last_run_started
-    find_and_save(mins_ago: modified_at_or_later)
   end
 
   # Find and then save all public files changed since the specified number of minutes ago (defaults to everything if no time specified
