@@ -9,25 +9,9 @@ class PurlFinder
   # Example:
   #   results = find_and_save(mins_ago: 100)
   def find_and_save(mins_ago: nil)
-    results = {}
-    if RunLog.currently_running?
-      results[:note] = "Job currently running. No action taken."
-      UpdatingLogger.error(results[:note])
-      return false
-    else
-      start_time = Time.zone.now
-      output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
-      run_log = RunLog.create(finder_filename: output_file, started: start_time)
-      find_files(mins_ago: mins_ago, output_file: output_file)
-      save_result = save_purls(output_file: output_file)
-      end_time = Time.zone.now
-      results[:run_time] = end_time - start_time
-      run_log.total_druids = save_result[:count]
-      run_log.num_errors = save_result[:error]
-      run_log.ended = end_time
-      run_log.save
-    end
-    results.merge(save_result)
+    output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
+    find_files(mins_ago: mins_ago, output_file: output_file)
+    save_purls(output_file: output_file)
   end
 
   # Find all public files change since the specified number of minutes and store in the database, if no time specified, finds all files

@@ -188,21 +188,6 @@ describe PurlFinder do
         finder_file_test(mins_ago: nil, expected_num_files_found: n)
       end
     end
-
-    describe('saving purls') do
-      it 'does not start a new saving run if one is already running according to the run logs' do
-        expect(RunLog.count).to eq(0)
-        expect(RunLog.currently_running?).to be_falsey
-        r = RunLog.create(started: Time.zone.now)
-        expect(RunLog.currently_running?).to be_truthy
-        expect(purl_finder).not_to receive(:save_purls)
-        expect(UpdatingLogger).to receive(:error).once
-        expect(purl_finder.find_and_save).to be_falsey # it doesn't run
-        r.ended = Time.zone.now
-        r.save
-        expect(RunLog.currently_running?).to be_falsey
-      end
-    end
   end
   describe '#save_purls' do
     it 'catches and records an error from Purl#save_from_public_xml' do
