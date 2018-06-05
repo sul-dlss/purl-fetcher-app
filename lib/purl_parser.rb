@@ -26,16 +26,14 @@ class PurlParser
   # @return [Hash] A hash of all trues and falses in the form of {:true => ['Target1', 'Target2'], :false => ['Target3', 'Target4']}
   #
   def releases
-    unless @releases
-      @releases = { true: [], false: [] }
-      nodes = public_xml.xpath('//publicObject/releaseData/release')
-      nodes.each do |node|
-        target = node.attribute('to').text
-        status = node.text
-        @releases[status.downcase.to_sym] << target
-      end
+    releases = { true: [], false: [] }
+    nodes = public_xml.xpath('//publicObject/releaseData/release')
+    nodes.each do |node|
+      target = node.attribute('to').text
+      status = node.text
+      releases[status.downcase.to_sym] << target
     end
-    @releases
+    releases
   end
 
   # Extract the druid from publicXML identityMetadata.
@@ -43,7 +41,7 @@ class PurlParser
   # @return [String] The druid in the form of druid:pid
   #
   def druid
-    @druid ||= public_xml.at_xpath('//publicObject').attr('id')
+    public_xml.at_xpath('//publicObject').attr('id')
   end
 
   # Extract the title from publicXML DC. If there are more than 1 elements, it takes the first.
@@ -51,7 +49,7 @@ class PurlParser
   # @return [String] The title of the object
   #
   def title
-    @title ||= public_xml.xpath('//*[name()="dc:title"][1]').text
+    public_xml.xpath('//*[name()="dc:title"][1]').text
   end
 
   # Extract the object type
@@ -59,7 +57,7 @@ class PurlParser
   # @return [String] The object types, if multiple, separated by pipes
   #
   def object_type
-    @object_type ||= public_xml.xpath('//identityMetadata/objectType').map(&:text).join('|')
+    public_xml.xpath('//identityMetadata/objectType').map(&:text).join('|')
   end
 
   # Extract collections the item is a member of
@@ -67,20 +65,20 @@ class PurlParser
   # @return [Array] The collections the item is a member of
   #
   def collections
-    @collections ||= public_xml.xpath('//*[name()="fedora:isMemberOfCollection"]').map { |n| n.attribute('resource').text.split('/')[1] }
+    public_xml.xpath('//*[name()="fedora:isMemberOfCollection"]').map { |n| n.attribute('resource').text.split('/')[1] }
   end
 
   # Extract collections and sets the item is a member of
   #
   # @return [String] The cat key, an empty string is returned if there is no catkey
   def catkey
-    @catkey ||= public_xml.xpath("//identityMetadata/otherId[@name='catkey']").text
+    public_xml.xpath("//identityMetadata/otherId[@name='catkey']").text
   end
 
   ##
   # Returns the publication time, in local time zone.
   # @return [Time]
   def published_at
-    @published_at ||= Time.parse(public_xml.at_xpath('//publicObject').attr('published').to_s).in_time_zone
+    Time.parse(public_xml.at_xpath('//publicObject').attr('published').to_s).in_time_zone
   end
 end
