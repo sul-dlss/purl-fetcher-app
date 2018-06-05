@@ -1,12 +1,6 @@
 require 'druid-tools'
 
 class PurlFinder
-  # Finds all objects modified since the beginning of time and update database
-  # Note: This is not the function to use for processing deletes
-  def full_update
-    find_and_save
-  end
-
   # Find and then save all public files changed since the specified number of minutes ago (defaults to everything if no time specified
   # Note: This is not the function to use for processing deletes
   #

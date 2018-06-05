@@ -202,23 +202,6 @@ describe PurlFinder do
         r.save
         expect(RunLog.currently_running?).to be_falsey
       end
-
-      it 'saves purls correctly' do
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database) # no extra purls in the database yet
-        expect(RunLog.currently_running?).to be_falsey
-        expect(RunLog.count).to eq(0)
-        save_counts = purl_finder.full_update # this will run both a find and a update operation, although we really just need to test save at this point
-        expect(save_counts[:count]).to eq(n)
-        expect(save_counts[:success]).to eq(n)
-        expect(save_counts[:error]).to eq(0)
-        # Confirm results against the database
-        expect(Purl.all.count).to eq(num_purl_fixtures_in_database + n) # two extra items saved
-        saved_druids = ["druid:bb050dj7711", "druid:ct961sj2730", "druid:nc687px4289", 'druid:gg111hh2222', 'druid:hh111ii2222']
-        all_druids = saved_druids + fixture_druids_in_database
-        expect(Purl.all.map(&:druid).sort).to eq(all_druids.sort) # sort so we do not have to worry about ordering, just if they match the expected druids
-        expect(RunLog.count).to eq(1)
-        expect(RunLog.currently_running?).to be_falsey
-      end
     end
   end
   describe '#save_purls' do
