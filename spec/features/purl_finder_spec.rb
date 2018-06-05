@@ -134,6 +134,12 @@ describe PurlFinder do
 
     # Warning this block of tests can take some time due to the fact that you need to sleep for at least a minute for the find command
     describe('Finding changed files on the purl mount') do
+      before :each do
+        Dir.glob(File.join(purl_fixture_path, '**', '*')).each do |f|
+          FileUtils.touch f, mtime: (Time.zone.now - 2.minutes).to_i
+        end
+      end
+
       after :each do
         # Clear the temp file and purl back out
         delete_file(empty_file)
@@ -142,9 +148,6 @@ describe PurlFinder do
 
       # this method includes a sleep command since we need to be sure the time based finding works correctly
       it 'finds public files correctly using time constraints' do
-        sleep(61)
-
-        # Nothing has changed in the last minute so when we search for things modified a minute ago, nothing should pop up
         finder_file_test(mins_ago: 1, expected_num_files_found: 0)
 
         # # Make sure we filter only on files we want
