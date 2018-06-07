@@ -1,29 +1,6 @@
 require 'druid-tools'
-require 'purl_finder_setup'
 
 class PurlFinder
-
-  include PurlFinderSetup
-
-  # Given a previous run_log entry, just update database without finding
-  # @param [Integer] run_log_id: The ID of a previous run log entry
-  def update_database(run_log_id)
-    save_purls(output_file: RunLog.find(run_log_id).finder_filename)
-  end
-
-  # Finds all objects modified since the beginning of time and update database
-  # Note: This is not the function to use for processing deletes
-  def full_update
-    find_and_save
-  end
-
-  # Finds all objects modified since the last time updating was run
-  # Note: This is not the function to use for processing deletes
-  def save_since_last_run
-    modified_at_or_later = RunLog.minutes_since_last_run_started
-    find_and_save(mins_ago: modified_at_or_later)
-  end
-
   # Find and then save all public files changed since the specified number of minutes ago (defaults to everything if no time specified
   # Note: This is not the function to use for processing deletes
   #
@@ -32,25 +9,7 @@ class PurlFinder
   # Example:
   #   results = find_and_save(mins_ago: 100)
   def find_and_save(mins_ago: nil)
-    results = {}
-    if RunLog.currently_running?
-      results[:note] = "Job currently running. No action taken."
-      UpdatingLogger.error(results[:note])
-      return false
-    else
-      start_time = Time.zone.now
-      output_file = File.join(base_path_finder_log, "#{base_filename_finder_log}_#{Time.zone.now.strftime('%Y-%m-%d_%H-%M-%S-%L')}.txt")
-      run_log = RunLog.create(finder_filename: output_file, started: start_time)
-      find_files(mins_ago: mins_ago, output_file: output_file)
-      save_result = save_purls(output_file: output_file)
-      end_time = Time.zone.now
-      results[:run_time] = end_time - start_time
-      run_log.total_druids = save_result[:count]
-      run_log.num_errors = save_result[:error]
-      run_log.ended = end_time
-      run_log.save
-    end
-    results.merge(save_result)
+    save_purls(find_files(mins_ago: mins_ago))
   end
 
   # Find all public files change since the specified number of minutes and store in the database, if no time specified, finds all files
@@ -58,16 +17,16 @@ class PurlFinder
   # @param [Hash] mins_ago: The number of minutes to go back and find changes for (defaults to all time if left off)
   # @param [Hash] output_file: The filename location to store the results of the find operation
   # @param [String] The output file where the files were stored
-  def find_files(params={})
-    mins_ago = params[:mins_ago] || nil
-    output_file = params[:output_file] || default_output_file
+  def find_files(mins_ago: nil)
+    return to_enum(:find_files, mins_ago: mins_ago) unless block_given?
+
     search_string = "find #{purl_mount_location} -name public -type f"
     search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
-    search_string += "> #{output_file}" # store the results in a tmp file so we don't have to keep everything in memory
     UpdatingLogger.info("Finding public files")
     UpdatingLogger.info(search_string)
-    `#{search_string}` # this is the big blocker line - send the find to unix and wait around until its done, at which point we have a file to read in
-    output_file
+    IO.popen(search_string) do |find_io|
+      find_io.each { |line| yield line }
+    end
   end
 
   # Saves purls in the database based on druids found in the output_file, going back to the specified minutes ago
@@ -75,25 +34,22 @@ class PurlFinder
   # returns an integer with the number of files found
   # @param [Hash] output_file: The filename location of found purls to save
   # @return [Hash] A hash with stats on the number of purls saved, success and failure counts
-  def save_purls(params={})
-    output_file = params[:output_file] || default_output_file
+  def save_purls(lines)
     count = 0
     error = 0
     success = 0
-    UpdatingLogger.info("Saving from #{output_file}")
-    File.foreach(output_file) do |line| # line will be the full file path, including the druid tree, try and get the druid from this
+    lines.each do |line| # line will be the full file path, including the druid tree, try and get the druid from this
       druid = get_druid_from_file_path(line)
-      if !druid.blank?
-        UpdatingLogger.info("updating #{druid}")
-        begin
-          result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
-        rescue => e
-          Honeybadger.notify(e)
-          UpdatingLogger.error("An error occurred while trying to save #{druid}.")
-        end
-        result ? success += 1 : error += 1
-        count += 1
+      next if druid.blank?
+      UpdatingLogger.info("updating #{druid}")
+      begin
+        result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public
+      rescue => e
+        Honeybadger.notify(e)
+        UpdatingLogger.error("An error occurred while trying to save #{druid}.")
       end
+      result ? success += 1 : error += 1
+      count += 1
     end
     UpdatingLogger.info("Attempted save of #{count} purls; #{success} succeeded, #{error} failed")
     { count: count, success: success, error: error }
@@ -103,7 +59,7 @@ class PurlFinder
   #
   # @return [Hash] A hash providing some stats on the number of items deleted, successful and errored out
   def remove_deleted(params={})
-    mins_ago = params[:mins_ago] || nil
+    mins_ago = params[:mins_ago]
 
     # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
     # a deleted object and thus don't have a .deletes dir
@@ -130,4 +86,64 @@ class PurlFinder
     { count: count, success: success, error: error }
   end
 
+  def default_output_file
+    File.join(base_path_finder_log, base_filename_finder_log)
+  end
+
+  # file location in the rails app to store the results of file system find operation
+  def base_path_finder_log
+    Settings.BASE_PATH_FINDER_LOG
+  end
+
+  # the base filename of the file to stores the results of the find operation
+  def base_filename_finder_log
+    Settings.BASE_FILENAME_FINDER_LOG
+  end
+
+  # Return the absolute path to the .deletes dir
+  #
+  # @return [String] The absolute path
+  def path_to_deletes_dir
+    Pathname(File.join(purl_mount_location, Settings.DELETES_DIR)).to_s
+  end
+
+  # Accessor to get the purl document cache path
+  #
+  # @return [String] The path
+  def purl_mount_location
+    Settings.PURL_DOCUMENT_PATH
+  end
+
+  # Returns a path to the file location in the purl mount given a druid
+  #
+  # @param druid [String] The druid you are interested in
+  # @return [String] Full path to location in purl mount
+  def purl_path(druid)
+    DruidTools::PurlDruid.new(druid, purl_mount_location).path
+  end
+
+  # Given a full path to a public file, try and pull just the druid part out
+  # @param path [String] The path to the public file (e.g. /purl/document_cache/aa/000/bb/0000/public)
+  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
+  def get_druid_from_file_path(path)
+    find_druid = path.match(%r{[a-zA-Z]{2}/[0-9]{3}/[a-zA-Z]{2}/[0-9]{4}})
+    find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
+  end
+
+  # Given a full path to a deleted file, try and pull just the druid part out
+  # @param path [String] The path to the deleted file (e.g. /purl/document_cache/.deletes/aa000bb0000)
+  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
+  def get_druid_from_delete_path(path)
+    find_druid = path.match(/[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}[0-9]{4}/)
+    find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
+  end
+
+  # Determine if public purl xml path exists for a given druid
+  #
+  # @param druid [String] The druid you are interested in
+  # @return [Boolean] True or False
+  def public_xml_exists?(druid)
+    dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
+    File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
+  end
 end

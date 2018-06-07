@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321232801) do
+ActiveRecord::Schema.define(version: 2018_06_05_170000) do
 
   create_table "collections", force: :cascade do |t|
     t.string "druid", null: false
@@ -63,17 +63,6 @@ ActiveRecord::Schema.define(version: 20170321232801) do
     t.index ["name", "purl_id"], name: "index_release_tags_on_name_and_purl_id", unique: true
     t.index ["purl_id"], name: "index_release_tags_on_purl_id"
     t.index ["release_type"], name: "index_release_tags_on_release_type"
-  end
-
-  create_table "run_logs", force: :cascade do |t|
-    t.integer "total_druids"
-    t.integer "num_errors"
-    t.string "finder_filename"
-    t.string "note"
-    t.datetime "started"
-    t.datetime "ended"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

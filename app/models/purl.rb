@@ -1,6 +1,4 @@
 class Purl < ApplicationRecord
-  include Filterable
-
   has_and_belongs_to_many :collections
   has_many :release_tags, dependent: :destroy
   paginates_per 100
@@ -32,6 +30,16 @@ class Purl < ApplicationRecord
     return unless target['target'].present?
     includes(:release_tags).where(release_tags: { name: target['target'] })
   }
+
+  ##
+  # @param [Hash] filtering_params
+  def self.filter(filtering_params)
+    results = where(nil)
+    filtering_params.each do |key, value|
+      results = results.public_send(key, value) if value.present?
+    end
+    results
+  end
 
   ##
   # Return true targets with always values only if the object is not deleted in
