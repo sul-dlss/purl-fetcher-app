@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
     end
 
     def druid_param
-      params.require(:druid)
+      druid = params.require(:druid)
+      druid = "druid:#{druid}" unless druid.include?('druid:')
+      druid
     end
 end
