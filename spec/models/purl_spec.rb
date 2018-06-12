@@ -25,11 +25,11 @@ describe Purl, type: :model do
         .to change { subject.collections.count }.from(3).to(2)
     end
   end
-  describe '#update_from_public_xml' do
+  describe '#update_from_public_xml!' do
     let(:purl_object) { create(:purl) }
     it 'updates an instance from public xml' do
       purl_object.update(druid: 'druid:bb050dj7711')
-      purl_object.update_from_public_xml
+      purl_object.update_from_public_xml!
       expect(purl_object.druid).to eq 'druid:bb050dj7711'
       expect(purl_object.title).to eq 'This is Pete\'s New Test title for this object.'
       expect(purl_object.release_tags.count).to eq 3
@@ -38,7 +38,14 @@ describe Purl, type: :model do
       expect(purl_object.deleted_at).to be_nil
     end
     context 'public xml unavailable' do
-      it { expect(purl_object.update_from_public_xml).to be false }
+      it { expect(purl_object.update_from_public_xml!).to be false }
+    end
+    context 'validations' do
+      it 'raises exceptions if the validations fail' do
+        create(:purl, druid: 'druid:bb050dj7711')
+        purl_object.update(druid: 'druid:bb050dj7711')
+        expect { purl_object.update_from_public_xml! }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
     end
   end
   describe '.membership' do
