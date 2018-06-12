@@ -71,7 +71,7 @@ class Purl < ApplicationRecord
 
   ##
   # Updates a Purl using information from the public xml document
-  def update_from_public_xml
+  def update_from_public_xml!
     public_xml = PurlParser.new(path)
 
     return false unless public_xml.exists?
@@ -96,7 +96,7 @@ class Purl < ApplicationRecord
     self.published_at = public_xml.published_at
     self.deleted_at = nil # ensure the deleted at field is nil (important for a republish of a previously deleted purl)
 
-    save
+    save!
   end
 
   # class level method to create or update a purl model object given a path to a purl directory
@@ -107,8 +107,8 @@ class Purl < ApplicationRecord
 
     return false unless public_xml.exists?
 
-    purl = find_or_create_by(druid: public_xml.druid) # either create a new druid record or get the existing one
-    purl.update_from_public_xml
+    purl = find_or_initialize_by(druid: public_xml.druid) # either create a new druid record or get the existing one
+    purl.update_from_public_xml!
   end
 
   ##

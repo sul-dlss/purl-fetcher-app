@@ -23,8 +23,9 @@ module V1
     # Update a Purl from its public xml
     def update
       @purl = Purl.find_or_create_by(druid: druid_param)
+      @purl.update_from_public_xml!
       respond_to do |format|
-        format.json { render json: @purl.update_from_public_xml }
+        format.json { render json: true }
       end
     end
 
