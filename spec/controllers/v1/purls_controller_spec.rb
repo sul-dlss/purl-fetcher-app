@@ -76,6 +76,12 @@ RSpec.describe V1::PurlsController do
       patch :update, params: { druid: 'druid:bb050dj7711' }, format: :json
       expect(assigns(:purl).title).to eq "This is Pete's New Test title for this object."
     end
+    it 'normalizes the druid parameter' do
+      expect do
+        patch :update, params: { druid: 'ab012cd3456' }, format: :json
+      end.to change(Purl, :count).by(1)
+      expect(Purl.first.druid).to eq 'druid:ab012cd3456'
+    end
   end
   describe 'DELETE delete' do
     let(:purl_object) { create(:purl) }
