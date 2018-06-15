@@ -7,7 +7,5 @@ ALWAYS_SEND_TRUE_TARGET:
 FILENAME_UPDATING_LOG: log/indexing.log
 PURL_DOCUMENT_PATH: /purl/document_cache
 DELETES_DIR: .deletes
-LISTENER_PATH: /purl/recent_changes
-LISTENER_PID_FILE: "<%=File.join(Rails.root,'run','listener.pid')%>"
 BASE_FILENAME_FINDER_LOG: "purl_finder"
 BASE_PATH_FINDER_LOG: "<%=File.join(Rails.root,'log')%>"
