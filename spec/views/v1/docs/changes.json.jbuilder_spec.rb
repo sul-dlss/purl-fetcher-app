@@ -4,6 +4,7 @@ describe 'v1/docs/changes.json.jbuilder' do
   before do
     assign(:changes, Purl.all.page(1))
   end
+
   it 'has pagination' do
     render
     data = JSON.parse(rendered, symbolize_names: true)

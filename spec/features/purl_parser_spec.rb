@@ -51,6 +51,7 @@ describe PurlParser do
       expect(purl.exists?).to be_falsey
     end
   end
+
   describe '#published_at' do
     let(:sample_doc_path) do
       DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path

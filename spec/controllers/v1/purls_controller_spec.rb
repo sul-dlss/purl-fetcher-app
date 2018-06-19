@@ -14,6 +14,7 @@ RSpec.describe V1::PurlsController do
         expect(assigns(:purls).count).to eq 1
       end
     end
+
     describe 'uses membership scope' do
       it 'to limit non-member objects' do
         get :index, params: { membership: 'none' }, format: :json
@@ -24,6 +25,7 @@ RSpec.describe V1::PurlsController do
         expect(assigns(:purls).count).to eq 4
       end
     end
+
     describe 'uses status scope' do
       it 'to limit deleted objects' do
         get :index, params: { status: 'deleted' }, format: :json
@@ -34,12 +36,14 @@ RSpec.describe V1::PurlsController do
         expect(assigns(:purls).count).to eq 5
       end
     end
+
     describe 'uses target scope' do
       it 'to limit targets objects' do
         get :index, params: { target: 'SearchWorks' }, format: :json
         expect(assigns(:purls).count).to eq 2
       end
     end
+
     describe 'pagination parameters' do
       it 'per_page' do
         get :index, params: { per_page: 1 }, format: :json
@@ -53,6 +57,7 @@ RSpec.describe V1::PurlsController do
       end
     end
   end
+
   describe 'GET show' do
     it 'looks up a Purl by its druid' do
       get :show, params: { druid: 'druid:dd111ee2222' }, format: :json
@@ -64,6 +69,7 @@ RSpec.describe V1::PurlsController do
       expect { get :show, params: { druid: 'druid:bogus' }, format: :json }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
   describe 'PATCH update' do
     let(:purl_object) { create(:purl) }
     it 'creates a new purl entry' do
@@ -83,6 +89,7 @@ RSpec.describe V1::PurlsController do
       expect(Purl.first.druid).to eq 'druid:ab012cd3456'
     end
   end
+
   describe 'DELETE delete' do
     let(:purl_object) { create(:purl) }
     it 'marks the purl as deleted' do

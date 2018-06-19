@@ -8,12 +8,14 @@ describe ApiConstraint do
         expect(described_class.new(version: 2).matches?(request)).to be false
       end
     end
+
     context 'when not specified' do
       it 'matches to 1' do
         request = double('a request', headers: {})
         expect(described_class.new(version: 1).matches?(request)).to be true
       end
     end
+
     context 'when greater than version specified' do
       it 'matches to 1' do
         request = double('a request', headers: { 'HTTP_ACCEPT' => 'version=2' })
