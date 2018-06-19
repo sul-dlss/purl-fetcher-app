@@ -8,6 +8,7 @@ describe Purl, type: :model do
         expect(subject.true_targets).to include 'SearchWorksPreview'
       end
     end
+
     context 'when deleted' do
       subject { create(:purl) }
       it 'returns an empty array' do
@@ -16,6 +17,7 @@ describe Purl, type: :model do
       end
     end
   end
+
   let(:druid) { 'druid:bb050dj7711' }
   describe '#refresh_collections' do
     subject { create(:purl) }
@@ -25,6 +27,7 @@ describe Purl, type: :model do
         .to change { subject.collections.count }.from(3).to(2)
     end
   end
+
   describe '#update_from_public_xml!' do
     let(:purl_object) { create(:purl) }
     it 'updates an instance from public xml' do
@@ -40,6 +43,7 @@ describe Purl, type: :model do
     context 'public xml unavailable' do
       it { expect(purl_object.update_from_public_xml!).to be false }
     end
+
     context 'validations' do
       it 'raises exceptions if the validations fail' do
         create(:purl, druid: 'druid:bb050dj7711')
@@ -48,6 +52,7 @@ describe Purl, type: :model do
       end
     end
   end
+
   describe '.membership' do
     context 'when passed "none"' do
       it 'returns objects that do not belong to a collection' do
@@ -58,6 +63,7 @@ describe Purl, type: :model do
         end
       end
     end
+
     context 'when passed "collection"' do
       it 'returns objects that only belong to a collection' do
         objects = described_class.membership('membership' => 'collection')
@@ -67,12 +73,14 @@ describe Purl, type: :model do
         end
       end
     end
+
     context 'anything else' do
       it 'returns everything' do
         expect(described_class.membership('yolo').count).to eq described_class.all.count
       end
     end
   end
+
   describe '.status' do
     context 'when passed "deleted"' do
       it 'returns objects that have been deleted' do
@@ -80,18 +88,21 @@ describe Purl, type: :model do
         expect(objects.count).to eq 3
       end
     end
+
     context 'when passed "collection"' do
       it 'returns objects that are still public' do
         objects = described_class.status('status' => 'public')
         expect(objects.count).to eq 5
       end
     end
+
     context 'anything else' do
       it 'returns everything' do
         expect(described_class.status('yolo').count).to eq described_class.all.count
       end
     end
   end
+
   describe '.target' do
     context 'when passed a valid target' do
       it 'returns objects that have that target' do
@@ -99,18 +110,21 @@ describe Purl, type: :model do
         expect(objects.count).to eq 2
       end
     end
+
     context 'when passed an invalid target' do
       it 'returns nothing' do
         objects = described_class.target('target' => 'SuperCoolStuff')
         expect(objects.count).to eq 0
       end
     end
+
     context 'anything else' do
       it 'returns everything' do
         expect(described_class.target('yolo').count).to eq described_class.all.count
       end
     end
   end
+
   describe '.mark_deleted' do
     it 'always starts without deleted_at time' do
       purl = described_class.create(druid: druid)
@@ -138,6 +152,7 @@ describe Purl, type: :model do
         .to change { purl.collections.count }.from(1).to(0)
     end
   end
+
   describe '.save_from_public_xml' do
     let(:purl_path) { DruidTools::PurlDruid.new(druid, purl_fixture_path).path }
     it 'does not create duplication Collection or relationships' do

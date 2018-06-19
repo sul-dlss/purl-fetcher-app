@@ -8,6 +8,7 @@ describe ReleaseTag do
       expect(tags).to include('Revs' => true, 'SearchWorks' => true)
     end
   end
+
   context 'updates duplicate tags correctly' do
     it 'finds prior tags using unique composite key' do
       tag = described_class.find_by(purl_id: purl.id, name: 'Revs')

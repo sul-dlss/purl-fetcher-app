@@ -8,6 +8,7 @@ RSpec.describe V1::CollectionsController do
       expect(assigns(:collections).first.druid).to eq 'druid:ff111gg2222'
       expect(response).to render_template('collections/index')
     end
+
     describe 'pagination parameters' do
       it 'per_page' do
         get :index, params: { per_page: 1 }, format: :json
@@ -21,6 +22,7 @@ RSpec.describe V1::CollectionsController do
       end
     end
   end
+
   describe 'GET show' do
     it 'looks up a Purl by its druid' do
       get :show, params: { druid: 'druid:ff111gg2222' }, format: :json
@@ -32,6 +34,7 @@ RSpec.describe V1::CollectionsController do
       expect { get :show, params: { druid: 'druid:bogus' }, format: :json }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
   describe 'GET purls' do
     it 'purls for a selected collection' do
       get :purls, params: { druid: 'druid:ff111gg2222' }, format: :json

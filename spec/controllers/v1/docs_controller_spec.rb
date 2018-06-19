@@ -20,6 +20,7 @@ RSpec.describe V1::DocsController do
       end
     end
   end
+
   describe '#deletes' do
     it 'assigns and renders template' do
       get :deletes, format: :json

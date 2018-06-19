@@ -153,6 +153,7 @@ describe PurlListener do
         subject.send(:process_event, Pathname('/no/where/not_a_druid'))
       end
     end
+
     context '.process_druid_file' do
       it 'parses the druid from the filename' do
         expect(fn).to receive(:rename).with("#{fn}.lock")

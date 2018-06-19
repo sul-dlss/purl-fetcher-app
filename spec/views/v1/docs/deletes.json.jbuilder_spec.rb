@@ -7,6 +7,7 @@ describe 'v1/docs/deletes.json.jbuilder' do
       Purl.where(deleted_at: Time.zone.at(0).iso8601..Time.zone.now.iso8601).page(1)
     )
   end
+
   it 'has pagination' do
     render
     data = JSON.parse(rendered, symbolize_names: true)

@@ -4,6 +4,7 @@ describe 'v1/purls/show.json.jbuilder' do
   before do
     assign(:purl, Purl.find(1))
   end
+
   it 'renders purl partial' do
     render
     expect(JSON.parse(rendered)).to include('collections' => ['druid:ff111gg2222'], 'druid' => 'druid:bb111cc2222')
