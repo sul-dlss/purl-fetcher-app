@@ -49,6 +49,7 @@ end
 
 group :production do
   gem 'mysql2'
+  gem 'newrelic_rpm'
 end
 
 group :deployment do
@@ -57,7 +58,6 @@ group :deployment do
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
-  gem 'newrelic_rpm'
 end
 
 group :development, :test do
