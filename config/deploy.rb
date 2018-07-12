@@ -10,7 +10,7 @@ set :deploy_to, "/opt/app/lyberadmin/purl-fetcher"
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/secrets.yml config/database.yml config/honeybadger.yml}
+set :linked_files, %w{config/secrets.yml config/database.yml config/honeybadger.yml config/newrelic.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log run tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}

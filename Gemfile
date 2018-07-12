@@ -57,6 +57,7 @@ group :deployment do
   gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
+  gem 'newrelic_rpm'
 end
 
 group :development, :test do
