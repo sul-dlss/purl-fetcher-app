@@ -6,6 +6,7 @@ module V1
     def changes
       @changes = Purl.where(deleted_at: nil)
                      .where(updated_at: @first_modified..@last_modified)
+                     .target('target' => params[:target])
                      .includes(:collections, :release_tags)
                      .page(page_params[:page])
                      .per(per_page_params[:per_page])
@@ -14,6 +15,7 @@ module V1
     # API call to get a full list of all purl deletes between two times
     def deletes
       @deletes = Purl.where(deleted_at: @first_modified..@last_modified)
+                     .target('target' => params[:target])
                      .reorder(:deleted_at) # used to override the default_scope
                      .page(page_params[:page])
                      .per(per_page_params[:per_page])
