@@ -174,6 +174,7 @@ Name | Located In | Description | Required | Schema | Default
 `last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`target` | query | Release tag to filter on | No | string | nil
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
@@ -240,6 +241,7 @@ Name | Located In | Description | Required | Schema | Default
 `last_modified` | query | Limit response by an ending datetime| No | datetime in iso8601 | current time
 `page` | query | request a specific page of results | No | integer | 1
 `per_page` | query | Limit the number of results per page | No | integer (1 - 10000) | 100
+`target` | query | Release tag to filter on | No | string | nil
 `version` | header | Version of the API request eg(`version=1`) | No | integer | 1
 
 ##### Example Response
