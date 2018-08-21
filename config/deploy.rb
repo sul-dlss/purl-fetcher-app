@@ -2,7 +2,7 @@ set :application, 'purl-fetcher'
 set :repo_url, 'https://github.com/sul-dlss/purl-fetcher.git'
 
 # Default branch is :master
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+set :branch, 'master'
 
 set :deploy_to, "/opt/app/lyberadmin/purl-fetcher"
 
