@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_170000) do
+ActiveRecord::Schema.define(version: 2018_09_06_142344) do
 
   create_table "collections", force: :cascade do |t|
     t.string "druid", null: false

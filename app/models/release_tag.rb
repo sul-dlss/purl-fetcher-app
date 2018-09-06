@@ -2,6 +2,10 @@ class ReleaseTag < ApplicationRecord
   belongs_to :purl
   validates :name, uniqueness: { scope: :purl_id }
 
+  before_validation do
+    self.name = name.upcase
+  end
+
   ##
   # Locates an existing ReleaseTag record and sets the release_type as given
   #
@@ -10,6 +14,8 @@ class ReleaseTag < ApplicationRecord
   # @param [Boolean] `release_type`
   # @return [ReleaseTag] finds or creates a ReleaseTag record for the given tuple
   def self.for(purl, name, release_type)
+    name = name.upcase
+
     tag = ReleaseTag.find_by(name: name, purl_id: purl.id)
     if tag.present?
       tag.release_type = release_type
