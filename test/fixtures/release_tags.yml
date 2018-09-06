@@ -5,16 +5,16 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
- name: Revs
+ name: REVS
  release_type: true
  purl_id: 1
 
 two:
- name: SearchWorks
+ name: SEARCHWORKS
  release_type: true
  purl_id: 1
 
 three:
- name: SearchWorks
+ name: SEARCHWORKS
  release_type: false
  purl_id: 2
