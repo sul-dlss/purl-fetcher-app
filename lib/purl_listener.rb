@@ -33,6 +33,7 @@ class PurlListener
                  pid_file = Pathname(Settings.LISTENER_PID_FILE),
                  logger = UpdatingLogger)
     raise ArgumentError, "Missing #{path}" unless path.directory?
+
     @pid_file = pid_file
     @pid = nil
     @path = path
