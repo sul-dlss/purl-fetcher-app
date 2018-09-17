@@ -10,6 +10,7 @@ class ApiConstraint
     requested_version = accept_header.scan(/version=(\d*)/).flatten.first
     return true if version == 1 && requested_version.blank?
     return true if version <= requested_version.to_i
+
     false
   end
 end

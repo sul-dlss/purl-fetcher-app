@@ -72,6 +72,7 @@ RSpec.describe V1::PurlsController do
 
   describe 'PATCH update' do
     let(:purl_object) { create(:purl) }
+
     it 'creates a new purl entry' do
       expect do
         patch :update, params: { druid: 'druid:ab012cd3456' }, format: :json
@@ -92,6 +93,7 @@ RSpec.describe V1::PurlsController do
 
   describe 'DELETE delete' do
     let(:purl_object) { create(:purl) }
+
     it 'marks the purl as deleted' do
       purl_object.update(druid: 'druid:bb050dj7711')
       delete :destroy, params: { druid: 'druid:bb050dj7711' }, format: :json

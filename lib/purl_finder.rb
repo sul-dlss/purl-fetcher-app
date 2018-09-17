@@ -41,6 +41,7 @@ class PurlFinder
     lines.each do |line| # line will be the full file path, including the druid tree, try and get the druid from this
       druid = get_druid_from_file_path(line)
       next if druid.blank?
+
       UpdatingLogger.info("updating #{druid}")
       begin
         result = Purl.save_from_public_xml(File.dirname(line)) # pass the directory of the file containing public

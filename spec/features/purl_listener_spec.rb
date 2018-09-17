@@ -130,6 +130,7 @@ describe PurlListener do
   context 'processing files' do
     let(:druid) { 'aa111bb2222' }
     let(:fn) { Pathname("/no/where/#{druid}") }
+
     before do
       ListenerLog.create(process_id: $PID, started_at: Time.current - 1)
     end

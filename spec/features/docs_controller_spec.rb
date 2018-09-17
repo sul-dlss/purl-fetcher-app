@@ -13,6 +13,7 @@ describe(V1::DocsController, type: :request, integration: true) do
       last_page?: true
     }
   end
+
   it "tests the docs changes API call for all time" do
     get changes_docs_path
     expect(response).to be_successful

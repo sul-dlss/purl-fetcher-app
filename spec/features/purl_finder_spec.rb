@@ -55,6 +55,7 @@ describe PurlFinder do
 
     describe('deleting documents') do
       let(:druid) { 'bb050dj6667' }
+
       before :each do
         FileUtils.cp_r test_purl_source_dir, test_purl_dest_dir
       end

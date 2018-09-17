@@ -19,6 +19,7 @@ describe Purl, type: :model do
   end
 
   let(:druid) { 'druid:bb050dj7711' }
+
   describe '#refresh_collections' do
     subject { create(:purl) }
     it 'removes previous collections and adds new ones' do
@@ -30,6 +31,7 @@ describe Purl, type: :model do
 
   describe '#update_from_public_xml!' do
     let(:purl_object) { create(:purl) }
+
     it 'updates an instance from public xml' do
       purl_object.update(druid: 'druid:bb050dj7711')
       purl_object.update_from_public_xml!
@@ -155,6 +157,7 @@ describe Purl, type: :model do
 
   describe '.save_from_public_xml' do
     let(:purl_path) { DruidTools::PurlDruid.new(druid, purl_fixture_path).path }
+
     it 'does not create duplication Collection or relationships' do
       n = 2
       expect do
