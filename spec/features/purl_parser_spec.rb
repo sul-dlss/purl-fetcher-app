@@ -56,6 +56,7 @@ describe PurlParser do
     let(:sample_doc_path) do
       DruidTools::PurlDruid.new('bb050dj7711', purl_fixture_path).path
     end
+
     subject { described_class.new(sample_doc_path) }
     it 'gets the published_at metadata directly from the public XML' do
       expect(subject.published_at).to be_an Time

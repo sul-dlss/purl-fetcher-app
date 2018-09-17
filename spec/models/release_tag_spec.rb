@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe ReleaseTag do
   let(:purl) { Purl.find(1) }
+
   context 'reads data correctly' do
     it '.release_tags' do
       tags = Hash[purl.release_tags.collect { |tag| [ tag.name, tag.release_type ] }]
