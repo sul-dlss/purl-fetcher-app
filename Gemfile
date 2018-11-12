@@ -31,6 +31,7 @@ gem 'honeybadger', '~> 3.0'
 
 gem 'listen', '>= 3.0.5', '< 3.2' # used by PurlListener
 gem 'config'
+gem 'lograge'
 
 group :test do
   gem 'rspec-rails', '~> 3.1'
