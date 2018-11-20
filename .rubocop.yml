@@ -13,7 +13,7 @@ AllCops:
     - 'spec/rails_helper.rb'
     - 'vendor/**/*'
     - 'tmp/**/*'
-  
+
 Rails:
   Enabled: true
 
@@ -28,6 +28,9 @@ Layout/EmptyLineBetweenDefs:
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
   Max: 200
+  Exclude:
+    - 'spec/features/docs_controller_spec.rb'
+
 Metrics/AbcSize:
   Max: 30
 
