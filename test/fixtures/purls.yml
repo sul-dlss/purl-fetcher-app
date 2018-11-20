@@ -9,7 +9,7 @@ indexed_1:
   druid: druid:bb111cc2222
   title: Some test object
   object_type: item
-  catkey: ''
+  catkey: 'catkey111'
   published_at: <%=Time.zone.parse('1/1/2015').iso8601%>
 indexed_2:
   id: 2

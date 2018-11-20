@@ -7,7 +7,7 @@ describe 'v1/purls/_purl.json.jbuilder' do
       'collections' => ['druid:ff111gg2222'],
       'druid' => 'druid:bb111cc2222',
       'object_type' => 'item',
-      'catkey' => '',
+      'catkey' => 'catkey111',
       'title' => 'Some test object'
     )
   end
