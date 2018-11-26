@@ -1,14 +1,12 @@
 namespace :purl_fetcher do
   desc 'Run the apps specs'
   task :spec do
-    begin
-      require 'rspec/core/rake_task'
-      RSpec::Core::RakeTask.new(:rspec)
-      Rake::Task['rspec'].invoke
-    rescue LoadError
-      desc 'rspec unavailable'
-      abort 'rspec not installed'
-    end
+    require 'rspec/core/rake_task'
+    RSpec::Core::RakeTask.new(:rspec)
+    Rake::Task['rspec'].invoke
+  rescue LoadError
+    desc 'rspec unavailable'
+    abort 'rspec not installed'
   end
 end
 
