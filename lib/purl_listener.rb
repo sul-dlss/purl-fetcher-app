@@ -131,13 +131,11 @@ class PurlListener
       druid = path.basename.to_s
       if DruidTools::Druid.valid?(druid)
         elapsed_time = Benchmark.realtime do
-          begin
             process_druid_file(path, druid)
           rescue => e
             logger.error("Cannot process #{druid}: #{e.message}")
             Honeybadger.notify(e) # backtrace is available there
             return
-          end
         end
         logger.info("Processed #{druid} in #{elapsed_time} seconds")
       else

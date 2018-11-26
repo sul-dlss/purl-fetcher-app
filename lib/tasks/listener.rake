@@ -11,12 +11,10 @@ namespace :listener do
 
   desc 'Start the listener'
   task :start => :environment do |_t, args|
-    begin
-      PurlListener.new.start
-    rescue SignalException => e
-      Honeybadger.notify(e)
-      puts "Listener stopped via signal #{e.message}"
-    end
+    PurlListener.new.start
+  rescue SignalException => e
+    Honeybadger.notify(e)
+    puts "Listener stopped via signal #{e.message}"
   end
 
   desc 'Stop the listener'
