@@ -4,7 +4,8 @@ module V1
 
     # API call to get a full list of all purls modified between two times
     def changes
-      @changes = Purl.where(deleted_at: nil)
+      @changes = Purl.published
+                     .where(deleted_at: nil)
                      .where(updated_at: @first_modified..@last_modified)
                      .target('target' => params[:target])
                      .includes(:collections, :release_tags)

@@ -32,6 +32,8 @@ class Purl < ApplicationRecord
     includes(:release_tags).where(release_tags: { name: target['target'] })
   }
 
+  scope :published, -> { where.not(published_at: nil) }
+
   ##
   # @param [Hash] filtering_params
   def self.filter(filtering_params)
