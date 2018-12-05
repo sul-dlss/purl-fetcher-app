@@ -21,16 +21,4 @@ set :keep_releases, 5
 # honeybadger_env otherwise defaults to rails_env
 set :honeybadger_env, "#{fetch(:stage)}"
 
-desc 'Restart the PurlListener'
-namespace :deploy do
-  task :restart do
-    on primary(:app) do
-      within current_path do
-        with :rails_env => fetch(:rails_env) do
-          execute :rake, 'listener:restart'
-        end
-      end
-    end
-  end
-end
 after 'deploy:published', 'deploy:restart'
