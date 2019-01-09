@@ -36,7 +36,7 @@ class Purl < ApplicationRecord
 
   ##
   # @param [Hash] filtering_params
-  def self.filter(filtering_params)
+  def self.with_filter(filtering_params)
     results = where(nil)
     filtering_params.each do |key, value|
       results = results.public_send(key, value) if value.present?

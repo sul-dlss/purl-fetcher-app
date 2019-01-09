@@ -5,7 +5,7 @@ module V1
     def index
       @purls = Purl.all
                    .includes(:collections, :release_tags)
-                   .filter(filter_params)
+                   .with_filter(filter_params)
                    .status(status_param)
                    .target(target_param)
                    .membership(membership_param)
