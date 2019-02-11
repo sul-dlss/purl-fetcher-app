@@ -67,7 +67,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.13'
   gem 'yard'
 end
 
