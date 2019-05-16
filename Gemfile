@@ -20,7 +20,6 @@ end
 gem 'puma', '~> 3.11'
 
 gem 'druid-tools'
-gem 'whenever', :require => false
 gem 'kaminari' # for pagination
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
