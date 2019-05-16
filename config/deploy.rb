@@ -6,9 +6,6 @@ set :branch, 'master'
 
 set :deploy_to, "/opt/app/lyberadmin/purl-fetcher"
 
-# Whenever
-set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
-
 # Default value for :linked_files is []
 set :linked_files, %w{config/secrets.yml config/database.yml config/honeybadger.yml config/newrelic.yml}
 
