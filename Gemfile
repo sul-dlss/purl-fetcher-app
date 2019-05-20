@@ -26,7 +26,7 @@ gem 'kaminari' # for pagination
 gem 'jbuilder', '~> 2.5'
 
 gem 'okcomputer' # for monitoring
-gem 'honeybadger', '~> 3.0'
+gem 'honeybadger'
 
 gem 'listen', '>= 3.0.5', '< 3.2' # used by PurlListener
 gem 'config'
