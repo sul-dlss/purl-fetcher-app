@@ -1,0 +1,76 @@
+<h1>PURL Fetcher</h1>
+
+<h2>Total</h2>
+<table>
+  <tr><td>Published</td><td><%= number_with_delimiter @metrics.published %></td></tr>
+  <tr><td>Changes</td><td><%= number_with_delimiter @metrics.changes %></td></tr>
+  <tr><td>Deleted</td><td><%= number_with_delimiter @metrics.deleted %></td></tr>
+</table>
+
+<h2>Histogram</h2>
+<table>
+  <thead>
+    <tr>
+      <% @metrics.histogram.keys.each do |key| %>
+        <th><%= key %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% @metrics.histogram.values.each do |value| %>
+        <td><%= number_with_delimiter value %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Release tags</h2>
+<% names = @metrics.release_tags.keys.map(&:first).uniq %>
+<% release_types = @metrics.release_tags.keys.map(&:last).uniq %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <% release_types.each do |key| %>
+        <th><%= key %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% names.each do |name| %>
+      <tr>
+        <td><%= name %></td>
+        <% release_types.each do |key| %>
+          <td><%= number_with_delimiter @metrics.release_tags[[name, key]] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Searchworks</h2>
+<dl>
+  <dt>Released without a catkey</dt>
+  <dd><%= number_with_delimiter @metrics.searchworks[:released_without_catkey] %></dd>
+  <dt>Released with a catkey</dt>
+  <dd><%= number_with_delimiter @metrics.searchworks[:released_with_catkey] %></dd>
+</dl>
+
+<h3>Histogram</h3>
+<table>
+  <thead>
+    <tr>
+      <% @metrics.searchworks[:histogram].keys.each do |key| %>
+        <th><%= key %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% @metrics.searchworks[:histogram].values.each do |value| %>
+        <td><%= number_with_delimiter value %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
