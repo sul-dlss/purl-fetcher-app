@@ -7,6 +7,6 @@ describe 'v1/collections/show.json.jbuilder' do
 
   it 'renders purl partial' do
     render
-    expect(JSON.parse(rendered)).to include('druid' => 'druid:ff111gg2222', 'catkey' => '')
+    expect(JSON.parse(rendered)).to include('druid' => 'druid:ff111gg2222')
   end
 end
