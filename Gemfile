@@ -67,7 +67,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false
-  gem 'sqlite3', '~> 1.3.13'
+  gem 'sqlite3'
   gem 'yard'
 end
 
