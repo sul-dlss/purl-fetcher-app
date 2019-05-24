@@ -2,6 +2,10 @@ module V1
   class DocsController < ApplicationController
     before_action :date_params
 
+    def stats
+      @metrics = Statistics.new
+    end
+
     # API call to get a full list of all purls modified between two times
     def changes
       @changes = Purl.published

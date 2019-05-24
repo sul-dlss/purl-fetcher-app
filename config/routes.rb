@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root :controller=>:application, :action=>:default
+  root 'v1/docs#stats'
+
   scope module: :v1, constraints: ApiConstraint.new(version: 1) do
     resource :docs, :defaults => { :format => 'json' }, :only => [:get] do
       get 'deletes'
