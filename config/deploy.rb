@@ -2,7 +2,7 @@ set :application, 'purl-fetcher'
 set :repo_url, 'https://github.com/sul-dlss/purl-fetcher.git'
 
 # Default branch is :master
-set :branch, 'stats'
+set :branch, 'master'
 
 set :deploy_to, "/opt/app/lyberadmin/purl-fetcher"
 
