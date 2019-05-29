@@ -1,5 +1,6 @@
 json.changes @changes do |change|
   json.druid change.druid
+  json.updated_at change.updated_at.iso8601
   json.latest_change change.published_at.iso8601
   json.catkey change.catkey if change.catkey.present?
   json.true_targets change.true_targets if change.true_targets.present?
