@@ -19,7 +19,8 @@ module V1
 
     # API call to get a full list of all purl deletes between two times
     def deletes
-      @deletes = Purl.where(deleted_at: @first_modified..@last_modified)
+      @deletes = Purl.where(updated_at: @first_modified..@last_modified)
+                     .where.not(deleted_at: nil)
                      .target('target' => params[:target])
                      .reorder(:deleted_at) # used to override the default_scope
                      .page(page_params[:page])
