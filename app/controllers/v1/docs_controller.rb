@@ -29,8 +29,17 @@ module V1
     private
 
       def date_params
-        @first_modified = params[:first_modified] || Time.zone.at(0).iso8601
-        @last_modified = params[:last_modified] || (Time.zone.now + 1.second).iso8601
+        @first_modified = if params[:first_modified]
+                            Time.zone.parse(params[:first_modified])
+                          else
+                            Time.zone.at(0)
+                          end
+
+        @last_modified = if params[:last_modified]
+                           Time.zone.parse(params[:last_modified])
+                         else
+                           Time.zone.now
+                         end
       end
 
       def per_page_params
