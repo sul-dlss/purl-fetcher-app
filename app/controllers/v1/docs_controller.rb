@@ -22,7 +22,6 @@ module V1
       @deletes = Purl.where(updated_at: @first_modified..@last_modified)
                      .where.not(deleted_at: nil)
                      .target('target' => params[:target])
-                     .reorder(:deleted_at) # used to override the default_scope
                      .page(page_params[:page])
                      .per(per_page_params[:per_page])
     end

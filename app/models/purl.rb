@@ -3,7 +3,7 @@ class Purl < ApplicationRecord
   has_many :release_tags, dependent: :destroy
   paginates_per 100
   max_paginates_per 10_000
-  default_scope -> { order('published_at') }
+  default_scope -> { order(:updated_at) }
   validates :druid, uniqueness: true
 
   scope :object_type, -> (object_type) { where object_type: object_type }
