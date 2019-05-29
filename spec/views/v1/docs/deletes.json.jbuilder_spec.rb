@@ -6,6 +6,8 @@ describe 'v1/docs/deletes.json.jbuilder' do
       :deletes,
       Purl.where(deleted_at: Time.zone.at(0).iso8601..Time.zone.now.iso8601).page(1)
     )
+    assign(:first_modified, Time.zone.now - 1.day)
+    assign(:last_modified, Time.zone.now)
   end
 
   it 'has pagination' do
@@ -17,5 +19,6 @@ describe 'v1/docs/deletes.json.jbuilder' do
                                     first_page?: true,
                                     last_page?: true,
                                     next_page: nil
+    expect(data[:range]).to include(:first_modified, :last_modified)
   end
 end

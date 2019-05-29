@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'v1/docs/changes.json.jbuilder' do
   before do
     assign(:changes, Purl.all.page(1))
+    assign(:first_modified, Time.zone.now - 1.day)
+    assign(:last_modified, Time.zone.now)
   end
 
   it 'has pagination' do
@@ -14,6 +16,7 @@ describe 'v1/docs/changes.json.jbuilder' do
                                     first_page?: true,
                                     last_page?: true,
                                     next_page: nil
+    expect(data[:range]).to include(:first_modified, :last_modified)
   end
   it 'always returns "SearchWorksPreview"' do
     render
