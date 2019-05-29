@@ -47,7 +47,7 @@ RSpec.describe V1::PurlsController do
     describe 'pagination parameters' do
       it 'per_page' do
         get :index, params: { per_page: 1 }, format: :json
-        expect(assigns(:purls).first.druid).to eq 'druid:ee111ff2222'
+        expect(assigns(:purls).first.druid).to eq 'druid:dd111ee2222'
         expect(assigns(:purls).count).to eq 1
       end
       it 'page' do
@@ -87,7 +87,7 @@ RSpec.describe V1::PurlsController do
       expect do
         patch :update, params: { druid: 'ab012cd3456' }, format: :json
       end.to change(Purl, :count).by(1)
-      expect(Purl.first.druid).to eq 'druid:ab012cd3456'
+      expect(Purl.last.druid).to eq 'druid:ab012cd3456'
     end
   end
 
