@@ -56,37 +56,6 @@ class PurlFinder
     { count: count, success: success, error: error }
   end
 
-  # Finds all objects deleted from purl in the specified number of minutes and updates model to reflect their deletion
-  #
-  # @return [Hash] A hash providing some stats on the number of items deleted, successful and errored out
-  def remove_deleted(params={})
-    mins_ago = params[:mins_ago]
-
-    # If we called the below statement with a /* on the end it would not return itself, however it would then throw errors on servers that don't yet have
-    # a deleted object and thus don't have a .deletes dir
-    search_string = "find #{path_to_deletes_dir}"
-    search_string += " -mmin -#{mins_ago.to_i}" if mins_ago
-
-    deleted_objects = `#{search_string}`.split
-    deleted_objects -= [path_to_deletes_dir] # remove the deleted objects dir itself
-
-    count = 0
-    error = 0
-    success = 0
-    deleted_objects.each do |fn|
-      druid = get_druid_from_delete_path(fn)
-      if !druid.blank? && !public_xml_exists?(druid) # double check that the public xml files are actually gone
-        UpdatingLogger.info("deleting #{druid}")
-        result = Purl.mark_deleted(druid, File.mtime(fn))
-        result ? success += 1 : error += 1
-        count += 1
-      else
-        UpdatingLogger.debug { "ignoring #{fn}" }
-      end
-    end
-    { count: count, success: success, error: error }
-  end
-
   def default_output_file
     File.join(base_path_finder_log, base_filename_finder_log)
   end
@@ -99,13 +68,6 @@ class PurlFinder
   # the base filename of the file to stores the results of the find operation
   def base_filename_finder_log
     Settings.BASE_FILENAME_FINDER_LOG
-  end
-
-  # Return the absolute path to the .deletes dir
-  #
-  # @return [String] The absolute path
-  def path_to_deletes_dir
-    Pathname(File.join(purl_mount_location, Settings.DELETES_DIR)).to_s
   end
 
   # Accessor to get the purl document cache path
@@ -129,22 +91,5 @@ class PurlFinder
   def get_druid_from_file_path(path)
     find_druid = path.match(%r{[a-zA-Z]{2}/[0-9]{3}/[a-zA-Z]{2}/[0-9]{4}})
     find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
-  end
-
-  # Given a full path to a deleted file, try and pull just the druid part out
-  # @param path [String] The path to the deleted file (e.g. /purl/document_cache/.deletes/aa000bb0000)
-  # @return [String] The druid in the form of pid (e.g. aa000bb0000) or blank string if none found
-  def get_druid_from_delete_path(path)
-    find_druid = path.match(/[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}[0-9]{4}/)
-    find_druid && find_druid.size == 1 ? find_druid.to_s.delete('/') : ""
-  end
-
-  # Determine if public purl xml path exists for a given druid
-  #
-  # @param druid [String] The druid you are interested in
-  # @return [Boolean] True or False
-  def public_xml_exists?(druid)
-    dir_name = Pathname(purl_path(druid)) # This will include the full druid on the end of the path, we don't want that for purl
-    File.directory?(dir_name) # if the directory does not exist (so File returns false) then it is really deleted
   end
 end
