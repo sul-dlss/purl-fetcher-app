@@ -32,7 +32,7 @@ Layout/EmptyLineBetweenDefs:
 Metrics/LineLength:
   Max: 200
   Exclude:
-    - 'spec/features/docs_controller_spec.rb'
+    - 'spec/features/v1/docs_controller_spec.rb'
 
 Metrics/AbcSize:
   Max: 30
