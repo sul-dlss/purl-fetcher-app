@@ -7,6 +7,7 @@ RSpec.describe V1::PurlsController do
       expect(assigns(:purls)).to be_an ActiveRecord::Relation
       expect(response).to render_template('purls/index')
     end
+
     describe 'is filterable' do
       it 'by object_type' do
         get :index, params: { object_type: 'collection' }, format: :json
@@ -20,6 +21,7 @@ RSpec.describe V1::PurlsController do
         get :index, params: { membership: 'none' }, format: :json
         expect(assigns(:purls).count).to eq 4
       end
+
       it 'to limit only objects that are part of a collection' do
         get :index, params: { membership: 'collection' }, format: :json
         expect(assigns(:purls).count).to eq 4
@@ -31,6 +33,7 @@ RSpec.describe V1::PurlsController do
         get :index, params: { status: 'deleted' }, format: :json
         expect(assigns(:purls).count).to eq 3
       end
+
       it 'to limit only objects that are public' do
         get :index, params: { status: 'public' }, format: :json
         expect(assigns(:purls).count).to eq 5
@@ -50,6 +53,7 @@ RSpec.describe V1::PurlsController do
         expect(assigns(:purls).first.druid).to eq 'druid:dd111ee2222'
         expect(assigns(:purls).count).to eq 1
       end
+
       it 'page' do
         get :index, params: { per_page: 1, page: 2 }, format: :json
         expect(assigns(:purls).first.druid).to eq 'druid:ff111gg2222'
@@ -65,6 +69,7 @@ RSpec.describe V1::PurlsController do
       expect(assigns(:purl)).to be_an Purl
       expect(response).to render_template('purls/show')
     end
+
     it 'raise a record not found error (returning a 404) when the purl druid is not found' do
       expect { get :show, params: { druid: 'druid:bogus' }, format: :json }.to raise_error(ActiveRecord::RecordNotFound)
     end
@@ -78,11 +83,13 @@ RSpec.describe V1::PurlsController do
         patch :update, params: { druid: 'druid:ab012cd3456' }, format: :json
       end.to change(Purl, :count).by(1)
     end
+
     it 'updates the purl with new data' do
       purl_object.update(druid: 'druid:bb050dj7711')
       patch :update, params: { druid: 'druid:bb050dj7711' }, format: :json
       expect(assigns(:purl).title).to eq "This is Pete's New Test title for this object."
     end
+
     it 'normalizes the druid parameter' do
       expect do
         patch :update, params: { druid: 'ab012cd3456' }, format: :json

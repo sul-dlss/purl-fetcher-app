@@ -18,6 +18,7 @@ describe 'v1/docs/changes.json.jbuilder' do
                                     next_page: nil
     expect(data[:range]).to include(:first_modified, :last_modified)
   end
+
   it 'always returns "SearchWorksPreview"' do
     render
     expect(rendered).to match(/SearchWorksPreview/)

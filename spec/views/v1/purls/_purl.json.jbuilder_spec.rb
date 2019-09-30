@@ -11,12 +11,14 @@ describe 'v1/purls/_purl.json.jbuilder' do
       'title' => 'Some test object'
     )
   end
+
   it 'ignores the catkey if it is blank' do
     purl = Purl.find(1)
     purl.catkey = ''
     render partial: 'v1/purls/purl', locals: { purl: purl }
     expect(JSON.parse(rendered)).not_to include('catkey')
   end
+
   it 'always returns "SearchWorksPreview" for non deleted Purls' do
     render partial: 'v1/purls/purl', locals: { purl: Purl.where(deleted_at: nil).first }
     expect(rendered).to match(/SearchWorksPreview/)

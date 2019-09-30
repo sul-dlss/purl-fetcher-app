@@ -8,6 +8,7 @@ describe 'v1/collections/_collection.json.jbuilder' do
       'catkey' => ''
     )
   end
+
   it 'always returns "SearchWorksPreview" for non deleted Purls' do
     render partial: 'v1/collections/collection', locals: { collection: Purl.where(deleted_at: nil).first }
     expect(rendered).to match(/SearchWorksPreview/)
