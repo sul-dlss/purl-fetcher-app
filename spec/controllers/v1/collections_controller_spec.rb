@@ -15,6 +15,7 @@ RSpec.describe V1::CollectionsController do
         expect(assigns(:collections).first.druid).to eq 'druid:ff111gg2222'
         expect(assigns(:collections).count).to eq 1
       end
+
       it 'page' do
         get :index, params: { per_page: 1, page: 2 }, format: :json
         expect(assigns(:collections).first.druid).to eq 'druid:gg111hh2222'
@@ -30,6 +31,7 @@ RSpec.describe V1::CollectionsController do
       expect(assigns(:collection)).to be_an Purl
       expect(response).to render_template('collections/show')
     end
+
     it 'raise a record not found error (returning a 404) when the collection druid is not found' do
       expect { get :show, params: { druid: 'druid:bogus' }, format: :json }.to raise_error(ActiveRecord::RecordNotFound)
     end

@@ -42,6 +42,7 @@ describe Purl, type: :model do
       expect(purl_object.published_at.iso8601).to eq '2015-04-09T20:20:16Z' # should be in UTC
       expect(purl_object.deleted_at).to be_nil
     end
+
     context 'public xml unavailable' do
       it { expect(purl_object.update_from_public_xml!).to be false }
     end
@@ -132,22 +133,26 @@ describe Purl, type: :model do
       purl = described_class.create(druid: druid)
       expect(purl.deleted_at?).to be_falsey
     end
+
     it 'marks a record as deleted' do
       expect(described_class.mark_deleted(druid)).to be_truthy
       purl = described_class.find_by_druid(druid)
       expect(purl.deleted_at?).to be_truthy
     end
+
     it 'marks a record as deleted with a given timestamp' do
       deleted_at_time = Time.current
       expect(described_class.mark_deleted(druid, deleted_at_time)).to be_truthy
       purl = described_class.find_by(druid: druid)
       expect(purl.deleted_at.iso8601).to eq deleted_at_time.iso8601 # favorable compare which removes milliseconds
     end
+
     it 'cleans up release_tags' do
       purl = described_class.find(1)
       expect{ described_class.mark_deleted(purl.druid) }
         .to change { purl.release_tags.count }.from(2).to(0)
     end
+
     it 'cleans up collections' do
       purl = described_class.find(1)
       expect{ described_class.mark_deleted(purl.druid) }

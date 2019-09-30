@@ -9,6 +9,7 @@ describe 'v1/purls/index.json.jbuilder' do
     render
     expect(rendered).to match(/pages/)
   end
+
   it 'always returns "SearchWorksPreview"' do
     render
     expect(rendered).to match(/SearchWorksPreview/)
