@@ -20,7 +20,11 @@
 /log/purl_finder*
 
 /public/*.gz
+/public/assets
 /public/sitemap.xml
+
+/node_modules
+yarn.lock
 
 nohup.out
 REVISION
