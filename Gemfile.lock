@@ -333,7 +333,7 @@ DEPENDENCIES
   kaminari
   listen (>= 3.0.5, < 3.2)
   lograge
-  mysql2
+  mysql2 (< 0.5.3)
   newrelic_rpm
   okcomputer
   puma (~> 3.11)
