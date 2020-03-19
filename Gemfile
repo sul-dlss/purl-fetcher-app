@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0'
 gem 'rake', '~> 12'
 gem 'sassc-rails'
 
@@ -34,7 +34,7 @@ gem 'config'
 gem 'lograge'
 
 group :test do
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 4.0.0.rc1'
   gem 'capybara'
   gem 'simplecov', require: false
   gem 'rails-controller-testing'
