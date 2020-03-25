@@ -26,14 +26,6 @@ rake db:migrate RAILS_ENV=test
 rails server
 ```
 
-## Logging
-
-There are three log files:
-
-* `indexing.log` - items that are being saved (added or deleted)
-* `[environment].log` - Rails logger
-* `access.log` and `error.log` from Apache - traffic to the HTTP APIs
-
 ## Running tests
 
 ```bash
