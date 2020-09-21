@@ -123,10 +123,10 @@ class Purl < ApplicationRecord
   def self.mark_deleted(druid, deleted_at = nil)
     druid = "druid:#{druid}" unless druid.include?('druid:') # add the druid prefix if it happens to be missing
     purl = begin
-             find_or_create_by(druid: druid) # either create a new druid record or get the existing one
-           rescue ActiveRecord::RecordNotUnique
-             retry
-           end
+      find_or_create_by(druid: druid) # either create a new druid record or get the existing one
+    rescue ActiveRecord::RecordNotUnique
+      retry
+    end
     #  (in theory we should *always* have a previous druid here)
     purl.deleted_at = deleted_at.nil? ? Time.current : deleted_at
     purl.release_tags.delete_all
