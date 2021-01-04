@@ -374,7 +374,7 @@ DEPENDENCIES
   newrelic_rpm
   okcomputer
   puma (~> 3.11)
-  rails (~> 6.0)
+  rails (~> 6.1)
   rails-controller-testing
   rake (~> 12)
   rspec-rails (~> 4.0.0.rc1)
@@ -392,4 +392,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   2.2.0
+   2.2.4
