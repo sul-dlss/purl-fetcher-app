@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 6.1'
-gem 'rake', '~> 12'
+gem 'rake', '~> 13'
 gem 'sassc-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -18,7 +18,7 @@ group :development, :test do
 end
 
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 5'
 
 gem 'druid-tools'
 gem 'kaminari' # for pagination
@@ -29,12 +29,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'okcomputer' # for monitoring
 gem 'honeybadger'
 
-gem 'listen', '>= 3.0.5', '< 3.2' # used by PurlListener
 gem 'config'
 gem 'lograge'
 
 group :test do
-  gem 'rspec-rails', '~> 4.0.0.rc1'
+  gem 'rspec-rails', '~> 4.0'
   gem 'capybara'
   gem 'simplecov', require: false
   gem 'rails-controller-testing'
@@ -45,7 +44,7 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'listen', '~> 3.3'
 
   gem 'byebug'
 end
